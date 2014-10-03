@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Health Mate</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_medication">Medication</string>
+    <string name="title_activity_health_location">HealthLocation</string>
+    <string name="title_activity_moods">Moods</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_activity_emergency">Emergency</string>
+    <string name="title_activity_step_counter">StepCounter</string>
+    <string name="title_activity_note">Note</string>
+
+</resources>
