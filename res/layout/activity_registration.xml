@@ -7,11 +7,63 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team9.healthmate.Registration" >
-
     <TextView
-        android:id="@+id/welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
+    android:id="@+id/create_account"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="@string/create_account" />
+    <LinearLayout
+        android:id="@+id/name_fields"
+	    android:orientation="horizontal" 
+        android:paddingLeft="4.0dip" 
+        android:paddingTop="5.0dip" 
+        android:paddingRight="4.0dip" 
+        android:paddingBottom="1.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/create_account">
+	    <EditText
+	    android:id="@+id/first_name"
+	    android:layout_weight="1"
+	    android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:hint="@string/first_name"
+	    />
+	   	<EditText
+	    android:id="@+id/last_name"
+	    android:layout_weight="1"
+	    android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:hint="@string/last_name"
+	    />
+    </LinearLayout>
+   	<EditText 
+    android:id="@+id/username"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_below="@+id/name_fields"
+    android:hint="@string/username"
+    />
+   	<EditText 
+    android:id="@+id/password"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_below="@+id/username"
+    android:hint="@string/password"
+    android:inputType="textPassword"
+    />
+   	<EditText 
+    android:id="@+id/confirm_password"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_below="@+id/password"
+    android:hint="@string/confirm_password"
+    android:inputType="textPassword"
+    />
 </RelativeLayout>

@@ -246,12 +246,14 @@ int id action_context_bar 0x7f05001d
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
-int id action_settings 0x7f050044
+int id action_settings 0x7f050048
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
 int id beginning 0x7f050011
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
+int id confirm_password 0x7f050047
+int id create_account 0x7f050043
 int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
@@ -260,11 +262,13 @@ int id edit_query 0x7f050030
 int id end 0x7f050013
 int id expand_activities_button 0x7f050026
 int id expanded_menu 0x7f05002c
+int id first_name 0x7f050045
 int id home 0x7f050014
 int id homeAsUp 0x7f050005
 int id icon 0x7f05002a
 int id ifRoom 0x7f05000a
 int id image 0x7f050027
+int id last_name 0x7f050046
 int id listMode 0x7f050001
 int id list_item 0x7f050029
 int id login_button 0x7f050040
@@ -272,6 +276,7 @@ int id login_fields 0x7f05003d
 int id login_title 0x7f05003c
 int id menu 0x7f050042
 int id middle 0x7f050012
+int id name_fields 0x7f050044
 int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
@@ -302,7 +307,6 @@ int id top_action_bar 0x7f050020
 int id up 0x7f050021
 int id useLogo 0x7f050003
 int id username 0x7f05003e
-int id welcome 0x7f050043
 int id withText 0x7f05000c
 int integer abc_max_action_buttons 0x7f090000
 int layout abc_action_bar_decor 0x7f030000
@@ -355,7 +359,11 @@ int string abc_shareactionprovider_share_with 0x7f0a000c
 int string abc_shareactionprovider_share_with_application 0x7f0a000b
 int string action_settings 0x7f0a000f
 int string app_name 0x7f0a000d
+int string confirm_password 0x7f0a0020
+int string create_account 0x7f0a001d
+int string first_name 0x7f0a001e
 int string hello_world 0x7f0a000e
+int string last_name 0x7f0a001f
 int string login_button 0x7f0a001a
 int string password 0x7f0a0019
 int string register_button 0x7f0a001b

@@ -17,5 +17,9 @@
     <string name="login_button">Login</string>
     <string name="register_button">Register</string>
     <string name="title_activity_registration">Registration</string>
+    <string name="create_account">Create an Account</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="confirm_password">Confirm Password</string>
 
 </resources>
