@@ -19,7 +19,7 @@ public class Login extends Activity implements OnClickListener{
 	system integration */
 	public Button login;
 	public Button register;
-	public Intent intent;
+	//public Intent intent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +33,22 @@ public class Login extends Activity implements OnClickListener{
 		register.setOnClickListener(this);
 	}
 	
-	public void startAct()	{
-		intent = new Intent(Login.this, Menu.class);
+	public void startMenu()	{
+		Intent intent = new Intent(Login.this, Menu.class);
+		startActivity(intent);
+	}
+	
+	public void startRegistration()	{
+		Intent intent = new Intent(Login.this, Registration.class);
 		startActivity(intent);
 	}
 	
 	@Override
 	public void onClick(View v) {
-		startAct();	
+		if (v.equals(register)) {
+			startRegistration();
+		} else if (v.equals(login)) {
+			startMenu();
+		}
 	}	
 }
