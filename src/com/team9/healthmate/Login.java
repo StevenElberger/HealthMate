@@ -8,10 +8,17 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import com.team9.healthmate.R;
 
+/** 
+ * Presents the login screen to users. Also allows
+ * new users to register for an account.
+ * @author Steve
+ * 
+ */
 public class Login extends Activity implements OnClickListener{
-	public Button enter; 
 	/*Please don't not delete delete this button until full
 	system integration */
+	public Button login;
+	public Button register;
 	public Intent intent;
 
 	@Override
@@ -19,20 +26,20 @@ public class Login extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		login = (Button) findViewById(R.id.enter_button);
+		login.setOnClickListener(this);
 		
-		
-		enter = (Button) findViewById(R.id.enter_button);
-		enter.setOnClickListener(this);
-		
+		register = (Button) findViewById(R.id.register_button);
+		register.setOnClickListener(this);
 	}
+	
 	public void startAct()	{
 		intent = new Intent(Login.this, Menu.class);
 		startActivity(intent);
 	}
+	
 	@Override
 	public void onClick(View v) {
-		startAct();
-		
-	}
-	
+		startAct();	
+	}	
 }

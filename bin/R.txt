@@ -257,7 +257,7 @@ int id disableHome 0x7f050008
 int id dropdown 0x7f05000f
 int id edit_query 0x7f050030
 int id end 0x7f050013
-int id enter_button 0x7f05003d
+int id enter_button 0x7f050040
 int id expand_activities_button 0x7f050026
 int id expanded_menu 0x7f05002c
 int id home 0x7f050014
@@ -267,15 +267,18 @@ int id ifRoom 0x7f05000a
 int id image 0x7f050027
 int id listMode 0x7f050001
 int id list_item 0x7f050029
+int id login_fields 0x7f05003d
 int id login_title 0x7f05003c
-int id menu 0x7f05003e
+int id menu 0x7f050042
 int id middle 0x7f050012
 int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
+int id password 0x7f05003f
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019
 int id radio 0x7f05002f
+int id register_button 0x7f050041
 int id search_badge 0x7f050032
 int id search_bar 0x7f050031
 int id search_button 0x7f050033
@@ -297,6 +300,7 @@ int id title 0x7f05002b
 int id top_action_bar 0x7f050020
 int id up 0x7f050021
 int id useLogo 0x7f050003
+int id username 0x7f05003e
 int id withText 0x7f05000c
 int integer abc_max_action_buttons 0x7f090000
 int layout abc_action_bar_decor 0x7f030000
@@ -348,6 +352,9 @@ int string abc_shareactionprovider_share_with_application 0x7f0a000b
 int string action_settings 0x7f0a000f
 int string app_name 0x7f0a000d
 int string hello_world 0x7f0a000e
+int string login_button 0x7f0a001a
+int string password 0x7f0a0019
+int string register_button 0x7f0a001b
 int string title_activity_emergency 0x7f0a0014
 int string title_activity_health_location 0x7f0a0011
 int string title_activity_medication 0x7f0a0010
@@ -355,6 +362,8 @@ int string title_activity_menu 0x7f0a0013
 int string title_activity_moods 0x7f0a0012
 int string title_activity_note 0x7f0a0016
 int string title_activity_step_counter 0x7f0a0015
+int string username 0x7f0a0018
+int string welcome_label 0x7f0a0017
 int style AppTheme 0x7f0b008b
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f0b0063
 int style TextAppearance_AppCompat_Base_SearchResult 0x7f0b006d
