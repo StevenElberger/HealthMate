@@ -26,7 +26,7 @@ public class Login extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		login = (Button) findViewById(R.id.enter_button);
+		login = (Button) findViewById(R.id.login_button);
 		login.setOnClickListener(this);
 		
 		register = (Button) findViewById(R.id.register_button);

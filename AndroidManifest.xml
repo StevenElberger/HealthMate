@@ -54,7 +54,7 @@
             android:name=".Registration"
             android:label="@string/title_activity_registration" >
             <intent-filter>
-                <action android:name="com.team9.healthmate.Registration" />
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
