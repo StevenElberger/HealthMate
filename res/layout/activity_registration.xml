@@ -12,7 +12,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:text="@string/create_account" />
+    android:text="@string/create_account"
+    />
     <LinearLayout
         android:id="@+id/name_fields"
 	    android:orientation="horizontal" 
@@ -48,22 +49,81 @@
     android:layout_below="@+id/name_fields"
     android:hint="@string/username"
     />
-   	<EditText 
-    android:id="@+id/password"
+   	<LinearLayout
+        android:id="@+id/passwords"
+	    android:orientation="horizontal" 
+        android:paddingLeft="4.0dip" 
+        android:paddingTop="5.0dip" 
+        android:paddingRight="4.0dip" 
+        android:paddingBottom="1.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/username">
+	   	<EditText 
+	    android:id="@+id/password"
+	    android:layout_weight="1"
+		android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:hint="@string/password"
+	    android:inputType="textPassword"
+	    />
+	   	<EditText 
+	    android:id="@+id/confirm_password"
+	    android:layout_weight="1"
+		android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:hint="@string/confirm_password"
+	    android:inputType="textPassword"
+	    />
+   	</LinearLayout>
+   	<LinearLayout
+        android:id="@+id/input_sex"
+	    android:orientation="horizontal" 
+        android:paddingLeft="4.0dip" 
+        android:paddingTop="5.0dip" 
+        android:paddingRight="4.0dip" 
+        android:paddingBottom="1.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/passwords">
+	   	<TextView
+	    android:id="@+id/enter_sex"
+	    android:layout_weight="1"
+		android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:text="@string/enter_sex"
+	    />
+	   	<Spinner
+		android:id="@+id/sex"
+		android:layout_weight="1"
+		android:layout_width="0dp"
+		android:gravity="center"
+		android:layout_height="wrap_content"
+		/>
+	</LinearLayout>
+   	<TextView
+    android:id="@+id/enter_bday"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_below="@+id/username"
-    android:hint="@string/password"
-    android:inputType="textPassword"
+    android:layout_below="@+id/input_sex"
+    android:text="@string/enter_bday"
     />
-   	<EditText 
-    android:id="@+id/confirm_password"
-    android:layout_width="fill_parent"
+   	<DatePicker
+   	android:id="@+id/bday"
+   	android:calendarViewShown="false"
+   	android:endYear="2014"
+   	android:maxDate="01/01/2014"
+   	android:minDate="01/01/1900"
+   	android:spinnersShown="true"
+   	android:startYear="1900"
+   	android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_below="@+id/enter_bday"
     android:gravity="center"
-    android:layout_below="@+id/password"
-    android:hint="@string/confirm_password"
-    android:inputType="textPassword"
     />
+   	
 </RelativeLayout>
