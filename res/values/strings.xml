@@ -28,5 +28,6 @@
         <item>Female</item>
         <item>Other</item>
     </string-array>
+    <string name="ok">OK</string>
 
 </resources>

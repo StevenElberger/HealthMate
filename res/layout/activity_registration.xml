@@ -108,22 +108,40 @@
     android:id="@+id/enter_bday"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
     android:layout_below="@+id/input_sex"
     android:text="@string/enter_bday"
     />
-   	<DatePicker
-   	android:id="@+id/bday"
-   	android:calendarViewShown="false"
-   	android:endYear="2014"
-   	android:maxDate="01/01/2014"
-   	android:minDate="01/01/1900"
-   	android:spinnersShown="true"
-   	android:startYear="1900"
-   	android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/enter_bday"
-    android:gravity="center"
-    />
-   	
+   	<LinearLayout
+    android:id="@+id/bday_confirm"
+ 	android:orientation="horizontal" 
+    android:paddingLeft="4.0dip" 
+    android:paddingTop="5.0dip" 
+    android:paddingRight="4.0dip" 
+    android:paddingBottom="1.0dip" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:layout_below="@+id/enter_bday">
+	   	<DatePicker
+	   	android:id="@+id/bday"
+	   	android:calendarViewShown="false"
+	   	android:endYear="2014"
+	   	android:maxDate="01/01/2014"
+	   	android:minDate="01/01/1900"
+	   	android:spinnersShown="true"
+	   	android:startYear="1900"
+	   	android:layout_weight="5"
+	    android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:gravity="start"
+	    />
+	   	<Button
+	    android:id="@+id/create_account_button"
+	    android:layout_weight="1"
+	    android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:layout_gravity="center_vertical"
+	    android:text="@string/ok"
+	    />
+	</LinearLayout>
 </RelativeLayout>

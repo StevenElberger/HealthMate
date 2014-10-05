@@ -247,15 +247,17 @@ int id action_context_bar 0x7f05001d
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
-int id action_settings 0x7f05004e
+int id action_settings 0x7f050050
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
-int id bday 0x7f05004d
+int id bday 0x7f05004e
+int id bday_confirm 0x7f05004d
 int id beginning 0x7f050011
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
 int id confirm_password 0x7f050048
 int id create_account 0x7f050043
+int id create_account_button 0x7f05004f
 int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
@@ -375,6 +377,7 @@ int string first_name 0x7f0a001e
 int string hello_world 0x7f0a000e
 int string last_name 0x7f0a001f
 int string login_button 0x7f0a001a
+int string ok 0x7f0a0023
 int string password 0x7f0a0019
 int string register_button 0x7f0a001b
 int string title_activity_emergency 0x7f0a0014
