@@ -1,0 +1,155 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/new_medication_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adding a new Medication" 
+        />
+
+	<LinearLayout 
+	    android:id="@+id/new_medication_form"
+	    android:layout_below="@id/new_medication_title" 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical">	    
+	
+   	   <TextView
+        android:id="@+id/new_medication_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5.0dip"
+        android:layout_marginBottom="1.0dip"
+        android:text="Name: " />
+	   <EditText 
+	    android:id="@+id/new_medication_name"
+	    android:layout_weight="1"
+		android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:hint="Medication name"/>
+	   
+	   <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10.0dip"
+	        android:layout_marginBottom="1.0dip"
+	        android:text="Frequency: " />
+	   
+	  	<RadioGroup 
+	  	    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+	  	    >
+	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_A"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="5.0dip"
+		        android:text="Once a day"
+		        android:onClick="disableFrequencyPicker"/>
+   	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_B"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="5.0dip"	        
+		        android:text="Twice a day"
+		        android:onClick="disableFrequencyPicker"/>
+   	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_C"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="5.0dip"
+		        android:text="Once a week"
+		        android:onClick="disableFrequencyPicker"/>
+   	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_D"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+       	        android:layout_marginTop="5.0dip"
+		        android:text="Other..."
+		        android:onClick="enableFrequencyPicker"/>
+	  	</RadioGroup>
+		<LinearLayout 
+		    android:id="@+id/new_medication_frequency_section" 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="25dip"
+		    android:orientation="horizontal"
+		    >
+	    		<Button 
+		   	    android:id="@+id/new_medication_numer_picker_decrease"
+		   	    android:layout_width="wrap_content"
+		   	    android:layout_height="40dip"
+		   	    android:onClick="decreaseNumberPicker"
+				android:text="-"
+				android:enabled="false" />
+			   <EditText 
+			    android:id="@+id/new_medication_dosage_frequency"
+				android:layout_width="wrap_content"
+			    android:layout_height="40dip"
+			    android:gravity="center"
+			    android:editable="false"
+			    android:text="0" />
+			   	<Button 
+		   	    android:id="@+id/new_medication_numer_picker_increase"
+		   	    android:layout_width="wrap_content"
+		   	    android:layout_height="40dip"
+		   	    android:onClick="increaseNumberPicker"
+				android:text="+"
+				android:enabled="false" />
+				   		
+		   <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=" times a " />
+		   
+		    <Spinner
+		    android:id="@+id/new_medication_frequency_lapse"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" 
+		    android:clickable="false"/>	    
+		</LinearLayout>
+		
+		<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip"
+        android:layout_marginBottom="1.0dip"
+        android:text="Dosage strenght: " />
+		
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    >
+			   <EditText 
+			    android:id="@+id/new_medication_dosage_strength"
+				android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:gravity="center"
+			    android:hint="(e.g. 200)"/>
+			   <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="mg" />
+			   </LinearLayout>
+	
+		<LinearLayout 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    >
+			<Button 
+		   	    android:id="@+id/new_medication_cancel"
+		   	    android:layout_width="wrap_content"
+		   	    android:layout_height="wrap_content"
+				android:text="cancel"/>
+			<Button 
+			   	    android:id="@+id/new_medication_save"
+		   	    android:layout_width="wrap_content"
+		   	    android:layout_height="wrap_content"
+				android:text="save"/>
+		</LinearLayout>
+	</LinearLayout>		
+</RelativeLayout>

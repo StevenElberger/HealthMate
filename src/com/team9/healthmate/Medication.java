@@ -31,7 +31,9 @@ public class Medication extends Activity {
 		medicationList.setAdapter(adapter);		
 	}	
 	
-	
+	public void createMedication(View V){
+		this.startActivity( new Intent(this,NewMedication.class));
+	}
 }
 
 class MedicationObject {
@@ -57,6 +59,7 @@ class MedicationObject {
 	public FrequencyLapse getFrequencyLapse() { return this.lapse; }
 	public int getFrequency() { return this.frequency; }
 	public int getDosage() { return this.dosage; }
+	public String frequencyToString(){ return this.frequency + "times a " + this.lapse; }
 	
 	//Mutators
 	public void setName(String name) { this.name = name;  }	
