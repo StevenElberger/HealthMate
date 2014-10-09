@@ -97,7 +97,7 @@ public class DataStorageManager {
 		// Go through the array of JSON objects and append all the information into 
 		// a single string of information.
 		for (int i = 0; i < dataSet.length(); i++) {
-			data = dataSet.getJSONObject(i).getString(fileName);
+			data = dataSet.getJSONObject(i).getString("activity");
 			dataBuffer.append(data + "\n");
 		}
 		
