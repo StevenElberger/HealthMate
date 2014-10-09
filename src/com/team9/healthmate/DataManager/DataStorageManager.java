@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -78,7 +80,11 @@ public class DataStorageManager {
 		
 		// The array containing all the JSON Objects
 		JSONArray dataSet;
+		JSONObject currentDataPacket;
 		String data;
+		
+		Iterator<String> iterator;
+		String key;
 		
 		// Go through the entire file, byte for byte,
 		// and append all the information into data set.
@@ -97,8 +103,20 @@ public class DataStorageManager {
 		// Go through the array of JSON objects and append all the information into 
 		// a single string of information.
 		for (int i = 0; i < dataSet.length(); i++) {
-			data = dataSet.getJSONObject(i).getString("activity");
-			dataBuffer.append(data + "\n");
+			
+			currentDataPacket = dataSet.getJSONObject(i);
+			iterator = currentDataPacket.keys();
+			
+			while (iterator.hasNext()) {
+				
+				// Get the next key
+				key = iterator.next();
+				
+				// Get the value of the current key
+				data = dataSet.getJSONObject(i).getString(key);
+				// Append the information into a single String.
+				dataBuffer.append(key + ": " + data + "\n");
+			}
 		}
 		
 		return dataBuffer.toString();
