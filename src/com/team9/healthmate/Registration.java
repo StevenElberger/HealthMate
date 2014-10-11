@@ -28,6 +28,7 @@ public class Registration extends Activity {
 		//DialogFragment newFragment = new DatePickerFragment();
 	    //newFragment.show(getFragmentManager(), "datePicker");
 		
+		
 		// User's birthday
 	    DatePicker datePicker = (DatePicker) findViewById(R.id.bday);
 	    int year = datePicker.getYear();

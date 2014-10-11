@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.TextView;
 
 public class DataStorageManager {
@@ -39,7 +40,6 @@ public class DataStorageManager {
 		// abstract the filename from the set of information
 		String fileName = listOfItems.get("filename");
 		listOfItems.remove("filename");
-		
 		JSONObject data = new JSONObject();
 		
 		// Go through the list of information, expanding the JSON object.
@@ -48,7 +48,7 @@ public class DataStorageManager {
 		}
 		
 		// Get the JSON object information in a string format
-		String text = data.toString();
+		String text = data.toString() + "\n";
 
 		// Write to the file with the given file name
 		// MODE_APPEND causes the write to create a new file if the file does not exist,
@@ -66,7 +66,7 @@ public class DataStorageManager {
 	 * @fileName the file that will be read from.
 	 * @return information contained in the file that was read
 	 */
-	public static String readJSONObject(Context context, String fileName) throws IOException, JSONException {
+	public static String readJSONObject(Context context, String fileName) throws IOException, JSONException  {
 		
 		// Open the file with the given file name
 		FileInputStream fileInputStream = context.getApplicationContext().openFileInput(fileName);
@@ -98,10 +98,19 @@ public class DataStorageManager {
 		fileInputStream.close();
 		
 		// Create a new array of JSON objects using the information read from the file.
-		dataSet = new JSONArray(buffer.toString());
+		// Separate the JSON Objects and create a string of all the objects separated by ","
+		String [] parseString = buffer.toString().split("\n");
+		String appendedString = "";
+		for (int i = 0; i < parseString.length - 1; i++) {
+			appendedString = appendedString + parseString[i] + ", ";
+		}
+		// Create a JSONArray containing all the JSON Objects
+		appendedString = appendedString + parseString[parseString.length - 1];
+		dataSet = new JSONArray(("[" + appendedString + "]"));
+		
 		
 		// Go through the array of JSON objects and append all the information into 
-		// a single string of information.
+		// a single string of information, this will be just keys and values.
 		for (int i = 0; i < dataSet.length(); i++) {
 			
 			currentDataPacket = dataSet.getJSONObject(i);
