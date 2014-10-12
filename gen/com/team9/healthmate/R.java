@@ -28,23 +28,27 @@ public final class R {
         public static final int btnAddMedication=0x7f070004;
         public static final int enter_button=0x7f070001;
         public static final int listViewMedications=0x7f070003;
+        public static final int list_subtitle=0x7f070019;
+        public static final int list_title=0x7f070018;
         public static final int login_title=0x7f070000;
         public static final int menu=0x7f070005;
-        public static final int new_medication_cancel=0x7f070014;
-        public static final int new_medication_dosage_frequency=0x7f070010;
-        public static final int new_medication_dosage_strength=0x7f070013;
+        public static final int new_medication_cancel=0x7f070016;
+        public static final int new_medication_dosage_frequency=0x7f070011;
+        public static final int new_medication_dosage_strength=0x7f070014;
         public static final int new_medication_form=0x7f070007;
-        public static final int new_medication_frequency_lapse=0x7f070012;
-        public static final int new_medication_frequency_radio_A=0x7f07000a;
-        public static final int new_medication_frequency_radio_B=0x7f07000b;
-        public static final int new_medication_frequency_radio_C=0x7f07000c;
-        public static final int new_medication_frequency_radio_D=0x7f07000d;
-        public static final int new_medication_frequency_section=0x7f07000e;
-        public static final int new_medication_name=0x7f070009;
-        public static final int new_medication_name_label=0x7f070008;
-        public static final int new_medication_numer_picker_decrease=0x7f07000f;
-        public static final int new_medication_numer_picker_increase=0x7f070011;
-        public static final int new_medication_save=0x7f070015;
+        public static final int new_medication_frequency_lapse=0x7f070013;
+        public static final int new_medication_frequency_radio_A=0x7f07000b;
+        public static final int new_medication_frequency_radio_B=0x7f07000c;
+        public static final int new_medication_frequency_radio_C=0x7f07000d;
+        public static final int new_medication_frequency_radio_D=0x7f07000e;
+        public static final int new_medication_frequency_section=0x7f07000f;
+        public static final int new_medication_name=0x7f07000a;
+        public static final int new_medication_name_label=0x7f070009;
+        public static final int new_medication_numer_picker_decrease=0x7f070010;
+        public static final int new_medication_numer_picker_increase=0x7f070012;
+        public static final int new_medication_reminder_switch=0x7f070015;
+        public static final int new_medication_save=0x7f070017;
+        public static final int new_medication_submit_buttons=0x7f070008;
         public static final int new_medication_title=0x7f070006;
         public static final int titleMedication=0x7f070002;
     }
@@ -58,6 +62,7 @@ public final class R {
         public static final int activity_new_medication=0x7f030006;
         public static final int activity_note=0x7f030007;
         public static final int activity_step_counter=0x7f030008;
+        public static final int list_item=0x7f030009;
     }
     public static final class string {
         public static final int action_settings=0x7f050002;

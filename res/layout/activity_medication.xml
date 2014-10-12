@@ -11,20 +11,21 @@
         android:id="@+id/titleMedication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Medications" />
+        android:text="List of medications" />
 
     <ListView
         android:id="@+id/listViewMedications"
-        android:layout_below="@id/titleMedication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         />
+        android:layout_above="@+id/btnAddMedication"
+        android:layout_below="@id/titleMedication" />
     
     <Button
 	    android:id="@+id/btnAddMedication"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_centerHorizontal="true" android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true" 
+	    android:layout_alignParentBottom="true"
 	    android:text="Add new Medication" 
 	    android:onClick="createMedication"
 	    />

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.ToggleButton;
 
 public class NewMedication extends Activity {
 
@@ -22,6 +23,14 @@ public class NewMedication extends Activity {
 		
 		EditText dosage = (EditText) findViewById(R.id.new_medication_dosage_strength);
 		dosage.setInputType(InputType.TYPE_CLASS_NUMBER);
+		
+		//cancel button
+		Button button = (Button) findViewById(R.id.new_medication_cancel);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	finish();
+            }
+        });
 	}
 	
 	public void increaseNumberPicker(View v)
@@ -43,8 +52,7 @@ public class NewMedication extends Activity {
 		Spinner spinner = (Spinner) findViewById(R.id.new_medication_frequency_lapse);
 		String[] spinnerValues = {"Day", "Week", "Month"};
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-		         android.R.layout.simple_spinner_item, spinnerValues);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerValues);
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
@@ -69,5 +77,11 @@ public class NewMedication extends Activity {
 		b.setEnabled(false);
 		Spinner spinner = (Spinner) findViewById(R.id.new_medication_frequency_lapse);
 		spinner.setClickable(false);
+	}
+	
+	public void onReminderToggleSwitch(View v)
+	{		
+		/**/
+		return;
 	}
 }
