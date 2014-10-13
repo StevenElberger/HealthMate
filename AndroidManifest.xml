@@ -11,7 +11,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name">
+        android:label="@string/app_name" >
         <activity
             android:name=".Login"
             android:label="@string/app_name" >
@@ -52,6 +52,10 @@
         <activity
             android:name=".NewMedication"
             android:label="@string/title_activity_new_medication" >
+        </activity>
+        <activity
+            android:name=".MedicationDetails"
+            android:label="@string/title_activity_medication_details">
         </activity>
     </application>
 

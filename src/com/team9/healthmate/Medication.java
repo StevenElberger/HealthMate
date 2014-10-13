@@ -1,5 +1,6 @@
 package com.team9.healthmate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ public class Medication extends Activity
 		setContentView(R.layout.activity_medication);
 				
 		populateMedicationList();
+		registerClickCallback();
 	}	
 	
 	public void populateMedicationList()
@@ -39,6 +42,20 @@ public class Medication extends Activity
 		
 		ArrayAdapter<MedicationObject> adapter = new TwoLinesAdapter();
 		medicationList.setAdapter(adapter);
+	}
+	
+	public void registerClickCallback()
+	{
+		ListView list = (ListView) findViewById(R.id.listViewMedications);
+		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+				MedicationObject selectedMed = medications.get(position);
+				//Call MedicationDetails Activity
+				Intent intent = new Intent(Medication.this, MedicationDetails.class);
+				intent.putExtra("medInfo", selectedMed);
+				startActivity(intent);			
+			}
+		});
 	}
 	
 	public void createMedication(View V)
@@ -75,7 +92,7 @@ public class Medication extends Activity
 	}
 }
 
-class MedicationObject 
+class MedicationObject implements Serializable
 {
 	public static enum FrequencyType
 	{
@@ -86,6 +103,7 @@ class MedicationObject
 	FrequencyType frequencyType; 
 	int frequencyValue; //e.g. take 'frequency' times a 'lapse'
 	int ammount; //in milligrams
+	boolean reminderStatus = false;
 	
 	//Constructor
 	public MedicationObject(String name, FrequencyType frequencyType, int frequencyValue, int ammount) 

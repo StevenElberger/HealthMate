@@ -1,6 +1,13 @@
+/*
+ * IMPORTANT: When implementing the save button, don't forget to check if it should save as new or update existing medication!
+ */
+
 package com.team9.healthmate;
 
+import com.team9.healthmate.MedicationObject.FrequencyType;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -9,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
@@ -23,6 +31,42 @@ public class NewMedication extends Activity {
 		
 		EditText dosage = (EditText) findViewById(R.id.new_medication_dosage_strength);
 		dosage.setInputType(InputType.TYPE_CLASS_NUMBER);
+		
+		//Checks if it is edit or create new med
+		Intent i = getIntent();
+		MedicationObject med = (MedicationObject)i.getSerializableExtra("medInfo");
+		
+		//if it is edit populate fields
+		if (med != null)
+		{			
+			EditText name = (EditText) findViewById(R.id.new_medication_name);
+			name.setText(med.name);
+			
+			RadioButton radio;
+			if (med.frequencyValue == 1 && med.frequencyType == FrequencyType.Day)
+				radio = (RadioButton) findViewById(R.id.new_medication_frequency_radio_A);
+			else if (med.frequencyValue == 2 && med.frequencyType == FrequencyType.Day)
+				radio = (RadioButton) findViewById(R.id.new_medication_frequency_radio_B);
+			else if (med.frequencyValue == 1 && med.frequencyType == FrequencyType.Week)
+				radio = (RadioButton) findViewById(R.id.new_medication_frequency_radio_C);
+			else {
+				radio = (RadioButton) findViewById(R.id.new_medication_frequency_radio_D);
+				radio.setChecked(true);
+				enableFrequencyPicker(new View(this));
+				EditText freq = (EditText) findViewById(R.id.new_medication_dosage_frequency);
+				freq.setText(""+med.frequencyValue);
+				
+				Spinner spinner = (Spinner) findViewById(R.id.new_medication_frequency_lapse);
+				spinner.setSelection(med.frequencyType.ordinal());
+			}
+			radio.setChecked(true);
+				
+			EditText dosageStrength = (EditText) findViewById(R.id.new_medication_dosage_strength);
+			dosageStrength.setText(""+med.ammount);
+						
+			Button button = (Button) findViewById(R.id.new_medication_save);
+			button.setText("Update");
+		}
 		
 		//cancel button
 		Button button = (Button) findViewById(R.id.new_medication_cancel);
@@ -81,7 +125,6 @@ public class NewMedication extends Activity {
 	
 	public void onReminderToggleSwitch(View v)
 	{		
-		/**/
 		return;
 	}
 }

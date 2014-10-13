@@ -12,5 +12,6 @@
     <string name="title_activity_step_counter">StepCounter</string>
     <string name="title_activity_note">Note</string>
     <string name="title_activity_new_medication">NewMedication</string>
+    <string name="title_activity_medication_details">MedicationDetails</string>
 
 </resources>
