@@ -11,5 +11,21 @@
     <string name="title_activity_emergency">Emergency</string>
     <string name="title_activity_step_counter">StepCounter</string>
     <string name="title_activity_note">Note</string>
+    <string name="happy">Happy</string>
+    <string name="ok">Just Ok</string>
+    <string name="motivated">Motivated</string>
+    <string name="stressed">Stressed</string>
+    <string name="angry">Angry</string>
+    <string name="tired">Tired</string>
+    <string name="depressed">Depressed</string>
+    <string name="reset">Reset</string>
+    <string name="submit">Submit</string>
+    <string name="happyCounter">""</string>
+    <string name="okCounter">" "</string>
+    <string name="motivatedCounter">" "</string>
+    <string name="stressedCounter">" "</string>
+    <string name="angryCounter">" "</string>
+    <string name="tiredCounter">" "</string>
+    <string name="depressedCounter">" "</string>  
 
 </resources>
