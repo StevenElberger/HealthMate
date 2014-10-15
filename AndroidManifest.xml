@@ -56,6 +56,13 @@
         <activity
             android:name=".MedicationDetails"
             android:label="@string/title_activity_medication_details">
+            android:name=".Registration"
+            android:label="@string/title_activity_registration" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
