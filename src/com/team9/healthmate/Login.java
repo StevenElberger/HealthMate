@@ -33,8 +33,9 @@ public class Login extends Activity implements OnClickListener{
 	// These contain the text value of the ids for username and password 
 	EditText name = null;
 	EditText pass = null;
-	//public Intent intent;*/
-
+	//public Intent intent;
+	*/
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,13 +46,12 @@ public class Login extends Activity implements OnClickListener{
 		
 		register = (Button) findViewById(R.id.register_button);
 		register.setOnClickListener(this);
+		
 		/*
 		// Get the reference for the two text fields in the activity
 		name = (EditText)findViewById(R.id.username);
 		pass = (EditText)findViewById(R.id.password);
 		*/
-		
-		
 	}
 	
 	public void startMenu()	{
@@ -106,9 +106,8 @@ public class Login extends Activity implements OnClickListener{
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-			}
 			}*/
-			startMenu();
 			}
+			startMenu();
 	}
 }

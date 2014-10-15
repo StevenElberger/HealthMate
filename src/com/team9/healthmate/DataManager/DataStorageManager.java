@@ -1,7 +1,9 @@
 package com.team9.healthmate.DataManager;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,8 +88,20 @@ public class DataStorageManager {
 	 */
 	public static ArrayList<Map<String, String>> readJSONObject(Context context, String fileName) throws IOException, JSONException  {
 		
+		FileInputStream fileInputStream;
+		String emptyTextString = "";
 		// Open the file with the given file name
-		FileInputStream fileInputStream = context.getApplicationContext().openFileInput(fileName);
+		try {
+			fileInputStream = context.getApplicationContext().openFileInput(fileName);
+		}
+		// If the file does not exist, Create a new Empty File.
+		catch(FileNotFoundException e) {
+			FileOutputStream fileOutputStream = 
+					context.getApplicationContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+			fileOutputStream.write(emptyTextString.getBytes());
+			fileOutputStream.close();
+			fileInputStream = context.getApplicationContext().openFileInput(fileName);
+		}
 		
 		// Buffer increases the amount of information coming in for a given read.
 		BufferedInputStream bufferInputStream = new BufferedInputStream(fileInputStream);
