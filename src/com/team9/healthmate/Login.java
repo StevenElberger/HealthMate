@@ -29,12 +29,10 @@ public class Login extends Activity implements OnClickListener{
 	system integration */
 	public Button login;
 	public Button register;
-	/*
 	// These contain the text value of the ids for username and password 
-	EditText name = null;
-	EditText pass = null;
+	EditText name;
+	EditText pass;
 	//public Intent intent;
-	*/
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +45,9 @@ public class Login extends Activity implements OnClickListener{
 		register = (Button) findViewById(R.id.register_button);
 		register.setOnClickListener(this);
 		
-		/*
 		// Get the reference for the two text fields in the activity
 		name = (EditText)findViewById(R.id.username);
 		pass = (EditText)findViewById(R.id.password);
-		*/
 	}
 	
 	public void startMenu()	{
@@ -69,7 +65,6 @@ public class Login extends Activity implements OnClickListener{
 		if (v.equals(register)) {
 			startRegistration();
 		} else if (v.equals(login)) {
-			/*
 			// Data Structure that will contain the key value pairs that need to be stored
 			Map<String, String> information = new HashMap<String, String>();
 			
@@ -78,6 +73,33 @@ public class Login extends Activity implements OnClickListener{
 			information.put("password", pass.getText().toString());
 			
 			try {
+				
+				// Check the contents of the account file against
+				// the credentials provided by the user
+				Context context = getApplicationContext();
+				ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(context, "account");
+				Iterator<Map<String, String>> iterator = credentials.iterator();
+				Map<String, String> dataSet = new HashMap<String, String>();
+				
+				while (iterator.hasNext()) {
+					// go through all key value pairs
+					dataSet = iterator.next();
+					Iterator<String> it = dataSet.keySet().iterator();
+					while (it.hasNext()) {
+						// check the key, value pair against the edit texts' values
+						String key = it.next();
+						String value = dataSet.get(key);
+						// make sure we only check the username key
+						if (key.equals("username")) {
+							if (name.getText().toString().equals(value)) {
+								DataStorageManager.displayText(this, R.id.textView1, "Successful authentication");
+							}
+						}
+					}
+				}
+				//DataStorageManager.displayText(this, R.id.textView1, "Weiner");
+				
+				/*
 				// Get the context of the Application, send the information that needs to be written,
 				// read the information from a file, and display the information read onto the current screen.
 				Context context = getApplicationContext();
@@ -102,11 +124,12 @@ public class Login extends Activity implements OnClickListener{
 					}
 				}
 				DataStorageManager.displayText(this, R.id.textView1, collectionOfData);
+				*/
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-			}*/
-			startMenu();
+			}
+			//startMenu();
 		}
 	}
 }
