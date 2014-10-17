@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
-//import android.view.View;
-//import android.view.View.OnClickListener;
-//import android.widget.Button;
+import android.view.View.OnClickListener;
 
 /** 
  * Presents the registration screen to users. Allows
@@ -18,7 +18,7 @@ import android.widget.Spinner;
  * 
  */
 public class Registration extends Activity {
-	//public Button createAccount;
+	public Button createAccount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class Registration extends Activity {
 		sexSpinner.setAdapter(adapter);
 	    
 		//createAccount = (Button) findViewById(R.id.register_button);
-		//createAccount.setOnClickListener(this);
+		//createAccount.setOnClickListener((OnClickListener) this);
 	}
 
 	public void startAct()	{
@@ -51,9 +51,8 @@ public class Registration extends Activity {
 		startActivity(intent);
 	}
 	
-/*	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		startAct();
-	}*/
+		//startAct();
+	}
 }

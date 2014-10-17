@@ -107,7 +107,7 @@ public class Login extends Activity implements OnClickListener{
 			catch (Exception e) {
 				e.printStackTrace();
 			}*/
-			}
 			startMenu();
+		}
 	}
 }
