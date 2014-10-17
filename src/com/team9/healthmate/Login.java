@@ -74,7 +74,6 @@ public class Login extends Activity implements OnClickListener{
 			Map<String, String> information = new HashMap<String, String>();
 			
 			// Add the information that will be stored.
-			information.put("filename", "account");
 			information.put("username", name.getText().toString());
 			information.put("password", pass.getText().toString());
 			
@@ -82,7 +81,7 @@ public class Login extends Activity implements OnClickListener{
 				// Get the context of the Application, send the information that needs to be written,
 				// read the information from a file, and display the information read onto the current screen.
 				Context context = getApplicationContext();
-				DataStorageManager.writeJSONObject(context, information, true);
+				DataStorageManager.writeJSONObject(context, "account", information, true);
 				ArrayList<Map<String, String>> info = 
 						DataStorageManager.readJSONObject(context, "account");
 				Iterator<Map<String, String>> iterator = info.iterator();
