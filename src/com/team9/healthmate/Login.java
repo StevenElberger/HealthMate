@@ -29,12 +29,12 @@ public class Login extends Activity implements OnClickListener{
 	system integration */
 	public Button login;
 	public Button register;
-	/*
+	
 	// These contain the text value of the ids for username and password 
 	EditText name = null;
 	EditText pass = null;
 	//public Intent intent;
-	*/
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +47,11 @@ public class Login extends Activity implements OnClickListener{
 		register = (Button) findViewById(R.id.register_button);
 		register.setOnClickListener(this);
 		
-		/*
+		
 		// Get the reference for the two text fields in the activity
 		name = (EditText)findViewById(R.id.username);
 		pass = (EditText)findViewById(R.id.password);
-		*/
+		
 	}
 	
 	public void startMenu()	{
@@ -69,12 +69,11 @@ public class Login extends Activity implements OnClickListener{
 		if (v.equals(register)) {
 			startRegistration();
 		} else if (v.equals(login)) {
-			/*
+			
 			// Data Structure that will contain the key value pairs that need to be stored
 			Map<String, String> information = new HashMap<String, String>();
 			
 			// Add the information that will be stored.
-			information.put("filename", "account");
 			information.put("username", name.getText().toString());
 			information.put("password", pass.getText().toString());
 			
@@ -82,7 +81,7 @@ public class Login extends Activity implements OnClickListener{
 				// Get the context of the Application, send the information that needs to be written,
 				// read the information from a file, and display the information read onto the current screen.
 				Context context = getApplicationContext();
-				DataStorageManager.writeJSONObject(context, information, true);
+				DataStorageManager.writeJSONObject(context, "account", information, true);
 				ArrayList<Map<String, String>> info = 
 						DataStorageManager.readJSONObject(context, "account");
 				Iterator<Map<String, String>> iterator = info.iterator();
@@ -106,7 +105,7 @@ public class Login extends Activity implements OnClickListener{
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-			}*/
+			}
 			startMenu();
 		}
 	}
