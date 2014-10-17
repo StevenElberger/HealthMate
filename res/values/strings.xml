@@ -29,5 +29,7 @@
         <item>Other</item>
     </string-array>
     <string name="ok">OK</string>
+    <string name="appointmentForm">Appointment Form</string>
+    <string name="appointmentFormName">Doctor\'s Name</string>
 
 </resources>
