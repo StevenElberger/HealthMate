@@ -37,6 +37,11 @@ public class Registration extends Activity implements OnClickListener {
 	public DatePicker datePicker;
 	public Spinner sexSpinner;
 	
+	/**
+	 * Sets up the picker and spinner as well as
+	 * references to text box values. Also adds
+	 * a listener to the registration button.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,9 +49,6 @@ public class Registration extends Activity implements OnClickListener {
 		
 		// User's birthday
 	    datePicker = (DatePicker) findViewById(R.id.bday);
-	    int year = datePicker.getYear();
-	    int month = datePicker.getMonth();
-	    int day = datePicker.getDayOfMonth();
 	    
 	    // User's sex
 	    sexSpinner = (Spinner) findViewById(R.id.sex);
@@ -63,12 +65,21 @@ public class Registration extends Activity implements OnClickListener {
 		username = (EditText) findViewById(R.id.username);
 		password = (EditText) findViewById(R.id.password);
 	}
-
+	
+	/**
+	 * Launch the login activity.
+	 */
 	public void startAct()	{
 		Intent intent = new Intent(Registration.this, Login.class);
 		startActivity(intent);
 	}
 	
+	/**
+	 * Calculates user's age and writes all
+	 * information provided by the user to the
+	 * account file. It will overwrite any existing
+	 * data so there can only be one account at a time.
+	 */
 	public void generateAccount() {
 		// Calculate age -- sorry for the mess
 		int day = datePicker.getDayOfMonth();
