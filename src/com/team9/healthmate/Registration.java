@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -42,10 +41,6 @@ public class Registration extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration);
-		
-		//DialogFragment newFragment = new DatePickerFragment();
-	    //newFragment.show(getFragmentManager(), "datePicker");
-		
 		
 		// User's birthday
 	    datePicker = (DatePicker) findViewById(R.id.bday);
