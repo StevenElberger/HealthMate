@@ -14,9 +14,9 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -69,7 +69,7 @@ public class GraphManager {
 	 * all the key value pairs to generate PointValues which
 	 * are then put into a graph.
 	 * @param appContext	The context of the app calling this method.
-	 * @return
+	 * @param v				The layout the graph should be displayed in.
 	 */
 	public static void getPointData(Context appContext, View v) {
 		List<PointValue> values = new ArrayList<PointValue>();
@@ -103,14 +103,27 @@ public class GraphManager {
 		
 		// Generate lines from point data
 		Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
+		line.setStrokeWidth(1);
+		line.setPointRadius(3);
 		List<Line> lines = new ArrayList<Line>();
 		lines.add(line);
 		
 		// Set axes
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i = 1; i < 11; i++) {
+			yValues.add(new AxisValue(i));
+		}
+		List<AxisValue> xValues = new ArrayList<AxisValue>();
+		for (int i = 1; i < 12; i++) {
+			xValues.add(new AxisValue(i));
+		}
 		Axis axisX = new Axis();
 		Axis axisY = new Axis();
-		axisX.setName("Axis X");
-		axisY.setName("Axis Y");
+		axisX.setName("Days");
+		axisY.setName("Mood Level");
+		axisY.setHasLines(true);
+		axisY.setValues(yValues);
+		axisX.setValues(xValues);
 		
 		LineChartData data = new LineChartData(lines);
 		
