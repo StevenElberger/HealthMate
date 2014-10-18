@@ -39,6 +39,8 @@ public class GraphManager {
 	 * @param appContext	The context of the app calling this method.
 	 */
 	public static void writeRandomData(Context appContext) {
+		// Just some simple point data modeled after
+		// the moods feature's data
 		Map<String, String> testData = new HashMap<String, String>();
 		testData.put("Day1", "1");
 		testData.put("Day2", "5");
@@ -72,15 +74,18 @@ public class GraphManager {
 	public static void getPointData(Context appContext, View v) {
 		List<PointValue> values = new ArrayList<PointValue>();
 		try {
+			// Grab data from data file
 			ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(appContext, "testdata");
 			Iterator<Map<String, String>> iterator = credentials.iterator();
 			Map<String, String> dataSet = new HashMap<String, String>();
 			while (iterator.hasNext()) {
-				// go through all the keys
+				// Go through all the keys
 				dataSet = iterator.next();
 				Iterator<String> it = dataSet.keySet().iterator();
 				int xValues = 1;
 				while (it.hasNext()) {
+					// If the keys are what we're looking for
+					// then put their values into points
 					String key = it.next();
 					String value = dataSet.get(key);
 					if (key.contains("Day")) {
@@ -96,6 +101,7 @@ public class GraphManager {
 			e.printStackTrace();
 		}
 		
+		// Generate lines from point data
 		Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
 		List<Line> lines = new ArrayList<Line>();
 		lines.add(line);
@@ -111,6 +117,8 @@ public class GraphManager {
 		data.setAxisXBottom(axisX);
 		data.setAxisYLeft(axisY);
 		
+		// Generate the graph and display it inside
+		// the appropriate view
 		LineChartView chart = new LineChartView(appContext);
 		chart.setLineChartData(data);
 		
