@@ -60,9 +60,16 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name=".Appointments">
-          
+            android:name=".AppointmentForm"
+            android:label="@string/title_activity_appointment_form">
         </activity>
+        <activity 
+            android:name=".AppointmentsList"
+            android:label="@string/title_activity_appointment_list">
+        </activity>
+        <activity 
+            android:name=".AppointmentDetail"
+            android:label="@string/title_activity_appointment_detail"></activity>
     </application>
 
 </manifest>

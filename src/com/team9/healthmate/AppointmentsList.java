@@ -10,6 +10,8 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -27,13 +29,35 @@ public class AppointmentsList extends ListActivity {
 		
 		try {
 		appointments =  DataStorageManager.readJSONObject(this, "appointments");
-		ArrayAdapter<Map<String, String>> adapter = new ArrayAdapter<Map<String, String>>(
-				this, android.R.layout.simple_list_item_1, appointments);
+		ArrayList<String> appointmentList = new ArrayList<String>();
+		for (int i = 0; i < appointments.size(); i++) {
+			appointmentList.add("Appointment " + (i + 1));
+		}
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				this, android.R.layout.simple_list_item_1, appointmentList);
 		setListAdapter(adapter);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.appointments_list, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		if (item.getItemId() == R.id.action_create_new_appointment) {
+			Intent intent = new Intent(this, AppointmentForm.class);
+			startActivity(intent);
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override

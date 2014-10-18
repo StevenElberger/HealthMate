@@ -39,10 +39,18 @@
     <string name="appointment_form_email">Enter Email Address</string>
     <string name="appointment_form_comment">Enter a Comment</string>
     <string name="appointment_form_save">Save</string>
+    <string name="title_activity_appointment_form">Appointment Form</string>
+    <string name="title_activity_appointment_list">Appointment List</string>
     
-    <string name="medium_text">Medium Text</string>
     
     <string name="appointment_detail_title">Appointment Information</string>
-    
+    <string name="appointment_detail_name">Doctor\'s Name: </string>
+    <string name="appointment_detail_address">Location: </string>
+    <string name="appointment_detail_contact_information">Contact Information\:</string>
+    <string name="appointment_detail_date">Date: </string>
+    <string name="appointment_detail_time">Time: </string>
+    <string name="appointment_detail_comment">Comment: </string>
+    <string name="title_activity_appointment_detail">Appointment Information</string>
+    <string name="action_create_new_appointment">New Appointment</string>
 
 </resources>

@@ -53,7 +53,7 @@ public class Menu extends Activity {
 			case 4:	return Note.class;
 			case 5:	return Emergency.class;
 			/////////////////////////////////
-			case 6: return Appointments.class;
+			case 6: return AppointmentsList.class;
 			/////////////////////////////////
 		}
 		return null;
