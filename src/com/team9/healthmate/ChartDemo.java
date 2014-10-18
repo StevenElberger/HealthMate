@@ -3,6 +3,8 @@ package com.team9.healthmate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.team9.healthmate.GraphManager.GraphManager;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +22,10 @@ public class ChartDemo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chart_demo);
 		
+		GraphManager.writeRandomData(getApplicationContext());
+		
+		GraphManager.getPointData(getApplicationContext(), findViewById(R.id.chart_layout));
+		/*
 		// Set points
 		List<PointValue> values = new ArrayList<PointValue>();
 		values.add(new PointValue(0, 2));
@@ -44,12 +50,12 @@ public class ChartDemo extends Activity {
 		data.setAxisXBottom(axisX);
 		data.setAxisYLeft(axisY);
 		
-		
 		//LineChartView chart = (LineChartView) findViewById(R.id.chart);
 		LineChartView chart = new LineChartView(getApplicationContext());
 		chart.setLineChartData(data);
 		
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.chart_layout);
 		layout.addView(chart);
+		*/
 	}
 }
