@@ -18,14 +18,12 @@ import android.widget.ListView;
 
 public class AppointmentsList extends ListActivity {
 	
-	private static final int REQUEST_CODE = 100;
 	ArrayList<Map<String, String>> appointments; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_list);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		try {
 		appointments =  DataStorageManager.readJSONObject(this, "appointments");
@@ -67,7 +65,6 @@ public class AppointmentsList extends ListActivity {
 		String key;
 		Set<String> setOfKeys;
 		Iterator<String> stringIterator;
-		
 		Map<String, String> appointment = appointments.get(position);
 		Intent intent = new Intent(this, AppointmentDetail.class);
 		
@@ -75,9 +72,12 @@ public class AppointmentsList extends ListActivity {
 		stringIterator = setOfKeys.iterator();
 		while (stringIterator.hasNext()){
 			key = stringIterator.next();
-			intent.putExtra(key, stringIterator.next());
+			intent.putExtra(key, appointment.get(key));
 			}
-		startActivityForResult(intent, REQUEST_CODE);
+		
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		finish();
 	}
 
 }

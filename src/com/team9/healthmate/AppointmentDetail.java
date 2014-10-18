@@ -12,8 +12,6 @@ public class AppointmentDetail extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_details);
 		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
 		Intent intent = getIntent();
 		
 		String doctorsName = intent.getStringExtra("name");
@@ -42,6 +40,14 @@ public class AppointmentDetail extends Activity {
 		textView =(TextView) findViewById(R.id.AppointmentDetailComment);
 		textView.setText("Comment: \n" + comment);
 		
+	}
+	
+	@Override
+	public void onBackPressed() {
+		Intent newIntent = new Intent(AppointmentDetail.this, AppointmentsList.class);
+		newIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(newIntent);
+		finish();
 	}
 
 }

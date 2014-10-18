@@ -27,7 +27,6 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_form);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		save = (Button) findViewById(R.id.SaveAppointment);
 		save.setOnClickListener((OnClickListener) this);
@@ -35,7 +34,9 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	
 	public void appointmentList()	{
 		Intent intent = new Intent(AppointmentForm.this, AppointmentsList.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
+		finish();
 	}
 	
 	@Override
@@ -74,7 +75,10 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		appointment.put("comment", userInput.getText().toString());
 		
 		DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
+		
 		appointmentList();
+		
+		//finish();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
