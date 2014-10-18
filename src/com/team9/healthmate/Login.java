@@ -8,11 +8,13 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
@@ -27,6 +29,8 @@ public class Login extends Activity implements OnClickListener{
 	public Button register;
 	EditText name;
 	EditText pass;
+	TextView debugText;
+	boolean debugMode = false;
 	
 	/**
 	 * Attaches listeners to both buttons and sets up references
@@ -45,6 +49,12 @@ public class Login extends Activity implements OnClickListener{
 		
 		name = (EditText)findViewById(R.id.username);
 		pass = (EditText)findViewById(R.id.password);
+		
+		if (debugMode) {
+			debugText = (TextView) findViewById(R.id.debug_text);
+			debugText.setVisibility(1);
+			debugText.setText("Debug values");
+		}
 	}
 	
 	/**
@@ -105,11 +115,14 @@ public class Login extends Activity implements OnClickListener{
 				}
 				if (userCorrect && passCorrect) {
 					startMenu();
+				} else {
+					TextView incorrectLabel = (TextView) findViewById(R.id.login_title);
+					incorrectLabel.setText("Incorrect username or password.");
+					incorrectLabel.setTextColor(Color.RED);
 				}
 				// debug values for username and password
 				//DataStorageManager.displayText(this, R.id.textView1, "U: " + userCorrect + " / " + "P: " + passCorrect);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
