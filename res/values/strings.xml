@@ -29,7 +29,20 @@
         <item>Other</item>
     </string-array>
     <string name="ok">OK</string>
-    <string name="appointmentForm">Appointment Form</string>
-    <string name="appointmentFormName">Doctor\'s Name</string>
+    
+    <string name="appointment_form_title">Appointment Form</string>
+    <string name="appointment_form_time_title">Time of Appointment</string>
+    <string name="appointment_form_date_title">Date of Appointment</string>
+    <string name="appointment_form_name">Enter a Doctor\'s Name</string>
+    <string name="appointment_form_address">Enter a Address</string>
+    <string name="appointment_form_phone_number">Enter a Phone Number</string>
+    <string name="appointment_form_email">Enter Email Address</string>
+    <string name="appointment_form_comment">Enter a Comment</string>
+    <string name="appointment_form_save">Save</string>
+    
+    <string name="medium_text">Medium Text</string>
+    
+    <string name="appointment_detail_title">Appointment Information</string>
+    
 
 </resources>
