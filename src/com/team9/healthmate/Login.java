@@ -98,6 +98,18 @@ public class Login extends Activity implements OnClickListener{
 				// credentials provided
 				String providedName = name.getText().toString();
 				String providedPass = pass.getText().toString();
+				// check for both a username and a password
+				if (providedName.equals("") || providedPass.equals("")) {
+					// need both!
+					name.setText("");
+					pass.setText("");
+					
+					TextView incorrectLabel = (TextView) findViewById(R.id.login_title);
+					incorrectLabel.setText("Please enter both a username and a password");
+					incorrectLabel.setTextColor(Color.RED);
+					return;
+				}
+				// attempt to authenticate the user
 				while (iterator.hasNext()) {
 					// go through all the keys
 					dataSet = iterator.next();
@@ -116,8 +128,12 @@ public class Login extends Activity implements OnClickListener{
 				if (userCorrect && passCorrect) {
 					startMenu();
 				} else {
+					// authentication failed
+					name.setText("");
+					pass.setText("");
+					
 					TextView incorrectLabel = (TextView) findViewById(R.id.login_title);
-					incorrectLabel.setText("Incorrect username or password.");
+					incorrectLabel.setText("Incorrect username or password");
 					incorrectLabel.setTextColor(Color.RED);
 				}
 				// debug values for username and password
