@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.team9.healthmate.R;
+
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -15,16 +19,25 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener{
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_moods);
+		setContentView(R.layout.activity_moods);	
 		
 		init();			
+		
+		final Button button = (Button) findViewById(R.id.cmdReset);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+               for (int i = 0; i < seek.length; i++) {
+				seek[i].setProgress(0);
+			}
+            }
+        });
 	}
 	
 	public void init(){
 		label[0] = (TextView)findViewById(R.id.txtHappyCounter);		
 		seek[0] = (SeekBar)findViewById(R.id.skHappy);
 		seek[0].setOnSeekBarChangeListener(this);
-		
+				
 		label[1] = (TextView)findViewById(R.id.txtOkCounter);		
 		seek[1] = (SeekBar)findViewById(R.id.skJustOk);
 		seek[1].setOnSeekBarChangeListener(this);

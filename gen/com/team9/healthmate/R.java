@@ -8,6 +8,9 @@
 package com.team9.healthmate;
 
 public final class R {
+    public static final class array {
+        public static final int sex=0x7f070000;
+    }
     public static final class attr {
     }
     public static final class dimen {
@@ -25,33 +28,52 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int cmdReset=0x7f08001a;
-        public static final int cmdSubmit=0x7f080019;
-        public static final int enter_button=0x7f080001;
-        public static final int linearLayout1=0x7f080003;
-        public static final int login_title=0x7f080000;
-        public static final int menu=0x7f080002;
-        public static final int skAngry=0x7f080012;
-        public static final int skDepressed=0x7f080018;
-        public static final int skHappy=0x7f080009;
-        public static final int skJustOk=0x7f080006;
-        public static final int skMotivated=0x7f08000c;
-        public static final int skStressed=0x7f08000f;
-        public static final int skTired=0x7f080015;
-        public static final int textView1=0x7f080007;
-        public static final int textView2=0x7f080004;
-        public static final int textView3=0x7f08000a;
-        public static final int textView4=0x7f08000d;
-        public static final int textView5=0x7f080010;
-        public static final int textView6=0x7f080013;
-        public static final int textView7=0x7f080016;
-        public static final int txtAngryCounter=0x7f080011;
-        public static final int txtDepressedCounter=0x7f080017;
-        public static final int txtHappyCounter=0x7f080008;
-        public static final int txtMotivatedCounter=0x7f08000b;
-        public static final int txtOkCounter=0x7f080005;
-        public static final int txtStressedCounter=0x7f08000e;
-        public static final int txtTiredCounter=0x7f080014;
+        public static final int action_settings=0x7f0a002d;
+        public static final int bday=0x7f0a002b;
+        public static final int bday_confirm=0x7f0a002a;
+        public static final int button1=0x7f0a0007;
+        public static final int cmdReset=0x7f0a001f;
+        public static final int cmdSubmit=0x7f0a001e;
+        public static final int confirm_password=0x7f0a0025;
+        public static final int create_account=0x7f0a0020;
+        public static final int create_account_button=0x7f0a002c;
+        public static final int enter_bday=0x7f0a0029;
+        public static final int enter_sex=0x7f0a0027;
+        public static final int first_name=0x7f0a0022;
+        public static final int input_sex=0x7f0a0026;
+        public static final int last_name=0x7f0a0023;
+        public static final int linearLayout1=0x7f0a0009;
+        public static final int login_button=0x7f0a0004;
+        public static final int login_fields=0x7f0a0001;
+        public static final int login_title=0x7f0a0000;
+        public static final int menu=0x7f0a0008;
+        public static final int name_fields=0x7f0a0021;
+        public static final int password=0x7f0a0003;
+        public static final int passwords=0x7f0a0024;
+        public static final int register_button=0x7f0a0005;
+        public static final int sex=0x7f0a0028;
+        public static final int skAngry=0x7f0a0017;
+        public static final int skDepressed=0x7f0a001d;
+        public static final int skHappy=0x7f0a000e;
+        public static final int skJustOk=0x7f0a000c;
+        public static final int skMotivated=0x7f0a0011;
+        public static final int skStressed=0x7f0a0014;
+        public static final int skTired=0x7f0a001a;
+        public static final int textView1=0x7f0a0006;
+        public static final int textView2=0x7f0a000a;
+        public static final int textView3=0x7f0a000f;
+        public static final int textView4=0x7f0a0012;
+        public static final int textView5=0x7f0a0015;
+        public static final int textView6=0x7f0a0018;
+        public static final int textView7=0x7f0a001b;
+        public static final int txtAngryCounter=0x7f0a0016;
+        public static final int txtDepressedCounter=0x7f0a001c;
+        public static final int txtHappyCounter=0x7f0a000d;
+        public static final int txtMotivatedCounter=0x7f0a0010;
+        public static final int txtOkCounter=0x7f0a000b;
+        public static final int txtStressedCounter=0x7f0a0013;
+        public static final int txtTiredCounter=0x7f0a0019;
+        public static final int username=0x7f0a0002;
     }
     public static final class integer {
         public static final int Happy=0x7f050000;
@@ -64,22 +86,37 @@ public final class R {
         public static final int activity_menu=0x7f030004;
         public static final int activity_moods=0x7f030005;
         public static final int activity_note=0x7f030006;
-        public static final int activity_step_counter=0x7f030007;
+        public static final int activity_registration=0x7f030007;
+        public static final int activity_step_counter=0x7f030008;
+        public static final int sex_spinner_textview=0x7f030009;
+    }
+    public static final class menu {
+        public static final int registration=0x7f090000;
     }
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int angry=0x7f06000e;
         public static final int angryCounter=0x7f060017;
         public static final int app_name=0x7f060000;
+        public static final int confirm_password=0x7f060023;
+        public static final int create_account=0x7f060020;
         public static final int depressed=0x7f060010;
         public static final int depressedCounter=0x7f060019;
+        public static final int enter_bday=0x7f060024;
+        public static final int enter_sex=0x7f060025;
+        public static final int first_name=0x7f060021;
         public static final int happy=0x7f06000a;
         public static final int happyCounter=0x7f060013;
         public static final int hello_world=0x7f060001;
+        public static final int last_name=0x7f060022;
+        public static final int login_button=0x7f06001d;
         public static final int motivated=0x7f06000c;
         public static final int motivatedCounter=0x7f060015;
         public static final int ok=0x7f06000b;
+        public static final int ok2=0x7f060026;
         public static final int okCounter=0x7f060014;
+        public static final int password=0x7f06001c;
+        public static final int register_button=0x7f06001e;
         public static final int reset=0x7f060011;
         public static final int stressed=0x7f06000d;
         public static final int stressedCounter=0x7f060016;
@@ -92,7 +129,10 @@ public final class R {
         public static final int title_activity_menu=0x7f060006;
         public static final int title_activity_moods=0x7f060005;
         public static final int title_activity_note=0x7f060009;
+        public static final int title_activity_registration=0x7f06001f;
         public static final int title_activity_step_counter=0x7f060008;
+        public static final int username=0x7f06001b;
+        public static final int welcome_label=0x7f06001a;
     }
     public static final class style {
         /** 
@@ -102,6 +142,6 @@ public final class R {
  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070000;
+        public static final int AppTheme=0x7f080000;
     }
 }

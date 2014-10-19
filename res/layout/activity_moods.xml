@@ -41,7 +41,7 @@
             android:layout_width="326dp"
             android:layout_height="wrap_content"
             android:max="10"
-            android:progress="10" />
+            android:progress="0" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="10"
-            android:progress="10"
+            android:progress="0"
             android:secondaryProgress="10" />
 
         <RelativeLayout
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="10"
-            android:progress="10" />
+            android:progress="0" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -127,7 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="10"
-            android:progress="10" />
+            android:progress="0" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -155,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="10"
-            android:progress="10" />
+            android:progress="0" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -183,7 +183,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="10"
-            android:progress="10" />
+            android:progress="0" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -211,7 +211,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="10"
-            android:progress="10" />
+            android:progress="0" />
+
     </LinearLayout>
 
     <RelativeLayout
