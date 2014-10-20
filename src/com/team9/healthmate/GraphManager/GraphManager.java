@@ -17,9 +17,14 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Column;
+import lecho.lib.hellocharts.model.ColumnChartData;
+import lecho.lib.hellocharts.model.ColumnValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.util.Utils;
+import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
@@ -61,6 +66,104 @@ public class GraphManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void getColumnData(Context appContext, View v) {
+		int numSubcolumns = 1;
+		int numColumns = 8;
+		// Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
+		List<Column> columns = new ArrayList<Column>();
+		List<ColumnValue> values;
+		for (int i = 0; i < numColumns; ++i) {
+
+			values = new ArrayList<ColumnValue>();
+			for (int j = 0; j < numSubcolumns; ++j) {
+				values.add(new ColumnValue((float) Math.random() * 50f + 5, Utils.pickColor()));
+			}
+
+			Column column = new Column(values);
+			columns.add(column);
+		}
+		
+		Axis xAxis = new Axis();
+		Axis yAxis = new Axis();
+		xAxis.setName("Days");
+		yAxis.setName("Mood Level");
+		
+		ColumnChartData data = new ColumnChartData(columns);
+		data.setAxisXBottom(xAxis);
+		data.setAxisYLeft(yAxis);
+		
+		ColumnChartView chart = new ColumnChartView(appContext);
+		chart.setColumnChartData(data);
+		
+		((RelativeLayout) v).addView(chart);
+		/*
+		List<PointValue> values = new ArrayList<PointValue>();
+		try {
+			// Grab data from data file
+			ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(appContext, "testdata");
+			Iterator<Map<String, String>> iterator = credentials.iterator();
+			Map<String, String> dataSet = new HashMap<String, String>();
+			while (iterator.hasNext()) {
+				// Go through all the keys
+				dataSet = iterator.next();
+				Iterator<String> it = dataSet.keySet().iterator();
+				int xValues = 1;
+				while (it.hasNext()) {
+					// If the keys are what we're looking for
+					// then put their values into points
+					String key = it.next();
+					String value = dataSet.get(key);
+					if (key.contains("Day")) {
+						PointValue point = new PointValue(xValues, Integer.parseInt(value));
+						values.add(point);
+						xValues++;
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		// Generate lines from point data
+		Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
+		line.setStrokeWidth(1);
+		line.setPointRadius(3);
+		List<Line> lines = new ArrayList<Line>();
+		lines.add(line);
+		
+		// Set axes
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i = 1; i < 11; i++) {
+			yValues.add(new AxisValue(i));
+		}
+		List<AxisValue> xValues = new ArrayList<AxisValue>();
+		for (int i = 1; i < 12; i++) {
+			xValues.add(new AxisValue(i));
+		}
+		Axis axisX = new Axis();
+		Axis axisY = new Axis();
+		axisX.setName("Days");
+		axisY.setName("Mood Level");
+		axisY.setHasLines(true);
+		axisY.setValues(yValues);
+		axisX.setValues(xValues);
+		
+		LineChartData data = new LineChartData(lines);
+		
+		data.setAxisXBottom(axisX);
+		data.setAxisYLeft(axisY);
+		
+		// Generate the graph and display it inside
+		// the appropriate view
+		LineChartView chart = new LineChartView(appContext);
+		chart.setLineChartData(data);
+		
+		((RelativeLayout) v).addView(chart);
+		*/
 	}
 	
 	/**

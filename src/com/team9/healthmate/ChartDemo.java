@@ -14,6 +14,9 @@ public class ChartDemo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chart_demo);
 		
+		GraphManager.getColumnData(getApplicationContext(), findViewById(R.id.chart_layout));
+		
+		/* Line Graph
 		// generate test data
 		GraphManager.writeRandomData(getApplicationContext());
 		
@@ -21,7 +24,7 @@ public class ChartDemo extends Activity {
 		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 		LineGraph lg = new LineGraph("Days", "Mood Level", "testdata", xValues, yValues, false, true, Color.BLUE, 1, 3);
 		GraphManager.generateMoodLineGraph(getApplicationContext(), findViewById(R.id.chart_layout), lg);
-		
+		*/
 		//GraphManager.getPointData(getApplicationContext(), findViewById(R.id.chart_layout));
 	}
 }
