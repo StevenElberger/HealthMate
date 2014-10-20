@@ -1,8 +1,10 @@
 package com.team9.healthmate;
 
 import com.team9.healthmate.GraphManager.GraphManager;
+import com.team9.healthmate.GraphManager.LineGraph;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 
 public class ChartDemo extends Activity {
@@ -12,8 +14,14 @@ public class ChartDemo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chart_demo);
 		
+		// generate test data
 		GraphManager.writeRandomData(getApplicationContext());
 		
-		GraphManager.getPointData(getApplicationContext(), findViewById(R.id.chart_layout));
+		int[] xValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		LineGraph lg = new LineGraph("Days", "Mood Level", "testdata", xValues, yValues, false, true, Color.BLUE, 1, 3);
+		GraphManager.generateMoodLineGraph(getApplicationContext(), findViewById(R.id.chart_layout), lg);
+		
+		//GraphManager.getPointData(getApplicationContext(), findViewById(R.id.chart_layout));
 	}
 }
