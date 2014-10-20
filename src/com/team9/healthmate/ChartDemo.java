@@ -1,5 +1,6 @@
 package com.team9.healthmate;
 
+import com.team9.healthmate.GraphManager.ColumnGraph;
 import com.team9.healthmate.GraphManager.GraphManager;
 import com.team9.healthmate.GraphManager.LineGraph;
 
@@ -14,7 +15,12 @@ public class ChartDemo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chart_demo);
 		
-		GraphManager.getColumnData(getApplicationContext(), findViewById(R.id.chart_layout));
+		GraphManager.writeRandomData(getApplicationContext());
+		
+		ColumnGraph cg = new ColumnGraph("Days", "Mood Level", "testdata", 11, 1, Color.BLUE);
+		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), cg);
+		
+		//GraphManager.getColumnData(getApplicationContext(), findViewById(R.id.chart_layout));
 		
 		/* Line Graph
 		// generate test data
