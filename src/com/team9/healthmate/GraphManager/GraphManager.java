@@ -137,4 +137,103 @@ public class GraphManager {
 		
 		((RelativeLayout) v).addView(chart);
 	}
+	
+	/**
+	 * Grabs point data from a file to 
+	 * generate a line graph. Called from
+	 * generateMoodLineGraph. Note: Needs
+	 * to be made more general.
+	 * @param appContext	Context from the activity creating the graph
+	 * @param fileName		Name of the file containing the point data
+	 * @return				Returns the list of point values
+	 */
+	public static List<PointValue> getMoodData(Context appContext, String fileName) {
+		List<PointValue> dataPoints = new ArrayList<PointValue>();
+		
+		try {
+			// Grab data from data file
+			ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(appContext, fileName);
+			Iterator<Map<String, String>> iterator = credentials.iterator();
+			Map<String, String> dataSet = new HashMap<String, String>();
+			while (iterator.hasNext()) {
+				// Go through all the keys
+				dataSet = iterator.next();
+				Iterator<String> it = dataSet.keySet().iterator();
+				int xValues = 1;
+				while (it.hasNext()) {
+					// If the keys are what we're looking for
+					// then put their values into points
+					String key = it.next();
+					String value = dataSet.get(key);
+					if (key.contains("Day")) {
+						PointValue point = new PointValue(xValues, Integer.parseInt(value));
+						dataPoints.add(point);
+						xValues++;
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return dataPoints;
+	}
+	
+	/**
+	 * Generates a line graph given point data
+	 * from the moods activity. Requires a Line Graph
+	 * Data object to be passed with necessary information
+	 * to generate the graph.
+	 * @param appContext	Context from the activity calling this method
+	 * @param v				View to display the graph in (should be a RelativeLayout)
+	 * @param lineGraph		Line Graph Data object with necessary graph information
+	 */
+	public static void generateMoodLineGraph(Context appContext, View v, LineGraph lineGraph) {
+		// Grab data, generate point values
+		List<PointValue> dataPoints = getMoodData(appContext, lineGraph.fileName);
+		
+		// Generate lines from point data
+		Line line = new Line(dataPoints).setColor(lineGraph.color).setCubic(true);
+		line.setStrokeWidth(lineGraph.strokeWidth);
+		line.setPointRadius(lineGraph.pointWidth);
+		List<Line> lines = new ArrayList<Line>();
+		lines.add(line);
+		
+		// Create axes
+		Axis axisY = new Axis();
+		Axis axisX = new Axis();
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		List<AxisValue> xValues = new ArrayList<AxisValue>();
+		
+		// If not auto gen, set the axes' points
+		if (!lineGraph.autoGenerateAxes) {
+			for (int i : lineGraph.yAxisValues) {
+				yValues.add(new AxisValue(i));
+			}
+			for (int i : lineGraph.xAxisValues) {
+				xValues.add(new AxisValue(i));
+			}
+			axisY.setValues(yValues);
+			axisX.setValues(xValues);
+		}
+		
+		// Set name and lines
+		axisY.setName(lineGraph.yAxisName);
+		axisX.setName(lineGraph.xAxisName);
+		axisY.setHasLines(lineGraph.yAxisLines);
+		axisX.setHasLines(lineGraph.xAxisLines);
+		
+		LineChartData data = new LineChartData(lines);
+		
+		data.setAxisXBottom(axisX);
+		data.setAxisYLeft(axisY);
+		
+		// Generate the graph and display it inside
+		// the appropriate view
+		LineChartView chart = new LineChartView(appContext);
+		chart.setLineChartData(data);
+		
+		((RelativeLayout) v).addView(chart);
+	}
 }
