@@ -12,7 +12,6 @@ public class LineGraph extends GraphData {
 	int color;
 	int strokeWidth;
 	int pointWidth;
-	boolean xAxisLines, yAxisLines;
 	
 	/**
 	 * Constructor used for automatic
@@ -27,7 +26,7 @@ public class LineGraph extends GraphData {
 	 * @param pWidth	Width of point radius
 	 */
 	public LineGraph(String xName, String yName, String fileN, boolean xLines, boolean yLines, int c, int sWidth, int pWidth) {
-		super(xName, yName, fileN);
+		super(xName, yName, fileN, xLines, yLines);
 		xAxisLines = xLines;
 		yAxisLines = yLines;
 		color = c;
@@ -50,7 +49,7 @@ public class LineGraph extends GraphData {
 	 * @param pWidth	Width of point radius
 	 */
 	public LineGraph(String xName, String yName, String fileN, int[] xAxisV, int[] yAxisV, boolean xLines, boolean yLines, int c, int sWidth, int pWidth) {
-		super(xName, yName, fileN, xAxisV, yAxisV);
+		super(xName, yName, fileN, xAxisV, yAxisV, xLines, yLines);
 		xAxisLines = xLines;
 		yAxisLines = yLines;
 		color = c;

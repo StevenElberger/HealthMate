@@ -221,6 +221,7 @@ public class GraphManager {
 		Axis yAxis = new Axis();
 		xAxis.setName(columnGraph.xAxisName);
 		yAxis.setName(columnGraph.yAxisName);
+		yAxis.setHasLines(true);
 		
 		ColumnChartData data = new ColumnChartData(columns);
 		data.setAxisXBottom(xAxis);

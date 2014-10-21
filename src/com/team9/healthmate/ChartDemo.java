@@ -17,7 +17,7 @@ public class ChartDemo extends Activity {
 		
 		GraphManager.writeRandomData(getApplicationContext());
 		
-		ColumnGraph cg = new ColumnGraph("Days", "Mood Level", "testdata", 11, 1, Color.BLUE);
+		ColumnGraph cg = new ColumnGraph("Days", "Mood Level", "testdata", false, false, 11, 1, Color.BLUE);
 		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), cg);
 		
 		//GraphManager.getColumnData(getApplicationContext(), findViewById(R.id.chart_layout));
