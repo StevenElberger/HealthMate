@@ -375,15 +375,17 @@ public class GraphManager {
 		List<AxisValue> xValues = new ArrayList<AxisValue>();
 		
 		// If not auto gen, set the axes' points
-		if (!lineGraph.autoGenerateAxes) {
-			for (int i : lineGraph.yAxisValues) {
-				yValues.add(new AxisValue(i));
-			}
+		if (lineGraph.xAxisValues != null) {
 			for (int i : lineGraph.xAxisValues) {
 				xValues.add(new AxisValue(i));
 			}
-			axisY.setValues(yValues);
 			axisX.setValues(xValues);
+		}
+		if (lineGraph.yAxisValues != null) {
+			for (int i : lineGraph.yAxisValues) {
+				yValues.add(new AxisValue(i));
+			}
+			axisY.setValues(yValues);
 		}
 		
 		// Set name and lines

@@ -11,7 +11,6 @@ public class GraphData {
 	String xAxisName, yAxisName, fileName;
 	int[] xAxisValues;
 	int[] yAxisValues;
-	boolean autoGenerateAxes;
 	boolean xAxisLines, yAxisLines;
 	
 	/**
@@ -29,7 +28,6 @@ public class GraphData {
 		fileName = fileN;
 		xAxisLines = xLines;
 		yAxisLines = yLines;
-		autoGenerateAxes = true;
 	}
 	
 	/**
@@ -51,6 +49,5 @@ public class GraphData {
 		fileName = fileN;
 		xAxisLines = xLines;
 		yAxisLines = yLines;
-		autoGenerateAxes = false;
 	}
 }
