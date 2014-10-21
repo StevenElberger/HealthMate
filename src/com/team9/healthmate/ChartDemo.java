@@ -15,10 +15,19 @@ public class ChartDemo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chart_demo);
 		
-		GraphManager.writeRandomData(getApplicationContext());
+		// Used for debug / example purposes
+		//GraphManager.writeRandomData(getApplicationContext());
+		//GraphManager.writeRandomData(getApplicationContext());
+		//GraphManager.writeRandomData(getApplicationContext());
+		//GraphManager.writeRandomData(getApplicationContext());
+		//GraphManager.writeRandomData(getApplicationContext());
 		
-		ColumnGraph cg = new ColumnGraph("Days", "Mood Level", "testdata", false, false, 11, 1, Color.BLUE);
-		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), cg);
+		// We know the values for moods are 1 - 10 so we'll explicitly set the y-axis values
+		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
+		ColumnGraph cg = new ColumnGraph("Days", "Mood Level", "testdata", null, yValues, false, false, 11, 1, Color.BLUE);
+		// Generate a column graph for the given mood
+		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), cg, "Stressed");
 		
 		//GraphManager.getColumnData(getApplicationContext(), findViewById(R.id.chart_layout));
 		

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.json.JSONException;
 
@@ -44,23 +45,20 @@ public class GraphManager {
 	 * @param appContext	The context of the app calling this method.
 	 */
 	public static void writeRandomData(Context appContext) {
-		// Just some simple point data modeled after
-		// the moods feature's data
-		Map<String, String> testData = new HashMap<String, String>();
-		testData.put("Day1", "1");
-		testData.put("Day2", "5");
-		testData.put("Day3", "9");
-		testData.put("Day4", "10");
-		testData.put("Day5", "6");
-		testData.put("Day6", "2");
-		testData.put("Day7", "1");
-		testData.put("Day8", "5");
-		testData.put("Day9", "4");
-		testData.put("Day10", "6");
-		testData.put("Day11", "7");
-		
+		String[] moodKeys = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
+		// generate a data file with 31 randomly-generated surveys
 		try {
-			DataStorageManager.writeJSONObject(appContext, "testdata", testData, true);
+			Random rand = new Random();
+			Map<String, String> testData;
+			for (int i = 0; i < 1; i++) {
+				testData = new HashMap<String, String>();
+				for (String s : moodKeys) {
+					// generate a random value 1 - 10 for each mood
+					int value = rand.nextInt(10) + 1;
+					testData.put(s, "" + value);
+				}
+				DataStorageManager.writeJSONObject(appContext, "testdata", testData, false);
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -68,6 +66,11 @@ public class GraphManager {
 		}
 	}
 	
+	/**
+	 * Debug purposes only
+	 * @param appContext	The context of the Activity calling
+	 * @param v				The view to display the graph in
+	 */
 	public static void getColumnData(Context appContext, View v) {
 		int numSubcolumns = 1;
 		int numColumns = 8;
@@ -174,55 +177,125 @@ public class GraphManager {
 		((RelativeLayout) v).addView(chart);
 	}
 	
-	public static List<ColumnValue> getColumnMoodData(Context appContext, String fileName) {
-		List<ColumnValue> dataColumns = new ArrayList<ColumnValue>();
+	/**
+	 * Grabs data from the given file name for the moods
+	 * activity.
+	 * @param appContext	Context of the activity calling
+	 * @param fileName		Name of the file with moods data
+	 * @param graphColor	Not currently being used, but the color specified in the graph object
+	 * @return				Returns a map (Key = mood, Value = column values for that mood)
+	 */
+	public static Map<String, List<ColumnValue>> getColumnMoodData(Context appContext, String fileName, int graphColor) {
+		Map<String, List<ColumnValue>> data = new HashMap<String, List<ColumnValue>>();
+		List<ColumnValue> justOkColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> happyColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> motivatedColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> stressedColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> angryColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> tiredColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> depressedColumn = new ArrayList<ColumnValue>();
 		
 		try {
 			// Grab data from data file
-			ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(appContext, fileName);
-			Iterator<Map<String, String>> iterator = credentials.iterator();
+			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, fileName);
+			Iterator<Map<String, String>> iterator = moodData.iterator();
 			Map<String, String> dataSet = new HashMap<String, String>();
+			
 			while (iterator.hasNext()) {
 				// Go through all the keys
 				dataSet = iterator.next();
 				Iterator<String> it = dataSet.keySet().iterator();
 				while (it.hasNext()) {
 					// If the keys are what we're looking for
-					// then put their values into points
+					// then put their values into columns
 					String key = it.next();
 					String value = dataSet.get(key);
-					if (key.contains("Day")) {
-						ColumnValue column = new ColumnValue(Integer.parseInt(value));
-						dataColumns.add(column);
+					if (key.equals("Just Ok")) {
+						ColumnValue justOk = new ColumnValue(Integer.parseInt(value), Color.GREEN); // change to graphColor eventually
+						justOkColumn.add(justOk);
+					} else if (key.equals("Happy")) {
+						ColumnValue happy = new ColumnValue(Integer.parseInt(value), Color.BLUE);
+						happyColumn.add(happy);
+					} else if (key.equals("Motivated")) {
+						ColumnValue motivated = new ColumnValue(Integer.parseInt(value), Color.CYAN);
+						motivatedColumn.add(motivated);
+					} else if (key.equals("Stressed")) {
+						ColumnValue stressed = new ColumnValue(Integer.parseInt(value), Color.MAGENTA);
+						stressedColumn.add(stressed);
+					} else if (key.equals("Angry")) {
+						ColumnValue angry = new ColumnValue(Integer.parseInt(value), Color.RED);
+						angryColumn.add(angry);
+					} else if (key.equals("Tired")) {
+						ColumnValue tired = new ColumnValue(Integer.parseInt(value), Color.GRAY);
+						tiredColumn.add(tired);
+					} else if (key.equals("Depressed")) {
+						ColumnValue depressed = new ColumnValue(Integer.parseInt(value), Color.DKGRAY);
+						depressedColumn.add(depressed);
 					}
 				}
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+			data.put("Just Ok", justOkColumn);
+			data.put("Happy", happyColumn);
+			data.put("Motivated", motivatedColumn);
+			data.put("Stressed", stressedColumn);
+			data.put("Angry", angryColumn);
+			data.put("Tired", tiredColumn);
+			data.put("Depressed", depressedColumn);
 		} catch (JSONException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return dataColumns;
+		return data;
 	}
 	
-	public static void generateMoodColumnGraph(Context appContext, View v, ColumnGraph columnGraph) {
-		List<ColumnValue> dataColumns = getColumnMoodData(appContext, columnGraph.fileName);
+	/**
+	 * Generates a mood column graph for the mood specified.
+	 * @param appContext		The context of the activity
+	 * @param v					The view to display the graph in
+	 * @param columnGraph		The ColumnGraph object for necessary graph information
+	 * @param mood				The mood to be graphed
+	 */
+	public static void generateMoodColumnGraph(Context appContext, View v, ColumnGraph columnGraph, String mood) {
+		// list of columns
+		Map<String, List<ColumnValue>> moodData = getColumnMoodData(appContext, columnGraph.fileName, columnGraph.color);
+		// values for the mood column we want
+		List<ColumnValue> givenValues = moodData.get(mood);
+		
+		// create columns
 		List<Column> columns = new ArrayList<Column>();
 		List<ColumnValue> colValues;
-		// each column takes an arraylist of column values
-		for (int i = 0; i < columnGraph.numColumns; ++i) {
+		for (int i = 0; i < givenValues.size(); i++) {
 			colValues = new ArrayList<ColumnValue>();
-			colValues.add(dataColumns.get(i));
+			colValues.add(givenValues.get(i));
+			
 			Column column = new Column(colValues);
 			columns.add(column);
 		}
 		
+		// set up axes
 		Axis xAxis = new Axis();
 		Axis yAxis = new Axis();
+		
+		if (columnGraph.xAxisValues != null) {
+			List<AxisValue> xValues = new ArrayList<AxisValue>();
+			for (int i : columnGraph.xAxisValues) {
+				xValues.add(new AxisValue(i));
+			}
+			xAxis.setValues(xValues);
+		}
+		if (columnGraph.yAxisValues != null) {
+			List<AxisValue> yValues = new ArrayList<AxisValue>();
+			for (int i : columnGraph.yAxisValues) {
+				yValues.add(new AxisValue(i));
+			}
+			yAxis.setValues(yValues);
+		}
 		xAxis.setName(columnGraph.xAxisName);
 		yAxis.setName(columnGraph.yAxisName);
 		yAxis.setHasLines(true);
 		
+		// set up chart
 		ColumnChartData data = new ColumnChartData(columns);
 		data.setAxisXBottom(xAxis);
 		data.setAxisYLeft(yAxis);
