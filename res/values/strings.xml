@@ -23,7 +23,13 @@
     <string name="confirm_password">Confirm</string>
     <string name="enter_bday">Please enter your birthday:</string>
     <string name="enter_sex">Please enter your sex:</string>
-
+	<string name="JustOk">Just Ok</string>
+	<string name="Happy">Happy</string>
+	<string name="Motivated">Motivated</string>
+	<string name="Stressed">Stressed</string>
+	<string name="Angry">Angry</string>
+	<string name="Tired">Tired</string>
+	<string name="Depressed">Depressed</string>
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
