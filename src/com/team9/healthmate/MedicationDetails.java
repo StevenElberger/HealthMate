@@ -30,11 +30,12 @@ public class MedicationDetails extends Activity {
 		dosage.setText(med.ammount+"mg");
 		
 		TextView reminder = (TextView) findViewById(R.id.medication_details_reminder);				
-		if(med.reminderStatus)
+		if(med.reminderStatus) {
 			reminder.setText("ON");
-		else
+		}
+		else {
 			reminder.setText("OFF");
-		
+		}
 		//back button
 		Button back = (Button) findViewById(R.id.medication_details_button_back);
 		back.setOnClickListener(new View.OnClickListener() {
@@ -54,5 +55,4 @@ public class MedicationDetails extends Activity {
 	          }
 	      });
 	}
-	
 }

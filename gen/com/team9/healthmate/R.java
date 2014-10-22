@@ -8,6 +8,9 @@
 package com.team9.healthmate;
 
 public final class R {
+    public static final class array {
+        public static final int sex=0x7f060000;
+    }
     public static final class attr {
     }
     public static final class dimen {
@@ -25,40 +28,59 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080021;
-        public static final int btnAddMedication=0x7f080004;
-        public static final int enter_button=0x7f080001;
-        public static final int linearLayout1=0x7f080005;
-        public static final int listViewMedications=0x7f080003;
-        public static final int list_subtitle=0x7f080020;
-        public static final int list_title=0x7f08001f;
-        public static final int login_title=0x7f080000;
-        public static final int medication_details_button_back=0x7f08000a;
-        public static final int medication_details_button_edit=0x7f08000b;
-        public static final int medication_details_dosage=0x7f080008;
-        public static final int medication_details_frequency=0x7f080007;
-        public static final int medication_details_name=0x7f080006;
-        public static final int medication_details_reminder=0x7f080009;
-        public static final int menu=0x7f08000c;
-        public static final int new_medication_cancel=0x7f08001d;
-        public static final int new_medication_dosage_frequency=0x7f080018;
-        public static final int new_medication_dosage_strength=0x7f08001b;
-        public static final int new_medication_form=0x7f08000e;
-        public static final int new_medication_frequency_lapse=0x7f08001a;
-        public static final int new_medication_frequency_radio_A=0x7f080012;
-        public static final int new_medication_frequency_radio_B=0x7f080013;
-        public static final int new_medication_frequency_radio_C=0x7f080014;
-        public static final int new_medication_frequency_radio_D=0x7f080015;
-        public static final int new_medication_frequency_section=0x7f080016;
-        public static final int new_medication_name=0x7f080011;
-        public static final int new_medication_name_label=0x7f080010;
-        public static final int new_medication_numer_picker_decrease=0x7f080017;
-        public static final int new_medication_numer_picker_increase=0x7f080019;
-        public static final int new_medication_reminder_switch=0x7f08001c;
-        public static final int new_medication_save=0x7f08001e;
-        public static final int new_medication_submit_buttons=0x7f08000f;
-        public static final int new_medication_title=0x7f08000d;
-        public static final int titleMedication=0x7f080002;
+        public static final int action_settings=0x7f090034;
+        public static final int bday=0x7f090030;
+        public static final int bday_confirm=0x7f09002f;
+        public static final int btnAddMedication=0x7f09000a;
+        public static final int button1=0x7f090007;
+        public static final int confirm_password=0x7f09002a;
+        public static final int create_account=0x7f090025;
+        public static final int create_account_button=0x7f090031;
+        public static final int enter_bday=0x7f09002e;
+        public static final int enter_sex=0x7f09002c;
+        public static final int first_name=0x7f090027;
+        public static final int input_sex=0x7f09002b;
+        public static final int last_name=0x7f090028;
+        public static final int linearLayout1=0x7f09000b;
+        public static final int listViewMedications=0x7f090009;
+        public static final int list_subtitle=0x7f090033;
+        public static final int list_title=0x7f090032;
+        public static final int login_button=0x7f090004;
+        public static final int login_fields=0x7f090001;
+        public static final int login_title=0x7f090000;
+        public static final int medication_details_button_back=0x7f090010;
+        public static final int medication_details_button_edit=0x7f090011;
+        public static final int medication_details_dosage=0x7f09000e;
+        public static final int medication_details_frequency=0x7f09000d;
+        public static final int medication_details_name=0x7f09000c;
+        public static final int medication_details_reminder=0x7f09000f;
+        public static final int menu=0x7f090012;
+        public static final int name_fields=0x7f090026;
+        public static final int new_medication_cancel=0x7f090023;
+        public static final int new_medication_dosage_frequency=0x7f09001e;
+        public static final int new_medication_dosage_strength=0x7f090021;
+        public static final int new_medication_form=0x7f090014;
+        public static final int new_medication_frequency_radio_A=0x7f090018;
+        public static final int new_medication_frequency_radio_B=0x7f090019;
+        public static final int new_medication_frequency_radio_C=0x7f09001a;
+        public static final int new_medication_frequency_radio_D=0x7f09001b;
+        public static final int new_medication_frequency_section=0x7f09001c;
+        public static final int new_medication_frequency_type=0x7f090020;
+        public static final int new_medication_name=0x7f090017;
+        public static final int new_medication_name_label=0x7f090016;
+        public static final int new_medication_numer_picker_decrease=0x7f09001d;
+        public static final int new_medication_numer_picker_increase=0x7f09001f;
+        public static final int new_medication_reminder_switch=0x7f090022;
+        public static final int new_medication_save=0x7f090024;
+        public static final int new_medication_submit_buttons=0x7f090015;
+        public static final int new_medication_title=0x7f090013;
+        public static final int password=0x7f090003;
+        public static final int passwords=0x7f090029;
+        public static final int register_button=0x7f090005;
+        public static final int sex=0x7f09002d;
+        public static final int textView1=0x7f090006;
+        public static final int titleMedication=0x7f090008;
+        public static final int username=0x7f090002;
     }
     public static final class layout {
         public static final int activity_emergency=0x7f030000;
@@ -70,16 +92,29 @@ public final class R {
         public static final int activity_moods=0x7f030006;
         public static final int activity_new_medication=0x7f030007;
         public static final int activity_note=0x7f030008;
-        public static final int activity_step_counter=0x7f030009;
-        public static final int list_item=0x7f03000a;
+        public static final int activity_registration=0x7f030009;
+        public static final int activity_step_counter=0x7f03000a;
+        public static final int list_item=0x7f03000b;
+        public static final int sex_spinner_textview=0x7f03000c;
     }
     public static final class menu {
-        public static final int medication_details=0x7f070000;
+        public static final int medication_details=0x7f080000;
+        public static final int registration=0x7f080001;
     }
     public static final class string {
         public static final int action_settings=0x7f050002;
         public static final int app_name=0x7f050000;
+        public static final int confirm_password=0x7f050015;
+        public static final int create_account=0x7f050012;
+        public static final int enter_bday=0x7f050016;
+        public static final int enter_sex=0x7f050017;
+        public static final int first_name=0x7f050013;
         public static final int hello_world=0x7f050001;
+        public static final int last_name=0x7f050014;
+        public static final int login_button=0x7f05000f;
+        public static final int ok=0x7f050018;
+        public static final int password=0x7f05000e;
+        public static final int register_button=0x7f050010;
         public static final int title_activity_emergency=0x7f050007;
         public static final int title_activity_health_location=0x7f050004;
         public static final int title_activity_medication=0x7f050003;
@@ -88,7 +123,10 @@ public final class R {
         public static final int title_activity_moods=0x7f050005;
         public static final int title_activity_new_medication=0x7f05000a;
         public static final int title_activity_note=0x7f050009;
+        public static final int title_activity_registration=0x7f050011;
         public static final int title_activity_step_counter=0x7f050008;
+        public static final int username=0x7f05000d;
+        public static final int welcome_label=0x7f05000c;
     }
     public static final class style {
         /** 
@@ -98,6 +136,6 @@ public final class R {
  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060000;
+        public static final int AppTheme=0x7f070000;
     }
 }
