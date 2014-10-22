@@ -1,14 +1,16 @@
 package com.team9.healthmate.DataManager;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -17,9 +19,13 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.widget.TextView;
 
+/* The DataStorageManager class is a static class that can handle writing and reading to a file.
+ * The information is written in JSON notation to a file in the internal storage of android.
+ * A time stamp is automatically generated when a write is done to a file and stored with the
+ * information written to a file. 
+ */
 public class DataStorageManager {
 	
 	/* Method to Display a given text on the Screen of the Current Activity.
@@ -35,14 +41,20 @@ public class DataStorageManager {
 	/* Method to write information to a file, this information will be written 
 	 * in a JSON object format.
 	 * @context the current context of the activity
+	 * @filename the file that will be written to.
 	 * @listOfItems the list of key value pairs of the information that needs to be written
 	 */
-	public static void writeJSONObject(Context context, Map<String, String> listOfItems, boolean overwrite) 
+	public static void writeJSONObject(Context context, String filename, Map<String, String> listOfItems, boolean overwrite) 
 			throws JSONException, IOException {
 		
+		// Generate a time stamp for every JSON object written to the file
+		// this will be stored with each JSON object.
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+		String timestamp = dateFormat.format(new Date());
+		listOfItems.put("timestamp", timestamp);
+		
 		// abstract the filename from the set of information
-		String fileName = listOfItems.get("filename");
-		listOfItems.remove("filename");
+		String fileName = filename;
 		JSONObject data = new JSONObject();
 		
 		// Go through the list of information, expanding the JSON object.
