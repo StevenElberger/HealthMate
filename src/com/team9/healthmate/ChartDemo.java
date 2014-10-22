@@ -23,13 +23,30 @@ import android.widget.RelativeLayout;
  */
 public class ChartDemo extends ActionBarActivity {
 	Context context;
-	ColumnGraph columnGraph;
+	View view;
+	ColumnGraph[] columnGraph;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chart_demo);
+		
+		// Set references to objects we'll use later (cleaner code)
 		context = getApplicationContext();
+		view = findViewById(R.id.chart_layout);
+		
+		// We know the values for moods are 1 - 10 so we'll explicitly set the y-axis values
+		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		
+		// All possible moods (Labels for y-axes)
+		String[] moods = {"General Wellness Levels", "Happiness Levels", "Motivation Levels", "Stress Levels", 
+				"Anger Levels", "Lethargy Levels", "Depression Levels"};
+		// A Column Graph for each mood
+		columnGraph = new ColumnGraph[moods.length-1];
+		for (int i = 0; i < columnGraph.length; i++) {
+			columnGraph[i] = new ColumnGraph("Days", moods[i], "testdata", null, yValues, false, false, Color.BLUE);
+		}
+		
 		
 		// Used for debug / example purposes
 		//GraphManager.writeRandomData(getApplicationContext());
@@ -69,53 +86,35 @@ public class ChartDemo extends ActionBarActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// We know the values for moods are 1 - 10 so we'll explicitly set the y-axis values
-		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		// Necessary to wipe the view where the graph
+		// will be displayed
 		View v = findViewById(R.id.chart_layout);
 		((RelativeLayout) v).removeAllViews();
-	    // Handle presses on the action bar items
+
+		// Generate a new ColumnGraph object with desired
+		// properties depending on which option was selected
+		// and then generate a new Column Graph to display
 	    switch (item.getItemId()) {
 	        case R.id.JustOk:
-	        	// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
-	    		columnGraph = new ColumnGraph("Days", "General Wellness Level", "testdata", null, yValues, false, false, Color.BLUE);
-	    		// Generate a column graph for the given mood
-	    		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), columnGraph, "Just Ok");
+	    		GraphManager.generateMoodColumnGraph(context, view, columnGraph[0], "Just Ok");
 	            return true;
 	        case R.id.Happy:
-	        	// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
-	    		columnGraph = new ColumnGraph("Days", "Happiness Level", "testdata", null, yValues, false, false, Color.BLUE);
-	    		// Generate a column graph for the given mood
-	    		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), columnGraph, "Happy");
+	    		GraphManager.generateMoodColumnGraph(context, view, columnGraph[1], "Happy");
 	            return true;
 	        case R.id.Motivated:
-	        	// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
-	    		columnGraph = new ColumnGraph("Days", "Motivation Level", "testdata", null, yValues, false, false, Color.BLUE);
-	    		// Generate a column graph for the given mood
-	    		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), columnGraph, "Motivated");
+	    		GraphManager.generateMoodColumnGraph(context, view, columnGraph[2], "Motivated");
 	        	return true;
 	        case R.id.Stressed:
-	        	// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
-	    		columnGraph = new ColumnGraph("Days", "Stress Level", "testdata", null, yValues, false, false, Color.BLUE);
-	    		// Generate a column graph for the given mood
-	    		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), columnGraph, "Stressed");
+	    		GraphManager.generateMoodColumnGraph(context, view, columnGraph[3], "Stressed");
 	        	return true;
 	        case R.id.Angry:
-	        	// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
-	    		columnGraph = new ColumnGraph("Days", "Anger Level", "testdata", null, yValues, false, false, Color.BLUE);
-	    		// Generate a column graph for the given mood
-	    		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), columnGraph, "Angry");
+	    		GraphManager.generateMoodColumnGraph(context, view, columnGraph[4], "Angry");
 	        	return true;
 	        case R.id.Tired:
-	        	// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
-	    		columnGraph = new ColumnGraph("Days", "Tiredness Level", "testdata", null, yValues, false, false, Color.BLUE);
-	    		// Generate a column graph for the given mood
-	    		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), columnGraph, "Tired");
+	    		GraphManager.generateMoodColumnGraph(context, view, columnGraph[5], "Tired");
 	        	return true;
 	        case R.id.Depressed:
-	        	// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
-	    		columnGraph = new ColumnGraph("Days", "Depression Level", "testdata", null, yValues, false, false, Color.BLUE);
-	    		// Generate a column graph for the given mood
-	    		GraphManager.generateMoodColumnGraph(getApplicationContext(), findViewById(R.id.chart_layout), columnGraph, "Depressed");
+	    		GraphManager.generateMoodColumnGraph(context, view, columnGraph[6], "Depressed");
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
