@@ -41,22 +41,19 @@ public class ChartDemo extends ActionBarActivity {
 		// All possible moods (Labels for y-axes)
 		String[] moods = {"General Wellness Levels", "Happiness Levels", "Motivation Levels", "Stress Levels", 
 				"Anger Levels", "Lethargy Levels", "Depression Levels"};
+		
+		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.WHITE, Color.RED, Color.LTGRAY, Color.DKGRAY};
+		
 		// A Column Graph for each mood
-		columnGraph = new ColumnGraph[moods.length-1];
+		columnGraph = new ColumnGraph[moods.length];
 		for (int i = 0; i < columnGraph.length; i++) {
-			columnGraph[i] = new ColumnGraph("Days", moods[i], "testdata", null, yValues, false, false, Color.BLUE);
+			columnGraph[i] = new ColumnGraph("Days", moods[i], "testdata", null, yValues, false, false, colors[i]);
 		}
 		
 		
 		// Used for debug / example purposes
-		//GraphManager.writeRandomData(getApplicationContext());
-		//GraphManager.writeRandomData(getApplicationContext());
-		//GraphManager.writeRandomData(getApplicationContext());
-		//GraphManager.writeRandomData(getApplicationContext());
-		//GraphManager.writeRandomData(getApplicationContext());
-		
-		// We know the values for moods are 1 - 10 so we'll explicitly set the y-axis values
-		//int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		//GraphManager.writeRandomData(context);
+
 		// Create a ColumnGraph object with the specified information (Color is not currently used for column graphs)
 		//ColumnGraph cg = new ColumnGraph("Days", "Mood Level", "testdata", null, yValues, false, false, 11, 1, Color.BLUE);
 		// Generate a column graph for the given mood

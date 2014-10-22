@@ -211,25 +211,25 @@ public class GraphManager {
 					String key = it.next();
 					String value = dataSet.get(key);
 					if (key.equals("Just Ok")) {
-						ColumnValue justOk = new ColumnValue(Integer.parseInt(value), Color.GREEN); // change to graphColor eventually
+						ColumnValue justOk = new ColumnValue(Integer.parseInt(value), graphColor); // change to graphColor eventually
 						justOkColumn.add(justOk);
 					} else if (key.equals("Happy")) {
-						ColumnValue happy = new ColumnValue(Integer.parseInt(value), Color.BLUE);
+						ColumnValue happy = new ColumnValue(Integer.parseInt(value), graphColor);
 						happyColumn.add(happy);
 					} else if (key.equals("Motivated")) {
-						ColumnValue motivated = new ColumnValue(Integer.parseInt(value), Color.CYAN);
+						ColumnValue motivated = new ColumnValue(Integer.parseInt(value), graphColor);
 						motivatedColumn.add(motivated);
 					} else if (key.equals("Stressed")) {
-						ColumnValue stressed = new ColumnValue(Integer.parseInt(value), Color.MAGENTA);
+						ColumnValue stressed = new ColumnValue(Integer.parseInt(value), graphColor);
 						stressedColumn.add(stressed);
 					} else if (key.equals("Angry")) {
-						ColumnValue angry = new ColumnValue(Integer.parseInt(value), Color.RED);
+						ColumnValue angry = new ColumnValue(Integer.parseInt(value), graphColor);
 						angryColumn.add(angry);
 					} else if (key.equals("Tired")) {
-						ColumnValue tired = new ColumnValue(Integer.parseInt(value), Color.GRAY);
+						ColumnValue tired = new ColumnValue(Integer.parseInt(value), graphColor);
 						tiredColumn.add(tired);
 					} else if (key.equals("Depressed")) {
-						ColumnValue depressed = new ColumnValue(Integer.parseInt(value), Color.DKGRAY);
+						ColumnValue depressed = new ColumnValue(Integer.parseInt(value), graphColor);
 						depressedColumn.add(depressed);
 					}
 				}
