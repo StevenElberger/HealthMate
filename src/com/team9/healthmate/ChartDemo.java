@@ -38,13 +38,13 @@ public class ChartDemo extends ActionBarActivity {
 		// We know the values for moods are 1 - 10 so we'll explicitly set the y-axis values
 		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 		
-		// All possible moods (Labels for y-axes)
+		// Set up ColumnGraph objects for graph generation
 		String[] moods = {"General Wellness Levels", "Happiness Levels", "Motivation Levels", "Stress Levels", 
 				"Anger Levels", "Lethargy Levels", "Depression Levels"};
 		
+		// Other colors are possible
 		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.WHITE, Color.RED, Color.LTGRAY, Color.DKGRAY};
 		
-		// A Column Graph for each mood
 		columnGraph = new ColumnGraph[moods.length];
 		for (int i = 0; i < columnGraph.length; i++) {
 			columnGraph[i] = new ColumnGraph("Days", moods[i], "testdata", null, yValues, false, false, colors[i]);
