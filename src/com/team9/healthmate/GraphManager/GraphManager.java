@@ -14,6 +14,7 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import lecho.lib.hellocharts.model.Axis;
@@ -185,7 +186,7 @@ public class GraphManager {
 	 * @param graphColor	Not currently being used, but the color specified in the graph object
 	 * @return				Returns a map (Key = mood, Value = column values for that mood)
 	 */
-	public static Map<String, List<ColumnValue>> getColumnMoodData(Context appContext, String fileName, int graphColor) {
+	public static Map<String, List<ColumnValue>> getColumnMoodData(Context appContext, String fileName, int graphColor) { // should just take 2 args
 		Map<String, List<ColumnValue>> data = new HashMap<String, List<ColumnValue>>();
 		List<ColumnValue> justOkColumn = new ArrayList<ColumnValue>();
 		List<ColumnValue> happyColumn = new ArrayList<ColumnValue>();
@@ -315,25 +316,24 @@ public class GraphManager {
 	 * @param fileName		Name of the file containing the point data
 	 * @return				Returns the list of point values
 	 */
-	public static List<PointValue> getMoodData(Context appContext, String fileName) {
+	public static List<PointValue> getLineMoodData(Context appContext, String fileName, String mood) {
 		List<PointValue> dataPoints = new ArrayList<PointValue>();
-		
 		try {
 			// Grab data from data file
 			ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(appContext, fileName);
 			Iterator<Map<String, String>> iterator = credentials.iterator();
 			Map<String, String> dataSet = new HashMap<String, String>();
+			int xValues = 1;
 			while (iterator.hasNext()) {
 				// Go through all the keys
 				dataSet = iterator.next();
 				Iterator<String> it = dataSet.keySet().iterator();
-				int xValues = 1;
 				while (it.hasNext()) {
 					// If the keys are what we're looking for
 					// then put their values into points
 					String key = it.next();
 					String value = dataSet.get(key);
-					if (key.contains("Day")) {
+					if (key.equals(mood)) {
 						PointValue point = new PointValue(xValues, Integer.parseInt(value));
 						dataPoints.add(point);
 						xValues++;
@@ -350,17 +350,17 @@ public class GraphManager {
 	
 	/**
 	 * Generates a line graph given point data
-	 * from the moods activity. Requires a Line Graph
-	 * Data object to be passed with necessary information
+	 * from the moods activity. Requires a LineGraph
+	 * object to be passed with necessary information
 	 * to generate the graph.
 	 * @param appContext	Context from the activity calling this method
 	 * @param v				View to display the graph in (should be a RelativeLayout)
 	 * @param lineGraph		Line Graph Data object with necessary graph information
 	 */
-	public static void generateMoodLineGraph(Context appContext, View v, LineGraph lineGraph) {
+	public static void generateMoodLineGraph(Context appContext, View v, LineGraph lineGraph, String mood) {
 		// Grab data, generate point values
-		List<PointValue> dataPoints = getMoodData(appContext, lineGraph.fileName);
-		
+		List<PointValue> dataPoints = getLineMoodData(appContext, lineGraph.fileName, mood);
+
 		// Generate lines from point data
 		Line line = new Line(dataPoints).setColor(lineGraph.color).setCubic(true);
 		line.setStrokeWidth(lineGraph.strokeWidth);
@@ -371,17 +371,10 @@ public class GraphManager {
 		// Create axes
 		Axis axisY = new Axis();
 		Axis axisX = new Axis();
-		List<AxisValue> yValues = new ArrayList<AxisValue>();
-		List<AxisValue> xValues = new ArrayList<AxisValue>();
 		
-		// If not auto gen, set the axes' points
-		if (lineGraph.xAxisValues != null) {
-			for (int i : lineGraph.xAxisValues) {
-				xValues.add(new AxisValue(i));
-			}
-			axisX.setValues(xValues);
-		}
+		// If not auto gen, set the axis' points
 		if (lineGraph.yAxisValues != null) {
+			List<AxisValue> yValues = new ArrayList<AxisValue>();
 			for (int i : lineGraph.yAxisValues) {
 				yValues.add(new AxisValue(i));
 			}
