@@ -38,9 +38,9 @@ public class GraphManager {
 	
 	/**
 	 * Only necessary for debug purposes. This will
-	 * generate some random data to a file in order to
+	 * generate some random mood data to a file in order to
 	 * test the graph generating functions.
-	 * @param appContext	The context of the app calling this method.
+	 * @param appContext	The context of the Activity calling this method.
 	 */
 	public static void writeRandomData(Context appContext) {
 		String[] moodKeys = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
@@ -68,23 +68,16 @@ public class GraphManager {
 	 * Grabs data from the given file name for the moods
 	 * activity.
 	 * @param appContext	Context of the activity calling
-	 * @param fileName		Name of the file with moods data
-	 * @param graphColor	Not currently being used, but the color specified in the graph object
-	 * @return				Returns a map (Key = mood, Value = column values for that mood)
+	 * @param columnGraph	ColumnGraph object with necessary information
+	 * @param mood			The mood to be graphed
+	 * @return				Returns a list of column values for the specified mood
 	 */
-	public static Map<String, List<ColumnValue>> getColumnMoodData(Context appContext, String fileName, int graphColor) { // should just take 2 args
-		Map<String, List<ColumnValue>> data = new HashMap<String, List<ColumnValue>>();
-		List<ColumnValue> justOkColumn = new ArrayList<ColumnValue>();
-		List<ColumnValue> happyColumn = new ArrayList<ColumnValue>();
-		List<ColumnValue> motivatedColumn = new ArrayList<ColumnValue>();
-		List<ColumnValue> stressedColumn = new ArrayList<ColumnValue>();
-		List<ColumnValue> angryColumn = new ArrayList<ColumnValue>();
-		List<ColumnValue> tiredColumn = new ArrayList<ColumnValue>();
-		List<ColumnValue> depressedColumn = new ArrayList<ColumnValue>();
+	public static List<ColumnValue> getColumnMoodData(Context appContext, ColumnGraph columnGraph, String mood) {
+		List<ColumnValue> colValues = new ArrayList<ColumnValue>();
 		
 		try {
 			// Grab data from data file
-			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, fileName);
+			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, columnGraph.fileName);
 			Iterator<Map<String, String>> iterator = moodData.iterator();
 			Map<String, String> dataSet = new HashMap<String, String>();
 			
@@ -97,57 +90,30 @@ public class GraphManager {
 					// then put their values into columns
 					String key = it.next();
 					String value = dataSet.get(key);
-					if (key.equals("Just Ok")) {
-						ColumnValue justOk = new ColumnValue(Integer.parseInt(value), graphColor); // change to graphColor eventually
-						justOkColumn.add(justOk);
-					} else if (key.equals("Happy")) {
-						ColumnValue happy = new ColumnValue(Integer.parseInt(value), graphColor);
-						happyColumn.add(happy);
-					} else if (key.equals("Motivated")) {
-						ColumnValue motivated = new ColumnValue(Integer.parseInt(value), graphColor);
-						motivatedColumn.add(motivated);
-					} else if (key.equals("Stressed")) {
-						ColumnValue stressed = new ColumnValue(Integer.parseInt(value), graphColor);
-						stressedColumn.add(stressed);
-					} else if (key.equals("Angry")) {
-						ColumnValue angry = new ColumnValue(Integer.parseInt(value), graphColor);
-						angryColumn.add(angry);
-					} else if (key.equals("Tired")) {
-						ColumnValue tired = new ColumnValue(Integer.parseInt(value), graphColor);
-						tiredColumn.add(tired);
-					} else if (key.equals("Depressed")) {
-						ColumnValue depressed = new ColumnValue(Integer.parseInt(value), graphColor);
-						depressedColumn.add(depressed);
+					if (key.equals(mood)) {
+						ColumnValue moodValue = new ColumnValue(Integer.parseInt(value), columnGraph.color);
+						colValues.add(moodValue);
 					}
 				}
 			}
-			data.put("Just Ok", justOkColumn);
-			data.put("Happy", happyColumn);
-			data.put("Motivated", motivatedColumn);
-			data.put("Stressed", stressedColumn);
-			data.put("Angry", angryColumn);
-			data.put("Tired", tiredColumn);
-			data.put("Depressed", depressedColumn);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return data;
+		return colValues;
 	}
 	
 	/**
 	 * Generates a mood column graph for the mood specified.
 	 * @param appContext		The context of the activity
-	 * @param v					The view to display the graph in
+	 * @param view				The view to display the graph in
 	 * @param columnGraph		The ColumnGraph object for necessary graph information
 	 * @param mood				The mood to be graphed
 	 */
-	public static void generateMoodColumnGraph(Context appContext, View v, ColumnGraph columnGraph, String mood) {
-		// list of columns
-		Map<String, List<ColumnValue>> moodData = getColumnMoodData(appContext, columnGraph.fileName, columnGraph.color);
+	public static void generateMoodColumnGraph(Context appContext, View view, ColumnGraph columnGraph, String mood) {
 		// values for the mood column we want
-		List<ColumnValue> givenValues = moodData.get(mood);
+		List<ColumnValue> givenValues = getColumnMoodData(appContext, columnGraph, mood);
 		
 		// create columns
 		List<Column> columns = new ArrayList<Column>();
@@ -190,14 +156,13 @@ public class GraphManager {
 		ColumnChartView chart = new ColumnChartView(appContext);
 		chart.setColumnChartData(data);
 		
-		((RelativeLayout) v).addView(chart);
+		((RelativeLayout) view).addView(chart);
 	}
 	
 	/**
-	 * Grabs point data from a file to 
+	 * Grabs mood data from a file to 
 	 * generate a line graph. Called from
-	 * generateMoodLineGraph. Note: Needs
-	 * to be made more general.
+	 * generateMoodLineGraph.
 	 * @param appContext	Context from the activity creating the graph
 	 * @param fileName		Name of the file containing the point data
 	 * @param mood			The mood to be graphed
@@ -236,7 +201,7 @@ public class GraphManager {
 	}
 	
 	/**
-	 * Generates a line graph given point data
+	 * Generates a line graph given mood data
 	 * from the moods activity. Requires a LineGraph
 	 * object to be passed with necessary information
 	 * to generate the graph.
