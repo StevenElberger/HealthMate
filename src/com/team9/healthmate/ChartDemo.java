@@ -127,13 +127,43 @@ public class ChartDemo extends ActionBarActivity {
 	private void generateLineData(int color, float range) {
 		// Cancel last animation if not finished.
 		lcv.cancelDataAnimation();
-
+		
+		List<PointValue> points;
+		switch (color) {
+			case Color.GREEN:
+				points = GraphManager.getMoodLineData(context, "testdata", "Just Ok");
+				break;
+			case Color.YELLOW:
+				points = GraphManager.getMoodLineData(context, "testdata", "Happy");
+				break;
+			case Color.CYAN:
+				points = GraphManager.getMoodLineData(context, "testdata", "Motivated");
+				break;
+			case Color.MAGENTA:
+				points = GraphManager.getMoodLineData(context, "testdata", "Stressed");
+				break;
+			case Color.RED:
+				points = GraphManager.getMoodLineData(context, "testdata", "Angry");
+				break;
+			case Color.LTGRAY:
+				points = GraphManager.getMoodLineData(context, "testdata", "Tired");
+				break;
+			case Color.DKGRAY:
+				points = GraphManager.getMoodLineData(context, "testdata", "Depressed");
+				break;
+			default:
+				points = GraphManager.getMoodLineData(context, "testdata", "Just Ok");
+				break;
+		}
+		Line newLine = new Line(points);
 		// Modify data targets
 		Line line = lineData.getLines().get(0);// For this example there is always only one line.
 		line.setColor(color);
-		for (PointValue value : line.getValues()) {
-			// Change target only for Y value.
-			value.setTarget(value.getX(), (float) Math.random() * range);
+		PointValue oldValue, newValue;
+		for (int i = 0; i < line.getValues().size(); i++) {
+			oldValue = line.getValues().get(i);
+			newValue = newLine.getValues().get(i);
+			oldValue.setTarget(oldValue.getX(), newValue.getY());
 		}
 
 		// Start new data animation with 300ms duration;
@@ -144,7 +174,7 @@ public class ChartDemo extends ActionBarActivity {
 		List<PointValue> dataPoints = GraphManager.getMoodLineData(appContext, "testdata", "Just Ok");
 		
 		// Generate lines from point data
-		Line line = new Line(dataPoints).setColor(Color.BLUE).setCubic(true);
+		Line line = new Line(dataPoints).setColor(Color.GREEN).setCubic(true);
 		line.setStrokeWidth(1);
 		line.setPointRadius(3);
 		line.setHasLabelsOnlyForSelected(true);
