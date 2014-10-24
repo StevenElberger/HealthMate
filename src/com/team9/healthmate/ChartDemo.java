@@ -1,5 +1,23 @@
 package com.team9.healthmate;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Column;
+import lecho.lib.hellocharts.model.ColumnChartData;
+import lecho.lib.hellocharts.model.ColumnValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.util.Utils;
+import lecho.lib.hellocharts.view.ColumnChartView;
+import lecho.lib.hellocharts.view.LineChartView;
+
 import com.team9.healthmate.GraphManager.ColumnGraph;
 import com.team9.healthmate.GraphManager.GraphManager;
 import com.team9.healthmate.GraphManager.LineGraph;
@@ -23,9 +41,11 @@ import android.widget.RelativeLayout;
 public class ChartDemo extends ActionBarActivity {
 	View view;
 	Context context;
-	boolean genLineGraphs;
-	LineGraph[] lineGraph;
-	ColumnGraph[] columnGraph;
+	LineChartView lcv;
+	ColumnChartView ccv;
+	LineChartData lineData;
+	ColumnGraph columnGraph;
+	ColumnChartData columnData;
 	
 	/**
 	 * Sets up references for further use.
@@ -48,26 +68,25 @@ public class ChartDemo extends ActionBarActivity {
 	 * GraphManager class.
 	 */
 	public void createGraphs() {
-		genLineGraphs = false;
+		lcv = (LineChartView) findViewById(R.id.chart_top);
+		ccv = (ColumnChartView) findViewById(R.id.chart_bottom);
 		
-		// We know the values for moods are 1 - 10 so we'll explicitly set the y-axis values
-		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		columnGraph = new ColumnGraph(null, null, "testdata", null, null, false, false, 0);
 		
-		// Set up ColumnGraph objects for graph generation
-		String[] moods = {"General Wellness Levels", "Happiness Levels", "Motivation Levels", "Stress Levels", 
-				"Anger Levels", "Lethargy Levels", "Depression Levels"};
-		
-		// Other colors are possible
-		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.WHITE, Color.RED, Color.LTGRAY, Color.DKGRAY};
-		
-		columnGraph = new ColumnGraph[moods.length];
-		for (int i = 0; i < columnGraph.length; i++) {
-			columnGraph[i] = new ColumnGraph("Days", moods[i], "testdata", null, yValues, false, false, colors[i]);
+		ccv.setOnValueTouchListener(new ValueTouchListener());
+	}
+	
+
+	private class ValueTouchListener implements ColumnChartView.ColumnChartOnValueTouchListener {
+
+		@Override
+		public void onValueTouched(int selectedLine, int selectedValue, ColumnValue value) {
+			generateLineData(value.getColor(), 10);
 		}
-		
-		lineGraph = new LineGraph[moods.length];
-		for (int i = 0; i < lineGraph.length; i++) {
-			lineGraph[i] = new LineGraph("Days", moods[i], "testdata", null, yValues, false, true, colors[i], 1, 3);
+
+		@Override
+		public void onNothingTouched() {
+			
 		}
 	}
 	
@@ -90,63 +109,133 @@ public class ChartDemo extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Necessary to wipe the view where the graph
 		// will be displayed
-		((RelativeLayout) view).removeAllViews();
+		//((RelativeLayout) view).removeAllViews();
 
 		// Generate a new ColumnGraph object with desired
 		// properties depending on which option was selected
 		// and then generate a new Column Graph to display
 	    switch (item.getItemId()) {
 	        case R.id.JustOk:
-	        	if (genLineGraphs) {
-	        		GraphManager.generateMoodLineGraph(context, view, lineGraph[0], "Just Ok");
-	        	} else {
-	        		GraphManager.generateMoodColumnGraph(context, view, columnGraph[0], "Just Ok");
-	        	}
+	        		setUpLineChart(context, lcv);
+	        		GraphManager.setUpMoodColumnGraph(context, columnGraph, ccv);
 	            return true;
-	        case R.id.Happy:
-	        	if (genLineGraphs) {
-	        		GraphManager.generateMoodLineGraph(context, view, lineGraph[1], "Happy");
-	        	} else {
-	        		GraphManager.generateMoodColumnGraph(context, view, columnGraph[1], "Happy");
-	        	}
-	            return true;
-	        case R.id.Motivated:
-	        	if (genLineGraphs) {
-	        		GraphManager.generateMoodLineGraph(context, view, lineGraph[2], "Motivated");
-	        	} else {
-	        		GraphManager.generateMoodColumnGraph(context, view, columnGraph[2], "Motivated");
-	        	}
-	        	return true;
-	        case R.id.Stressed:
-	        	if (genLineGraphs) {
-	        		GraphManager.generateMoodLineGraph(context, view, lineGraph[3], "Stressed");
-	        	} else {
-	        		GraphManager.generateMoodColumnGraph(context, view, columnGraph[3], "Stressed");
-	        	}
-	        	return true;
-	        case R.id.Angry:
-	        	if (genLineGraphs) {
-	        		GraphManager.generateMoodLineGraph(context, view, lineGraph[4], "Angry");
-	        	} else {
-	        		GraphManager.generateMoodColumnGraph(context, view, columnGraph[4], "Angry");
-	        	}
-	        	return true;
-	        case R.id.Tired:
-	        	if (genLineGraphs) {
-	        		GraphManager.generateMoodLineGraph(context, view, lineGraph[5], "Tired");
-	        	} else {
-	        		GraphManager.generateMoodColumnGraph(context, view, columnGraph[5], "Tired");
-	        	}
-	        	return true;
-	        case R.id.Depressed:
-	        	if (genLineGraphs) {
-	        		GraphManager.generateMoodLineGraph(context, view, lineGraph[6], "Depressed");
-	        	} else {
-	        		GraphManager.generateMoodColumnGraph(context, view, columnGraph[6], "Depressed");
-	        	}
-	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
+	private void generateLineData(int color, float range) {
+		// Cancel last animation if not finished.
+		lcv.cancelDataAnimation();
+
+		// Modify data targets
+		Line line = lineData.getLines().get(0);// For this example there is always only one line.
+		line.setColor(color);
+		for (PointValue value : line.getValues()) {
+			// Change target only for Y value.
+			value.setTarget(value.getX(), (float) Math.random() * range);
+		}
+
+		// Start new data animation with 300ms duration;
+		lcv.startDataAnimation(300);
+	}
+	
+	public void setUpLineChart(Context appContext, LineChartView lcv) {
+		List<PointValue> dataPoints = GraphManager.getMoodLineData(appContext, "testdata", "Just Ok");
+		
+		// Generate lines from point data
+		Line line = new Line(dataPoints).setColor(Color.BLUE).setCubic(true);
+		line.setStrokeWidth(1);
+		line.setPointRadius(3);
+		line.setHasLabelsOnlyForSelected(true);
+		List<Line> lines = new ArrayList<Line>();
+		lines.add(line);
+		
+		// Create axes
+		Axis axisY = new Axis();
+		Axis axisX = new Axis();
+		
+		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		// If not auto gen, set the axis' points
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i : yAxisValues) {
+			yValues.add(new AxisValue(i));
+		}
+		axisY.setValues(yValues);
+		
+		// Set name and lines
+//		axisY.setName("Just Ok");
+//		axisX.setName("Days");
+		axisY.setHasLines(true);
+		axisX.setHasLines(false);
+//		axisY.setLineColor(Color.DKGRAY);
+//		axisX.setLineColor(Color.DKGRAY);
+		
+		lineData = new LineChartData(lines);
+		
+		lineData.setAxisXBottom(axisX);
+		lineData.setAxisYLeft(axisY);
+		
+		lcv.setValueSelectionEnabled(true);
+		lcv.setLineChartData(lineData);
+		
+		// For build-up animation you have to disable viewport recalculation.
+		lcv.setViewportCalculationEnabled(false);
+		
+		// And set initial max viewport and current viewport- remember to set viewports after data.
+		Viewport v = new Viewport(0, 10, dataPoints.size(), 0);
+		lcv.setMaxViewport(v);
+		lcv.setCurrentViewport(v, false);
+
+		lcv.setZoomType(ZoomType.HORIZONTAL);		
+	}
+	
+//	public void setUpMoodColumnGraph(Context appContext, ColumnGraph columnGraph, ColumnChartView ccv) {
+//		// values for the mood column we want
+//		Map<String, List<ColumnValue>> givenValues = GraphManager.getColumnMoodData(appContext, "testdata");
+//		
+//		String[] moods = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
+//		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.RED, Color.LTGRAY, Color.DKGRAY};
+//		
+//		// create columns (average values per column)
+//		List<Column> columns = new ArrayList<Column>();
+//		List<ColumnValue> colValues;
+//		int sum;
+//		for (int i = 0; i < givenValues.size(); i++) {
+//			colValues = new ArrayList<ColumnValue>();
+//			colValues = givenValues.get(moods[i]);
+//			sum = 0;
+//			for (int j = 0; j < colValues.size(); j++) {
+//				sum += (int) colValues.get(j).getValue();
+//			}
+//			List<ColumnValue> avgValue = new ArrayList<ColumnValue>();
+//			avgValue.add(new ColumnValue(sum / colValues.size(), colors[i]));
+//			Column column = new Column(avgValue);
+//			column.setHasLabelsOnlyForSelected(true);
+//			columns.add(column);
+//		}
+//		
+//		// set up axes
+//		Axis xAxis = new Axis();
+//		Axis yAxis = new Axis();
+//		
+//		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+//		// If not auto gen, set the axis' points
+//		List<AxisValue> yValues = new ArrayList<AxisValue>();
+//		for (int i : yAxisValues) {
+//			yValues.add(new AxisValue(i));
+//		}
+//
+////		xAxis.setName(columnGraph.xAxisName);
+////		yAxis.setName(columnGraph.yAxisName);
+//		yAxis.setHasLines(true);
+//		
+//		// set up chart
+//		ColumnChartData data = new ColumnChartData(columns);
+//		data.setAxisXBottom(xAxis);
+//		data.setAxisYLeft(yAxis);
+//		
+//		ccv.setValueSelectionEnabled(true);
+//		ccv.setColumnChartData(data);
+//	}
 }

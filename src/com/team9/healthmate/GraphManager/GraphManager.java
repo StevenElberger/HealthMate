@@ -13,8 +13,10 @@ import org.json.JSONException;
 import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.RelativeLayout;
+import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Column;
@@ -23,6 +25,7 @@ import lecho.lib.hellocharts.model.ColumnValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
 
@@ -255,5 +258,213 @@ public class GraphManager {
 		chart.setLineChartData(data);
 		
 		((RelativeLayout) view).addView(chart);
+	}
+	
+	/**
+	 * Testing / Debug
+	 * Grabs data from the given file name for the moods
+	 * activity.
+	 * @param appContext	Context of the activity calling
+	 * @param fileName		Name of the file with moods data
+	 * @param graphColor	Not currently being used, but the color specified in the graph object
+	 * @return				Returns a map (Key = mood, Value = column values for that mood)
+	 */
+	public static Map<String, List<ColumnValue>> getColumnMoodData(Context appContext, String fileName) {
+		Map<String, List<ColumnValue>> data = new HashMap<String, List<ColumnValue>>();
+		List<ColumnValue> justOkColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> happyColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> motivatedColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> stressedColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> angryColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> tiredColumn = new ArrayList<ColumnValue>();
+		List<ColumnValue> depressedColumn = new ArrayList<ColumnValue>();
+		
+		try {
+			// Grab data from data file
+			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, fileName);
+			Iterator<Map<String, String>> iterator = moodData.iterator();
+			Map<String, String> dataSet = new HashMap<String, String>();
+			
+			while (iterator.hasNext()) {
+				// Go through all the keys
+				dataSet = iterator.next();
+				Iterator<String> it = dataSet.keySet().iterator();
+				while (it.hasNext()) {
+					// If the keys are what we're looking for
+					// then put their values into columns
+					String key = it.next();
+					String value = dataSet.get(key);
+					if (key.equals("Just Ok")) {
+						ColumnValue justOk = new ColumnValue(Integer.parseInt(value), Color.GREEN);
+						justOkColumn.add(justOk);
+					} else if (key.equals("Happy")) {
+						ColumnValue happy = new ColumnValue(Integer.parseInt(value), Color.YELLOW);
+						happyColumn.add(happy);
+					} else if (key.equals("Motivated")) {
+						ColumnValue motivated = new ColumnValue(Integer.parseInt(value), Color.CYAN);
+						motivatedColumn.add(motivated);
+					} else if (key.equals("Stressed")) {
+						ColumnValue stressed = new ColumnValue(Integer.parseInt(value), Color.MAGENTA);
+						stressedColumn.add(stressed);
+					} else if (key.equals("Angry")) {
+						ColumnValue angry = new ColumnValue(Integer.parseInt(value), Color.RED);
+						angryColumn.add(angry);
+					} else if (key.equals("Tired")) {
+						ColumnValue tired = new ColumnValue(Integer.parseInt(value), Color.LTGRAY);
+						tiredColumn.add(tired);
+					} else if (key.equals("Depressed")) {
+						ColumnValue depressed = new ColumnValue(Integer.parseInt(value), Color.DKGRAY);
+						depressedColumn.add(depressed);
+					}
+				}
+			}
+			data.put("Just Ok", justOkColumn);
+			data.put("Happy", happyColumn);
+			data.put("Motivated", motivatedColumn);
+			data.put("Stressed", stressedColumn);
+			data.put("Angry", angryColumn);
+			data.put("Tired", tiredColumn);
+			data.put("Depressed", depressedColumn);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	/**
+	 * Testing / Debug
+	 * @param appContext
+	 * @param lcv
+	 */
+	public static void setUpLineChart(Context appContext, LineChartView lcv) {
+		List<PointValue> dataPoints = getMoodLineData(appContext, "testdata", "Just Ok");
+		
+		// Generate lines from point data
+		Line line = new Line(dataPoints).setColor(Color.BLUE).setCubic(true);
+		line.setStrokeWidth(1);
+		line.setPointRadius(3);
+		line.setHasLabelsOnlyForSelected(true);
+		List<Line> lines = new ArrayList<Line>();
+		lines.add(line);
+		
+		// Create axes
+		Axis axisY = new Axis();
+		Axis axisX = new Axis();
+		
+		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		// If not auto gen, set the axis' points
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i : yAxisValues) {
+			yValues.add(new AxisValue(i));
+		}
+		axisY.setValues(yValues);
+		
+		// Set name and lines
+//		axisY.setName("Just Ok");
+//		axisX.setName("Days");
+		axisY.setHasLines(true);
+		axisX.setHasLines(false);
+//		axisY.setLineColor(Color.DKGRAY);
+//		axisX.setLineColor(Color.DKGRAY);
+		
+		LineChartData data = new LineChartData(lines);
+		
+		data.setAxisXBottom(axisX);
+		data.setAxisYLeft(axisY);
+		
+		lcv.setValueSelectionEnabled(true);
+		lcv.setLineChartData(data);
+		
+		// For build-up animation you have to disable viewport recalculation.
+		lcv.setViewportCalculationEnabled(false);
+		
+		// And set initial max viewport and current viewport- remember to set viewports after data.
+		Viewport v = new Viewport(0, 10, dataPoints.size(), 0);
+		lcv.setMaxViewport(v);
+		lcv.setCurrentViewport(v, false);
+
+		lcv.setZoomType(ZoomType.HORIZONTAL);		
+	}
+	
+	/**
+	 * Testing / Debug
+	 * Should display a column chart graph with
+	 * each column representing the average values
+	 * of a specific mood.
+	 * @param appContext
+	 * @param columnGraph
+	 * @param ccv
+	 */
+	public static void setUpMoodColumnGraph(Context appContext, ColumnGraph columnGraph, ColumnChartView ccv) {
+		// values for the mood column we want
+		Map<String, List<ColumnValue>> givenValues = getColumnMoodData(appContext, columnGraph.fileName);
+		
+		String[] moods = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
+		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.RED, Color.LTGRAY, Color.DKGRAY};
+		
+		// create columns (average values per column)
+		List<Column> columns = new ArrayList<Column>();
+		List<ColumnValue> colValues;
+		int sum;
+		for (int i = 0; i < givenValues.size(); i++) {
+			colValues = new ArrayList<ColumnValue>();
+			colValues = givenValues.get(moods[i]);
+			sum = 0;
+			for (int j = 0; j < colValues.size(); j++) {
+				sum += (int) colValues.get(j).getValue();
+			}
+			List<ColumnValue> avgValue = new ArrayList<ColumnValue>();
+			avgValue.add(new ColumnValue(sum / colValues.size(), colors[i]));
+			Column column = new Column(avgValue);
+			column.setHasLabelsOnlyForSelected(true);
+			columns.add(column);
+		}
+		
+		// set up axes
+		Axis xAxis = new Axis();
+		Axis yAxis = new Axis();
+		
+		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		// If not auto gen, set the axis' points
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i : yAxisValues) {
+			yValues.add(new AxisValue(i));
+		}
+
+//		xAxis.setName(columnGraph.xAxisName);
+//		yAxis.setName(columnGraph.yAxisName);
+		yAxis.setHasLines(true);
+		
+		// set up chart
+		ColumnChartData data = new ColumnChartData(columns);
+		data.setAxisXBottom(xAxis);
+		data.setAxisYLeft(yAxis);
+		
+		ccv.setValueSelectionEnabled(true);
+		ccv.setColumnChartData(data);
+	}
+	
+	public static void generateLineData(LineChartView lcv, Context appContext) {
+		// Cancel last animation if not finished.
+		lcv.cancelDataAnimation();
+		
+		List<PointValue> dataPoints = getMoodLineData(appContext, "testdata", "Just Ok");
+		
+		// Modify data targets
+		Line line = new Line(dataPoints).setColor(Color.BLUE).setCubic(true);
+		line.setStrokeWidth(1);
+		line.setPointRadius(3);
+		List<Line> lines = new ArrayList<Line>();
+		lines.add(line);
+		
+		LineChartData data = new LineChartData(lines);
+		
+		//lcv.setLineChartData(data);
+		
+		
+		// Start new data animation with 300ms duration;
+		lcv.startDataAnimation(300);
 	}
 }
