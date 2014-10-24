@@ -40,7 +40,7 @@ public class GraphManager {
 	 * Only necessary for debug purposes. This will
 	 * generate some random mood data to a file in order to
 	 * test the graph generating functions.
-	 * @param appContext	The context of the Activity calling this method.
+	 * @param appContext	The context of the Activity calling this method
 	 */
 	public static void writeRandomData(Context appContext) {
 		String[] moodKeys = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
@@ -67,12 +67,12 @@ public class GraphManager {
 	/**
 	 * Grabs data from the given file name for the moods
 	 * activity.
-	 * @param appContext	Context of the activity calling
+	 * @param appContext	Context of the Activity calling
 	 * @param columnGraph	ColumnGraph object with necessary information
 	 * @param mood			The mood to be graphed
 	 * @return				Returns a list of column values for the specified mood
 	 */
-	public static List<ColumnValue> getColumnMoodData(Context appContext, ColumnGraph columnGraph, String mood) {
+	public static List<ColumnValue> getMoodColumnData(Context appContext, ColumnGraph columnGraph, String mood) {
 		List<ColumnValue> colValues = new ArrayList<ColumnValue>();
 		
 		try {
@@ -106,14 +106,14 @@ public class GraphManager {
 	
 	/**
 	 * Generates a mood column graph for the mood specified.
-	 * @param appContext		The context of the activity
+	 * @param appContext		The context of the Activity that called
 	 * @param view				The view to display the graph in
 	 * @param columnGraph		The ColumnGraph object for necessary graph information
 	 * @param mood				The mood to be graphed
 	 */
 	public static void generateMoodColumnGraph(Context appContext, View view, ColumnGraph columnGraph, String mood) {
 		// values for the mood column we want
-		List<ColumnValue> givenValues = getColumnMoodData(appContext, columnGraph, mood);
+		List<ColumnValue> givenValues = getMoodColumnData(appContext, columnGraph, mood);
 		
 		// create columns
 		List<Column> columns = new ArrayList<Column>();
@@ -123,6 +123,7 @@ public class GraphManager {
 			colValues.add(givenValues.get(i));
 			
 			Column column = new Column(colValues);
+			column.setHasLabelsOnlyForSelected(true);
 			columns.add(column);
 		}
 		
@@ -154,6 +155,7 @@ public class GraphManager {
 		data.setAxisYLeft(yAxis);
 		
 		ColumnChartView chart = new ColumnChartView(appContext);
+		chart.setValueSelectionEnabled(true);
 		chart.setColumnChartData(data);
 		
 		((RelativeLayout) view).addView(chart);
@@ -163,12 +165,12 @@ public class GraphManager {
 	 * Grabs mood data from a file to 
 	 * generate a line graph. Called from
 	 * generateMoodLineGraph.
-	 * @param appContext	Context from the activity creating the graph
+	 * @param appContext	Context from the Activity that called
 	 * @param fileName		Name of the file containing the point data
 	 * @param mood			The mood to be graphed
 	 * @return				Returns the list of point values
 	 */
-	public static List<PointValue> getLineMoodData(Context appContext, String fileName, String mood) {
+	public static List<PointValue> getMoodLineData(Context appContext, String fileName, String mood) {
 		List<PointValue> dataPoints = new ArrayList<PointValue>();
 		try {
 			// Grab data from data file
@@ -205,18 +207,20 @@ public class GraphManager {
 	 * from the moods activity. Requires a LineGraph
 	 * object to be passed with necessary information
 	 * to generate the graph.
-	 * @param appContext	Context from the activity calling this method
-	 * @param v				View to display the graph in (should be a RelativeLayout)
+	 * @param appContext	Context of the Activity calling this method
+	 * @param view			View to display the graph in (should be a RelativeLayout)
 	 * @param lineGraph		Line Graph Data object with necessary graph information
+	 * @param mood			The mood to be graphed
 	 */
-	public static void generateMoodLineGraph(Context appContext, View v, LineGraph lineGraph, String mood) {
+	public static void generateMoodLineGraph(Context appContext, View view, LineGraph lineGraph, String mood) {
 		// Grab data, generate point values
-		List<PointValue> dataPoints = getLineMoodData(appContext, lineGraph.fileName, mood);
+		List<PointValue> dataPoints = getMoodLineData(appContext, lineGraph.fileName, mood);
 
 		// Generate lines from point data
 		Line line = new Line(dataPoints).setColor(lineGraph.color).setCubic(true);
 		line.setStrokeWidth(lineGraph.strokeWidth);
 		line.setPointRadius(lineGraph.pointWidth);
+		line.setHasLabelsOnlyForSelected(true);
 		List<Line> lines = new ArrayList<Line>();
 		lines.add(line);
 		
@@ -247,8 +251,9 @@ public class GraphManager {
 		// Generate the graph and display it inside
 		// the appropriate view
 		LineChartView chart = new LineChartView(appContext);
+		chart.setValueSelectionEnabled(true);
 		chart.setLineChartData(data);
 		
-		((RelativeLayout) v).addView(chart);
+		((RelativeLayout) view).addView(chart);
 	}
 }
