@@ -33,8 +33,8 @@ public class Login extends Activity implements OnClickListener{
 	// These contain the text value of the ids for username and password 
 	EditText name = null;
 	EditText pass = null;
-	//public Intent intent;
-	*/
+	//public Intent intent;*/
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,8 @@ public class Login extends Activity implements OnClickListener{
 		/*
 		// Get the reference for the two text fields in the activity
 		name = (EditText)findViewById(R.id.username);
-		pass = (EditText)findViewById(R.id.password);
-		*/
+		pass = (EditText)findViewById(R.id.password);*/
+		
 	}
 	
 	public void startMenu()	{
@@ -81,7 +81,7 @@ public class Login extends Activity implements OnClickListener{
 				// Get the context of the Application, send the information that needs to be written,
 				// read the information from a file, and display the information read onto the current screen.
 				Context context = getApplicationContext();
-				DataStorageManager.writeJSONObject(context, "account", information, true);
+				//DataStorageManager.writeJSONObject(context, "account", information, false);
 				ArrayList<Map<String, String>> info = 
 						DataStorageManager.readJSONObject(context, "account");
 				Iterator<Map<String, String>> iterator = info.iterator();
@@ -101,7 +101,10 @@ public class Login extends Activity implements OnClickListener{
 						collectionOfData = collectionOfData + key + ": " + dataSet.get(key) + "\n";
 					}
 				}
-				DataStorageManager.displayText(this, R.id.textView1, collectionOfData);
+				if (DataStorageManager.deleteJSONObject(context, "account", info.get(2)))
+					DataStorageManager.displayText(this, R.id.textView1, "success");
+				else
+					DataStorageManager.displayText(this, R.id.textView1, "failed");
 			}
 			catch (Exception e) {
 				e.printStackTrace();
