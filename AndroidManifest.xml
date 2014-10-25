@@ -58,6 +58,10 @@
             android:name=".ChartDemo"
             android:label="@string/title_activity_chart_demo" >
         </activity>
+        <activity
+            android:name=".AnimatedChartDemo"
+            android:label="@string/title_activity_animated_chart_demo" >
+        </activity>
     </application>
 
 </manifest>
