@@ -3,6 +3,8 @@ package com.team9.healthmate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class AppointmentDetail extends Activity {
@@ -14,6 +16,7 @@ public class AppointmentDetail extends Activity {
 		
 		Intent intent = getIntent();
 		
+		String appointmentTitle = intent.getStringExtra("title");
 		String doctorsName = intent.getStringExtra("name");
 		String location = intent.getStringExtra("location");
 		String phone = intent.getStringExtra("phone");
@@ -23,7 +26,10 @@ public class AppointmentDetail extends Activity {
 		String endTime = intent.getStringExtra("end time");
 		String date = intent.getStringExtra("date");
 		
-		TextView textView =(TextView) findViewById(R.id.AppointmentDetailName);
+		TextView textView =(TextView) findViewById(R.id.AppointmentDetailTitle);
+		textView.setText(appointmentTitle);
+		
+		textView =(TextView) findViewById(R.id.AppointmentDetailName);
 		textView.setText("Doctor's Name: " + doctorsName);
 		
 		textView =(TextView) findViewById(R.id.AppointmentDetailAddress);
@@ -44,6 +50,19 @@ public class AppointmentDetail extends Activity {
 		textView =(TextView) findViewById(R.id.AppointmentDetailComment);
 		textView.setText("Comment: \n" + comment);
 		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+	    getMenuInflater().inflate(R.menu.appointment_details, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override

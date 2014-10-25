@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="10dp"
+        android:textSize="20sp"
         android:text="@string/appointment_detail_title"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     

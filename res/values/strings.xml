@@ -30,7 +30,8 @@
     </string-array>
     <string name="ok">OK</string>
     
-    <string name="appointment_form_title">Appointment Form</string>
+    <string name="appointment_form_header">Appointment Form</string>
+    <string name="appointment_form_title">Appointment Title</string>
     <string name="appointment_form_start_time_title">Start Time of Appointment</string>
     <string name="appointment_form_end_time_title">End Time of Appointment</string>
     <string name="appointment_form_date_title">Date of Appointment</string>
@@ -53,6 +54,9 @@
     <string name="appointment_detail_end_time">Time: </string>
     <string name="appointment_detail_comment">Comment: </string>
     <string name="title_activity_appointment_detail">Appointment Information</string>
+    
     <string name="action_create_new_appointment">New Appointment</string>
+    <string name="action_edit_appointment">Edit</string>
+    <string name="action_delete_appointment">Delete</string>
 
 </resources>

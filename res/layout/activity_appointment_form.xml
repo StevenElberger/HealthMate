@@ -14,11 +14,20 @@
         android:paddingTop="10dp" >
 
         <TextView
-            android:id="@+id/AppointmentFormTitle"
+            android:id="@+id/AppointmentFormHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/appointment_form_title"
+            android:text="@string/appointment_form_header"
             android:textSize="20sp" />
+        
+        <EditText
+            android:id="@+id/AppointmentFormTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/appointment_form_title"
+            android:inputType="text"
+            android:paddingTop="5dp" >
+        </EditText>
 
         <EditText
             android:id="@+id/AppointmentFormName"
@@ -113,12 +122,22 @@
             android:paddingTop="5dp"
             android:spinnersShown="true"
             android:startYear="2014" />
+        
+        <TextView
+            android:id="@+id/SaveButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/appointment_form_save"
+            android:textSize="20sp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/SaveAppointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/appointment_form_save" />
+            android:contentDescription="@string/appointment_form_save"
+            android:src="@drawable/ic_action_content_save" />
     </LinearLayout>
 
 </ScrollView>

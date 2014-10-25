@@ -10,14 +10,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 
 public class AppointmentForm extends Activity implements OnClickListener {
 	
-	public Button save;
+	public ImageButton save;
 	
 	
 	@Override
@@ -25,7 +25,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_form);
 		
-		save = (Button) findViewById(R.id.SaveAppointment);
+		save = (ImageButton) findViewById(R.id.SaveAppointment);
 		save.setOnClickListener((OnClickListener) this);
 		
 	}
@@ -43,6 +43,10 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		try {
 		Map<String, String> appointment = new HashMap<String, String>();
 		EditText userInput;
+		
+		userInput =(EditText) findViewById(R.id.AppointmentFormTitle);
+		appointment.put("title", userInput.getText().toString());
+		
 		userInput =(EditText) findViewById(R.id.AppointmentFormName);
 		appointment.put("name", userInput.getText().toString());
 		
@@ -91,7 +95,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		}
 		
 		DatePicker datePicker =(DatePicker) findViewById(R.id.AppointmentFormDate);
-		int day = datePicker.getDayOfMonth();
+		int day = datePicker.getDayOfMonth() + 1;
 		int month = datePicker.getMonth();
 		int year = datePicker.getYear();
 		String formatedDate = month + "-" + day + "-" + year;

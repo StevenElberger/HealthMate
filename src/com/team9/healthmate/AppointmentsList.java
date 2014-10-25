@@ -16,8 +16,19 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+/**
+ * Activity Class that Displays a List of Appointments that
+ * have been created by the user of the application. The user
+ * can select an appointment and view its information through
+ * another activity. The user may also create new appointments
+ * through another activity by clicking the New Activity Button.
+ * @author Michael Sandoval
+ *
+ */
 public class AppointmentsList extends ListActivity {
 	
+	// Container for the list of appointments that will
+	// be read from the appointments file.
 	ArrayList<Map<String, String>> appointments; 
 	
 	@Override
@@ -25,14 +36,35 @@ public class AppointmentsList extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_list);
 		
+		// Attempt to read from the Appointments file
 		try {
 		appointments =  DataStorageManager.readJSONObject(this, "appointments");
+		
+		// A list of strings that will be displayed to the user
 		ArrayList<String> appointmentList = new ArrayList<String>();
+		
+		// The information that will be displayed to the user.
+		String appointmentInformation = "";
+		
+		// Object used to process each appointment
+		Map<String, String> appointment;
+		
+		// Go through all the appointments and generate a list of Strings.
+		// This list will be used to generate a list with information about
+		// each appointment.
 		for (int i = 0; i < appointments.size(); i++) {
-			appointmentList.add("Appointment " + (i + 1));
+			appointment = appointments.get(i);
+			appointmentInformation = appointment.get("title") + "\n" + "Doctor: " + 
+					appointment.get("name") + " Date: " + appointment.get("date");
+			appointmentList.add(appointmentInformation);
 		}
+		
+		// Pass in the list of information, the adapter will generate
+		// a list.
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 				this, android.R.layout.simple_list_item_1, appointmentList);
+		
+		// set the adapter as active.
 		setListAdapter(adapter);
 		}
 		catch (Exception e) {
