@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.view.View;
 
 /**
- * Used to show graph generation
- * features. Mainly used for debugging.
+ * An example of a line column dependency
+ * graph using averages for each mood as the
+ * column values and updating the line graph
+ * with the selected column's data.
  * @author Steve
  *
  */
@@ -48,6 +50,11 @@ public class AnimatedChartDemo extends Activity {
 		ccv.setOnValueTouchListener(new ValueTouchListener());
 	}
 	
+	/**
+	 * Detects when a column is selected.
+	 * @author Steve
+	 *
+	 */
 	private class ValueTouchListener implements ColumnChartView.ColumnChartOnValueTouchListener {
 
 		@Override
