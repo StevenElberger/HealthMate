@@ -8,6 +8,7 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -18,6 +19,7 @@ import android.widget.TimePicker;
 public class AppointmentForm extends Activity implements OnClickListener {
 	
 	public ImageButton save;
+	Map<String, String> appointmentDetails;
 	
 	
 	@Override
@@ -25,8 +27,54 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_form);
 		
+		//Intent intent = getIntent();
+		
 		save = (ImageButton) findViewById(R.id.SaveAppointment);
 		save.setOnClickListener((OnClickListener) this);
+		
+		/*if (intent.getStringExtra("timestamp") != null)
+		{
+			/*EditText editInput;
+			appointmentDetails = new HashMap<String, String>();
+			
+			appointmentDetails.put("timestamp", intent.getStringExtra("timestamp"));
+			
+			appointmentDetails.put("title", intent.getStringExtra("title"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormTitle);
+			editInput.setText(intent.getStringExtra("title"));
+			
+			appointmentDetails.put("name", intent.getStringExtra("name"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormName);
+			editInput.setText(intent.getStringExtra("name"));
+			
+			appointmentDetails.put("location", intent.getStringExtra("location"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormAddress);
+			editInput.setText(intent.getStringExtra("location"));
+			
+			appointmentDetails.put("phone", intent.getStringExtra("phone"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormPhoneNumber);
+			editInput.setText(intent.getStringExtra("phone"));
+			
+			appointmentDetails.put("email", intent.getStringExtra("email"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormEmail);
+			editInput.setText(intent.getStringExtra("email"));
+			
+			appointmentDetails.put("date", intent.getStringExtra("date"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormDate);
+			editInput.setText(intent.getStringExtra("date"));
+			
+			appointmentDetails.put("start time", intent.getStringExtra("start time"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormStartTime);
+			editInput.setText(intent.getStringExtra("start time"));
+			
+			appointmentDetails.put("end time", intent.getStringExtra("end time"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormEndTime);
+			editInput.setText(intent.getStringExtra("end time"));
+			
+			appointmentDetails.put("comment", intent.getStringExtra("comment"));
+			editInput = (EditText)findViewById(R.id.AppointmentFormEndTime);
+			editInput.setText(intent.getStringExtra("comment"));
+		}*/
 		
 	}
 	
@@ -41,6 +89,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		
 		try {
+			
+		Log.w("ImageButton", "Lister Active");
 		Map<String, String> appointment = new HashMap<String, String>();
 		EditText userInput;
 		
@@ -58,6 +108,9 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		
 		userInput =(EditText) findViewById(R.id.AppointmentFormEmail);
 		appointment.put("email", userInput.getText().toString());
+		
+		userInput =(EditText) findViewById(R.id.AppointmentFormComment);
+		appointment.put("comment", userInput.getText().toString());
 		
 		TimePicker timePicker =(TimePicker) findViewById(R.id.AppointmentFormStartTime);
 		timePicker.clearFocus();
@@ -101,14 +154,14 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		String formatedDate = month + "-" + day + "-" + year;
 		appointment.put("date", formatedDate);
 		
-		userInput =(EditText) findViewById(R.id.AppointmentFormComment);
-		appointment.put("comment", userInput.getText().toString());
+		/*if (appointmentDetails.get("timestamp") != null) {
+			DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+		}*/
 		
 		DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
 		
 		appointmentList();
 		
-		//finish();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
