@@ -380,6 +380,7 @@ public class GraphManager {
 		}
 
 		yAxis.setHasLines(true);
+		yAxis.setName("Mood Averages");
 		
 		// set up chart
 		ColumnChartData data = new ColumnChartData(columns);
@@ -465,7 +466,7 @@ public class GraphManager {
 	public static void setUpInitialLineChart(Context appContext, LineChartView lcv) {
 		// Doesn't actually use "Just Ok". Only uses it's x-axis values --spaghetti!!!--
 		List<PointValue> dataPoints = GraphManager.getMoodLineData(appContext, "testdata", "Just Ok");
-		ChartData lineData = lcv.getChartData();
+		LineChartData lineData = (LineChartData) lcv.getChartData();
 		
 		// Generate lines from point data
 		Line line = new Line(dataPoints).setColor(Color.WHITE).setCubic(true);
@@ -473,7 +474,7 @@ public class GraphManager {
 		line.setPointRadius(3);
 		line.setHasLabelsOnlyForSelected(true);
 		for (PointValue value : line.getValues()) {
-			value.set(value.getX(), 5);
+			value.set(value.getX() - 1, 5);
 		}
 		List<Line> lines = new ArrayList<Line>();
 		lines.add(line);
@@ -490,6 +491,12 @@ public class GraphManager {
 		}
 		axisY.setValues(yValues);
 		
+		List<AxisValue> xValues = new ArrayList<AxisValue>();
+		for (PointValue value : line.getValues()) {
+			xValues.add(new AxisValue(value.getX()));
+		}
+		axisX.setValues(xValues);
+		
 		// Set name and lines
 		axisY.setHasLines(true);
 		axisX.setHasLines(false);
@@ -501,7 +508,7 @@ public class GraphManager {
 		lineData.setAxisYLeft(axisY);
 		
 		lcv.setValueSelectionEnabled(true);
-		lcv.setLineChartData((LineChartData) lineData);
+		lcv.setLineChartData(lineData);
 		
 		// For build-up animation you have to disable viewport recalculation
 		lcv.setViewportCalculationEnabled(false);
