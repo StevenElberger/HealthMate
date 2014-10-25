@@ -109,6 +109,25 @@ public class Login extends Activity implements OnClickListener{
 			catch (Exception e) {
 				e.printStackTrace();
 			}*/
+			/*try {
+				Context context = getApplicationContext();
+				ArrayList<Map<String, String>> information = DataStorageManager.readJSONObject(context, "account");
+				
+				if (DataStorageManager.deleteJSONObject(context, "account", information.get(2)))
+					DataStorageManager.displayText(this, R.id.textView1, "success");
+				else
+					DataStorageManager.displayText(this, R.id.textView1, "failed");
+				Map<String, String> information;
+				for (int i = 0; i < 200; i++) {
+					information = new HashMap<String, String>();
+					information.put("name", " " + i);
+					DataStorageManager.writeJSONObject(context, "account", information, false);
+				}
+				
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}*/
 			startMenu();
 		}
 	}
