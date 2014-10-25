@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.ChartData;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.ColumnValue;
@@ -261,15 +262,14 @@ public class GraphManager {
 	}
 	
 	/**
-	 * Testing / Debug
-	 * Grabs data from the given file name for the moods
-	 * activity.
-	 * @param appContext	Context of the activity calling
+	 * Grabs all the data for the moods activity.
+	 * Used to reduce the number of times the data file
+	 * needs to be read.
+	 * @param appContext	Context of the Activity calling
 	 * @param fileName		Name of the file with moods data
-	 * @param graphColor	Not currently being used, but the color specified in the graph object
 	 * @return				Returns a map (Key = mood, Value = column values for that mood)
 	 */
-	public static Map<String, List<ColumnValue>> getColumnMoodData(Context appContext, String fileName) {
+	public static Map<String, List<ColumnValue>> getAllMoodColumnData(Context appContext, String fileName) {
 		Map<String, List<ColumnValue>> data = new HashMap<String, List<ColumnValue>>();
 		List<ColumnValue> justOkColumn = new ArrayList<ColumnValue>();
 		List<ColumnValue> happyColumn = new ArrayList<ColumnValue>();
@@ -334,18 +334,147 @@ public class GraphManager {
 	}
 	
 	/**
-	 * Testing / Debug
-	 * @param appContext
-	 * @param lcv
+	 * Calculates the average value for
+	 * each data type and displays a column
+	 * for each data type with its respective
+	 * average.
+	 * @param appContext	Context of the Activity
+	 * @param ccv			ColumnChart to be created
 	 */
-	public static void setUpLineChart(Context appContext, LineChartView lcv) {
-		List<PointValue> dataPoints = getMoodLineData(appContext, "testdata", "Just Ok");
+	public static void setUpMoodColumnGraph(Context appContext, ColumnChartView ccv) {
+		// values for the mood column we want
+		Map<String, List<ColumnValue>> givenValues = getAllMoodColumnData(appContext, "testdata");
+		
+		String[] moods = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
+		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.RED, Color.LTGRAY, Color.DKGRAY};
+		
+		// create columns (average values per column)
+		List<Column> columns = new ArrayList<Column>();
+		List<ColumnValue> colValues;
+		int sum;
+		// iterate through each data type
+		for (int i = 0; i < givenValues.size(); i++) {
+			colValues = new ArrayList<ColumnValue>();
+			colValues = givenValues.get(moods[i]);
+			sum = 0;
+			// calculate sum total of all values for this data
+			for (int j = 0; j < colValues.size(); j++) {
+				sum += (int) colValues.get(j).getValue();
+			}
+			// stick the average in a column
+			List<ColumnValue> avgValue = new ArrayList<ColumnValue>();
+			avgValue.add(new ColumnValue(sum / colValues.size(), colors[i]));
+			Column column = new Column(avgValue);
+			column.setHasLabelsOnlyForSelected(true);
+			columns.add(column);
+		}
+		
+		// set up axes
+		Axis xAxis = new Axis();
+		Axis yAxis = new Axis();
+		
+		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i : yAxisValues) {
+			yValues.add(new AxisValue(i));
+		}
+
+		yAxis.setHasLines(true);
+		
+		// set up chart
+		ColumnChartData data = new ColumnChartData(columns);
+		data.setAxisXBottom(xAxis);
+		data.setAxisYLeft(yAxis);
+		
+		ccv.setValueSelectionEnabled(true);
+		ccv.setColumnChartData(data);
+	}
+	
+	/**
+	 * Updates the line graph in a Line Column
+	 * Dependence Graph when a column is selected
+	 * using the data from the data type represented
+	 * by that column.
+	 * @param lcv			The line chart being updated
+	 * @param context		Context of the Activity
+	 * @param color			Color of the column selected
+	 */
+	public static void updateLineData(LineChartView lcv, Context context, int color) {
+		// Cancel last animation if not finished
+		lcv.cancelDataAnimation();
+		
+		ChartData lineData = lcv.getChartData();
+		List<PointValue> points;
+		// grab points for updating the line graph
+		switch (color) {
+			case Color.GREEN:
+				points = GraphManager.getMoodLineData(context, "testdata", "Just Ok");
+				lineData.getAxisYLeft().setName("Just Ok");
+				break;
+			case Color.YELLOW:
+				points = GraphManager.getMoodLineData(context, "testdata", "Happy");
+				lineData.getAxisYLeft().setName("Happy");
+				break;
+			case Color.CYAN:
+				points = GraphManager.getMoodLineData(context, "testdata", "Motivated");
+				lineData.getAxisYLeft().setName("Motivated");
+				break;
+			case Color.MAGENTA:
+				points = GraphManager.getMoodLineData(context, "testdata", "Stressed");
+				lineData.getAxisYLeft().setName("Stressed");
+				break;
+			case Color.RED:
+				points = GraphManager.getMoodLineData(context, "testdata", "Angry");
+				lineData.getAxisYLeft().setName("Angry");
+				break;
+			case Color.LTGRAY:
+				points = GraphManager.getMoodLineData(context, "testdata", "Tired");
+				lineData.getAxisYLeft().setName("Tired");
+				break;
+			case Color.DKGRAY:
+				points = GraphManager.getMoodLineData(context, "testdata", "Depressed");
+				lineData.getAxisYLeft().setName("Depressed");
+				break;
+			default:
+				points = GraphManager.getMoodLineData(context, "testdata", "Just Ok");
+				lineData.getAxisYLeft().setName("Just Ok");
+				break;
+		}
+		
+		Line newLine = new Line(points);
+		// Modify data targets
+		Line line = ((LineChartData) lineData).getLines().get(0);
+		line.setColor(color);
+		PointValue oldValue, newValue;
+		for (int i = 0; i < line.getValues().size(); i++) {
+			oldValue = line.getValues().get(i);
+			newValue = newLine.getValues().get(i);
+			oldValue.setTarget(oldValue.getX(), newValue.getY());
+		}
+
+		// Start new data animation with 300ms duration
+		lcv.startDataAnimation(300);
+	}
+	
+	/**
+	 * Sets up initial line chart in a Line Column
+	 * Dependence Graph.
+	 * @param appContext	Context of the Activity
+	 * @param lcv			The line chart being updated
+	 */
+	public static void setUpInitialLineChart(Context appContext, LineChartView lcv) {
+		// Doesn't actually use "Just Ok". Only uses it's x-axis values --spaghetti!!!--
+		List<PointValue> dataPoints = GraphManager.getMoodLineData(appContext, "testdata", "Just Ok");
+		ChartData lineData = lcv.getChartData();
 		
 		// Generate lines from point data
-		Line line = new Line(dataPoints).setColor(Color.BLUE).setCubic(true);
+		Line line = new Line(dataPoints).setColor(Color.WHITE).setCubic(true);
 		line.setStrokeWidth(1);
 		line.setPointRadius(3);
 		line.setHasLabelsOnlyForSelected(true);
+		for (PointValue value : line.getValues()) {
+			value.set(value.getX(), 5);
+		}
 		List<Line> lines = new ArrayList<Line>();
 		lines.add(line);
 		
@@ -362,109 +491,26 @@ public class GraphManager {
 		axisY.setValues(yValues);
 		
 		// Set name and lines
-//		axisY.setName("Just Ok");
-//		axisX.setName("Days");
 		axisY.setHasLines(true);
 		axisX.setHasLines(false);
-//		axisY.setLineColor(Color.DKGRAY);
-//		axisX.setLineColor(Color.DKGRAY);
+		axisY.setName("Choose a Column");
 		
-		LineChartData data = new LineChartData(lines);
+		lineData = new LineChartData(lines);
 		
-		data.setAxisXBottom(axisX);
-		data.setAxisYLeft(axisY);
+		lineData.setAxisXBottom(axisX);
+		lineData.setAxisYLeft(axisY);
 		
 		lcv.setValueSelectionEnabled(true);
-		lcv.setLineChartData(data);
+		lcv.setLineChartData((LineChartData) lineData);
 		
-		// For build-up animation you have to disable viewport recalculation.
+		// For build-up animation you have to disable viewport recalculation
 		lcv.setViewportCalculationEnabled(false);
 		
-		// And set initial max viewport and current viewport- remember to set viewports after data.
+		// And set initial max viewport and current viewport - remember to set viewports after data
 		Viewport v = new Viewport(0, 10, dataPoints.size(), 0);
 		lcv.setMaxViewport(v);
 		lcv.setCurrentViewport(v, false);
 
 		lcv.setZoomType(ZoomType.HORIZONTAL);		
-	}
-	
-	/**
-	 * Testing / Debug
-	 * Should display a column chart graph with
-	 * each column representing the average values
-	 * of a specific mood.
-	 * @param appContext
-	 * @param columnGraph
-	 * @param ccv
-	 */
-	public static void setUpMoodColumnGraph(Context appContext, ColumnGraph columnGraph, ColumnChartView ccv) {
-		// values for the mood column we want
-		Map<String, List<ColumnValue>> givenValues = getColumnMoodData(appContext, columnGraph.fileName);
-		
-		String[] moods = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
-		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.RED, Color.LTGRAY, Color.DKGRAY};
-		
-		// create columns (average values per column)
-		List<Column> columns = new ArrayList<Column>();
-		List<ColumnValue> colValues;
-		int sum;
-		for (int i = 0; i < givenValues.size(); i++) {
-			colValues = new ArrayList<ColumnValue>();
-			colValues = givenValues.get(moods[i]);
-			sum = 0;
-			for (int j = 0; j < colValues.size(); j++) {
-				sum += (int) colValues.get(j).getValue();
-			}
-			List<ColumnValue> avgValue = new ArrayList<ColumnValue>();
-			avgValue.add(new ColumnValue(sum / colValues.size(), colors[i]));
-			Column column = new Column(avgValue);
-			column.setHasLabelsOnlyForSelected(true);
-			columns.add(column);
-		}
-		
-		// set up axes
-		Axis xAxis = new Axis();
-		Axis yAxis = new Axis();
-		
-		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		// If not auto gen, set the axis' points
-		List<AxisValue> yValues = new ArrayList<AxisValue>();
-		for (int i : yAxisValues) {
-			yValues.add(new AxisValue(i));
-		}
-
-//		xAxis.setName(columnGraph.xAxisName);
-//		yAxis.setName(columnGraph.yAxisName);
-		yAxis.setHasLines(true);
-		
-		// set up chart
-		ColumnChartData data = new ColumnChartData(columns);
-		data.setAxisXBottom(xAxis);
-		data.setAxisYLeft(yAxis);
-		
-		ccv.setValueSelectionEnabled(true);
-		ccv.setColumnChartData(data);
-	}
-	
-	public static void generateLineData(LineChartView lcv, Context appContext) {
-		// Cancel last animation if not finished.
-		lcv.cancelDataAnimation();
-		
-		List<PointValue> dataPoints = getMoodLineData(appContext, "testdata", "Just Ok");
-		
-		// Modify data targets
-		Line line = new Line(dataPoints).setColor(Color.BLUE).setCubic(true);
-		line.setStrokeWidth(1);
-		line.setPointRadius(3);
-		List<Line> lines = new ArrayList<Line>();
-		lines.add(line);
-		
-		LineChartData data = new LineChartData(lines);
-		
-		//lcv.setLineChartData(data);
-		
-		
-		// Start new data animation with 300ms duration;
-		lcv.startDataAnimation(300);
 	}
 }
