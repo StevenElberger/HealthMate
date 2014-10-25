@@ -46,11 +46,19 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
-        android:id="@+id/AppointmentDetailTime"
+        android:id="@+id/AppointmentDetailStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="@string/appointment_detail_time"
+        android:text="@string/appointment_detail_start_time"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/AppointmentDetailEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/appointment_detail_end_time"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView

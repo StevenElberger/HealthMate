@@ -19,7 +19,8 @@ public class AppointmentDetail extends Activity {
 		String phone = intent.getStringExtra("phone");
 		String email = intent.getStringExtra("email");
 		String comment = intent.getStringExtra("comment");
-		String time = intent.getStringExtra("time");
+		String startTime = intent.getStringExtra("start time");
+		String endTime = intent.getStringExtra("end time");
 		String date = intent.getStringExtra("date");
 		
 		TextView textView =(TextView) findViewById(R.id.AppointmentDetailName);
@@ -34,8 +35,11 @@ public class AppointmentDetail extends Activity {
 		textView =(TextView) findViewById(R.id.AppointmentDetailDate);
 		textView.setText("Date: " + date);
 		
-		textView =(TextView) findViewById(R.id.AppointmentDetailTime);
-		textView.setText("Time: " + time);
+		textView =(TextView) findViewById(R.id.AppointmentDetailStartTime);
+		textView.setText("Start Time: " + startTime);
+		
+		textView =(TextView) findViewById(R.id.AppointmentDetailEndTime);
+		textView.setText("End Time: " + endTime);
 		
 		textView =(TextView) findViewById(R.id.AppointmentDetailComment);
 		textView.setText("Comment: \n" + comment);

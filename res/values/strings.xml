@@ -31,7 +31,8 @@
     <string name="ok">OK</string>
     
     <string name="appointment_form_title">Appointment Form</string>
-    <string name="appointment_form_time_title">Time of Appointment</string>
+    <string name="appointment_form_start_time_title">Start Time of Appointment</string>
+    <string name="appointment_form_end_time_title">End Time of Appointment</string>
     <string name="appointment_form_date_title">Date of Appointment</string>
     <string name="appointment_form_name">Enter a Doctor\'s Name</string>
     <string name="appointment_form_address">Enter a Address</string>
@@ -48,7 +49,8 @@
     <string name="appointment_detail_address">Location: </string>
     <string name="appointment_detail_contact_information">Contact Information\:</string>
     <string name="appointment_detail_date">Date: </string>
-    <string name="appointment_detail_time">Time: </string>
+    <string name="appointment_detail_start_time">Time: </string>
+    <string name="appointment_detail_end_time">Time: </string>
     <string name="appointment_detail_comment">Comment: </string>
     <string name="title_activity_appointment_detail">Appointment Information</string>
     <string name="action_create_new_appointment">New Appointment</string>
