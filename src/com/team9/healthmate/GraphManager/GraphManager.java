@@ -122,16 +122,7 @@ public class GraphManager {
 		List<ColumnValue> givenValues = getMoodColumnData(appContext, columnGraph, mood);
 		
 		// create columns
-		List<Column> columns = new ArrayList<Column>();
-		List<ColumnValue> colValues;
-		for (int i = 0; i < givenValues.size(); i++) {
-			colValues = new ArrayList<ColumnValue>();
-			colValues.add(givenValues.get(i));
-			
-			Column column = new Column(colValues);
-			column.setHasLabelsOnlyForSelected(true);
-			columns.add(column);
-		}
+		List<Column> columns = setUpColumns(givenValues);
 		
 		// set up axes
 		Axis xAxis = new Axis();
@@ -567,17 +558,7 @@ public class GraphManager {
 		// values for the mood column we want
 		List<ColumnValue> givenValues = getColumnData(appContext, "testdata", color, mood);
 		
-		// create columns
-		List<Column> columns = new ArrayList<Column>();
-		List<ColumnValue> colValues;
-		for (int i = 0; i < givenValues.size(); i++) {
-			colValues = new ArrayList<ColumnValue>();
-			colValues.add(givenValues.get(i));
-			
-			Column column = new Column(colValues);
-			column.setHasLabelsOnlyForSelected(true);
-			columns.add(column);
-		}
+		List<Column> columns = setUpColumns(givenValues);
 		
 		// set up axes
 		Axis xAxis = new Axis();
@@ -608,5 +589,20 @@ public class GraphManager {
 		
 		ccv.setColumnChartData(data);
 		
+	}
+	
+	public static List<Column> setUpColumns(List<ColumnValue> givenValues) {
+		// create columns
+		List<Column> columns = new ArrayList<Column>();
+		List<ColumnValue> colValues;
+		for (int i = 0; i < givenValues.size(); i++) {
+			colValues = new ArrayList<ColumnValue>();
+			colValues.add(givenValues.get(i));
+			
+			Column column = new Column(colValues);
+			column.setHasLabelsOnlyForSelected(true);
+			columns.add(column);
+		}
+		return columns;
 	}
 }

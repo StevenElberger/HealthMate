@@ -48,7 +48,7 @@ public class ChartDemo extends ActionBarActivity {
 	 * GraphManager class.
 	 */
 	public void createGraphs() {
-		genLineGraphs = true;
+		genLineGraphs = false;
 		
 		// We know the values for moods are 1 - 10 so we'll explicitly set the y-axis values
 		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
