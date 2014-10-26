@@ -85,9 +85,10 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
   	    }		  
 	}			
 	
-	//The function is calling two button event calls
-	//Button Reset will reset to original state of controls
-	//Button Submit will save the user data to a file
+	/*The function is calling two button event calls
+	*Button Reset will reset to original state of controls
+	*Button Submit will save the user data to a file 
+	*/
 	public void BtnClick(){		
 		//Reset
 		final Button buttonReset = (Button) findViewById(R.id.cmdReset);
@@ -99,7 +100,7 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
             }
         });     
         
-        //Submit
+        //Submit button will submit the user entered data
         final Button buttonSubmit = (Button) findViewById(R.id.cmdSubmit);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             
@@ -131,12 +132,16 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
         });
 	}
 		
-	//Initializing function
+	/*Initializing function
+	 * 
+	 */
 	public void Init(){				
 		SetControlLayout();			
 	}
 
-	// Setting the initial values for the controls	
+	/* Setting the initial values for the controls
+	 * 	
+	 */
 	public void SetControlLayout(){
 		int rsIDCounter, rsIDMoods, rsIDsk;
 		for (int i = 0; i < seek.length; i++) {
@@ -163,12 +168,12 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 				rsIDMoods = R.id.txtAngry;
 				rsIDsk = R.id.skAngry;
 				break;
-			case 6:
+			case 4:
 				rsIDCounter = R.id.txtTiredCounter;
 				rsIDMoods = R.id.txtTired;
 				rsIDsk = R.id.skTired;
 				break;
-			case 7:
+			case 5:
 				rsIDCounter = R.id.txtDepressedCounter;
 				rsIDMoods = R.id.txtDepressed;				
 				rsIDsk = R.id.skDepressed;
@@ -190,7 +195,11 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 	}
 	
 	
-	// If seek bar is moved the text counter will be updated
+	/* If seek bar is moved the text counter will be updated
+	 * @argo the current seekbar used
+	 * @progress indicates the current positoin of seekbar
+	 * @fromUser indicates if the user moved it
+	*/
 	@Override
 	public void onProgressChanged(SeekBar arg0, int progress, boolean fromUser) {
 		if (fromUser) {

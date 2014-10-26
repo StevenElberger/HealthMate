@@ -122,29 +122,55 @@ public class Login extends Activity implements OnClickListener{
 		}
 		else if(v.equals(emergency)){
 			Intent callIntent = new Intent(Intent.ACTION_CALL);
-		    callIntent.setData(Uri.parse("tel:123456789"));
+		    callIntent.setData(Uri.parse("tel:8053208737"));
 		    startActivity(callIntent);
 		    
+		    //sendSMS();
 			sendSMSMessage();
 			sendEmail();
 		}
 	}
 	
 	
-	//Sends a text 
+	//Sends a text
+//	 protected void sendSMS() {
+//	      Log.i("Send SMS", "");
+//
+//	      Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+//	      smsIntent.setData(Uri.parse("smsto:8053208737"));
+//	      smsIntent.setType("vnd.android-dir/mms-sms");
+//
+//	      smsIntent.putExtra("address"  , new String ("8053208737"));
+//	      smsIntent.putExtra("sms_body"  , "Test SMS to Gustavo");
+//	      try {
+//	         startActivity(smsIntent);
+//	         finish();
+//	         Log.i("Finished sending SMS...", "");
+//	      } catch (android.content.ActivityNotFoundException ex) {
+//	         Toast.makeText(Login.this, 
+//	         "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
+//	         Log.v("debugMe2", "Not sending a text");
+//	      }
+//	   }
+	
+	/*Sends a text to specified user
+	 * in the contact list
+	 */
 	protected void sendSMSMessage() {
-	      Log.i("Send SMS", "");
+	      Log.v("Send SMS", "");
 	      
 	      
-	      String phoneNo = "818-795-6013";
+	      String phoneNo = "805-320-8737";
 	      String message = "An emergency call was made by Dave at this time: " + dateFormat.format(date);
 
 	      try {
 	         SmsManager smsManager = SmsManager.getDefault();
 	         smsManager.sendTextMessage(phoneNo, null, message, null, null);
+	         Log.v("debugme", "Send Sms 2 try");
 	         Toast.makeText(getApplicationContext(), "SMS sent.",
 	         Toast.LENGTH_LONG).show();
 	      } catch (Exception e) {
+	    	  
 	         Toast.makeText(getApplicationContext(),
 	         "SMS faild, please try again.",
 	         Toast.LENGTH_LONG).show();
@@ -152,7 +178,9 @@ public class Login extends Activity implements OnClickListener{
 	      }
 	   }
 	
-	//Sends an email out
+	/*	Sends an email out to specified Users
+	 * from the contact list
+	 */
 	protected void sendEmail() {
 		String recipient = "avetikyan.davit@gmail.com";
 		String subject = "An emergency call was made by Dave at this time: " + dateFormat.format(date);
@@ -177,9 +205,9 @@ public class Login extends Activity implements OnClickListener{
 	}
 
 	
-	 public boolean onCreateOptionsMenu(Menu registration) {
-	      // Inflate the menu; this adds items to the action bar if it is present.
-	      getMenuInflater().inflate(R.menu.registration, (android.view.Menu) registration);
-	      return true;
-	   }
+//	 public boolean onCreateOptionsMenu(Menu registration) {
+//	      // Inflate the menu; this adds items to the action bar if it is present.
+//	      getMenuInflater().inflate(R.menu.menu, menu);
+//	      return true;
+//	   }
 }
