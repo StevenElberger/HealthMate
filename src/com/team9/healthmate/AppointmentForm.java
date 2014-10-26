@@ -16,158 +16,272 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
 
+/**
+ * Activity Class that Displays a Form used to create Appointments. The
+ * appointments are stored in the internal storage of the device when the user
+ * selects the save button.
+ * @author Michael
+ * 
+ */
 public class AppointmentForm extends Activity implements OnClickListener {
+
+	// Button to save the Appointment
+	ImageButton save;
+
+	// Data set to contain appointment information
+	Map<String, String> appointmentDetails; 
 	
-	public ImageButton save;
-	Map<String, String> appointmentDetails = new HashMap<String, String>();
-	
-	
+	Map<String, String> appointment;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_form);
-		
-		Intent intent = getIntent();
-		
+
 		save = (ImageButton) findViewById(R.id.SaveAppointment);
 		save.setOnClickListener((OnClickListener) this);
 		
-		if (intent.getStringExtra("timestamp") != null)
-		{
-			EditText editInput;
-			
-			appointmentDetails.put("timestamp", intent.getStringExtra("timestamp"));
-			
-			appointmentDetails.put("title", intent.getStringExtra("title"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormTitle);
-			editInput.setText(intent.getStringExtra("title"));
-			
-			appointmentDetails.put("name", intent.getStringExtra("name"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormName);
-			editInput.setText(intent.getStringExtra("name"));
-			
-			appointmentDetails.put("location", intent.getStringExtra("location"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormAddress);
-			editInput.setText(intent.getStringExtra("location"));
-			
-			appointmentDetails.put("phone", intent.getStringExtra("phone"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormPhoneNumber);
-			editInput.setText(intent.getStringExtra("phone"));
-			
-			appointmentDetails.put("email", intent.getStringExtra("email"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormEmail);
-			editInput.setText(intent.getStringExtra("email"));
-			
-			/*appointmentDetails.put("date", intent.getStringExtra("date"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormDate);
-			editInput.setText(intent.getStringExtra("date"));
-			
-			appointmentDetails.put("start time", intent.getStringExtra("start time"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormStartTime);
-			editInput.setText(intent.getStringExtra("start time"));
-			
-			appointmentDetails.put("end time", intent.getStringExtra("end time"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormEndTime);
-			editInput.setText(intent.getStringExtra("end time"));*/
-			
-			appointmentDetails.put("comment", intent.getStringExtra("comment"));
-			editInput = (EditText)findViewById(R.id.AppointmentFormEndTime);
-			editInput.setText(intent.getStringExtra("comment"));
-		}
-		
+		appointmentDetails = new HashMap<String, String>();
+
+		// Check if the user is editing a previous appointment.
+		checkIfInEditorMode();
+
 	}
-	
-	public void appointmentList()	{
+
+	/**
+	 * Method that creates an intent to start the next activity.
+	 */
+	private void appointmentList() {
 		Intent intent = new Intent(AppointmentForm.this, AppointmentsList.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		finish();
 	}
-	
+
 	@Override
 	public void onClick(View v) {
-		
 		try {
 			
-		Log.w("ImageButton", "Lister Active");
-		Map<String, String> appointment = new HashMap<String, String>();
-		EditText userInput;
+			// Create a new object to hold the information entered
+			// by the user.
+			appointment = new HashMap<String, String>();
+			
+			// Go through all the input boxes, and store the information
+			// as key/value pairs in the Map object.
+			EditText userInput;
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormTitle);
+			appointment.put("title", userInput.getText().toString());
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormName);
+			appointment.put("name", userInput.getText().toString());
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormAddress);
+			appointment.put("location", userInput.getText().toString());
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
+			appointment.put("phone", userInput.getText().toString());
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormEmail);
+			appointment.put("email", userInput.getText().toString());
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormComment);
+			appointment.put("comment", userInput.getText().toString());
+			
+			// Call method to handle the storing of Date and Time
+			// information entered by the user.
+			saveDateAndTime();
+			
+			// Check to see if the Appointment was being edited.
+			if (appointmentDetails.get("timestamp") != null) {
+				
+				// Delete the old Appointment from the file.
+				boolean success = DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+				
+				Log.w("Delete successful: ", "" + success);
+			}
+			
+			// Save the new Appointment to the "appointments" file
+			DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
+			
+			// Call method to go to the Appointment List Activity.
+			appointmentList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Method to check if the user is editing a previous appointment. If the
+	 * user is editing an appointment, load the information into the form.
+	 */
+	private void checkIfInEditorMode() {
+
+		// Get the intent that activated this Activity
+		Intent intent = getIntent();
+
+		// Check if information has been sent.
+		if (intent.getStringExtra("timestamp") != null) {
+			EditText editInput;
+			TimePicker timePicker;
+			DatePicker datePicker;
+			String[] date;
+			String[] time;
+
+			// Load the information into a Map Object that will
+			// be used to delete the old appointment settings.
+			appointmentDetails.put("timestamp", intent.getStringExtra("timestamp"));
+			appointmentDetails.put("title", intent.getStringExtra("title"));
+			appointmentDetails.put("name", intent.getStringExtra("name"));
+			appointmentDetails.put("location", intent.getStringExtra("location"));
+			appointmentDetails.put("phone", intent.getStringExtra("phone"));
+			appointmentDetails.put("email", intent.getStringExtra("email"));
+			appointmentDetails.put("comment", intent.getStringExtra("comment"));
+			appointmentDetails.put("start time", intent.getStringExtra("start time"));
+			appointmentDetails.put("end time", intent.getStringExtra("end time"));
+			appointmentDetails.put("date", intent.getStringExtra("date"));
+
+			// Fill the Form Input boxes with the previous user inputs
+			// Get the id of each text box, and set their values.
+			editInput = (EditText) findViewById(R.id.AppointmentFormTitle);
+			editInput.setText(intent.getStringExtra("title"));
+
+			editInput = (EditText) findViewById(R.id.AppointmentFormName);
+			editInput.setText(intent.getStringExtra("name"));
+
+			editInput = (EditText) findViewById(R.id.AppointmentFormAddress);
+			editInput.setText(intent.getStringExtra("location"));
+
+			editInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
+			editInput.setText(intent.getStringExtra("phone"));
+
+			editInput = (EditText) findViewById(R.id.AppointmentFormEmail);
+			editInput.setText(intent.getStringExtra("email"));
+
+			editInput = (EditText) findViewById(R.id.AppointmentFormComment);
+			editInput.setText(intent.getStringExtra("comment"));
+
+			// Get the reference from the Date Picker of the form
+			datePicker = (DatePicker) findViewById(R.id.AppointmentFormDate);
+
+			// Parse the text Date information sent by the intent.
+			date = intent.getStringExtra("date").split("-");
+
+			// Set the day, month, year for the previous date entered.
+			int year = Integer.parseInt(date[2]);
+			int month = Integer.parseInt(date[0]) - 1;
+			int dayOfMonth = Integer.parseInt(date[1]);
+			datePicker.init(year, month, dayOfMonth, null);
+
+			// Containers for the previous entered hour and minute
+			int setHour;
+			int setMinute;
+
+			// Get the reference from the Start Time Time Picker of the form
+			timePicker = (TimePicker) findViewById(R.id.AppointmentFormStartTime);
+
+			// Parse the text Time information sent by the intent.
+			time = intent.getStringExtra("start time").split(":");
+			setHour = Integer.parseInt(time[0]);
+			setMinute = Integer.parseInt(time[1].substring(0, 2));
+
+			// Check to see if the time of day
+			if (time[1].substring(2, 4).equals("pm")) {
+				setHour = setHour + 12;
+			}
+
+			// Set the time that was previously entered.
+			timePicker.setCurrentHour(setHour);
+			timePicker.setCurrentMinute(setMinute);
+
+			// Get the reference from the End Time Time Picker of the form
+			timePicker = (TimePicker) findViewById(R.id.AppointmentFormEndTime);
+
+			// Parse the text Time information sent by the intent.
+			time = intent.getStringExtra("end time").split(":");
+			setHour = Integer.parseInt(time[0]);
+			setMinute = Integer.parseInt(time[1].substring(0, 2));
+
+			// Check to see if the time of day
+			if (time[1].substring(2, 4).equals("pm")) {
+				setHour = setHour + 12;
+			}
+
+			// Set the time that was previously entered.
+			timePicker.setCurrentHour(setHour);
+			timePicker.setCurrentMinute(setMinute);
+		}
+	}
+	
+	/**
+	 * Method to save the date and time of the user input.
+	 * It formats the date and time into strings in order to 
+	 * store them in a file.
+	 */
+	private void saveDateAndTime() {
 		
-		userInput =(EditText) findViewById(R.id.AppointmentFormTitle);
-		appointment.put("title", userInput.getText().toString());
-		
-		userInput =(EditText) findViewById(R.id.AppointmentFormName);
-		appointment.put("name", userInput.getText().toString());
-		
-		userInput =(EditText) findViewById(R.id.AppointmentFormAddress);
-		appointment.put("location", userInput.getText().toString());
-		
-		userInput =(EditText) findViewById(R.id.AppointmentFormPhoneNumber);
-		appointment.put("phone", userInput.getText().toString());
-		
-		userInput =(EditText) findViewById(R.id.AppointmentFormEmail);
-		appointment.put("email", userInput.getText().toString());
-		
-		userInput =(EditText) findViewById(R.id.AppointmentFormComment);
-		appointment.put("comment", userInput.getText().toString());
-		
-		TimePicker timePicker =(TimePicker) findViewById(R.id.AppointmentFormStartTime);
+		// Get the reference to the start time.
+		TimePicker timePicker = (TimePicker) findViewById(R.id.AppointmentFormStartTime);
 		timePicker.clearFocus();
 		String timeOfDay = "am";
 		int minutes = timePicker.getCurrentMinute();
 		int hour = timePicker.getCurrentHour();
-		
+
+		// Go through the time and convert from 24 hours to 12 hour time
 		if (hour > 12) {
 			hour = hour - 12;
 			timeOfDay = "pm";
 		}
-		
-		if (minutes < 10){
-			appointment.put("start time", hour + ":0" + minutes + timeOfDay);
+
+		if (hour == 0) {
+			hour = hour + 12;
 		}
-		else {
+
+		// Add 0 to the minutes string if it is less than 10, representation preference.
+		// Add to the information that should be stored.
+		if (minutes < 10) {
+			appointment.put("start time", hour + ":0" + minutes + timeOfDay);
+		} else {
 			appointment.put("start time", hour + ":" + minutes + timeOfDay);
 		}
-		
-		timePicker =(TimePicker) findViewById(R.id.AppointmentFormEndTime);
+
+		// Get the reference to the end time.
+		timePicker = (TimePicker) findViewById(R.id.AppointmentFormEndTime);
 		timePicker.clearFocus();
 		timeOfDay = "am";
 		minutes = timePicker.getCurrentMinute();
 		hour = timePicker.getCurrentHour();
-		
+
+		// Go through the time and convert from 24 hours to 12 hour time
 		if (hour > 12) {
 			hour = hour - 12;
 			timeOfDay = "pm";
 		}
-		if (minutes < 10){
-			appointment.put("end time", hour + ":0" + minutes + timeOfDay);
+
+		if (hour == 0) {
+			hour = hour + 12;
 		}
-		else {
+
+		// Add 0 to the minutes string if it is less than 10, representation preference.
+		// Add to the information that should be stored.
+		if (minutes < 10) {
+			appointment.put("end time", hour + ":0" + minutes + timeOfDay);
+		} else {
 			appointment.put("end time", hour + ":" + minutes + timeOfDay);
 		}
-		
-		DatePicker datePicker =(DatePicker) findViewById(R.id.AppointmentFormDate);
-		int day = datePicker.getDayOfMonth() + 1;
-		int month = datePicker.getMonth();
-		int year = datePicker.getYear();
-		String formatedDate = month + "-" + day + "-" + year;
-		appointment.put("date", formatedDate);
-		
-		if (appointmentDetails.get("timestamp") != null) {
-			DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
-		}
-		
-		DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
-		
-		appointmentList();
-		
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	
 
+		// Get the reference to Date.
+		DatePicker datePicker = (DatePicker) findViewById(R.id.AppointmentFormDate);
+		int day = datePicker.getDayOfMonth();
+		int month = datePicker.getMonth() + 1;
+		int year = datePicker.getYear();
+		
+		// Set the format text it will be saved in.
+		String formatedDate = month + "-" + day + "-" + year;
+		
+		// Add to the information that should be stored.
+		appointment.put("date", formatedDate);
+	}
 }

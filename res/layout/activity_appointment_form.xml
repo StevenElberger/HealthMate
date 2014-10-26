@@ -92,8 +92,7 @@
             android:maxDate="01/01/2050"
             android:minDate="01/01/2014"
             android:paddingTop="5dp"
-            android:spinnersShown="true"
-            android:startYear="2014" />
+            android:spinnersShown="true"/>
 
         <TextView
             android:id="@+id/AppointmentFormStartTimeTitle"

@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.TextView;
 
 /**
@@ -81,6 +82,7 @@ public class DataStorageManager {
 
 		// Get the JSON object information in a string format
 		String text = data.toString() + "\n";
+		Log.w("Data Written", text);
 
 		// If overwrite is true, the file will be overwritten if it already
 		// exists.
@@ -289,6 +291,7 @@ public class DataStorageManager {
 		
 		// Get the string representation of the JSON Object
 		informationToBeDeleted = data.toString();
+		
 		// Buffer increases the amount of information coming in 
 		// for a given read.
 		BufferedInputStream bufferInputStream = 

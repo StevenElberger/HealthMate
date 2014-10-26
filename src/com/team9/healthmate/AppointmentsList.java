@@ -72,6 +72,10 @@ public class AppointmentsList extends ListActivity {
 		}
 	}
 	
+	/**
+	 * Method sets up the options available to the user.
+	 * An icon of an addition sign is displayed to the user as an option. 
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -79,9 +83,15 @@ public class AppointmentsList extends ListActivity {
 		return true;
 	}
 	
+	/**
+	 * Method to activate the user options in the Action Bar.
+	 * The only option is to create a new appointment, this leads
+	 * to the appointment form class.
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
+		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_create_new_appointment) {
 			Intent intent = new Intent(this, AppointmentForm.class);
 			startActivity(intent);
@@ -90,23 +100,40 @@ public class AppointmentsList extends ListActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Method to handle the event the user selects an appointment
+	 * from the list of appointments. The appointment's information
+	 * is sent to the appointment details class.
+	 */
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		
+		
 		String key;
 		Set<String> setOfKeys;
 		Iterator<String> stringIterator;
+		
+		// Get the appointment that was selected from the list of appointments.
 		Map<String, String> appointment = appointments.get(position);
+		
+		// Create a new intent that will start the Appointment Detail Activity
 		Intent intent = new Intent(this, AppointmentDetail.class);
 		
+		// Go through all the information stored in the appointment
+		// selected using the objects keys. 
 		setOfKeys = appointment.keySet();
 		stringIterator = setOfKeys.iterator();
+		
 		while (stringIterator.hasNext()){
 			key = stringIterator.next();
+			
+			// Add them to the intent, this will allow
+			// the activity started by the intent to access the information.
 			intent.putExtra(key, appointment.get(key));
 			}
 		
+		// Remove the current activity from the top of the stack when finished.
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		finish();
