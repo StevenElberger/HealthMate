@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.team9.healthmate.MedicationDetails" >
+    tools:context="com.team9.healthmate.Medications.MedicationDetails" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -18,7 +18,7 @@
             android:id="@+id/medication_details_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medication Name"
+            android:text="@string/medication_name"
             android:textSize="22sp" />
 
         <TableLayout
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Frequency"
+            android:text="@string/frequency"
             android:textSize="18sp" />
 
         <TextView
@@ -39,14 +39,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
-            android:text="frequency goes here"
+            android:text="@string/frequency_goes_here"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Dosage"
+            android:text="@string/dosage"
             android:textSize="18sp" />
 
         <TextView
@@ -54,14 +54,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
-            android:text="dosage goes here"
+            android:text="@string/dosage_goes_here"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Reminder: "
+            android:text="@string/reminder"
             android:textSize="18sp" />
 
         <TextView
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
-            android:text="OFF"
+            android:text="@string/off"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -79,18 +79,28 @@
 	    android:layout_alignParentBottom="true"
 	    android:layout_centerHorizontal="true"
 	    android:layout_marginTop="20dp"
-	    android:orientation="horizontal" >
+	    android:orientation="horizontal" 
+	    style="?android:attr/buttonBarStyle">
 
 	    <Button
 	        android:id="@+id/medication_details_button_back"
-	        android:layout_width="150dp"
+	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
-	        android:text="back"/>
+	        android:text="@string/back"
+	        style="?android:attr/buttonBarButtonStyle" />
 
 	    <Button
-	        android:id="@+id/medication_details_button_edit"
-	        android:layout_width="150dp"
+	        android:id="@+id/medication_details_button_remove"
+	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
-	        android:text="edit" />
+	        android:text="@string/remove" 
+	        style="?android:attr/buttonBarButtonStyle" />
+	    
+	    <Button
+	        android:id="@+id/medication_details_button_edit"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/edit"
+	        style="?android:attr/buttonBarButtonStyle" />
 	</LinearLayout>
 </RelativeLayout>

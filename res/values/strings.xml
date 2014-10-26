@@ -31,5 +31,36 @@
         <item>Other</item>
     </string-array>
     <string name="ok">OK</string>
+    <string name="name_">"Name: "</string>
+    <string name="medication_name">medication_name</string>
+    <string name="adding_a_new_medication">Adding a new Medication</string>
+    <string name="frequency_">"Frequency: "</string>
+    <string name="once_a_day">Once a day</string>
+    <string name="twice_a_day">Twice a day</string>
+    <string name="once_a_week">Once a week</string>
+    <string name="other_">Other...</string>
+    <string name="_">"Dosage strength: "</string>
+    <string name="_0">0</string>
+    <string name="_times_a_">" times a "</string>
+    <string name="dosage_strength_">"Dosage strength: "</string>
+    <string name="_e_g_200_">(e.g. 200)</string>
+    <string name="set_reminder">Set Reminder</string>
+    <string name="cancel">cancel</string>
+    <string name="save">save</string>
+    <string name="frequency">frequency</string>
+    <string name="frequency_goes_here">frequency_goes_here</string>
+    <string name="dosage">dosage</string>
+    <string name="dosage_goes_here">dosage_goes_here</string>
+    <string name="reminder_">"Reminder: "</string>
+    <string name="off">off</string>
+    <string name="back">back</string>
+    <string name="remove">remove</string>
+    <string name="edit">edit</string>
+    <string name="add_new_medication">Add new Medication</string>
+    <string name="list_of_medications">List of medications</string>
+    <string name="_minus">-</string>
+    <string name="_plus">+</string>
+    <string name="reminder">reminder</string>
+    <string name="take_one_everey">Take one everey</string>
 
 </resources>
