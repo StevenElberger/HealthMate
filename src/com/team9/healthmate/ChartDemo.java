@@ -48,10 +48,7 @@ public class ChartDemo extends ActionBarActivity {
 	 * GraphManager class.
 	 */
 	public void createGraphs() {
-		genLineGraphs = false;
-		
-		// We know the values for moods are 1 - 10 so we'll explicitly set the y-axis values
-		int[] yValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		genLineGraphs = true;
 		
 		// Set up ColumnGraph objects for graph generation
 		String[] moods = {"General Wellness Levels", "Happiness Levels", "Motivation Levels", "Stress Levels", 
@@ -62,12 +59,12 @@ public class ChartDemo extends ActionBarActivity {
 		
 		columnGraph = new ColumnGraph[moods.length];
 		for (int i = 0; i < columnGraph.length; i++) {
-			columnGraph[i] = new ColumnGraph("Days", moods[i], "testdata", null, yValues, false, false, colors[i]);
+			columnGraph[i] = new ColumnGraph("Days", moods[i], "testdata", false, false, colors[i]);
 		}
 		
 		lineGraph = new LineGraph[moods.length];
 		for (int i = 0; i < lineGraph.length; i++) {
-			lineGraph[i] = new LineGraph("Days", moods[i], "testdata", null, yValues, false, true, colors[i], 1, 3);
+			lineGraph[i] = new LineGraph("Days", moods[i], "testdata", false, true, colors[i], 1, 3);
 		}
 	}
 	

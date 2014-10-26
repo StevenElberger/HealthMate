@@ -126,7 +126,7 @@ public class GraphManager {
 		
 		// set up axes
 		Axis xAxis = new Axis();
-		Axis yAxis = new Axis();
+		Axis yAxis = setUpYAxis();
 		
 		if (columnGraph.xAxisValues != null) {
 			List<AxisValue> xValues = new ArrayList<AxisValue>();
@@ -135,16 +135,16 @@ public class GraphManager {
 			}
 			xAxis.setValues(xValues);
 		}
-		if (columnGraph.yAxisValues != null) {
-			List<AxisValue> yValues = new ArrayList<AxisValue>();
-			for (int i : columnGraph.yAxisValues) {
-				yValues.add(new AxisValue(i));
-			}
-			yAxis.setValues(yValues);
-		}
+//		if (columnGraph.yAxisValues != null) {
+//			List<AxisValue> yValues = new ArrayList<AxisValue>();
+//			for (int i : columnGraph.yAxisValues) {
+//				yValues.add(new AxisValue(i));
+//			}
+//			yAxis.setValues(yValues);
+//		}
 		xAxis.setName(columnGraph.xAxisName);
 		yAxis.setName(columnGraph.yAxisName);
-		yAxis.setHasLines(true);
+//		yAxis.setHasLines(true);
 		
 		// set up chart
 		ColumnChartData data = new ColumnChartData(columns);
@@ -224,15 +224,6 @@ public class GraphManager {
 		// Create axes
 		Axis axisY = new Axis();
 		Axis axisX = new Axis();
-		
-		// If not auto gen, set the axis' points
-		if (lineGraph.yAxisValues != null) {
-			List<AxisValue> yValues = new ArrayList<AxisValue>();
-			for (int i : lineGraph.yAxisValues) {
-				yValues.add(new AxisValue(i));
-			}
-			axisY.setValues(yValues);
-		}
 		
 		// Set name and lines
 		axisY.setName(lineGraph.yAxisName);
@@ -364,15 +355,8 @@ public class GraphManager {
 		
 		// set up axes
 		Axis xAxis = new Axis();
-		Axis yAxis = new Axis();
-		
-		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		List<AxisValue> yValues = new ArrayList<AxisValue>();
-		for (int i : yAxisValues) {
-			yValues.add(new AxisValue(i));
-		}
+		Axis yAxis = setUpYAxis();
 
-		yAxis.setHasLines(true);
 		yAxis.setName("Mood Averages");
 		
 		// set up chart
@@ -473,16 +457,8 @@ public class GraphManager {
 		lines.add(line);
 		
 		// Create axes
-		Axis axisY = new Axis();
+		Axis axisY = setUpYAxis();
 		Axis axisX = new Axis();
-		
-		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		// If not auto gen, set the axis' points
-		List<AxisValue> yValues = new ArrayList<AxisValue>();
-		for (int i : yAxisValues) {
-			yValues.add(new AxisValue(i));
-		}
-		axisY.setValues(yValues);
 		
 		List<AxisValue> xValues = new ArrayList<AxisValue>();
 		for (PointValue value : line.getValues()) {
@@ -491,7 +467,6 @@ public class GraphManager {
 		axisX.setValues(xValues);
 		
 		// Set name and lines
-		axisY.setHasLines(true);
 		axisX.setHasLines(false);
 		axisY.setName("Choose a Column");
 		
@@ -562,15 +537,7 @@ public class GraphManager {
 		
 		// set up axes
 		Axis xAxis = new Axis();
-		Axis yAxis = new Axis();
-		
-		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		List<AxisValue> yValues = new ArrayList<AxisValue>();
-		for (int i : yAxisValues) {
-			yValues.add(new AxisValue(i));
-		}
-		yAxis.setValues(yValues);
-		yAxis.setHasLines(true);
+		Axis yAxis = setUpYAxis();
 		
 		// set up chart
 		ColumnChartData data = new ColumnChartData(columns);
@@ -591,6 +558,12 @@ public class GraphManager {
 		
 	}
 	
+	/**
+	 * Used to assist in setting up columns for
+	 * column graphs.
+	 * @param givenValues
+	 * @return
+	 */
 	public static List<Column> setUpColumns(List<ColumnValue> givenValues) {
 		// create columns
 		List<Column> columns = new ArrayList<Column>();
@@ -604,5 +577,22 @@ public class GraphManager {
 			columns.add(column);
 		}
 		return columns;
+	}
+	
+	/**
+	 * Used to assist in setting up y-axis for
+	 * most graphs.
+	 * @return
+	 */
+	public static Axis setUpYAxis() {
+		Axis yAxis = new Axis();
+		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i : yAxisValues) {
+			yValues.add(new AxisValue(i));
+		}
+		yAxis.setValues(yValues);
+		yAxis.setHasLines(true);
+		return yAxis;
 	}
 }
