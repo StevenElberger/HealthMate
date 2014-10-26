@@ -26,7 +26,7 @@
     <string name="stressedCounter">" "</string>
     <string name="angryCounter">" "</string>
     <string name="tiredCounter">" "</string>
-    <string name="depressedCounter">" "</string>  
+    <string name="depressedCounter">" "</string>
     <string name="welcome_label">Welcome</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -39,11 +39,14 @@
     <string name="confirm_password">Confirm</string>
     <string name="enter_bday">Please enter your birthday:</string>
     <string name="enter_sex">Please enter your sex:</string>
+
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </string-array>
+
     <string name="ok2">OK</string>
+    <string name="title_activity_mood_page_viewer">MoodPageViewer</string>
 
 </resources>
