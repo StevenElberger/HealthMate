@@ -55,7 +55,7 @@ public class AppointmentsList extends ListActivity {
 		for (int i = 0; i < appointments.size(); i++) {
 			appointment = appointments.get(i);
 			appointmentInformation = appointment.get("title") + "\n" + "Doctor: " + 
-					appointment.get("name") + " Date: " + appointment.get("date");
+					appointment.get("name") + "\nDate: " + appointment.get("date");
 			appointmentList.add(appointmentInformation);
 		}
 		
