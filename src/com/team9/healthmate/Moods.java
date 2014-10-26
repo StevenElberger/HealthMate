@@ -1,9 +1,8 @@
-/*Davit Avetikyan
- Moods activity is providing Emotion recording 
- instruments. Will also display the activity progress
- in a form of a graph.
+/** @author Davit Avetikyan
+ 	Moods activity is providing Emotion recording 
+ 	instruments. Will also display the activity progress
+ 	in a form of a graph. Provides fragment look in the tabs 
  */
-
 
 package com.team9.healthmate;
 
@@ -43,18 +42,17 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 
 	private TextView lblCounter[] = new TextView[7];
 	private TextView lblMoods[] = new TextView[7];
-	private SeekBar seek[] = new SeekBar[6];
-	
+	private SeekBar seek[] = new SeekBar[6];	
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_moods);	
 		
-		Init();	// initializes all the view controls				
-		BtnClick();   // Calls button events
+		SetControlLayout();	// initializes all the view controls				
+		BtnClick();         // Calls button events
 		//SetTabs();		
 		
-		//Creating tabs in action Bar by referencing to Tablistener even
+		//Creats tabs in action Bar by referencing to Tablistener event
 		final ActionBar actionBar = getActionBar();
 		  actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -67,15 +65,13 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 				}				
 				@Override
 				public void onTabSelected(Tab tab, android.app.FragmentTransaction ft) {
-					// TODO Auto-generated method stub					
 				}
 				
 				@Override
 				public void onTabReselected(Tab tab, android.app.FragmentTransaction ft) {
-					// TODO Auto-generated method stub
-					
 				}
 			};
+			
 		//Creates 3 tabs in the action bar
 		  for (int i = 0; i < 3; i++) {
   	        actionBar.addTab(
@@ -85,18 +81,18 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
   	    }		  
 	}			
 	
-	/*The function is calling two button event calls
-	*Button Reset will reset to original state of controls
-	*Button Submit will save the user data to a file 
+	/**The function is calling two button event calls
+	*  Button Reset will reset to original state of controls
+	*  Button Submit will save the user data to a file 
 	*/
 	public void BtnClick(){		
-		//Reset
+		//Reset Button
 		final Button buttonReset = (Button) findViewById(R.id.cmdReset);
         buttonReset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                for (int i = 0; i < seek.length; i++) {
 				seek[i].setProgress(0);
-			}
+               }
             }
         });     
         
@@ -113,8 +109,7 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 				
 				DataStorageManager.writeJSONObject(getApplication(), "Moods", listOfItems, false);
 				Toast toast = Toast.makeText(getApplication(), "The file is successfully writen.", Toast.LENGTH_LONG);
-				toast.show();			
-//				
+				toast.show();							
 				finish();
 				
 			} catch (JSONException e) {
@@ -132,15 +127,8 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
         });
 	}
 		
-	/*Initializing function
-	 * 
-	 */
-	public void Init(){				
-		SetControlLayout();			
-	}
-
-	/* Setting the initial values for the controls
-	 * 	
+	/** Setting the initial values for the controls
+	  	SeekBars, TextViews
 	 */
 	public void SetControlLayout(){
 		int rsIDCounter, rsIDMoods, rsIDsk;
@@ -189,16 +177,14 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 			lblCounter[i].setText("0");
 			lblMoods[i] = (TextView)findViewById(rsIDMoods);
 			seek[i] = (SeekBar)findViewById(rsIDsk);
-			seek[i].setOnSeekBarChangeListener(this);
-			
+			seek[i].setOnSeekBarChangeListener(this);			
 		}
-	}
+	}	
 	
-	
-	/* If seek bar is moved the text counter will be updated
-	 * @argo the current seekbar used
-	 * @progress indicates the current positoin of seekbar
-	 * @fromUser indicates if the user moved it
+	/** If seek bar is moved the text counter will be updated
+	 * 	@argo the current seekbar used
+	 * 	@progress indicates the current positoin of seekbar
+	 * 	@fromUser indicates if the user moved it
 	*/
 	@Override
 	public void onProgressChanged(SeekBar arg0, int progress, boolean fromUser) {
@@ -206,22 +192,14 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 		for (int i = 0; i < seek.length; i++) {
 			lblCounter[i].setText(String.valueOf(seek[i].getProgress()));			
 			//updateMoodPicture();
-		}
-		}		
+				}
+			}		
 		}
 
 	@Override
-	public void onStartTrackingTouch(SeekBar arg0) {
-		// TODO Auto-generated method stub
-		
+	public void onStartTrackingTouch(SeekBar arg0) {		
 	}
-
 	@Override
 	public void onStopTrackingTouch(SeekBar arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
+	}	
 }

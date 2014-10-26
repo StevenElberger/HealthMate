@@ -37,8 +37,7 @@ public class Login extends Activity implements OnClickListener{
 	public Button login;
 	public Button register;
 	public Button emergency;
-	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	Date date = new Date();
+	
 	/*
 	// These contain the text value of the ids for username and password 
 	EditText name = null;
@@ -120,94 +119,14 @@ public class Login extends Activity implements OnClickListener{
 			}*/
 			startMenu();
 		}
-		else if(v.equals(emergency)){
-			Intent callIntent = new Intent(Intent.ACTION_CALL);
-		    callIntent.setData(Uri.parse("tel:8053208737"));
-		    startActivity(callIntent);
-		    
-		    //sendSMS();
-			sendSMSMessage();
-			sendEmail();
+		else if(v.equals(emergency)){ 
+			//Implemented when Emergency button is clicked
+			OneClickEmergency oneClick = new OneClickEmergency();	
+			oneClick.makeACall(Login.this);
+			oneClick.sendSMSMessage(Login.this);
+			oneClick.sendEmail(Login.this);
 		}
-	}
+	}	
 	
 	
-	//Sends a text
-//	 protected void sendSMS() {
-//	      Log.i("Send SMS", "");
-//
-//	      Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-//	      smsIntent.setData(Uri.parse("smsto:8053208737"));
-//	      smsIntent.setType("vnd.android-dir/mms-sms");
-//
-//	      smsIntent.putExtra("address"  , new String ("8053208737"));
-//	      smsIntent.putExtra("sms_body"  , "Test SMS to Gustavo");
-//	      try {
-//	         startActivity(smsIntent);
-//	         finish();
-//	         Log.i("Finished sending SMS...", "");
-//	      } catch (android.content.ActivityNotFoundException ex) {
-//	         Toast.makeText(Login.this, 
-//	         "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
-//	         Log.v("debugMe2", "Not sending a text");
-//	      }
-//	   }
-	
-	/*Sends a text to specified user
-	 * in the contact list
-	 */
-	protected void sendSMSMessage() {
-	      Log.v("Send SMS", "");
-	      
-	      
-	      String phoneNo = "805-320-8737";
-	      String message = "An emergency call was made by Dave at this time: " + dateFormat.format(date);
-
-	      try {
-	         SmsManager smsManager = SmsManager.getDefault();
-	         smsManager.sendTextMessage(phoneNo, null, message, null, null);
-	         Log.v("debugme", "Send Sms 2 try");
-	         Toast.makeText(getApplicationContext(), "SMS sent.",
-	         Toast.LENGTH_LONG).show();
-	      } catch (Exception e) {
-	    	  
-	         Toast.makeText(getApplicationContext(),
-	         "SMS faild, please try again.",
-	         Toast.LENGTH_LONG).show();
-	         e.printStackTrace();
-	      }
-	   }
-	
-	/*	Sends an email out to specified Users
-	 * from the contact list
-	 */
-	protected void sendEmail() {
-		String recipient = "avetikyan.davit@gmail.com";
-		String subject = "An emergency call was made by Dave at this time: " + dateFormat.format(date);
-		String body = "Emergency Call";
-				
-		String[] recipients = {recipient};
-		 Intent email = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
-		// prompts email clients only
-		 email.setType("message/rfc822");
-		 
-		 email.putExtra(Intent.EXTRA_EMAIL, recipients);
-		 email.putExtra(Intent.EXTRA_SUBJECT, subject);
-		 email.putExtra(Intent.EXTRA_TEXT, body);
-
-		 try {
-			 // the user can choose the email client
-			 startActivity(Intent.createChooser(email, "Choose an email client from..."));
-		 } catch (android.content.ActivityNotFoundException ex) {
-			 Toast.makeText(Login.this, "No email client installed.",
-					 Toast.LENGTH_LONG).show();
-		 }
-	}
-
-	
-//	 public boolean onCreateOptionsMenu(Menu registration) {
-//	      // Inflate the menu; this adds items to the action bar if it is present.
-//	      getMenuInflater().inflate(R.menu.menu, menu);
-//	      return true;
-//	   }
 }

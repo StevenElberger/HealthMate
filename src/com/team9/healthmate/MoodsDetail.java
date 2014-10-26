@@ -1,3 +1,7 @@
+/* @author Davit Avetikyan
+ * 	
+ * 
+ */
 package com.team9.healthmate;
 
 import android.view.View;
@@ -6,9 +10,12 @@ import android.widget.EditText;
 import android.widget.RadioButton;;
 
 
-public class MoodsDetail {
-	
+public class MoodsDetail {	
 
+	/* formIsValid will loop through 
+	 * child controls and check to see 
+	 * which instance it belongs to. 
+	 */
 	public boolean formIsValid(View layout) {
 	    for (int i = 0; i < ((ViewGroup) layout).getChildCount(); i++) {
 	        View v = ((ViewGroup) layout).getChildAt(i);
