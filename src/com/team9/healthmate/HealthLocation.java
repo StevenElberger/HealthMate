@@ -54,6 +54,7 @@ public class HealthLocation extends Activity implements LocationListener{
     public GoogleMap gMap;
     private final int MAX_PLACES = 20;
     private MarkerOptions[] places;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +70,12 @@ public class HealthLocation extends Activity implements LocationListener{
         pharmacy_icon = R.drawable.pharmacy_icon;
         */
 
-        //grab map
+        //grabs map
         gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.google_map)).getMap();
         if(gMap!= null) {
             gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             placeMarker = new Marker[MAX_PLACES];
-            //update location
+            //update location along with places
             updatePlaces();
         }
         else    {
@@ -104,6 +105,7 @@ public class HealthLocation extends Activity implements LocationListener{
         //DEBUG CODE
         Log.v("MyMapActivity", "status changed");
     }
+    
     //updates locations
     public void updatePlaces()   {
         //need Location Manager
@@ -145,6 +147,7 @@ public class HealthLocation extends Activity implements LocationListener{
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,30000, 100,this);
     }
+    
     public class GetPlaces extends AsyncTask<String, Void, String> {
         //fetch and parse place data
         @Override
