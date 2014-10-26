@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
+import com.team9.healthmate.GraphManager.GraphManager;
 
 /** 
  * Presents the login screen to users. Also allows
@@ -59,8 +60,9 @@ public class Login extends Activity implements OnClickListener{
 	 * Launch the registration activity.
 	 */
 	public void startRegistration()	{
-		Intent intent = new Intent(Login.this, Registration.class);
-		startActivity(intent);
+//		Intent intent = new Intent(Login.this, Registration.class);
+//		startActivity(intent);
+		GraphManager.writeRandomData(getApplicationContext());
 	}
 	
 	/**

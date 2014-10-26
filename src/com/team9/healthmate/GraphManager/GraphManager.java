@@ -27,8 +27,10 @@ import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.util.Utils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
+import lecho.lib.hellocharts.view.PreviewColumnChartView;
 
 /**
  * Responsible for generating graphs for different data
@@ -519,5 +521,92 @@ public class GraphManager {
 		lcv.setCurrentViewport(v, false);
 
 		lcv.setZoomType(ZoomType.HORIZONTAL);		
+	}
+	
+	public static List<ColumnValue> getColumnData(Context appContext, String fileName, int color, String mood) {
+		List<ColumnValue> colValues = new ArrayList<ColumnValue>();
+		
+		try {
+			// Grab data from data file
+			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, fileName);
+			Iterator<Map<String, String>> iterator = moodData.iterator();
+			Map<String, String> dataSet = new HashMap<String, String>();
+			
+			while (iterator.hasNext()) {
+				// Go through all the keys
+				dataSet = iterator.next();
+				Iterator<String> it = dataSet.keySet().iterator();
+				while (it.hasNext()) {
+					// If the keys are what we're looking for
+					// then put their values into columns
+					String key = it.next();
+					String value = dataSet.get(key);
+					if (key.equals(mood)) {
+						ColumnValue moodValue = new ColumnValue(Integer.parseInt(value), color);
+						colValues.add(moodValue);
+					}
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return colValues;
+	}
+	
+	/**
+	 * Calculates the average value for
+	 * each data type and displays a column
+	 * for each data type with its respective
+	 * average.
+	 * @param appContext	Context of the Activity
+	 * @param ccv			ColumnChart to be created
+	 */
+	public static void generateMoodColumnGraphWithChart(Context appContext, ColumnChartView ccv, PreviewColumnChartView pccv, int color, String mood) {
+		// values for the mood column we want
+		List<ColumnValue> givenValues = getColumnData(appContext, "testdata", color, mood);
+		
+		// create columns
+		List<Column> columns = new ArrayList<Column>();
+		List<ColumnValue> colValues;
+		for (int i = 0; i < givenValues.size(); i++) {
+			colValues = new ArrayList<ColumnValue>();
+			colValues.add(givenValues.get(i));
+			
+			Column column = new Column(colValues);
+			column.setHasLabelsOnlyForSelected(true);
+			columns.add(column);
+		}
+		
+		// set up axes
+		Axis xAxis = new Axis();
+		Axis yAxis = new Axis();
+		
+		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i : yAxisValues) {
+			yValues.add(new AxisValue(i));
+		}
+		yAxis.setValues(yValues);
+		yAxis.setHasLines(true);
+		
+		// set up chart
+		ColumnChartData data = new ColumnChartData(columns);
+		data.setAxisXBottom(xAxis);
+		data.setAxisYLeft(yAxis);
+		
+		ColumnChartData pData = new ColumnChartData(data);
+		for (Column column : pData.getColumns()) {
+			for (ColumnValue value : column.getValues()) {
+				value.setColor(Utils.DEFAULT_DARKEN_COLOR);
+			}
+		}
+		pData.setAxisXBottom(xAxis);
+		pData.setAxisYLeft(yAxis);
+		pccv.setColumnChartData(pData);
+		
+		ccv.setColumnChartData(data);
+		
 	}
 }
