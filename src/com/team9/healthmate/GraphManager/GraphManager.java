@@ -37,37 +37,47 @@ import lecho.lib.hellocharts.view.PreviewColumnChartView;
  * using the DataStorageManager class to grab the data
  * and generate it in a graph, giving it back to the
  * Activity that called.
+ * 
+ * Three sections of methods:
+ * - Data grabbers: 4 methods
+ * - Graph generators: 6 methods
+ * - Helpers: 4 methods
+ * 
  * @author Steve
- *
+ * @version 1.0
  */
 public class GraphManager {
 	
-	/**
-	 * Only necessary for debug purposes. This will
-	 * generate some random mood data to a file in order to
-	 * test the graph generating functions.
-	 * @param appContext	The context of the Activity calling this method
+	/*
+	 * Methods that grab data for setting up charts:
+	 * 
+	 * List<ColumnValue> getColumnData
+	 * List<ColumnValue> getMoodColumnData
+	 * List<PointValue> getMoodLineData
+	 * Map<String, List<ColumnValue>> getAllMoodColumnData
 	 */
-	public static void writeRandomData(Context appContext) {
-		String[] moodKeys = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
-		// generate a data file with 31 randomly-generated surveys
+	
+	/**
+	 * Grabs column data from a file, sorts them, and
+	 * returns the sorted values.
+	 * @param appContext	Context of the Activity
+	 * @param fileName		Name of the data file
+	 * @param color			Color of the column
+	 * @param mood			Mood to be graphed
+	 * @return				List of sorted column values
+	 */
+	public static List<ColumnValue> getColumnData(Context appContext, String fileName, int color, String mood) {
+		List<ColumnValue> colValues = new ArrayList<ColumnValue>();
 		try {
-			Random rand = new Random();
-			Map<String, String> testData;
-			for (int i = 0; i < 1; i++) {
-				testData = new HashMap<String, String>();
-				for (String s : moodKeys) {
-					// generate a random value 1 - 10 for each mood
-					int value = rand.nextInt(10) + 1;
-					testData.put(s, "" + value);
-				}
-				DataStorageManager.writeJSONObject(appContext, "testdata", testData, false);
-			}
+			// Grab data from data file
+			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, fileName);
+			colValues = sortColumnData(moodData, mood, color);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return colValues;
 	}
 	
 	/**
@@ -75,12 +85,11 @@ public class GraphManager {
 	 * activity.
 	 * @param appContext	Context of the Activity calling
 	 * @param columnGraph	ColumnGraph object with necessary information
-	 * @param mood			The mood to be graphed
+	 * @param mood			Mood to be graphed
 	 * @return				Returns a list of column values for the specified mood
 	 */
 	public static List<ColumnValue> getMoodColumnData(Context appContext, ColumnGraph columnGraph, String mood) {
 		List<ColumnValue> colValues = new ArrayList<ColumnValue>();
-		
 		try {
 			// Grab data from data file
 			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, columnGraph.fileName);
@@ -94,45 +103,12 @@ public class GraphManager {
 	}
 	
 	/**
-	 * Generates a mood column graph for the mood specified.
-	 * @param appContext		The context of the Activity that called
-	 * @param view				The view to display the graph in
-	 * @param columnGraph		The ColumnGraph object for necessary graph information
-	 * @param mood				The mood to be graphed
-	 */
-	public static void generateMoodColumnGraph(Context appContext, View view, ColumnGraph columnGraph, String mood) {
-		// values for the mood column we want
-		List<ColumnValue> givenValues = getMoodColumnData(appContext, columnGraph, mood);
-		
-		// create columns
-		List<Column> columns = setUpColumns(givenValues);
-		
-		// set up axes
-		Axis xAxis = new Axis();
-		Axis yAxis = setUpYAxis();
-
-		xAxis.setName(columnGraph.xAxisName);
-		yAxis.setName(columnGraph.yAxisName);
-		
-		// set up chart
-		ColumnChartData data = new ColumnChartData(columns);
-		data.setAxisXBottom(xAxis);
-		data.setAxisYLeft(yAxis);
-		
-		ColumnChartView chart = new ColumnChartView(appContext);
-		chart.setValueSelectionEnabled(true);
-		chart.setColumnChartData(data);
-		
-		((RelativeLayout) view).addView(chart);
-	}
-	
-	/**
 	 * Grabs mood data from a file to 
 	 * generate a line graph. Called from
 	 * generateMoodLineGraph.
 	 * @param appContext	Context from the Activity that called
 	 * @param fileName		Name of the file containing the point data
-	 * @param mood			The mood to be graphed
+	 * @param mood			Mood to be graphed
 	 * @return				Returns the list of point values
 	 */
 	public static List<PointValue> getMoodLineData(Context appContext, String fileName, String mood) {
@@ -165,52 +141,6 @@ public class GraphManager {
 			e.printStackTrace();
 		}
 		return dataPoints;
-	}
-	
-	/**
-	 * Generates a line graph given mood data
-	 * from the moods activity. Requires a LineGraph
-	 * object to be passed with necessary information
-	 * to generate the graph.
-	 * @param appContext	Context of the Activity calling this method
-	 * @param view			View to display the graph in (should be a RelativeLayout)
-	 * @param lineGraph		Line Graph Data object with necessary graph information
-	 * @param mood			The mood to be graphed
-	 */
-	public static void generateMoodLineGraph(Context appContext, View view, LineGraph lineGraph, String mood) {
-		// Grab data, generate point values
-		List<PointValue> dataPoints = getMoodLineData(appContext, lineGraph.fileName, mood);
-
-		// Generate lines from point data
-		Line line = new Line(dataPoints).setColor(lineGraph.color).setCubic(true);
-		line.setStrokeWidth(lineGraph.strokeWidth);
-		line.setPointRadius(lineGraph.pointWidth);
-		line.setHasLabelsOnlyForSelected(true);
-		List<Line> lines = new ArrayList<Line>();
-		lines.add(line);
-		
-		// Create axes
-		Axis axisY = new Axis();
-		Axis axisX = new Axis();
-		
-		// Set name and lines
-		axisY.setName(lineGraph.yAxisName);
-		axisX.setName(lineGraph.xAxisName);
-		axisY.setHasLines(lineGraph.yAxisLines);
-		axisX.setHasLines(lineGraph.xAxisLines);
-		
-		LineChartData data = new LineChartData(lines);
-		
-		data.setAxisXBottom(axisX);
-		data.setAxisYLeft(axisY);
-		
-		// Generate the graph and display it inside
-		// the appropriate view
-		LineChartView chart = new LineChartView(appContext);
-		chart.setValueSelectionEnabled(true);
-		chart.setLineChartData(data);
-		
-		((RelativeLayout) view).addView(chart);
 	}
 	
 	/**
@@ -285,6 +215,98 @@ public class GraphManager {
 		return data;
 	}
 	
+	/*
+	 * Methods that actually initialize and generate graphs:
+	 * 
+	 * void generateMoodColumnGraph
+	 * void generateMoodLineGraph
+	 * void setUpMoodColumnGraph
+	 * void updateLineData
+	 * void setUpInitialLineChart
+	 * void generateMoodColumnGraphWithChart
+	 */
+	
+	/**
+	 * Generates a mood column graph for the mood specified.
+	 * Requires a ColumnGraph object with the necessary
+	 * information to generate the graph.
+	 * @param appContext		The context of the Activity that called
+	 * @param view				The view to display the graph in
+	 * @param columnGraph		The ColumnGraph object for necessary graph information
+	 * @param mood				The mood to be graphed
+	 */
+	public static void generateMoodColumnGraph(Context appContext, View view, ColumnGraph columnGraph, String mood) {
+		// values for the mood column we want
+		List<ColumnValue> givenValues = getMoodColumnData(appContext, columnGraph, mood);
+		
+		// create columns
+		List<Column> columns = setUpColumns(givenValues);
+		
+		// set up axes
+		Axis xAxis = new Axis();
+		Axis yAxis = setUpYAxis();
+
+		xAxis.setName(columnGraph.xAxisName);
+		yAxis.setName(columnGraph.yAxisName);
+		
+		// set up chart
+		ColumnChartData data = new ColumnChartData(columns);
+		data.setAxisXBottom(xAxis);
+		data.setAxisYLeft(yAxis);
+		
+		ColumnChartView chart = new ColumnChartView(appContext);
+		chart.setValueSelectionEnabled(true);
+		chart.setColumnChartData(data);
+		
+		((RelativeLayout) view).addView(chart);
+	}
+	
+	/**
+	 * Generates a line graph given mood data
+	 * from the moods activity. Requires a LineGraph
+	 * object to be passed with necessary information
+	 * to generate the graph.
+	 * @param appContext	Context of the Activity calling this method
+	 * @param view			View to display the graph in (should be a RelativeLayout)
+	 * @param lineGraph		Line Graph Data object with necessary graph information
+	 * @param mood			The mood to be graphed
+	 */
+	public static void generateMoodLineGraph(Context appContext, View view, LineGraph lineGraph, String mood) {
+		// Grab data, generate point values
+		List<PointValue> dataPoints = getMoodLineData(appContext, lineGraph.fileName, mood);
+
+		// Generate lines from point data
+		Line line = new Line(dataPoints).setColor(lineGraph.color).setCubic(true);
+		line.setStrokeWidth(lineGraph.strokeWidth);
+		line.setPointRadius(lineGraph.pointWidth);
+		line.setHasLabelsOnlyForSelected(true);
+		List<Line> lines = new ArrayList<Line>();
+		lines.add(line);
+		
+		// Create axes
+		Axis axisY = new Axis();
+		Axis axisX = new Axis();
+		
+		// Set name and lines
+		axisY.setName(lineGraph.yAxisName);
+		axisX.setName(lineGraph.xAxisName);
+		axisY.setHasLines(lineGraph.yAxisLines);
+		axisX.setHasLines(lineGraph.xAxisLines);
+		
+		LineChartData data = new LineChartData(lines);
+		
+		data.setAxisXBottom(axisX);
+		data.setAxisYLeft(axisY);
+		
+		// Generate the graph and display it inside
+		// the appropriate view
+		LineChartView chart = new LineChartView(appContext);
+		chart.setValueSelectionEnabled(true);
+		chart.setLineChartData(data);
+		
+		((RelativeLayout) view).addView(chart);
+	}
+	
 	/**
 	 * Calculates the average value for
 	 * each data type and displays a column
@@ -341,7 +363,7 @@ public class GraphManager {
 	 * Dependence Graph when a column is selected
 	 * using the data from the data type represented
 	 * by that column.
-	 * @param lcv			The line chart being updated
+	 * @param lcv			Line chart being updated
 	 * @param context		Context of the Activity
 	 * @param color			Color of the column selected
 	 */
@@ -406,10 +428,10 @@ public class GraphManager {
 	 * Sets up initial line chart in a Line Column
 	 * Dependence Graph.
 	 * @param appContext	Context of the Activity
-	 * @param lcv			The line chart being updated
+	 * @param lcv			Line chart being updated
 	 */
 	public static void setUpInitialLineChart(Context appContext, LineChartView lcv) {
-		// Doesn't actually use "Just Ok". Only uses it's x-axis values --spaghetti!!!--
+		// Doesn't actually use "Just Ok". Only uses its x-axis values --spaghetti!!!--
 		List<PointValue> dataPoints = GraphManager.getMoodLineData(appContext, "testdata", "Just Ok");
 		LineChartData lineData = (LineChartData) lcv.getChartData();
 		
@@ -449,36 +471,22 @@ public class GraphManager {
 		// For build-up animation you have to disable viewport recalculation
 		lcv.setViewportCalculationEnabled(false);
 		
-		// And set initial max viewport and current viewport - remember to set viewports after data
+		// And set initial max viewport and current viewport - remember to set viewport after data
 		Viewport v = new Viewport(0, 10, dataPoints.size(), 0);
 		lcv.setMaxViewport(v);
 		lcv.setCurrentViewport(v, false);
 
 		lcv.setZoomType(ZoomType.HORIZONTAL);		
 	}
-	
-	public static List<ColumnValue> getColumnData(Context appContext, String fileName, int color, String mood) {
-		List<ColumnValue> colValues = new ArrayList<ColumnValue>();
-		
-		try {
-			// Grab data from data file
-			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, fileName);
-			colValues = sortColumnData(moodData, mood, color);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return colValues;
-	}
-	
+
 	/**
-	 * Calculates the average value for
-	 * each data type and displays a column
-	 * for each data type with its respective
-	 * average.
+	 * Sets up a column chart with a preview chart
+	 * simultaneously given the selected mood and color.
 	 * @param appContext	Context of the Activity
 	 * @param ccv			ColumnChart to be created
+	 * @param pccv			PreviewColumnChart to be created
+	 * @param color			Color of the top column chart
+	 * @param mood			Mood to be graphed
 	 */
 	public static void generateMoodColumnGraphWithChart(Context appContext, ColumnChartView ccv, PreviewColumnChartView pccv, int color, String mood) {
 		// values for the mood column we want
@@ -495,6 +503,7 @@ public class GraphManager {
 		data.setAxisXBottom(xAxis);
 		data.setAxisYLeft(yAxis);
 		
+		// set up the preview chart
 		ColumnChartData pData = new ColumnChartData(data);
 		for (Column column : pData.getColumns()) {
 			for (ColumnValue value : column.getValues()) {
@@ -504,16 +513,72 @@ public class GraphManager {
 		pData.setAxisXBottom(xAxis);
 		pData.setAxisYLeft(yAxis);
 		pccv.setColumnChartData(pData);
+		pccv.setPreviewColor(Color.RED);
 		
 		ccv.setColumnChartData(data);
-		
+	}
+	
+	/*
+	 * Helper methods -- they make for cleaner code
+	 * because they're repeated many times in setting up
+	 * graphs:
+	 * 
+	 * Axis setUpYAxis
+	 * void writeRandomData
+	 * List<Column> setUpColumns
+	 * List<ColumnValue> sortColumnData
+	 */
+	
+	/**
+	 * Used to assist in setting up y-axis for
+	 * most graphs.
+	 * @return		Y-Axis with integer values from 1 - 10
+	 */
+	public static Axis setUpYAxis() {
+		Axis yAxis = new Axis();
+		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i : yAxisValues) {
+			yValues.add(new AxisValue(i));
+		}
+		yAxis.setValues(yValues);
+		yAxis.setHasLines(true);
+		return yAxis;
+	}
+	
+	/**
+	 * Only necessary for debug purposes. This will
+	 * generate some random mood data to a file in order to
+	 * test the graph generating functions.
+	 * @param appContext	Context of the Activity calling this method
+	 */
+	public static void writeRandomData(Context appContext) {
+		String[] moodKeys = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
+		// generate a data file with 31 randomly-generated surveys
+		try {
+			Random rand = new Random();
+			Map<String, String> testData;
+			for (int i = 0; i < 1; i++) {
+				testData = new HashMap<String, String>();
+				for (String s : moodKeys) {
+					// generate a random value 1 - 10 for each mood
+					int value = rand.nextInt(10) + 1;
+					testData.put(s, "" + value);
+				}
+				DataStorageManager.writeJSONObject(appContext, "testdata", testData, false);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * Used to assist in setting up columns for
 	 * column graphs.
-	 * @param givenValues
-	 * @return
+	 * @param givenValues	The values of the columns
+	 * @return				The columns with their values
 	 */
 	public static List<Column> setUpColumns(List<ColumnValue> givenValues) {
 		// create columns
@@ -531,29 +596,12 @@ public class GraphManager {
 	}
 	
 	/**
-	 * Used to assist in setting up y-axis for
-	 * most graphs.
-	 * @return
-	 */
-	public static Axis setUpYAxis() {
-		Axis yAxis = new Axis();
-		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		List<AxisValue> yValues = new ArrayList<AxisValue>();
-		for (int i : yAxisValues) {
-			yValues.add(new AxisValue(i));
-		}
-		yAxis.setValues(yValues);
-		yAxis.setHasLines(true);
-		return yAxis;
-	}
-	
-	/**
 	 * Sorts and returns data for column
 	 * values.
-	 * @param moodData
-	 * @param mood
-	 * @param color
-	 * @return
+	 * @param moodData		The data for the columns
+	 * @param mood			The mood being graphed
+	 * @param color			The color of the columns
+	 * @return				The list of column values
 	 */
 	public static List<ColumnValue> sortColumnData(ArrayList<Map<String, String>> moodData, String mood, int color) {
 		List<ColumnValue> colValues = new ArrayList<ColumnValue>();

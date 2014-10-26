@@ -48,7 +48,7 @@ public class ChartDemo extends ActionBarActivity {
 	 * GraphManager class.
 	 */
 	public void createGraphs() {
-		genLineGraphs = true;
+		genLineGraphs = false;
 		
 		// Set up ColumnGraph objects for graph generation
 		String[] moods = {"General Wellness Levels", "Happiness Levels", "Motivation Levels", "Stress Levels", 

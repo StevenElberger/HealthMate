@@ -28,24 +28,20 @@ public class PreviewChartDemo extends Activity {
 		ccv = (ColumnChartView) findViewById(R.id.column_chart_top);
 		pccv = (PreviewColumnChartView) findViewById(R.id.column_chart_preview);
 		
+		// generate graphs, add viewport change listener, set up preview box
 		GraphManager.generateMoodColumnGraphWithChart(getApplicationContext(), ccv, pccv, Color.GREEN, "Just Ok");
 		pccv.setViewportChangeListener(new ViewportListener());
 		previewX(true);
-		pccv.setPreviewColor(Color.RED);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.preview_chart_demo, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -53,6 +49,10 @@ public class PreviewChartDemo extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Sets up preview box
+	 * @param animate	Use animation for current viewport
+	 */
 	private void previewX(boolean animate) {
 		Viewport tempViewport = new Viewport(ccv.getMaxViewport());
 		float dx = tempViewport.width() / 4;
@@ -65,8 +65,7 @@ public class PreviewChartDemo extends Activity {
 
 		@Override
 		public void onViewportChanged(Viewport newViewport) {
-			// don't use animation, it is unnecessary when using preview chart because usually viewport changes
-			// happens to often.
+			// unnecessary to use animation when using preview chart - viewport changes too often
 			ccv.setCurrentViewport(newViewport, false);
 		}
 
