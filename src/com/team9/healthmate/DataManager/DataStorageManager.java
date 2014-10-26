@@ -321,7 +321,6 @@ public class DataStorageManager {
 		// Create a JSONArray containing all the JSON Objects
 		appendedString = appendedString + parseString[parseString.length - 1];
 		dataSet = new JSONArray(("[" + appendedString + "]"));
-		Log.w("Information to Be Deleted: ", informationToBeDeleted);
 		
 		// Delete the old file
 		deleteFile(context, fileName);
@@ -335,11 +334,10 @@ public class DataStorageManager {
 		for (int i = 0; i < dataSet.length(); i++) {
 
 			currentDataPacket = dataSet.getJSONObject(i);
-			Log.w("Information in File: ", currentDataPacket.toString());
 			
 			// Check if the current JSONObject is the one wanted to be deleted
 			// If it is, do not add it to the data that will be written to the file.
-			if (informationToBeDeleted.compareTo(data.get("timestamp").toString()) == 0) {
+			if (informationToBeDeleted.compareTo(currentDataPacket.get("timestamp").toString()) == 0) {
 				dataRemoved = true;
 			}
 			else {
