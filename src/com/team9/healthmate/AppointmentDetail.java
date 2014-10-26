@@ -128,10 +128,9 @@ public class AppointmentDetail extends Activity {
 				key = stringIterator.next();
 				intent.putExtra(key, appointmentDetails.get(key));
 			}
-
 			// Go to the next activity
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+		    startActivity(intent);
 			finish();
 		}
 		return super.onOptionsItemSelected(item);

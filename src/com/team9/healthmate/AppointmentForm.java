@@ -28,8 +28,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	// Button to save the Appointment
 	ImageButton save;
 
-	// Data set to contain appointment information
-	Map<String, String> appointmentDetails; 
+	// Data set to contain appointment timeStamp
+	Map<String, String> appointmentTimeStamp; 
 	
 	Map<String, String> appointment;
 
@@ -41,7 +41,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		save = (ImageButton) findViewById(R.id.SaveAppointment);
 		save.setOnClickListener((OnClickListener) this);
 		
-		appointmentDetails = new HashMap<String, String>();
+		appointmentTimeStamp = new HashMap<String, String>();
 
 		// Check if the user is editing a previous appointment.
 		checkIfInEditorMode();
@@ -93,10 +93,10 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			saveDateAndTime();
 			
 			// Check to see if the Appointment was being edited.
-			if (appointmentDetails.get("timestamp") != null) {
+			if (appointmentTimeStamp.get("timestamp") != null) {
 				
 				// Delete the old Appointment from the file.
-				boolean success = DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+				boolean success = DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
 				
 				Log.w("Delete successful: ", "" + success);
 			}
@@ -130,18 +130,9 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			String[] date;
 			String[] time;
 
-			// Load the information into a Map Object that will
+			// Load the time stamp into a Map Object that will
 			// be used to delete the old appointment settings.
-			appointmentDetails.put("timestamp", intent.getStringExtra("timestamp"));
-			appointmentDetails.put("title", intent.getStringExtra("title"));
-			appointmentDetails.put("name", intent.getStringExtra("name"));
-			appointmentDetails.put("location", intent.getStringExtra("location"));
-			appointmentDetails.put("phone", intent.getStringExtra("phone"));
-			appointmentDetails.put("email", intent.getStringExtra("email"));
-			appointmentDetails.put("comment", intent.getStringExtra("comment"));
-			appointmentDetails.put("start time", intent.getStringExtra("start time"));
-			appointmentDetails.put("end time", intent.getStringExtra("end time"));
-			appointmentDetails.put("date", intent.getStringExtra("date"));
+			appointmentTimeStamp.put("timestamp", intent.getStringExtra("timestamp"));
 
 			// Fill the Form Input boxes with the previous user inputs
 			// Get the id of each text box, and set their values.
