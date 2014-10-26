@@ -108,10 +108,10 @@ public class Login extends Activity implements OnClickListener{
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-			}*/
-			/*try {
+			}
+			try {
 				Context context = getApplicationContext();
-				ArrayList<Map<String, String>> information = DataStorageManager.readJSONObject(context, "account");
+				/*ArrayList<Map<String, String>> information = DataStorageManager.readJSONObject(context, "account");
 				
 				if (DataStorageManager.deleteJSONObject(context, "account", information.get(2)))
 					DataStorageManager.displayText(this, R.id.textView1, "success");

@@ -67,7 +67,7 @@ public class DataStorageManager {
 		// Generate a time stamp for every JSON object written to the file
 		// this will be stored with each JSON object.
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd hh:mm:ss", Locale.US);
+				"yyyy-MM-dd hh:mm:ss:SSS", Locale.US);
 		String timestamp = dateFormat.format(new Date());
 		informationPacket.put("timestamp", timestamp);
 
