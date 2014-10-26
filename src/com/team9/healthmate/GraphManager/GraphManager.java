@@ -84,24 +84,7 @@ public class GraphManager {
 		try {
 			// Grab data from data file
 			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, columnGraph.fileName);
-			Iterator<Map<String, String>> iterator = moodData.iterator();
-			Map<String, String> dataSet = new HashMap<String, String>();
-			
-			while (iterator.hasNext()) {
-				// Go through all the keys
-				dataSet = iterator.next();
-				Iterator<String> it = dataSet.keySet().iterator();
-				while (it.hasNext()) {
-					// If the keys are what we're looking for
-					// then put their values into columns
-					String key = it.next();
-					String value = dataSet.get(key);
-					if (key.equals(mood)) {
-						ColumnValue moodValue = new ColumnValue(Integer.parseInt(value), columnGraph.color);
-						colValues.add(moodValue);
-					}
-				}
-			}
+			colValues = sortColumnData(moodData, mood, columnGraph.color);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -127,24 +110,9 @@ public class GraphManager {
 		// set up axes
 		Axis xAxis = new Axis();
 		Axis yAxis = setUpYAxis();
-		
-		if (columnGraph.xAxisValues != null) {
-			List<AxisValue> xValues = new ArrayList<AxisValue>();
-			for (int i : columnGraph.xAxisValues) {
-				xValues.add(new AxisValue(i));
-			}
-			xAxis.setValues(xValues);
-		}
-//		if (columnGraph.yAxisValues != null) {
-//			List<AxisValue> yValues = new ArrayList<AxisValue>();
-//			for (int i : columnGraph.yAxisValues) {
-//				yValues.add(new AxisValue(i));
-//			}
-//			yAxis.setValues(yValues);
-//		}
+
 		xAxis.setName(columnGraph.xAxisName);
 		yAxis.setName(columnGraph.yAxisName);
-//		yAxis.setHasLines(true);
 		
 		// set up chart
 		ColumnChartData data = new ColumnChartData(columns);
@@ -495,24 +463,7 @@ public class GraphManager {
 		try {
 			// Grab data from data file
 			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, fileName);
-			Iterator<Map<String, String>> iterator = moodData.iterator();
-			Map<String, String> dataSet = new HashMap<String, String>();
-			
-			while (iterator.hasNext()) {
-				// Go through all the keys
-				dataSet = iterator.next();
-				Iterator<String> it = dataSet.keySet().iterator();
-				while (it.hasNext()) {
-					// If the keys are what we're looking for
-					// then put their values into columns
-					String key = it.next();
-					String value = dataSet.get(key);
-					if (key.equals(mood)) {
-						ColumnValue moodValue = new ColumnValue(Integer.parseInt(value), color);
-						colValues.add(moodValue);
-					}
-				}
-			}
+			colValues = sortColumnData(moodData, mood, color);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -594,5 +545,36 @@ public class GraphManager {
 		yAxis.setValues(yValues);
 		yAxis.setHasLines(true);
 		return yAxis;
+	}
+	
+	/**
+	 * Sorts and returns data for column
+	 * values.
+	 * @param moodData
+	 * @param mood
+	 * @param color
+	 * @return
+	 */
+	public static List<ColumnValue> sortColumnData(ArrayList<Map<String, String>> moodData, String mood, int color) {
+		List<ColumnValue> colValues = new ArrayList<ColumnValue>();
+		Iterator<Map<String, String>> iterator = moodData.iterator();
+		Map<String, String> dataSet = new HashMap<String, String>();
+		
+		while (iterator.hasNext()) {
+			// Go through all the keys
+			dataSet = iterator.next();
+			Iterator<String> it = dataSet.keySet().iterator();
+			while (it.hasNext()) {
+				// If the keys are what we're looking for
+				// then put their values into columns
+				String key = it.next();
+				String value = dataSet.get(key);
+				if (key.equals(mood)) {
+					ColumnValue moodValue = new ColumnValue(Integer.parseInt(value), color);
+					colValues.add(moodValue);
+				}
+			}
+		}
+		return colValues;
 	}
 }
