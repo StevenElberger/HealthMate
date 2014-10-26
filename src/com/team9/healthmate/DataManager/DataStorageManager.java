@@ -318,6 +318,13 @@ public class DataStorageManager {
 		// Create a JSONArray containing all the JSON Objects
 		appendedString = appendedString + parseString[parseString.length - 1];
 		dataSet = new JSONArray(("[" + appendedString + "]"));
+		
+		// Delete the old file
+		deleteFile(context, fileName);
+		
+		// Create a new file that will be written to
+		FileOutputStream fileOutputStream = 
+				context.openFileOutput(fileName, Context.MODE_APPEND);
 
 		// Go through the array of JSON objects, compare them to the
 		// JSONObject that will be deleted.
@@ -331,21 +338,16 @@ public class DataStorageManager {
 				dataRemoved = true;
 			}
 			else {
-				text = text + currentDataPacket.toString() + "\n"; 
+				
+				text = currentDataPacket.toString() + "\n";
+				
+				// write the information to the file
+				fileOutputStream.write(text.getBytes());
 			}
 		}
 		
-		if (dataRemoved) {
-			// open the file that will be overwritten
-			FileOutputStream fileOutputStream = 
-					context.openFileOutput(fileName, Context.MODE_PRIVATE);
-			
-			// write the information to the file
-			fileOutputStream.write(text.getBytes());
-
-			// Close the output stream.
-			fileOutputStream.close();
-		}
+		// Close the output stream.
+		fileOutputStream.close();
 		
 		return dataRemoved;
 
