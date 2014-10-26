@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.team9.healthmate"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.team9.healthmate" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -31,7 +29,7 @@
         <!-- GOOGLE API KEY -->
         <meta-data
   		  android:name="com.google.android.maps.v2.API_KEY"
-  		  android:value="AIzaSyCghXNqD7l1CgvkQxXmQg54e_XQVMjPgnU"/>
+  		  android:value="AIzaSyDWGBE26HRgOfV6xNdL2xBHN1_qBvtkR0Y"/>
         
         <meta-data
     		android:name="com.google.android.gms.version"
