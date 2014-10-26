@@ -1,13 +1,19 @@
 package com.team9.healthmate;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONException;
+
+import com.team9.healthmate.DataManager.DataStorageManager;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -31,10 +37,22 @@ public class AppointmentDetail extends Activity {
 		appointmentDetails.put("location", intent.getStringExtra("location"));
 		appointmentDetails.put("phone", intent.getStringExtra("phone"));
 		appointmentDetails.put("email", intent.getStringExtra("email"));
+		appointmentDetails.put("comment", intent.getStringExtra("comment"));
 		appointmentDetails.put("start time", intent.getStringExtra("start time"));
 		appointmentDetails.put("end time", intent.getStringExtra("end time"));
 		appointmentDetails.put("date", intent.getStringExtra("date"));
-		appointmentDetails.put("comment", intent.getStringExtra("comment"));
+		
+		String key;
+		Set<String> setOfKeys;
+		Iterator<String> stringIterator;
+		
+		setOfKeys = appointmentDetails.keySet();
+		stringIterator = setOfKeys.iterator();
+		while (stringIterator.hasNext()){
+			key = stringIterator.next();
+			Log.w("Deletion", key + ":" + appointmentDetails.get(key));
+			}
+		
 
 		TextView textView = (TextView) findViewById(R.id.AppointmentDetailTitle);
 		textView.setText(appointmentDetails.get("title"));
@@ -74,18 +92,28 @@ public class AppointmentDetail extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getItemId() == R.id.action_delete_appointment) {
-
+			
+			try {
+				if (DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails)) {
+					Log.w("Deletion", "Successful Deletion");
+				} else {
+					Log.w("Deletion", "Failure");
+				}
+				DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			Intent intent = new Intent(this, AppointmentsList.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
-			finish();
+			//finish();
 		}
 
 		if (item.getItemId() == R.id.action_edit_appointment) {
 			String key;
 			Set<String> setOfKeys;
 			Iterator<String> stringIterator;
-			Intent intent = new Intent(this, AppointmentDetail.class);
+			Intent intent = new Intent(this, AppointmentForm.class);
 
 			setOfKeys = appointmentDetails.keySet();
 			stringIterator = setOfKeys.iterator();
@@ -96,7 +124,7 @@ public class AppointmentDetail extends Activity {
 
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
-			finish();
+			//finish();
 		}
 		return super.onOptionsItemSelected(item);
 	}

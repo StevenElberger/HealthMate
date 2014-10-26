@@ -19,7 +19,7 @@ import android.widget.TimePicker;
 public class AppointmentForm extends Activity implements OnClickListener {
 	
 	public ImageButton save;
-	Map<String, String> appointmentDetails;
+	Map<String, String> appointmentDetails = new HashMap<String, String>();
 	
 	
 	@Override
@@ -27,15 +27,14 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_form);
 		
-		//Intent intent = getIntent();
+		Intent intent = getIntent();
 		
 		save = (ImageButton) findViewById(R.id.SaveAppointment);
 		save.setOnClickListener((OnClickListener) this);
 		
-		/*if (intent.getStringExtra("timestamp") != null)
+		if (intent.getStringExtra("timestamp") != null)
 		{
-			/*EditText editInput;
-			appointmentDetails = new HashMap<String, String>();
+			EditText editInput;
 			
 			appointmentDetails.put("timestamp", intent.getStringExtra("timestamp"));
 			
@@ -59,7 +58,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			editInput = (EditText)findViewById(R.id.AppointmentFormEmail);
 			editInput.setText(intent.getStringExtra("email"));
 			
-			appointmentDetails.put("date", intent.getStringExtra("date"));
+			/*appointmentDetails.put("date", intent.getStringExtra("date"));
 			editInput = (EditText)findViewById(R.id.AppointmentFormDate);
 			editInput.setText(intent.getStringExtra("date"));
 			
@@ -69,12 +68,12 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			
 			appointmentDetails.put("end time", intent.getStringExtra("end time"));
 			editInput = (EditText)findViewById(R.id.AppointmentFormEndTime);
-			editInput.setText(intent.getStringExtra("end time"));
+			editInput.setText(intent.getStringExtra("end time"));*/
 			
 			appointmentDetails.put("comment", intent.getStringExtra("comment"));
 			editInput = (EditText)findViewById(R.id.AppointmentFormEndTime);
 			editInput.setText(intent.getStringExtra("comment"));
-		}*/
+		}
 		
 	}
 	
@@ -154,9 +153,9 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		String formatedDate = month + "-" + day + "-" + year;
 		appointment.put("date", formatedDate);
 		
-		/*if (appointmentDetails.get("timestamp") != null) {
+		if (appointmentDetails.get("timestamp") != null) {
 			DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
-		}*/
+		}
 		
 		DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
 		

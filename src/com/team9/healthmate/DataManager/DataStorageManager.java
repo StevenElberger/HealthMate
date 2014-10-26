@@ -289,7 +289,6 @@ public class DataStorageManager {
 		
 		// Get the string representation of the JSON Object
 		informationToBeDeleted = data.toString();
-
 		// Buffer increases the amount of information coming in 
 		// for a given read.
 		BufferedInputStream bufferInputStream = 
