@@ -288,7 +288,7 @@ public class DataStorageManager {
 		}
 		
 		// Get the string representation of the JSON Object
-		informationToBeDeleted = data.toString();
+		informationToBeDeleted = data.get("timestamp").toString();
 
 		// Buffer increases the amount of information coming in 
 		// for a given read.
@@ -335,7 +335,7 @@ public class DataStorageManager {
 			
 			// Check if the current JSONObject is the one wanted to be deleted
 			// If it is, do not add it to the data that will be written to the file.
-			if (currentDataPacket.toString().compareTo(informationToBeDeleted) == 0) {
+			if (informationToBeDeleted.compareTo(currentDataPacket.get("timestamp").toString()) == 0) {
 				dataRemoved = true;
 			}
 			else {
