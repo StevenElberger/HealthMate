@@ -15,6 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * Activity Class that displays the information for a given
+ * Appointment. Buttons are initialized that give the user 
+ * will have the option of editing or deleting the Appointment
+ * being displayed. 
+ * @author Michael Sandoval
+ *
+ */
 public class AppointmentDetail extends Activity {
 	
 	// Map Object to contain the appointment details

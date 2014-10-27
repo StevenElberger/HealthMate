@@ -38,6 +38,7 @@ public class AppointmentsList extends ListActivity {
 		
 		// Attempt to read from the Appointments file
 		try {
+			
 		appointments =  DataStorageManager.readJSONObject(this, "appointments");
 		
 		// A list of strings that will be displayed to the user
@@ -66,6 +67,7 @@ public class AppointmentsList extends ListActivity {
 		
 		// set the adapter as active.
 		setListAdapter(adapter);
+		
 		}
 		catch (Exception e) {
 			e.printStackTrace();

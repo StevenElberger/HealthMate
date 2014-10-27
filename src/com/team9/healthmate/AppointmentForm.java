@@ -8,7 +8,6 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -20,7 +19,7 @@ import android.widget.TimePicker;
  * Activity Class that Displays a Form used to create Appointments. The
  * appointments are stored in the internal storage of the device when the user
  * selects the save button.
- * @author Michael
+ * @author Michael Sandoval
  * 
  */
 public class AppointmentForm extends Activity implements OnClickListener {
@@ -28,11 +27,16 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	// Button to save the Appointment
 	ImageButton save;
 
-	// Data set to contain appointment timeStamp
+	// The container of the timestamp that will be deleted
 	Map<String, String> appointmentTimeStamp; 
 	
+	// The container of the Appointment that will be saved
 	Map<String, String> appointment;
 
+	/**
+	 * Method that sets the listener for the save button and
+	 * initializes the container for the appointment to be deleted.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,6 +54,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 
 	/**
 	 * Method that creates an intent to start the next activity.
+	 * The next activity is the AppointmentList Activity.
 	 */
 	private void appointmentList() {
 		Intent intent = new Intent(AppointmentForm.this, AppointmentsList.class);
@@ -58,6 +63,11 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		finish();
 	}
 
+	/**
+	 * Method that handles the event when the user clicks the save button.
+	 * Input from the user is read and stored in the internal storage of
+	 * the android device in a file named "appointments".
+	 */
 	@Override
 	public void onClick(View v) {
 		try {
@@ -96,9 +106,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			if (appointmentTimeStamp.get("timestamp") != null) {
 				
 				// Delete the old Appointment from the file.
-				boolean success = DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
-				
-				Log.w("Delete successful: ", "" + success);
+				DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
 			}
 			
 			// Save the new Appointment to the "appointments" file
@@ -116,6 +124,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	/**
 	 * Method to check if the user is editing a previous appointment. If the
 	 * user is editing an appointment, load the information into the form.
+	 * @author Michael Sandoval
 	 */
 	private void checkIfInEditorMode() {
 
