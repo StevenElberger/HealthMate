@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.team9.healthmate.R;
+import com.team9.healthmate.Medications.Medication;
 
 public class Menu extends Activity {
 	public ListView menu;

@@ -1,0 +1,199 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center_horizontal"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/new_medication_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/adding_a_new_medication"
+        />
+
+	<LinearLayout
+	    android:id="@+id/new_medication_form"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/new_medication_submit_buttons"
+	    android:layout_below="@id/new_medication_title"
+	    android:orientation="vertical" >
+	
+   	   <TextView
+        android:id="@+id/new_medication_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="5.0dip"
+        android:layout_marginBottom="1.0dip"
+        android:text="@string/name_" />
+
+	   <EditText
+	       android:id="@+id/new_medication_name"
+	       android:layout_width="fill_parent"
+	       android:layout_height="0dp"
+	       android:layout_marginLeft="5dp"
+	       android:layout_marginStart="5dp"
+	       android:layout_weight="1"
+	       android:gravity="center"
+	       android:inputType="text"
+	       android:imeOptions="actionDone"
+	       android:hint="@string/medication_name" />
+	   
+	   <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10.0dip"
+	        android:layout_marginBottom="1.0dip"
+	        android:text="@string/frequency_" />
+	   
+	  	<RadioGroup
+	  	    android:layout_width="fill_parent"
+	  	    android:layout_height="wrap_content"
+	  	    android:layout_marginLeft="15dp"
+	  	    android:orientation="vertical" >
+
+	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_A"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="5.0dip"
+		        android:text="@string/once_a_day"
+		        android:onClick="disableFrequencyPicker"/>
+   	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_B"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="5.0dip"	        
+		        android:text="@string/twice_a_day"
+		        android:onClick="disableFrequencyPicker"/>
+   	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_C"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="5.0dip"
+		        android:text="@string/once_a_week"
+		        android:onClick="disableFrequencyPicker"/>
+   	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_D"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+       	        android:layout_marginTop="5.0dip"
+		        android:text="@string/other_"
+		        android:onClick="enableFrequencyPicker"/>
+	  	</RadioGroup>
+	  	
+		<LinearLayout 
+		    android:id="@+id/new_medication_frequency_section" 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="25dip"
+		    android:orientation="horizontal"
+		    >
+	   	  	    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="One every" />
+	    		<Button 
+		   	    android:id="@+id/new_medication_numer_picker_decrease"
+		   	    android:layout_width="40dip"
+		   	    android:layout_height="40dip"
+		   	    android:onClick="decreaseNumberPicker"
+				android:text="@string/_minus"
+				android:enabled="false" />
+			   <EditText 
+			    android:id="@+id/new_medication_dosage_frequency"
+				android:layout_width="wrap_content"
+			    android:layout_height="40dip"
+			    android:gravity="center"
+			    android:text="@string/_0" 
+			    android:inputType="number"
+			    android:enabled="false"
+			    android:imeOptions="actionDone"/>
+			   	<Button 
+		   	    android:id="@+id/new_medication_numer_picker_increase"
+		   	    android:layout_width="40dip"
+		   	    android:layout_height="40dip"
+		   	    android:onClick="increaseNumberPicker"
+				android:text="@string/_plus"
+				android:enabled="false" />
+				   		
+
+		   <Spinner
+		       android:id="@+id/new_medication_frequency_type"
+		       android:layout_width="0dp"
+		       android:layout_height="wrap_content"
+		       android:layout_weight="1"
+		       android:clickable="false" />
+		</LinearLayout>
+		
+		<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip"
+        android:layout_marginBottom="1.0dip"
+        android:text="@string/dosage_strength_" />
+		
+		<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="15dp"
+		    android:orientation="horizontal" >
+
+			   <EditText 
+			    android:id="@+id/new_medication_dosage_strength"
+				android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:gravity="center"
+			    android:inputType="number"
+			    android:hint="@string/_e_g_200_"/>
+			   
+			   <Spinner
+		       android:id="@+id/new_medication_medication_type_spinner"
+		       android:layout_width="0dp"
+		       android:layout_height="wrap_content"
+		       android:layout_weight="1" />
+	   	</LinearLayout>
+				
+		<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip"
+        android:layout_marginBottom="1.0dip"
+        android:text="@string/set_reminder" />
+
+		<Switch
+		    android:id="@+id/new_medication_reminder_switch"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="15dp"
+		    android:onClick="onReminderToggleSwitch"
+		    android:textOff="OFF"
+		    android:textOn="ON" />
+	</LinearLayout>		
+	
+	<LinearLayout
+	   	android:id="@+id/new_medication_submit_buttons"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:orientation="horizontal" 
+	    style="?android:attr/buttonBarStyle" >
+
+	    <Button
+	        android:id="@+id/new_medication_cancel"
+	        android:layout_width="150dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/cancel"
+	        style="?android:attr/buttonBarButtonStyle" />
+
+	    <Button
+	        android:id="@+id/new_medication_save"
+	        android:layout_width="150dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/save" 
+	        style="?android:attr/buttonBarButtonStyle" />
+	</LinearLayout>
+</RelativeLayout>
