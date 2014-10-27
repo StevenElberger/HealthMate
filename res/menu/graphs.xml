@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item 
+        android:id="@+id/JustOk"
+        android:title="@+string/JustOk"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/Happy"
+        android:title="@+string/Happy"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/Motivated"
+        android:title="@+string/Motivated"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/Stressed"
+        android:title="@+string/Stressed"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/Angry"
+        android:title="@+string/Angry"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/Tired"
+        android:title="@+string/Tired"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/Depressed"
+        android:title="@+string/Depressed"
+        android:showAsAction="never"></item>
+</menu>

@@ -42,6 +42,14 @@
     <string name="enter_bday">Please enter your birthday:</string>
     <string name="enter_sex">Please enter your sex:</string>
 
+    <string name="JustOk">Just Ok</string>
+    <string name="Happy">Happy</string>
+    <string name="Motivated">Motivated</string>
+    <string name="Stressed">Stressed</string>
+    <string name="Angry">Angry</string>
+    <string name="Tired">Tired</string>
+    <string name="Depressed">Depressed</string>
+
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
@@ -82,5 +90,9 @@
     <string name="_plus">+</string>
     <string name="reminder">reminder</string>
     <string name="take_one_everey">Take one everey</string>
+
+    <string name="title_activity_chart_demo">ChartDemo</string>
+    <string name="title_activity_animated_chart_demo">AnimatedChartDemo</string>
+    <string name="title_activity_preview_chart_demo">PreviewChartDemo</string>
 
 </resources>
