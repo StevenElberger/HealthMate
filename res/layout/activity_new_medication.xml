@@ -1,13 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical" >
+    <RelativeLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:gravity="center_horizontal"
-    tools:context="${relativePackage}.${activityClass}" >
+    android:gravity="center_horizontal" >
 
     <TextView
         android:id="@+id/new_medication_title"
@@ -16,11 +20,10 @@
         android:text="@string/adding_a_new_medication"
         />
 
-	<LinearLayout
+	 <LinearLayout
 	    android:id="@+id/new_medication_form"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_above="@+id/new_medication_submit_buttons"
 	    android:layout_below="@id/new_medication_title"
 	    android:orientation="vertical" >
 	
@@ -82,13 +85,12 @@
 		        android:onClick="enableFrequencyPicker"/>
 	  	</RadioGroup>
 	  	
-		<LinearLayout 
+		  <LinearLayout 
 		    android:id="@+id/new_medication_frequency_section" 
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="25dip"
-		    android:orientation="horizontal"
-		    >
+		    android:orientation="horizontal" >
 	   	  	    <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
@@ -124,7 +126,7 @@
 		       android:layout_height="wrap_content"
 		       android:layout_weight="1"
 		       android:clickable="false" />
-		</LinearLayout>
+	 </LinearLayout>
 		
 		<TextView
         android:layout_width="wrap_content"
@@ -133,7 +135,7 @@
         android:layout_marginBottom="1.0dip"
         android:text="@string/dosage_strength_" />
 		
-		<LinearLayout
+		 <LinearLayout
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="15dp"
@@ -152,7 +154,7 @@
 		       android:layout_width="0dp"
 		       android:layout_height="wrap_content"
 		       android:layout_weight="1" />
-	   	</LinearLayout>
+	 </LinearLayout>	
 				
 		<TextView
         android:layout_width="wrap_content"
@@ -169,10 +171,10 @@
 		    android:onClick="onReminderToggleSwitch"
 		    android:textOff="OFF"
 		    android:textOn="ON" />
-	</LinearLayout>		
+	<!-- </LinearLayout> -->		
 	
-	<LinearLayout
-	   	android:id="@+id/new_medication_submit_buttons"
+	<!-- 	   	android:id="@+id/new_medication_submit_buttons" -->
+	 <LinearLayout
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignParentBottom="true"
@@ -193,5 +195,7 @@
 	        android:layout_height="wrap_content"
 	        android:text="@string/save" 
 	        style="?android:attr/buttonBarButtonStyle" />
+	    </LinearLayout>
 	</LinearLayout>
-</RelativeLayout>
+ </RelativeLayout>
+</ScrollView>
