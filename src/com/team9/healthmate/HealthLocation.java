@@ -7,7 +7,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -35,6 +34,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This activity is meant to display the user and health facilities around the user
+ * on a map given from the google map api v2. The data to find the health facilities
+ * around the user's location was given by the google place api and is parsed by the 
+ * code given this activity.
+ * 
+ * @author Joseph E Hoxsey
+ *
+ */
 public class HealthLocation extends Activity implements LocationListener{
 	
 	public String API_KEY = "AIzaSyByYEysYTmSo-_vMEkgVviy18IJbAg3dpE";
@@ -54,6 +62,12 @@ public class HealthLocation extends Activity implements LocationListener{
     public GoogleMap gMap;
     private final int MAX_PLACES = 20;
     private MarkerOptions[] places;
+    
+    /**
+     * This method is called as soon as the activity is selected. The method init markers
+     * map and after calls the init call of updatePlaces() method. In addition, it sets the
+     * content view to layout activity_health_location which is in the resource folder.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,34 +91,31 @@ public class HealthLocation extends Activity implements LocationListener{
             //update location
             updatePlaces();
         }
-        else    {
-            //DEBUG CODE
-            Log.v("Map:","Something is wrong with map setup or Play Service is not available");
-        }
 
     }
     @Override
     public void onLocationChanged(Location location) {
-        //DEBUG CODE
-        Log.v("MyMapActivity", "location changed");
         updatePlaces();
     }
     @Override
     public void onProviderDisabled(String provider){
-        //DEBUG CODE
-        Log.v("MyMapActivity", "provider disabled");
     }
     @Override
     public void onProviderEnabled(String provider) {
-        //DEBUG CODE
-        Log.v("MyMapActivity", "provider enabled");
     }
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        //DEBUG CODE
-        Log.v("MyMapActivity", "status changed");
     }
-    //updates locations
+    
+    /**
+     * Calling this method grabs the user's location using a LocationManager with network provider.
+     * In addition, the method clears all the markers from the map including the user's then adds
+     * a new mark for the user. Along with animating the camera to go to the user's location. Then
+     * builds a query string in order to find nearby location based on the specifications. Once the
+     * query string is built it is sent to AsyncTask that allows a thread to run in the background.
+     * Lastly, send a request to the location manager to update every 30 secs.
+     *  
+     */
     public void updatePlaces()   {
         //need Location Manager
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -145,6 +156,22 @@ public class HealthLocation extends Activity implements LocationListener{
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,30000, 100,this);
     }
+    
+    /**
+     * 
+     * 
+     * This method creates thread to run in the background of the application, completing the
+     * fetching and parse of the string given in the params in order to send a http request to
+     * google place api to receive a JSON object containing the information needed to find nearby
+     * locations.
+     * 
+     *  @params string(s): This string is a place query in order for google api to send back
+     *  					information. 
+     *  
+     *  @return string : Returns a string that will be built in the method which will be passed to the 
+     * 					 onPostExecute(String results) 
+     *
+     */
     public class GetPlaces extends AsyncTask<String, Void, String> {
         //fetch and parse place data
         @Override
@@ -177,17 +204,23 @@ public class HealthLocation extends Activity implements LocationListener{
                             placesBuilder.append(lineIn);
                         }
                     }
-                    else    {
-                    }
 
                 } catch (Exception e)   {
                     e.printStackTrace();
                 }
 
             }
-            Log.v("Place Search Debug", placesBuilder.toString());
             return placesBuilder.toString();
         }
+        
+        /**
+         * This method is an addition to the first thread and is ran right after doInBackground(..,).
+         * In addition, this is where the parsing of the JSON Object taken from the google place api
+         * and set the information to the markers including the location, icon display, etc.
+         * 
+         * @param results : A string that is given from the doInBackground(...) return results and
+         * 					is then put in a JSON Object to grab the information needed.
+         */
         protected void onPostExecute(String result)  {
             //parse place data returned from Google Places
             if(placeMarker != null) {
