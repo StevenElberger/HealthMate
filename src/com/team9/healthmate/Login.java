@@ -31,6 +31,7 @@ public class Login extends Activity implements OnClickListener{
 	EditText pass;
 	TextView debugText;
 	boolean debugMode = false;
+
 	
 	/**
 	 * Attaches listeners to both buttons and sets up references
@@ -55,6 +56,7 @@ public class Login extends Activity implements OnClickListener{
 			debugText.setVisibility(1);
 			debugText.setText("Debug values");
 		}
+
 	}
 	
 	/**
@@ -91,6 +93,7 @@ public class Login extends Activity implements OnClickListener{
 				Context context = getApplicationContext();
 				ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(context, "account");
 				Iterator<Map<String, String>> iterator = credentials.iterator();
+
 				Map<String, String> dataSet = new HashMap<String, String>();
 				// flags for correct credentials
 				boolean userCorrect = false;
@@ -139,6 +142,7 @@ public class Login extends Activity implements OnClickListener{
 				// debug values for username and password
 				//DataStorageManager.displayText(this, R.id.textView1, "U: " + userCorrect + " / " + "P: " + passCorrect);
 			} catch (Exception e) {
+
 				e.printStackTrace();
 			}
 		}
