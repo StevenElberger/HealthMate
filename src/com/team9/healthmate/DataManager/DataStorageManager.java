@@ -27,7 +27,8 @@ import android.widget.TextView;
  * The DataStorageManager class is a static class that can handle writing and reading to a file.
  * The information is written in JSON notation to a file in the internal storage of android.
  * A time stamp is automatically generated when a write is done to a file, and it is stored with 
- * the information written to a file. 
+ * the information written to a file.
+ * @author Michael Sandoval
  */
 public class DataStorageManager {
 
@@ -68,7 +69,7 @@ public class DataStorageManager {
 		// Generate a time stamp for every JSON object written to the file
 		// this will be stored with each JSON object.
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd hh:mm:ss", Locale.US);
+				"yyyy-MM-dd hh:mm:ss:SSS", Locale.US);
 		String timestamp = dateFormat.format(new Date());
 		informationPacket.put("timestamp", timestamp);
 
@@ -269,6 +270,7 @@ public class DataStorageManager {
 		// Boolean to identify if the data has been removed from the file
 		boolean dataRemoved = false;
 		
+		// String representation of JSON Object that will be deleted.
 		String informationToBeDeleted = "";
 		String text = "";
 

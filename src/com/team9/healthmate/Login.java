@@ -138,6 +138,7 @@ public class Login extends Activity implements OnClickListener{
 					TextView incorrectLabel = (TextView) findViewById(R.id.login_title);
 					incorrectLabel.setText("Incorrect username or password");
 					incorrectLabel.setTextColor(Color.RED);
+
 				}
 				// debug values for username and password
 				//DataStorageManager.displayText(this, R.id.textView1, "U: " + userCorrect + " / " + "P: " + passCorrect);
