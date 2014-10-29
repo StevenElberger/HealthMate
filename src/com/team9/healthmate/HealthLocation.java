@@ -22,14 +22,18 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,13 +56,12 @@ public class HealthLocation extends Activity implements LocationListener{
     //Conversion from 1 mile to meters
     public int METER_TO_MILE = 1610;
     public int radius = METER_TO_MILE;
-    public String types ="hospital";
-    //|doctor|fire_station|pharmacy|police
+    public String types ="";
     
     public String placesSearchStr;
     private Marker userMarker;
     private Marker[] placeMarker;
-    private int user_icon, hospital_icon/*,fire_station_icon, police_icon, doctor_icon, pharmacy_icon*/;
+    private int user_icon, hospital_icon,fire_station_icon, police_icon, doctor_icon, pharmacy_icon;
     public GoogleMap gMap;
     private final int MAX_PLACES = 20;
     private MarkerOptions[] places;
@@ -76,12 +79,9 @@ public class HealthLocation extends Activity implements LocationListener{
         //grabbing marker drawable ids
         user_icon = R.drawable.user_icon;
         hospital_icon = R.drawable.hospital_icon;
-        /*
         fire_station_icon = R.drawable.fire_station_icon;
         police_icon = R.drawable.police_icon;
-        doctor_icon = R.drawable.doctor_icon;
         pharmacy_icon = R.drawable.pharmacy_icon;
-        */
 
         //grab map
         gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.google_map)).getMap();
@@ -93,6 +93,24 @@ public class HealthLocation extends Activity implements LocationListener{
         }
 
     }
+    /**
+     * This method is a on click listener called from the xml from the image buttons.
+     * Changes the type of places that is viewed on the map.
+     * 
+     * @param v : v is the view from the button that is being called in order for the
+     * 			  method to be called.
+     */
+    public void onClick(View v)	{
+    	
+    	switch(v.getId())	{
+    		case R.id.hospital: types = "hospital"; /*updatePlaces();*/ break;
+    		case R.id.fire_station: types = "fire_station"; updatePlaces(); break;
+    		case R.id.police: types = "police"; updatePlaces(); break;
+    		case R.id.pharmacy: types = "pharmacy"; updatePlaces(); break;
+    	}
+    	
+    }
+    
     @Override
     public void onLocationChanged(Location location) {
         updatePlaces();
@@ -145,14 +163,23 @@ public class HealthLocation extends Activity implements LocationListener{
             .icon(BitmapDescriptorFactory.fromResource(user_icon))
             .snippet("Your last recorded location")
         );
-        gMap.animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
-        //build places query string
-       placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-                "json?location="+latitude+","+longitude+
-                "&radius="+radius+"&sensor=true" +
-                "&types="+types+
-                "&key="+API_KEY;
-        new GetPlaces().execute(placesSearchStr);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+        	.target(lastLatLng)      // Sets the center of the map to Mountain View
+        	.zoom(14)                   // Sets the zoom
+        	.tilt(45)                   // Sets the tilt of the camera to 30 degrees
+        	.build();                   // Creates a CameraPosition from the builder
+        
+        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null);
+        
+        if(types != "")	{
+	        //build places query string
+	       placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+	                "json?location="+latitude+","+longitude+
+	                "&radius="+radius+"&sensor=true" +
+	                "&types="+types+
+	                "&key="+API_KEY;
+	        new GetPlaces().execute(placesSearchStr);
+        }
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,30000, 100,this);
     }
@@ -213,6 +240,7 @@ public class HealthLocation extends Activity implements LocationListener{
             return placesBuilder.toString();
         }
         
+        
         /**
          * This method is an addition to the first thread and is ran right after doInBackground(..,).
          * In addition, this is where the parsing of the JSON Object taken from the google place api
@@ -259,13 +287,6 @@ public class HealthLocation extends Activity implements LocationListener{
                                 currIcon = hospital_icon;
                                 break;
                             }
-                            /*=======================================================
-                            Something is wrong with these. I need to investigate it
-                            ========================================================
-                            else if(thisType.contains("doctor")){
-                                currIcon = doctor_icon;
-                                break;
-                            }
                             else if(thisType.contains("fire_station")){
                                 currIcon = fire_station_icon;
                                 break;
@@ -277,7 +298,10 @@ public class HealthLocation extends Activity implements LocationListener{
                             else if(thisType.contains("pharmacy")){
                                 currIcon = pharmacy_icon;
                                 break;
-                            }*/
+                            }
+                            else	{
+                            	missingValue = false;
+                            }
                         }
                         vicinity = placeObject.getString("vicinity");
                         placeName = placeObject.getString("name");
@@ -311,5 +335,7 @@ public class HealthLocation extends Activity implements LocationListener{
 
         }
     }
+    
+    
 
 }

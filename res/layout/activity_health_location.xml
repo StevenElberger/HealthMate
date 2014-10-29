@@ -1,10 +1,50 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-
-    android:id="@+id/google_map"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:name="com.google.android.gms.maps.MapFragment"
-    map:cameraTilt="45"
-    map:cameraZoom="14"
+    android:layout_height="match_parent" >
+    
+    <fragment
+  	  class="com.google.android.gms.maps.MapFragment"
+    	android:id="@+id/google_map"
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent"
     />
+    <ImageButton 
+        android:id="@+id/hospital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp"
+        android:src="@drawable/hospital_icon"
+        android:onClick="onClick"/>
+    <ImageButton 
+        android:id="@+id/fire_station"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/hospital"
+        android:src="@drawable/fire_station_icon"
+        android:onClick="onClick"/>
+    <ImageButton 
+        android:id="@+id/police"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/fire_station"
+        android:src="@drawable/police_icon"
+        android:onClick="onClick"/>
+    <ImageButton 
+        android:id="@+id/pharmacy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/police"
+        android:src="@drawable/pharmacy_icon"
+        android:onClick="onClick"/>
+    
+</RelativeLayout>
