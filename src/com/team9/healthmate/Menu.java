@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.team9.healthmate.R;
+import com.team9.healthmate.Medications.Medication;
 
 public class Menu extends Activity {
 	public ListView menu;
@@ -21,7 +22,8 @@ public class Menu extends Activity {
 		setContentView(R.layout.activity_menu);
 		
 		String [] menuString = {
-				"Moods","Medication","Steps","Find a Doctor","Note","Emergency"
+				"Moods","Medication","Steps","Find a Doctor","Note","Emergency", "Appointments", "Graphs", "Animated Graphs", "More Graphs"
+
 		};
 		menu = (ListView) findViewById(R.id.menu);
 		
@@ -52,6 +54,10 @@ public class Menu extends Activity {
 			case 3:	return HealthLocation.class;
 			case 4:	return Note.class;
 			case 5:	return Emergency.class;
+			case 6: return AppointmentsList.class;
+			case 7: return ChartDemo.class;
+			case 8: return AnimatedChartDemo.class;
+			case 9: return PreviewChartDemo.class;
 		}
 		return null;
 	}
