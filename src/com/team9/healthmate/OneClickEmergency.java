@@ -1,9 +1,3 @@
-/* @author Davit Avetikyan 10/26/2014
- * OneClickEmergency class will provide with 
- * set of functionalities to send emails and texts. 
- * 
- */
-
 package com.team9.healthmate;
 
 import java.text.DateFormat;
@@ -17,7 +11,10 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
-
+/** @author Davit Avetikyan 10/26/2014
+ * OneClickEmergency class will provide with 
+ * set of functionalities to send emails and texts. 
+  */
 public class OneClickEmergency {
 	
 	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -26,6 +23,7 @@ public class OneClickEmergency {
 	/** Sends text to specified users
 	 *  from the contact list. Specifies in
 	 *  text body the purpose of the message	
+	 *  @param context the current context of the activity
 	 */
 	protected void sendSMSMessage(Context context) {
 	      Log.v("Send SMS", "");      
@@ -53,6 +51,7 @@ public class OneClickEmergency {
 	 * 	in the message body the purpose of the 
 	 * 	email, stamping the date and time the 
 	 * 	call was made.
+	 *  @param context the current context of the activity
 	 */
 	protected void sendEmail(Context context) {
 		String recipient = "avetikyan.davit@gmail.com";
@@ -78,7 +77,8 @@ public class OneClickEmergency {
 	}
 
 	/**	Makes a call to a specified phone number
-	 */
+	 * @param context the current context of the activity
+	 */ 
 	protected void makeACall(Context context){
 		Intent callIntent = new Intent(Intent.ACTION_CALL);
 	    callIntent.setData(Uri.parse("tel:8053208737"));

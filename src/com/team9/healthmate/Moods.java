@@ -1,9 +1,3 @@
-/** @author Davit Avetikyan
- 	Moods activity is providing Emotion recording 
- 	instruments. Will also display the activity progress
- 	in a form of a graph. Provides fragment look in the tabs 
- */
-
 package com.team9.healthmate;
 
 import java.io.IOException;
@@ -38,6 +32,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/** @author Davit Avetikyan
+	Moods activity is providing Emotion recording 
+	instruments. Will also display the activity progress
+	in a form of a graph. Provides fragment look in the tabs 
+*/
 public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 
 	private TextView lblCounter[] = new TextView[7];
@@ -50,8 +49,7 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 		
 		SetControlLayout();	// initializes all the view controls				
 		BtnClick();         // Calls button events
-		//SetTabs();		
-		
+				
 		//Creats tabs in action Bar by referencing to Tablistener event
 		final ActionBar actionBar = getActionBar();
 		  actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -182,9 +180,9 @@ public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
 	}	
 	
 	/** If seek bar is moved the text counter will be updated
-	 * 	@argo the current seekbar used
-	 * 	@progress indicates the current positoin of seekbar
-	 * 	@fromUser indicates if the user moved it
+	 * 	@param argo the current seekbar used
+	 * 	@param progress indicates the current positoin of seekbar
+	 * 	@param fromUser indicates if the user moved it
 	*/
 	@Override
 	public void onProgressChanged(SeekBar arg0, int progress, boolean fromUser) {
