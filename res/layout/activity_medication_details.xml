@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.team9.healthmate.Medications.MedicationDetails" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/medication_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medication_name"
+            android:textSize="22sp" />
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#CCCCCCCC" >
+        </TableLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/frequency"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/medication_details_frequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:text="@string/frequency_goes_here"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/dosage"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/medication_details_dosage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:text="@string/dosage_goes_here"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/reminder"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/medication_details_reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:text="@string/off"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="20dp"
+	    android:orientation="horizontal" 
+	    style="?android:attr/buttonBarStyle">
+
+	    <Button
+	        android:id="@+id/medication_details_button_back"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/back"
+	        style="?android:attr/buttonBarButtonStyle" />
+
+	    <Button
+	        android:id="@+id/medication_details_button_remove"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/remove" 
+	        style="?android:attr/buttonBarButtonStyle" />
+	    
+	    <Button
+	        android:id="@+id/medication_details_button_edit"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/edit"
+	        style="?android:attr/buttonBarButtonStyle" />
+	</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="10dp" >
+
+        <TextView
+            android:id="@+id/AppointmentFormHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/appointment_form_header"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/AppointmentFormTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/appointment_form_title"
+            android:inputType="text"
+            android:paddingTop="5dp" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/AppointmentFormName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/appointment_form_name"
+            android:inputType="textPersonName"
+            android:paddingTop="5dp" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/AppointmentFormAddress"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/appointment_form_address"
+            android:inputType="textPostalAddress"
+            android:paddingTop="5dp" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/AppointmentFormPhoneNumber"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/appointment_form_phone_number"
+            android:inputType="phone"
+            android:paddingTop="5dp" />
+
+        <EditText
+            android:id="@+id/AppointmentFormEmail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/appointment_form_email"
+            android:inputType="textEmailAddress"
+            android:paddingTop="5dp" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/AppointmentFormComment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/appointment_form_comment"
+            android:inputType="textMultiLine"
+            android:paddingTop="5dp" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/AppointmentFormDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="@string/appointment_form_date_title"
+            android:textSize="20sp" />
+
+        <DatePicker
+            android:id="@+id/AppointmentFormDate"
+            android:calendarViewShown="false"
+		   	android:endYear="2014"
+		   	android:maxDate="01/01/2050"
+		   	android:minDate="01/01/1900"
+		   	android:startYear="1900"
+		   	android:spinnersShown="true"
+		   	android:layout_weight="5"
+		    android:layout_width="match_parent"
+		    android:layout_height="0dp"
+		    android:gravity="start"/>
+
+        <TextView
+            android:id="@+id/AppointmentFormStartTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="@string/appointment_form_start_time_title"
+            android:textSize="20sp" />
+
+        <TimePicker
+            android:id="@+id/AppointmentFormStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp" />
+
+        <TextView
+            android:id="@+id/AppointmentFormEndTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="@string/appointment_form_end_time_title"
+            android:textSize="20sp" />
+
+        <TimePicker
+            android:id="@+id/AppointmentFormEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp" />
+
+        <TextView
+            android:id="@+id/SaveButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/appointment_form_save"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/SaveAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/appointment_form_save"
+            android:src="@drawable/ic_action_content_save" />
+    </LinearLayout>
+
+</ScrollView>
