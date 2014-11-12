@@ -123,5 +123,7 @@
     <string name="action_create_new_appointment">New Appointment</string>
     <string name="action_edit_appointment">Edit</string>
     <string name="action_delete_appointment">Delete</string>
+    
+    <string name="title_activity_notification">Notification Manager</string>
 
 </resources>
