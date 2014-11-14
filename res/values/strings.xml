@@ -41,7 +41,6 @@
     <string name="confirm_password">Confirm</string>
     <string name="enter_bday">Please enter your birthday:</string>
     <string name="enter_sex">Please enter your sex:</string>
-
     <string name="JustOk">Just Ok</string>
     <string name="Happy">Happy</string>
     <string name="Motivated">Motivated</string>
@@ -58,7 +57,6 @@
 
     <string name="ok2">OK</string>
     <string name="title_activity_mood_page_viewer">MoodPageViewer</string>
-    
     <string name="name_">"Name: "</string>
     <string name="medication_name">medication_name</string>
     <string name="adding_a_new_medication">Adding a new Medication</string>
@@ -90,11 +88,9 @@
     <string name="_plus">+</string>
     <string name="reminder">reminder</string>
     <string name="take_one_everey">Take one everey</string>
-
     <string name="title_activity_chart_demo">ChartDemo</string>
     <string name="title_activity_animated_chart_demo">AnimatedChartDemo</string>
     <string name="title_activity_preview_chart_demo">PreviewChartDemo</string>
-    
     <string name="appointment_form_header">Appointment Form</string>
     <string name="appointment_form_title">Appointment Title</string>
     <string name="appointment_form_start_time_title">Start Time of Appointment</string>
@@ -108,8 +104,6 @@
     <string name="appointment_form_save">Save</string>
     <string name="title_activity_appointment_form">Appointment Form</string>
     <string name="title_activity_appointment_list">Appointment List</string>
-    
-    
     <string name="appointment_detail_title">Appointment Information</string>
     <string name="appointment_detail_name">Doctor\'s Name: </string>
     <string name="appointment_detail_address">Location: </string>
@@ -119,9 +113,10 @@
     <string name="appointment_detail_end_time">Time: </string>
     <string name="appointment_detail_comment">Comment: </string>
     <string name="title_activity_appointment_detail">Appointment Information</string>
-    
     <string name="action_create_new_appointment">New Appointment</string>
     <string name="action_edit_appointment">Edit</string>
     <string name="action_delete_appointment">Delete</string>
+    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="action_edit_profile">Profile</string>
 
 </resources>
