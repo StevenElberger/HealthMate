@@ -12,6 +12,7 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.view.View.OnClickListener;
 
 /** 
@@ -33,7 +35,7 @@ public class Registration extends Activity implements OnClickListener {
 	public EditText lastName;
 	public EditText username;
 	public EditText password;
-	public EditText cpassword;
+	public EditText cPassword;
 	public DatePicker datePicker;
 	public Spinner sexSpinner;
 	
@@ -64,6 +66,7 @@ public class Registration extends Activity implements OnClickListener {
 		lastName = (EditText) findViewById(R.id.last_name);
 		username = (EditText) findViewById(R.id.username);
 		password = (EditText) findViewById(R.id.password);
+		cPassword = (EditText) findViewById(R.id.confirm_password);
 	}
 	
 	/**
@@ -75,47 +78,77 @@ public class Registration extends Activity implements OnClickListener {
 	}
 	
 	/**
+	 * Does basic error checking on the information
+	 * provided by the user. If any field is left blank
+	 * or the confirmation passwords do not match, it will
+	 * return false.
+	 * @return		Returns true if there are errors.
+	 */
+	public boolean errorCheck() {
+		boolean errors = false;
+		TextView topLabel = (TextView) findViewById(R.id.create_account);
+		if (firstName.getText().toString().equals("") || lastName.getText().toString().equals("") || 
+				username.getText().toString().equals("") || password.getText().toString().equals("") 
+				|| cPassword.getText().toString().equals("")) {
+			topLabel.setText("Fill out all fields");
+			topLabel.setTextColor(Color.RED);
+			errors = true;
+		}
+		if (!password.getText().toString().equals(cPassword.getText().toString())) {
+			topLabel.setText("Passwords do not match");
+			topLabel.setTextColor(Color.RED);
+			errors = true;
+		}
+		return errors;
+	}
+	
+	/**
 	 * Calculates user's age and writes all
 	 * information provided by the user to the
 	 * account file. It will overwrite any existing
 	 * data so there can only be one account at a time.
 	 */
 	public void generateAccount() {
-		// Calculate age -- sorry for the mess
-		int day = datePicker.getDayOfMonth();
-		int month = datePicker.getMonth();
-		int year = datePicker.getYear();
-		Calendar c = Calendar.getInstance();
-		int currentYear = c.get(Calendar.YEAR);
-		int currentMonth = c.get(Calendar.MONTH);
-		int currentDay = c.get(Calendar.DAY_OF_MONTH);
-		int age;
-		if (currentMonth >= month && currentDay >= day) {
-			age = currentYear - year;
-		} else {
-			age = currentYear - year - 1;
-		}
-		// Write contents to file
-		Context context = getApplicationContext();
-		Map<String, String> accountInfo = new HashMap<String, String>();
-		accountInfo.put("username", username.getText().toString());
-		accountInfo.put("password", password.getText().toString());
-		accountInfo.put("first_name", firstName.getText().toString());
-		accountInfo.put("last_name", lastName.getText().toString());
-		accountInfo.put("sex", sexSpinner.getSelectedItem().toString());
-		accountInfo.put("age", "" + age);
-		
-		try {
-			DataStorageManager.writeJSONObject(context, "account", accountInfo, true);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!errorCheck()) {
+			// Calculate age -- sorry for the mess
+			int day = datePicker.getDayOfMonth();
+			int month = datePicker.getMonth();
+			int year = datePicker.getYear();
+			Calendar c = Calendar.getInstance();
+			int currentYear = c.get(Calendar.YEAR);
+			int currentMonth = c.get(Calendar.MONTH);
+			int currentDay = c.get(Calendar.DAY_OF_MONTH);
+			int age;
+			if (currentMonth >= month && currentDay >= day) {
+				age = currentYear - year;
+			} else {
+				age = currentYear - year - 1;
+			}
+			// Write contents to file
+			Context context = getApplicationContext();
+			Map<String, String> accountInfo = new HashMap<String, String>();
+			accountInfo.put("username", username.getText().toString());
+			accountInfo.put("password", password.getText().toString());
+			accountInfo.put("first_name", firstName.getText().toString());
+			accountInfo.put("last_name", lastName.getText().toString());
+			accountInfo.put("sex", sexSpinner.getSelectedItem().toString());
+			accountInfo.put("age", "" + age);
+			
+			try {
+				DataStorageManager.writeJSONObject(context, "account", accountInfo, true);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			startAct();
 		}
 	}
 	
+	/**
+	 * Starts the account generation process.
+	 */
 	public void onClick(View v) {
 		generateAccount();
-		startAct();
 	}
 }
