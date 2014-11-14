@@ -118,5 +118,7 @@
     <string name="action_delete_appointment">Delete</string>
     <string name="title_activity_user_profile">UserProfile</string>
     <string name="action_edit_profile">Profile</string>
+    <string name="gender">Gender</string>
+    <string name="birthday">Birthday</string>
 
 </resources>
