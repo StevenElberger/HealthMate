@@ -9,7 +9,9 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class UserProfile extends Activity {
@@ -28,7 +30,7 @@ public class UserProfile extends Activity {
 		lastName = (TextView) findViewById(R.id.l_name);
 		userName = (TextView) findViewById(R.id.u_name);
 		gender = (TextView) findViewById(R.id.gender);
-		age = (TextView) findViewById(R.id.birthday);
+		age = (TextView) findViewById(R.id.age);
 		
 		try {
 			Context context = getApplicationContext();
@@ -69,5 +71,31 @@ public class UserProfile extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Set up the user profile button on the action bar.
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(android.view.Menu menu) {
+	    // Inflate the menu items for use in the action bar
+		getMenuInflater().inflate(R.menu.profile_menu, menu);
+		return true;
+	}
+	
+	/**
+	 * User clicked on edit profile button so send them to their
+	 * profile page.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		// Check to see which option was selected by the user.
+		if (item.getItemId() == R.id.action_edit_profile) {
+			Intent intent = new Intent(this, UserProfile.class);
+			startActivity(intent);
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 }
