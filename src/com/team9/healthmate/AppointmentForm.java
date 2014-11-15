@@ -1,24 +1,32 @@
 package com.team9.healthmate;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 /**
  * Activity Class that Displays a Form used to create Appointments. The
  * appointments are stored in the internal storage of the device when the user
  * selects the save button.
+ * 
  * @author Michael Sandoval
  * 
  */
@@ -28,14 +36,18 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	ImageButton save;
 
 	// The container of the timestamp that will be deleted
-	Map<String, String> appointmentTimeStamp; 
-	
+	Map<String, String> appointmentTimeStamp;
+
 	// The container of the Appointment that will be saved
 	Map<String, String> appointment;
 	
+	TextView incorrectInputMessage;
+
+	boolean appointmentFormError = false;
+
 	/**
-	 * Method that sets the listener for the save button and
-	 * initializes the container for the appointment to be deleted.
+	 * Method that sets the listener for the save button and initializes the
+	 * container for the appointment to be deleted.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +56,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 
 		save = (ImageButton) findViewById(R.id.SaveAppointment);
 		save.setOnClickListener((OnClickListener) this);
-		
+
 		appointmentTimeStamp = new HashMap<String, String>();
 
 		// Check if the user is editing a previous appointment.
@@ -53,8 +65,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Method that creates an intent to start the next activity.
-	 * The next activity is the AppointmentList Activity.
+	 * Method that creates an intent to start the next activity. The next
+	 * activity is the AppointmentList Activity.
 	 */
 	private void appointmentList() {
 		Intent intent = new Intent(AppointmentForm.this, AppointmentsList.class);
@@ -64,27 +76,49 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Method that handles the event when the user clicks the save button.
-	 * Input from the user is read and stored in the internal storage of
-	 * the android device in a file named "appointments".
+	 * Method that handles the event when the user clicks the save button. Input
+	 * from the user is read and stored in the internal storage of the android
+	 * device in a file named "appointments".
 	 */
 	@Override
 	public void onClick(View v) {
 		try {
-			
+
 			// Create a new object to hold the information entered
 			// by the user.
 			appointment = new HashMap<String, String>();
-			
+			String input = "";
+			appointmentFormError = false;
+
 			// Go through all the input boxes, and store the information
 			// as key/value pairs in the Map object.
 			EditText userInput;
 
 			userInput = (EditText) findViewById(R.id.AppointmentFormTitle);
-			appointment.put("title", userInput.getText().toString());
+			input = userInput.getText().toString();
+
+			if (input.equals("")) {
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormTitleError);
+				incorrectInputMessage.setText("A title is required to save Appointment");
+				incorrectInputMessage.setTextColor(Color.RED);
+				appointmentFormError = true;
+			} else {
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormTitleError);
+				incorrectInputMessage.setText("");
+				appointment.put("title", input);
+			}
 
 			userInput = (EditText) findViewById(R.id.AppointmentFormName);
-			appointment.put("name", userInput.getText().toString());
+			if (input.equals("")) {
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormNameError);
+				incorrectInputMessage.setText("A name is required to save Appointment");
+				incorrectInputMessage.setTextColor(Color.RED);
+				appointmentFormError = true;
+			} else {
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormTitleError);
+				incorrectInputMessage.setText("");
+				appointment.put("name", userInput.getText().toString());
+			}
 
 			userInput = (EditText) findViewById(R.id.AppointmentFormAddress);
 			appointment.put("location", userInput.getText().toString());
@@ -97,23 +131,28 @@ public class AppointmentForm extends Activity implements OnClickListener {
 
 			userInput = (EditText) findViewById(R.id.AppointmentFormComment);
 			appointment.put("comment", userInput.getText().toString());
-			
+
 			// Call method to handle the storing of Date and Time
 			// information entered by the user.
 			saveDateAndTime();
-			
-			// Check to see if the Appointment was being edited.
-			if (appointmentTimeStamp.get("timestamp") != null) {
-				
-				// Delete the old Appointment from the file.
-				DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
+
+			if (appointmentFormError == false) {
+				// Check to see if the Appointment was being edited.
+				if (appointmentTimeStamp.get("timestamp") != null) {
+
+					// Delete the old Appointment from the file.
+					DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
+				}
+					// Save the new Appointment to the "appointments" file
+					DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
+
+					// Call method to go to the Appointment List Activity.
+					appointmentList();
+			}  else {
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormError);
+				incorrectInputMessage.setText("Missing required information, please check input");
+				incorrectInputMessage.setTextColor(Color.RED);
 			}
-			
-			// Save the new Appointment to the "appointments" file
-			DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
-			
-			// Call method to go to the Appointment List Activity.
-			appointmentList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,6 +163,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	/**
 	 * Method to check if the user is editing a previous appointment. If the
 	 * user is editing an appointment, load the information into the form.
+	 * 
 	 * @author Michael Sandoval
 	 */
 	private void checkIfInEditorMode() {
@@ -214,11 +254,10 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			timePicker.setCurrentMinute(setMinute);
 		}
 	}
-	
+
 	/**
-	 * Method to save the date and time of the user input.
-	 * It formats the date and time into strings in order to 
-	 * store them in a file.
+	 * Method to save the date and time of the user input. It formats the date
+	 * and time into strings in order to store them in a file.
 	 */
 	private void saveDateAndTime() {
 		
@@ -278,10 +317,41 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		int month = datePicker.getMonth() + 1;
 		int year = datePicker.getYear();
 		
-		// Set the format text it will be saved in.
-		String formatedDate = month + "-" + day + "-" + year;
+		try {
 		
-		// Add to the information that should be stored.
-		appointment.put("date", formatedDate);
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+			Calendar currentDate = Calendar.getInstance(Locale.US);
+		
+			int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
+			int currentMonth = currentDate.get(Calendar.MONTH);
+			int currentYear = currentDate.get(Calendar.YEAR);
+		
+			Date userDate = simpleDateFormat.parse(month + "-" + day + "-" + year);
+			Date systemDate = simpleDateFormat.parse(currentMonth + "-" + currentDay + "-" + currentYear);
+			
+			// Check if the date the user entered is before the current date
+			// on the system. This is considered an invalid date, if so, let
+			// the user know through error message.
+			if (userDate.before(systemDate)) {
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormDateError);
+				incorrectInputMessage.setText("Date entered has already passed");
+				incorrectInputMessage.setTextColor(Color.RED);
+				appointmentFormError = true;
+				
+			} else {
+				
+				// Remove the error message and save the date
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormDateError);
+				incorrectInputMessage.setText("");
+				
+				// Set the format text it will be saved in.
+				String formatedDate = month + "-" + day + "-" + year;
+				
+				// Add to the information that should be stored.
+				appointment.put("date", formatedDate);
+			}
+		} catch (Exception e) {
+			Log.i("Appointment Form", "Parse Exception");
+		}
 	}
 }
