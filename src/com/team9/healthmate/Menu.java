@@ -3,6 +3,7 @@ package com.team9.healthmate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -36,6 +37,7 @@ public class Menu extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Toast.makeText(Menu.this, ""+position, Toast.LENGTH_SHORT).show();
 				changeActivity(position);
+				
 			}
 		});
 	}
