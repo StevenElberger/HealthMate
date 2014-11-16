@@ -120,5 +120,7 @@
     <string name="action_edit_profile">Profile</string>
     <string name="gender">Gender</string>
     <string name="age">Age</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
+    <string name="edit_profile_label">Edit Your Profile</string>
 
 </resources>

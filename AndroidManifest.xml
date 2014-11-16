@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="17"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" >
@@ -95,6 +95,10 @@
         <activity
             android:name=".UserProfile"
             android:label="@string/title_activity_user_profile" >
+        </activity>
+        <activity
+            android:name=".EditProfile"
+            android:label="@string/title_activity_edit_profile" >
         </activity>
     </application>
 

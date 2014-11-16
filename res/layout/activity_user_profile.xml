@@ -25,6 +25,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:gravity="end"
 	        android:text="@string/first_name" />
 	</LinearLayout>
 	
@@ -49,6 +50,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:gravity="end"
 	        android:text="@string/last_name" />
 	    
 	</LinearLayout>
@@ -74,6 +76,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:gravity="end"
 	        android:text="@string/username" />
 	    
 	</LinearLayout>
@@ -99,6 +102,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:gravity="end"
 	        android:text="@string/gender" />
 	    
 	</LinearLayout>
@@ -124,6 +128,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:gravity="end"
 	        android:text="@string/age" />
 	    
 	</LinearLayout>

@@ -92,7 +92,7 @@ public class UserProfile extends Activity {
 		
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_edit_profile) {
-			Intent intent = new Intent(this, UserProfile.class);
+			Intent intent = new Intent(this, EditProfile.class);
 			startActivity(intent);
 		}
 		
