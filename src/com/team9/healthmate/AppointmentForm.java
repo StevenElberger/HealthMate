@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.team9.healthmate.DataManager.DataStorageManager;
-import com.team9.healthmate.NotificationsManager.NotificationsManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -112,7 +111,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			
 			// Save the new Appointment to the "appointments" file
 			DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
-			
+			/*
 			/////////////////////////////////////////////////////////
 			Map<String, String> message = new HashMap<String, String>();
 			message.put("type", "appointments");
@@ -120,7 +119,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			message.put("description", "Hello World");
 			
 			NotificationsManager.generateNotification(this, message);
-			
+			*/
 			// Call method to go to the Appointment List Activity.
 			appointmentList();
 

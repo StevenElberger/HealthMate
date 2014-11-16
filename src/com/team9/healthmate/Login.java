@@ -1,15 +1,21 @@
 package com.team9.healthmate;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,6 +24,7 @@ import android.widget.TextView;
 
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
+import com.team9.healthmate.NotificationsManager.HealthMateAlarmService;
 
 /** 
  * Presents the login screen to users. Also allows
@@ -31,6 +38,9 @@ public class Login extends Activity implements OnClickListener{
 	EditText pass;
 	TextView debugText;
 	boolean debugMode = false;
+	
+	////////////////////////////////
+	private PendingIntent pendingIntent;
 
 	
 	/**
@@ -56,9 +66,39 @@ public class Login extends Activity implements OnClickListener{
 			debugText.setVisibility(1);
 			debugText.setText("Debug values");
 		}
-
+		
+		////////////////////////////////////////////
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		int i = preferences.getInt("numberoflaunches", 1);
+		
+		if (i < 2) {
+			alarmMethod();
+			i++;
+			editor.putInt("numberoflaunches", i);
+			editor.commit();
+		}
+		
+		////////////////////////////////////////
 	}
-	
+	////////////////////////////////////////////////////
+	private void alarmMethod() {
+		
+		Intent myIntent = new Intent(this, HealthMateAlarmService.class);
+		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+		pendingIntent = PendingIntent.getService(this, 0, myIntent, 0);
+		
+		Calendar calendar = Calendar.getInstance(Locale.US);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.AM_PM, Calendar.AM);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		
+		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*60*60*24, pendingIntent);
+		
+	}
+	//////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Launch the menu activity.
 	 */
