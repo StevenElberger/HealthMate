@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 
 import android.app.Activity;
@@ -16,6 +15,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -88,7 +88,7 @@ public class Login extends Activity implements OnClickListener{
 		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 		pendingIntent = PendingIntent.getService(this, 0, myIntent, 0);
 		
-		Calendar calendar = Calendar.getInstance(Locale.US);
+		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.HOUR, 0);
@@ -96,7 +96,7 @@ public class Login extends Activity implements OnClickListener{
 		calendar.add(Calendar.DAY_OF_MONTH, 1);
 		
 		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*60*60*24, pendingIntent);
-		
+		Log.i("Alarm: ", "Set");
 	}
 	//////////////////////////////////////////////////////////////////////////////
 	/**

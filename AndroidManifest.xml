@@ -20,6 +20,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat" >
+        
         <activity
             android:name=".Login"
             android:label="@string/app_name" >
@@ -99,14 +100,8 @@
             android:name=".NotificationsManager"
             android:label="@string/title_activity_notification">
         </activity>
-        
-        <service android:name=".HealthMateAlarmService"
-            	 android:enabled="true">
-        </service>
-        
-        <service android:name=".NotifyService"
-            	 android:enabled="true">
-        </service>
+        <service android:name=".NotificationsManager.HealthMateAlarmService"></service>
+        <service android:name=".NotificationsManager.NotifyService"></service>
     </application>
 
 </manifest>

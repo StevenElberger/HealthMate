@@ -14,6 +14,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 public class NotifyService extends Service {
 
@@ -73,6 +74,8 @@ public class NotifyService extends Service {
 		
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(0, mBuilder.build());
+		
+		Log.w("Service: ", "NotifyService");
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
