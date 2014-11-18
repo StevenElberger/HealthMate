@@ -96,11 +96,11 @@
     <string name="title_activity_preview_chart_demo">PreviewChartDemo</string>
     
     <string name="appointment_form_header">Appointment Form</string>
-    <string name="appointment_form_title">Appointment Title</string>
+    <string name="appointment_form_title">Appointment Title (Required)</string>
     <string name="appointment_form_start_time_title">Start Time of Appointment</string>
     <string name="appointment_form_end_time_title">End Time of Appointment</string>
     <string name="appointment_form_date_title">Date of Appointment</string>
-    <string name="appointment_form_name">Enter a Doctor\'s Name</string>
+    <string name="appointment_form_name">Enter a Doctor\'s Name (Required)</string>
     <string name="appointment_form_address">Enter a Address</string>
     <string name="appointment_form_phone_number">Enter a Phone Number</string>
     <string name="appointment_form_email">Enter Email Address</string>
