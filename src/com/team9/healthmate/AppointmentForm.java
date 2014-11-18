@@ -41,8 +41,6 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	// The container of the Appointment that will be saved
 	Map<String, String> appointment;
 
-	Calendar calendar;
-
 	// Error message
 	TextView incorrectInputMessage;
 
@@ -190,9 +188,6 @@ public class AppointmentForm extends Activity implements OnClickListener {
 					// Call method to go to the Appointment List Activity.
 					appointmentList();
 			}  else {
-				
-				// Delete the old Appointment from the file.
-				DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
 
 				// Create error Message
 				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormError);
