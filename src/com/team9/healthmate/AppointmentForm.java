@@ -1,5 +1,6 @@
 package com.team9.healthmate;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	
 	// The container of the Appointment that will be saved
 	Map<String, String> appointment;
+	
+	Calendar calendar;
 	
 	/**
 	 * Method that sets the listener for the save button and
@@ -107,19 +110,12 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				
 				// Delete the old Appointment from the file.
 				DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
+
 			}
 			
 			// Save the new Appointment to the "appointments" file
 			DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
-			/*
-			/////////////////////////////////////////////////////////
-			Map<String, String> message = new HashMap<String, String>();
-			message.put("type", "appointments");
-			message.put("title", "Testing Appoinment Notificaion");
-			message.put("description", "Hello World");
 			
-			NotificationsManager.generateNotification(this, message);
-			*/
 			// Call method to go to the Appointment List Activity.
 			appointmentList();
 

@@ -14,6 +14,7 @@
 	
 	<uses-permission android:name="android.permission.SEND_SMS"/>
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 	
     <application
         android:allowBackup="true"
@@ -96,12 +97,17 @@
             android:name=".AppointmentDetail"
             android:label="@string/title_activity_appointment_detail">
         </activity>
-        <activity 
-            android:name=".NotificationsManager"
-            android:label="@string/title_activity_notification">
-        </activity>
         <service android:name=".NotificationsManager.HealthMateAlarmService"></service>
-        <service android:name=".NotificationsManager.NotifyService"></service>
+        <service android:name=".NotificationsManager.NotifyService"
+            android:enabled="true"/>
+        <receiver android:name=".NotificationsManager.AlarmReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+            </receiver>
+        
+        
     </application>
 
 </manifest>
