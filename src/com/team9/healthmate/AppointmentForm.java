@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.team9.healthmate.DataManager.DataStorageManager;
+import com.team9.healthmate.NotificationsManager.NotificationsManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -46,6 +47,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 
 	// Error notifier
 	boolean appointmentFormError = false;
+	
+	Calendar timeOfAppointment;
 
 	/**
 	 * Method that sets the listener for the save button and initializes the
@@ -175,6 +178,17 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				// Remove error message
 				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormError);
 				incorrectInputMessage.setText("");
+				
+				// Create Notification
+				Map<String, String> message = new HashMap<String, String>();
+				String description = "Appointment with: " + appointment.get("name") + 
+						"\n You have an appointment on " + appointment.get("date") + 
+						"\n Staring at: " + appointment.get("start time");
+				message.put("type", "appointments");
+				message.put("title", appointment.get("title"));
+				message.put("description", description);
+				
+				NotificationsManager.registerNotification(this, message, timeOfAppointment);
 				
 				// Check to see if the Appointment was being edited.
 				if (appointmentTimeStamp.get("timestamp") != null) {
@@ -312,6 +326,9 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		String startTimeOfDay = "am";
 		String endTimeOfDay = "am";
 		
+		// Get an instance of the Calendar to set the time of the appointment
+		timeOfAppointment = Calendar.getInstance();
+		
 		try {
 			
 			// Time Format of the start and end time
@@ -322,6 +339,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			startTimePicker.clearFocus();
 			int startHour = startTimePicker.getCurrentHour();
 			int startMinutes = startTimePicker.getCurrentMinute();
+			//int scheduleHour = startHour;
+			//int schduleMinute = startMinutes;
 			
 			TimePicker endTimePicker = (TimePicker) findViewById(R.id.AppointmentFormEndTime);
 			endTimePicker.clearFocus();
@@ -344,8 +363,12 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				appointmentFormError = true;
 				
 			} else {
-				// If there is no error, change times to a specified format. Save the 
-				// start and end time.
+				// If there is no error, set the time of the appointment, and then change the times 
+				// to a specified format, and save start and end time.
+				
+				// Set the time of appointment
+				timeOfAppointment.set(Calendar.HOUR_OF_DAY, startHour);
+				timeOfAppointment.set(Calendar.MINUTE, startMinutes);
 				
 				// Go through the time and convert from 24 hours to 12 hour time
 				if (startHour > 12) {
@@ -430,6 +453,12 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				// Remove the error message and save the date
 				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormDateError);
 				incorrectInputMessage.setText("");
+				
+				// Set the date of appointment
+				timeOfAppointment.set(Calendar.YEAR, year);
+				timeOfAppointment.set(Calendar.MONTH, month - 1);
+				timeOfAppointment.set(Calendar.DAY_OF_MONTH, day);
+				
 				
 				// Set the format text it will be saved in.
 				String formatedDate = month + "-" + day + "-" + year;
