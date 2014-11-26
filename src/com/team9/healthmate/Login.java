@@ -87,64 +87,68 @@ public class Login extends Activity implements OnClickListener{
 		if (v.equals(register)) {
 			startRegistration();
 		} else if (v.equals(login)) {
-			try {
-				// check the contents of the account file against
-				// the credentials provided by the user
-				Context context = getApplicationContext();
-				ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(context, "account");
-				Iterator<Map<String, String>> iterator = credentials.iterator();
+			if (debugMode) {
+				startMenu();
+			} else {
+				try {
+					// check the contents of the account file against
+					// the credentials provided by the user
+					Context context = getApplicationContext();
+					ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(context, "account");
+					Iterator<Map<String, String>> iterator = credentials.iterator();
 
-				Map<String, String> dataSet = new HashMap<String, String>();
-				// flags for correct credentials
-				boolean userCorrect = false;
-				boolean passCorrect = false;
-				// credentials provided
-				String providedName = name.getText().toString();
-				String providedPass = pass.getText().toString();
-				// check for both a username and a password
-				if (providedName.equals("") || providedPass.equals("")) {
-					// need both!
-					name.setText("");
-					pass.setText("");
-					
-					TextView incorrectLabel = (TextView) findViewById(R.id.login_title);
-					incorrectLabel.setText("Please enter both a username and a password");
-					incorrectLabel.setTextColor(Color.RED);
-					return;
-				}
-				// attempt to authenticate the user
-				while (iterator.hasNext()) {
-					// go through all the keys
-					dataSet = iterator.next();
-					Iterator<String> it = dataSet.keySet().iterator();
-					while (it.hasNext()) {
-						String key = it.next();
-						String value = dataSet.get(key);
-						// make sure we only check the username & password keys
-						if (key.equals("username") && providedName.equals(value)) {
-								userCorrect = true;
-						} else if (key.equals("password") && providedPass.equals(value)) {
-								passCorrect = true;
+					Map<String, String> dataSet = new HashMap<String, String>();
+					// flags for correct credentials
+					boolean userCorrect = false;
+					boolean passCorrect = false;
+					// credentials provided
+					String providedName = name.getText().toString();
+					String providedPass = pass.getText().toString();
+					// check for both a username and a password
+					if (providedName.equals("") || providedPass.equals("")) {
+						// need both!
+						name.setText("");
+						pass.setText("");
+						
+						TextView incorrectLabel = (TextView) findViewById(R.id.login_title);
+						incorrectLabel.setText("Please enter both a username and a password");
+						incorrectLabel.setTextColor(Color.RED);
+						return;
+					}
+					// attempt to authenticate the user
+					while (iterator.hasNext()) {
+						// go through all the keys
+						dataSet = iterator.next();
+						Iterator<String> it = dataSet.keySet().iterator();
+						while (it.hasNext()) {
+							String key = it.next();
+							String value = dataSet.get(key);
+							// make sure we only check the username & password keys
+							if (key.equals("username") && providedName.equals(value)) {
+									userCorrect = true;
+							} else if (key.equals("password") && providedPass.equals(value)) {
+									passCorrect = true;
+							}
 						}
 					}
-				}
-				if (userCorrect && passCorrect) {
-					startMenu();
-				} else {
-					// authentication failed
-					name.setText("");
-					pass.setText("");
-					
-					TextView incorrectLabel = (TextView) findViewById(R.id.login_title);
-					incorrectLabel.setText("Incorrect username or password");
-					incorrectLabel.setTextColor(Color.RED);
+					if (userCorrect && passCorrect) {
+						startMenu();
+					} else {
+						// authentication failed
+						name.setText("");
+						pass.setText("");
+						
+						TextView incorrectLabel = (TextView) findViewById(R.id.login_title);
+						incorrectLabel.setText("Incorrect username or password");
+						incorrectLabel.setTextColor(Color.RED);
 
-				}
-				// debug values for username and password
-				//DataStorageManager.displayText(this, R.id.textView1, "U: " + userCorrect + " / " + "P: " + passCorrect);
-			} catch (Exception e) {
+					}
+					// debug values for username and password
+					//DataStorageManager.displayText(this, R.id.textView1, "U: " + userCorrect + " / " + "P: " + passCorrect);
+				} catch (Exception e) {
 
-				e.printStackTrace();
+					e.printStackTrace();
+				}
 			}
 		}
 	}	
