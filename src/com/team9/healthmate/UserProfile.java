@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class UserProfile extends Activity {
@@ -20,6 +21,7 @@ public class UserProfile extends Activity {
 	TextView userName;
 	TextView gender;
 	TextView age;
+	ImageView image;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class UserProfile extends Activity {
 		userName = (TextView) findViewById(R.id.u_name);
 		gender = (TextView) findViewById(R.id.gender);
 		age = (TextView) findViewById(R.id.age);
+		image = (ImageView) findViewById(R.id.profile_pic);
 		
 		try {
 			Context context = getApplicationContext();
