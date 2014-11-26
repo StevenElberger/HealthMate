@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -38,7 +39,10 @@ public class AppointmentForm extends Activity implements OnClickListener {
 
 	// The container of the time stamp that will be deleted
 	Map<String, String> appointmentTimeStamp;
-
+	
+	// Appointment to be deleted
+	Map<String, String> appointmentToDelete;
+	
 	// The container of the Appointment that will be saved
 	Map<String, String> appointment;
 
@@ -63,6 +67,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		save.setOnClickListener((OnClickListener) this);
 
 		appointmentTimeStamp = new HashMap<String, String>();
+		
+		appointmentToDelete = new HashMap<String, String>();
 
 		// Check if the user is editing a previous appointment.
 		checkIfInEditorMode();
@@ -178,26 +184,37 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				// Remove error message
 				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormError);
 				incorrectInputMessage.setText("");
+				String description = "";
 				
-				// Create Notification
-				Map<String, String> message = new HashMap<String, String>();
-				String description = "Appointment with: " + appointment.get("name") + 
-						"\n You have an appointment on " + appointment.get("date") + 
-						"\n Staring at: " + appointment.get("start time");
-				message.put("type", "appointments");
-				message.put("title", appointment.get("title"));
-				message.put("description", description);
-				
-				NotificationsManager.registerNotification(this, message, timeOfAppointment);
 				
 				// Check to see if the Appointment was being edited.
 				if (appointmentTimeStamp.get("timestamp") != null) {
 
 					// Delete the old Appointment from the file.
 					DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
+					Map<String, String> deletionMessage = new HashMap<String, String>();
+					description = "Appointment with: " + appointmentToDelete.get("name") + 
+							"\n You have an appointment on " + appointmentToDelete.get("date") + 
+							"\n Staring at: " + appointmentToDelete.get("start time");
+					deletionMessage.put("type", "appointments");
+					deletionMessage.put("title", appointmentToDelete.get("title"));
+					deletionMessage.put("description", description);
+					NotificationsManager.unregisterNotification(this, deletionMessage);
 				}
 					// Save the new Appointment to the "appointments" file
 					DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
+					
+					// Create Notification
+					Map<String, String> message = new HashMap<String, String>();
+					description = "Appointment with: " + appointment.get("name") + 
+							"\n You have an appointment on " + appointment.get("date") + 
+							"\n Staring at: " + appointment.get("start time");
+					
+					message.putAll(appointment);
+					message.put("type", "appointments");
+					message.put("description", description);
+					
+					NotificationsManager.registerNotification(this, message, timeOfAppointment);
 
 					// Call method to go to the Appointment List Activity.
 					appointmentList();
@@ -243,27 +260,35 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			// Get the id of each text box, and set their values.
 			editInput = (EditText) findViewById(R.id.AppointmentFormTitle);
 			editInput.setText(intent.getStringExtra("title"));
+			appointmentToDelete.put("title", intent.getStringExtra("title"));
 
 			editInput = (EditText) findViewById(R.id.AppointmentFormName);
 			editInput.setText(intent.getStringExtra("name"));
+			appointmentToDelete.put("name", intent.getStringExtra("name"));
 
 			editInput = (EditText) findViewById(R.id.AppointmentFormAddress);
 			editInput.setText(intent.getStringExtra("location"));
+			appointmentToDelete.put("location", intent.getStringExtra("location"));
 
 			editInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
 			editInput.setText(intent.getStringExtra("phone"));
+			appointmentToDelete.put("phone", intent.getStringExtra("phone"));
 
 			editInput = (EditText) findViewById(R.id.AppointmentFormEmail);
 			editInput.setText(intent.getStringExtra("email"));
+			appointmentToDelete.put("email", intent.getStringExtra("email"));
 
 			editInput = (EditText) findViewById(R.id.AppointmentFormComment);
 			editInput.setText(intent.getStringExtra("comment"));
+			appointmentToDelete.put("comment", intent.getStringExtra("comment"));
 
 			// Get the reference from the Date Picker of the form
 			datePicker = (DatePicker) findViewById(R.id.AppointmentFormDate);
 
 			// Parse the text Date information sent by the intent.
 			date = intent.getStringExtra("date").split("-");
+			
+			appointmentToDelete.put("date", intent.getStringExtra("date"));
 
 			// Set the day, month, year for the previous date entered.
 			int year = Integer.parseInt(date[2]);
@@ -280,6 +305,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 
 			// Parse the text Time information sent by the intent.
 			time = intent.getStringExtra("start time").split(":");
+			appointmentToDelete.put("start time", intent.getStringExtra("start time"));
+			
 			setHour = Integer.parseInt(time[0]);
 			setMinute = Integer.parseInt(time[1].substring(0, 2));
 
@@ -297,6 +324,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 
 			// Parse the text Time information sent by the intent.
 			time = intent.getStringExtra("end time").split(":");
+			appointmentToDelete.put("end time", intent.getStringExtra("end time"));
+			
 			setHour = Integer.parseInt(time[0]);
 			setMinute = Integer.parseInt(time[1].substring(0, 2));
 
@@ -339,8 +368,6 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			startTimePicker.clearFocus();
 			int startHour = startTimePicker.getCurrentHour();
 			int startMinutes = startTimePicker.getCurrentMinute();
-			//int scheduleHour = startHour;
-			//int schduleMinute = startMinutes;
 			
 			TimePicker endTimePicker = (TimePicker) findViewById(R.id.AppointmentFormEndTime);
 			endTimePicker.clearFocus();
@@ -369,6 +396,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				// Set the time of appointment
 				timeOfAppointment.set(Calendar.HOUR_OF_DAY, startHour);
 				timeOfAppointment.set(Calendar.MINUTE, startMinutes);
+				timeOfAppointment.set(Calendar.SECOND, 0);
 				
 				// Go through the time and convert from 24 hours to 12 hour time
 				if (startHour > 12) {
@@ -458,6 +486,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				timeOfAppointment.set(Calendar.YEAR, year);
 				timeOfAppointment.set(Calendar.MONTH, month - 1);
 				timeOfAppointment.set(Calendar.DAY_OF_MONTH, day);
+				Log.w("Time of Appointment: ", timeOfAppointment.getTime().toString());
 				
 				
 				// Set the format text it will be saved in.

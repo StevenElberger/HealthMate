@@ -7,6 +7,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 /** Class that registers notifications to be created at a specified time.
  * 	There are two types of notifications that can be registered, single time
@@ -39,6 +40,17 @@ public class NotificationsManager {
 		intent.putExtra("title", message.get("title"));
 		intent.putExtra("description", message.get("description"));
 		
+		if (intent.getStringExtra("type").equals("appointments")) {
+			intent.putExtra("name", message.get("name"));
+			intent.putExtra("location", message.get("location"));
+			intent.putExtra("phone", message.get("phone"));
+			intent.putExtra("email", message.get("email"));
+			intent.putExtra("comment", message.get("comment"));
+			intent.putExtra("start time", message.get("start time"));
+			intent.putExtra("end time", message.get("end time"));
+			intent.putExtra("date", message.get("date"));
+		}
+		
 		// Create a pending intent that will be used when the alarm goes off
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 		
@@ -47,6 +59,8 @@ public class NotificationsManager {
 		
 		// Register the alarm
 		alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+		
+		Log.v("Appointment Time: ", calendar.getTime().toString());
 	}
 	
 	/**

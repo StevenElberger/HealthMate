@@ -1,5 +1,6 @@
 package com.team9.healthmate.NotificationsManager;
 
+import com.team9.healthmate.AppointmentDetail;
 import com.team9.healthmate.AppointmentsList;
 import com.team9.healthmate.Login;
 import com.team9.healthmate.R;
@@ -14,6 +15,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 /**
  * Service Class that creates notifications when the service
@@ -62,6 +64,8 @@ public class NotifyService extends Service {
 		// Container used to build a notification
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
 		
+		Log.v("Notif Type: ", intent.getStringExtra("type"));
+		
 		// Determine what kind of notification this will be.
 		// Set the icon and event that will occur for the notification.
 		switch(type) {
@@ -69,7 +73,7 @@ public class NotifyService extends Service {
 		case "appointments":
 			// Appointment Notification
 			mBuilder.setSmallIcon(R.drawable.ic_appointment_notification);
-			resultIntent = new Intent(context, AppointmentsList.class);
+			resultIntent = new Intent(context, AppointmentDetail.class);
 			break;
 			
 		case "medications":
@@ -88,6 +92,8 @@ public class NotifyService extends Service {
 			mBuilder.setSmallIcon(R.drawable.ic_action_content_new);	
 			resultIntent = new Intent(context, Login.class);
 		}
+		
+		resultIntent.putExtras(intent.getExtras());
 		
 		// Set the title of the notification
 		mBuilder.setContentTitle(title);

@@ -7,6 +7,7 @@ import java.util.Set;
 
 
 import com.team9.healthmate.DataManager.DataStorageManager;
+import com.team9.healthmate.NotificationsManager.NotificationsManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -106,6 +107,14 @@ public class AppointmentDetail extends Activity {
 			
 			try { 
 				DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+				Map<String, String>  message = new HashMap<String, String>();
+				String description = "Appointment with: " + appointmentDetails.get("name") + 
+						"\n You have an appointment on " + appointmentDetails.get("date") + 
+						"\n Staring at: " + appointmentDetails.get("start time");
+				message.put("type", "appointment");
+				message.put("title", appointmentDetails.get("title"));
+				message.put("description", description);
+				NotificationsManager.unregisterNotification(this, message);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
