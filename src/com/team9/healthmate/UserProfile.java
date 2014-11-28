@@ -1,5 +1,6 @@
 package com.team9.healthmate;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -48,7 +48,7 @@ public class UserProfile extends Activity {
 	Button uploadButton;
 	TextView firstName, lastName, userName, gender, age;
 	EditText eFirstName, eLastName, eUserName, ePassword;
-	String sFirstName, sLastName, sUserName, sGender, sAge, sPassword;
+	String sFirstName, sLastName, sUserName, sGender, sAge, sPassword, imagePath;
 	boolean notPressedYet = true;
 	
 	@Override
@@ -62,36 +62,30 @@ public class UserProfile extends Activity {
 		gender = (TextView) findViewById(R.id.gender);
 		age = (TextView) findViewById(R.id.birthday);
 		image = (ImageView) findViewById(R.id.profile_pic);
-		uploadButton = (Button) findViewById(R.id.upload_profile_pic);
-		
-		uploadButton.setOnClickListener(new Button.OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(Intent.ACTION_PICK,
-						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				startActivityForResult(intent, 0);
-				}});
 		
 		// display user account information
 		loadProfileInformation();
 	}
 	
-	 @Override
+	/**
+	 * Grabs the data returned from the photo gallery.
+	 * This will be used to load the profile picture in the
+	 * user's profile.
+	 */
+	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		 // TODO Auto-generated method stub
 		 super.onActivityResult(requestCode, resultCode, data);
-
+		 
+		 // grab the image's path to save it
+		 // to the account file and load the image
 		 if (resultCode == RESULT_OK){
 			 Uri targetUri = data.getData();
-			 //textTargetUri.setText(targetUri.toString());
+			 imagePath = targetUri.toString();
 			 Bitmap bitmap;
 			 try {
 				 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 				 image.setImageBitmap(bitmap);
 			 } catch (FileNotFoundException e) {
-				 // TODO Auto-generated catch block
 				 e.printStackTrace();
 			 }
 		 }
@@ -139,6 +133,14 @@ public class UserProfile extends Activity {
 							age.setText(value);
 							sAge = value;
 							break;
+						case "picture":
+							// load the image from the file path stored
+							if (!value.equals("")) {
+								File imgFile = new  File(value);
+								Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+								image.setImageBitmap(bitmap);
+							}
+							imagePath = value;
 						default:
 							break;
 					}
@@ -163,6 +165,10 @@ public class UserProfile extends Activity {
 			dataSet.put("sex", sGender);
 			dataSet.put("age", sAge);
 			dataSet.put("password", sPassword);
+			if (imagePath == null) {
+				imagePath = "";
+			}
+			dataSet.put("picture", imagePath);
 			DataStorageManager.writeJSONObject(context, "account", dataSet, true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -208,6 +214,22 @@ public class UserProfile extends Activity {
 			eGender = (Spinner) findViewById(R.id.gender);
 			eAge = (DatePicker) findViewById(R.id.bday);
 			ePassword = (EditText) findViewById(R.id.password);
+			image = (ImageView) findViewById(R.id.edit_profile_pic);
+			
+			// set up the upload button
+			uploadButton = (Button) findViewById(R.id.upload_profile_pic);
+			
+			uploadButton.setOnClickListener(new Button.OnClickListener() {
+				
+				// when clicked, launch the photo gallery
+				// so the user may select a profile picture
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_PICK,
+							android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+					startActivityForResult(intent, 0);
+				}
+			});
 			
 			// set up the gender spinner
 			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
