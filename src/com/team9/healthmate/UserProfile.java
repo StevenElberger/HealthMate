@@ -17,11 +17,13 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -68,6 +70,30 @@ public class UserProfile extends Activity {
 	}
 	
 	/**
+	 * Returns the path to an image file selected
+	 * from the photo gallery. This is used to save
+	 * the image path of the user's profile picture
+	 * to the user's account file.
+	 * @param context		Application context
+	 * @param contentUri	The URI being returned with the image data
+	 * @return				A string of the image's direct file path
+	 */
+	public String getRealPathFromURI(Context context, Uri contentUri) {
+		Cursor cursor = null;
+		try { 
+			String[] proj = { MediaStore.Images.Media.DATA };
+		    cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+		    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		    cursor.moveToFirst();
+		    return cursor.getString(column_index);
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+		    }
+		}
+	}
+	
+	/**
 	 * Grabs the data returned from the photo gallery.
 	 * This will be used to load the profile picture in the
 	 * user's profile.
@@ -80,7 +106,7 @@ public class UserProfile extends Activity {
 		 // to the account file and load the image
 		 if (resultCode == RESULT_OK){
 			 Uri targetUri = data.getData();
-			 imagePath = targetUri.toString();
+			 imagePath = getRealPathFromURI(getApplicationContext(), targetUri);
 			 Bitmap bitmap;
 			 try {
 				 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
@@ -250,6 +276,13 @@ public class UserProfile extends Activity {
 			eLastName.setText(sLastName);
 			eUserName.setText(sUserName);
 			
+			// load image
+			if (imagePath != null) {
+				File imgFile = new  File(imagePath);
+				Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+				image.setImageBitmap(bitmap);
+			}
+			
 			// set the datepicker
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 			try {
@@ -301,6 +334,7 @@ public class UserProfile extends Activity {
 				userName = (TextView) findViewById(R.id.u_name);
 				gender = (TextView) findViewById(R.id.gender);
 				age = (TextView) findViewById(R.id.birthday);
+				image = (ImageView) findViewById(R.id.profile_pic);
 				
 				// set new forms' values
 				firstName.setText(sFirstName);
@@ -308,6 +342,13 @@ public class UserProfile extends Activity {
 				userName.setText(sUserName);
 				gender.setText(sGender);
 				age.setText(sAge);
+				
+				// load new image
+				if (imagePath != null) {
+					File imgFile = new  File(imagePath);
+					Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+					image.setImageBitmap(bitmap);
+				}
 				
 				// write information to user account file
 				// and bring user back to the original layout
