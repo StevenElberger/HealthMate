@@ -112,9 +112,6 @@ public class NotifyService extends Service {
 		// when the notification goes off
 		mBuilder.setSound(sound);
 		
-		// An action button the user can select that will set off the intent
-		mBuilder.addAction(0, "Details", pendingIntent);
-		
 		// The notification goes away when the user selects it
 		mBuilder.setAutoCancel(true);
 		
@@ -123,6 +120,9 @@ public class NotifyService extends Service {
 		
 		// Register the notification
 		mNotificationManager.notify(0, mBuilder.build());
+		
+		// After sending the notification, stop the service
+		this.stopSelf();
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
