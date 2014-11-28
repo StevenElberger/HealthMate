@@ -123,5 +123,6 @@
     <string name="title_activity_edit_profile">EditProfile</string>
     <string name="edit_profile_label">Edit Your Profile</string>
     <string name="profile_pic">Profile Picture</string>
+    <string name="enter_password">Enter your password to save changes</string>
 
 </resources>

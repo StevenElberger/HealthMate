@@ -14,6 +14,7 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -53,6 +54,7 @@ public class UserProfile extends Activity {
 		age = (TextView) findViewById(R.id.birthday);
 		image = (ImageView) findViewById(R.id.profile_pic);
 		
+		// display user account information
 		loadProfileInformation();
 	}
 	
@@ -155,8 +157,11 @@ public class UserProfile extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_edit_profile) {
+			// if the edit button was selected, load the
+			// appropriate layout
 			setContentView(R.layout.activity_edit_profile2);
-			// grab forms
+			
+			// grab forms on the new layout
 			eFirstName = (EditText) findViewById(R.id.f_name);
 			eLastName = (EditText) findViewById(R.id.l_name);
 			eUserName = (EditText) findViewById(R.id.u_name);
@@ -164,12 +169,12 @@ public class UserProfile extends Activity {
 			eAge = (DatePicker) findViewById(R.id.bday);
 			ePassword = (EditText) findViewById(R.id.password);
 			
+			// set up the gender spinner
 			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 		            R.array.sex, R.layout.sex_spinner_textview);
 		    adapter.setDropDownViewResource(R.layout.sex_spinner_textview);
 			eGender.setAdapter(adapter);
 			
-			// set form values
 			if (sGender.equals("Male")) {
 				eGender.setSelection(0);
 			} else if (sGender.equals("Female")) {
@@ -177,11 +182,12 @@ public class UserProfile extends Activity {
 			} else {
 				eGender.setSelection(2);
 			}
+			
+			// set form values
 			eFirstName.setText(sFirstName);
 			eLastName.setText(sLastName);
 			eUserName.setText(sUserName);
 			
-			gender.setText(sGender);
 			// set the datepicker
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 			try {
@@ -192,43 +198,57 @@ public class UserProfile extends Activity {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			
 			// Set flag and call onCreateOptionsMenu
 			// to inflate the correct menu.
 			notPressedYet = false;
 			invalidateOptionsMenu();
 		} else if (item.getItemId() == R.id.action_save_profile) {
+			// if the save button was selected, load
+			// the previous layout with the new values
+			// after writing the new values to the account file
+			
 			// grab form values
 			sFirstName = eFirstName.getText().toString();
 			sLastName = eLastName.getText().toString();
 			sUserName = eUserName.getText().toString();
 			sGender = eGender.getSelectedItem().toString();
+			
+			// grab from the datepicker
 			int day = eAge.getDayOfMonth();
 			int month = eAge.getMonth();
 			int year = eAge.getYear();
-			// grab from the datepicker
 			Calendar c = Calendar.getInstance();
 			c.set(year,  month, day);
 			Date userAge = c.getTime();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 			String dateString = sdf.format(userAge);
 			sAge = dateString;
+			
+			// check to make sure user entered his/her password
 			sPassword = ePassword.getText().toString();
-			setContentView(R.layout.activity_user_profile);
-			// grab new forms
-			firstName = (TextView) findViewById(R.id.f_name);
-			lastName = (TextView) findViewById(R.id.l_name);
-			userName = (TextView) findViewById(R.id.u_name);
-			gender = (TextView) findViewById(R.id.gender);
-			age = (TextView) findViewById(R.id.birthday);
-			// set new forms' values
-			firstName.setText(sFirstName);
-			lastName.setText(sLastName);
-			userName.setText(sUserName);
-			gender.setText(sGender);
-			age.setText(sAge);
-			writeProfileInformation();
-			notPressedYet = true;
-			invalidateOptionsMenu();
+			if (sPassword.equals("")) {
+				TextView warningLabel = (TextView) findViewById(R.id.no_password_label);
+				warningLabel.setTextColor(Color.RED);
+				warningLabel.setVisibility(0);
+			} else {
+				setContentView(R.layout.activity_user_profile);
+				// grab new forms
+				firstName = (TextView) findViewById(R.id.f_name);
+				lastName = (TextView) findViewById(R.id.l_name);
+				userName = (TextView) findViewById(R.id.u_name);
+				gender = (TextView) findViewById(R.id.gender);
+				age = (TextView) findViewById(R.id.birthday);
+				// set new forms' values
+				firstName.setText(sFirstName);
+				lastName.setText(sLastName);
+				userName.setText(sUserName);
+				gender.setText(sGender);
+				age.setText(sAge);
+				writeProfileInformation();
+				notPressedYet = true;
+				invalidateOptionsMenu();
+			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
