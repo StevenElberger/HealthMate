@@ -14,11 +14,20 @@
         android:paddingTop="10dp" >
         
         	<ImageView
-	        android:id="@+id/profile_pic"
-	        android:contentDescription="@string/profile_pic"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:src="@drawable/ic_launcher" />
+		        android:id="@+id/profile_pic"
+		        android:contentDescription="@string/profile_pic"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:src="@drawable/ic_launcher" />
+        	
+        	<Button
+			    android:id="@+id/upload_profile_pic"
+			    android:layout_weight="1"
+			    android:layout_width="0dp"
+			    android:layout_height="wrap_content"
+			    android:gravity="center"
+			    android:layout_gravity="center_vertical"
+			    android:text="@string/ok" />
         	
     </LinearLayout>
     

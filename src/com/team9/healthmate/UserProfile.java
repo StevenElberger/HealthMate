@@ -1,5 +1,6 @@
 package com.team9.healthmate;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,10 +15,17 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,10 +43,11 @@ import android.widget.TextView;
  */
 public class UserProfile extends Activity {
 	ImageView image;
-	TextView firstName, lastName, userName, gender, age;
-	EditText eFirstName, eLastName, eUserName, ePassword;
 	DatePicker eAge;
 	Spinner eGender;
+	Button uploadButton;
+	TextView firstName, lastName, userName, gender, age;
+	EditText eFirstName, eLastName, eUserName, ePassword;
 	String sFirstName, sLastName, sUserName, sGender, sAge, sPassword;
 	boolean notPressedYet = true;
 	
@@ -53,9 +62,39 @@ public class UserProfile extends Activity {
 		gender = (TextView) findViewById(R.id.gender);
 		age = (TextView) findViewById(R.id.birthday);
 		image = (ImageView) findViewById(R.id.profile_pic);
+		uploadButton = (Button) findViewById(R.id.upload_profile_pic);
+		
+		uploadButton.setOnClickListener(new Button.OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Intent.ACTION_PICK,
+						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(intent, 0);
+				}});
 		
 		// display user account information
 		loadProfileInformation();
+	}
+	
+	 @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		 // TODO Auto-generated method stub
+		 super.onActivityResult(requestCode, resultCode, data);
+
+		 if (resultCode == RESULT_OK){
+			 Uri targetUri = data.getData();
+			 //textTargetUri.setText(targetUri.toString());
+			 Bitmap bitmap;
+			 try {
+				 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+				 image.setImageBitmap(bitmap);
+			 } catch (FileNotFoundException e) {
+				 // TODO Auto-generated catch block
+				 e.printStackTrace();
+			 }
+		 }
 	}
 	
 	/**
@@ -151,7 +190,8 @@ public class UserProfile extends Activity {
 	 * If the user clicked the edit button, show all of their
 	 * profile information in the edit_profile_menu menu so
 	 * they may edit their profile. Otherwise, write all their
-	 * new information to file.
+	 * new information to file and bring them back to the original
+	 * profile layout.
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -239,12 +279,16 @@ public class UserProfile extends Activity {
 				userName = (TextView) findViewById(R.id.u_name);
 				gender = (TextView) findViewById(R.id.gender);
 				age = (TextView) findViewById(R.id.birthday);
+				
 				// set new forms' values
 				firstName.setText(sFirstName);
 				lastName.setText(sLastName);
 				userName.setText(sUserName);
 				gender.setText(sGender);
 				age.setText(sAge);
+				
+				// write information to user account file
+				// and bring user back to the original layout
 				writeProfileInformation();
 				notPressedYet = true;
 				invalidateOptionsMenu();
