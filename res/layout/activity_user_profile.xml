@@ -139,15 +139,15 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="@string/age" />
+	        android:text="@string/birthday" />
 	    
 	    <TextView
-	        android:id="@+id/age"
+	        android:id="@+id/birthday"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:gravity="end"
-	        android:text="@string/age" />
+	        android:text="@string/birthday" />
 	    
 	</LinearLayout>
 	

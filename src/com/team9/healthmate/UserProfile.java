@@ -1,8 +1,13 @@
 package com.team9.healthmate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import com.team9.healthmate.DataManager.DataStorageManager;
@@ -11,8 +16,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /** 
@@ -27,9 +35,10 @@ import android.widget.TextView;
 public class UserProfile extends Activity {
 	ImageView image;
 	TextView firstName, lastName, userName, gender, age;
-	EditText eFirstName, eLastName, eUserName, eGender, eAge, ePassword;
+	EditText eFirstName, eLastName, eUserName, ePassword;
+	DatePicker eAge;
+	Spinner eGender;
 	String sFirstName, sLastName, sUserName, sGender, sAge, sPassword;
-	boolean onLoad = true;
 	boolean notPressedYet = true;
 	
 	@Override
@@ -41,7 +50,7 @@ public class UserProfile extends Activity {
 		lastName = (TextView) findViewById(R.id.l_name);
 		userName = (TextView) findViewById(R.id.u_name);
 		gender = (TextView) findViewById(R.id.gender);
-		age = (TextView) findViewById(R.id.age);
+		age = (TextView) findViewById(R.id.birthday);
 		image = (ImageView) findViewById(R.id.profile_pic);
 		
 		loadProfileInformation();
@@ -151,15 +160,38 @@ public class UserProfile extends Activity {
 			eFirstName = (EditText) findViewById(R.id.f_name);
 			eLastName = (EditText) findViewById(R.id.l_name);
 			eUserName = (EditText) findViewById(R.id.u_name);
-			eGender = (EditText) findViewById(R.id.gender);
-			eAge = (EditText) findViewById(R.id.age);
+			eGender = (Spinner) findViewById(R.id.gender);
+			eAge = (DatePicker) findViewById(R.id.bday);
 			ePassword = (EditText) findViewById(R.id.password);
+			
+			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+		            R.array.sex, R.layout.sex_spinner_textview);
+		    adapter.setDropDownViewResource(R.layout.sex_spinner_textview);
+			eGender.setAdapter(adapter);
+			
 			// set form values
+			if (sGender.equals("Male")) {
+				eGender.setSelection(0);
+			} else if (sGender.equals("Female")) {
+				eGender.setSelection(1);
+			} else {
+				eGender.setSelection(2);
+			}
 			eFirstName.setText(sFirstName);
 			eLastName.setText(sLastName);
 			eUserName.setText(sUserName);
-			eGender.setText(sGender);
-			eAge.setText(sAge);
+			
+			gender.setText(sGender);
+			// set the datepicker
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+			try {
+				Date age = sdf.parse(sAge);
+				Calendar c = Calendar.getInstance();
+				c.setTime(age);
+				eAge.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			// Set flag and call onCreateOptionsMenu
 			// to inflate the correct menu.
 			notPressedYet = false;
@@ -169,8 +201,17 @@ public class UserProfile extends Activity {
 			sFirstName = eFirstName.getText().toString();
 			sLastName = eLastName.getText().toString();
 			sUserName = eUserName.getText().toString();
-			sGender = eGender.getText().toString();
-			sAge = eAge.getText().toString();
+			sGender = eGender.getSelectedItem().toString();
+			int day = eAge.getDayOfMonth();
+			int month = eAge.getMonth();
+			int year = eAge.getYear();
+			// grab from the datepicker
+			Calendar c = Calendar.getInstance();
+			c.set(year,  month, day);
+			Date userAge = c.getTime();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+			String dateString = sdf.format(userAge);
+			sAge = dateString;
 			sPassword = ePassword.getText().toString();
 			setContentView(R.layout.activity_user_profile);
 			// grab new forms
@@ -178,7 +219,7 @@ public class UserProfile extends Activity {
 			lastName = (TextView) findViewById(R.id.l_name);
 			userName = (TextView) findViewById(R.id.u_name);
 			gender = (TextView) findViewById(R.id.gender);
-			age = (TextView) findViewById(R.id.age);
+			age = (TextView) findViewById(R.id.birthday);
 			// set new forms' values
 			firstName.setText(sFirstName);
 			lastName.setText(sLastName);
