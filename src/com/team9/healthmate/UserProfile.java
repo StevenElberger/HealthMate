@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,9 @@ public class UserProfile extends Activity {
 	TextView gender;
 	TextView age;
 	ImageView image;
+	EditText eFirstName, eLastName, eUserName, eGender, eAge;
+	String sFirstName, sLastName, sUserName, sGender, sAge;
+	boolean notPressedYet = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +57,23 @@ public class UserProfile extends Activity {
 					switch (key) {
 						case "username":
 							userName.setText(value);
+							sUserName = value;
 							break;
 						case "first_name":
 							firstName.setText(value);
+							sFirstName = value;
 							break;
 						case "last_name":
 							lastName.setText(value);
+							sLastName = value;
 							break;
 						case "sex":
 							gender.setText(value);
+							sGender = value;
 							break;
 						case "age":
 							age.setText(value);
+							sAge = value;
 							break;
 						default:
 							break;
@@ -76,13 +85,25 @@ public class UserProfile extends Activity {
 		}
 	}
 	
-	/**
-	 * Set up the user profile button on the action bar.
-	 */
+//	/**
+//	 * Set up the user profile button on the action bar.
+//	 */
+//	@Override
+//	public boolean onCreateOptionsMenu(android.view.Menu menu) {
+//	    // Inflate the menu items for use in the action bar
+//		getMenuInflater().inflate(R.menu.profile_menu, menu);
+//		return true;
+//	}
+	
 	@Override
-	public boolean onCreateOptionsMenu(android.view.Menu menu) {
-	    // Inflate the menu items for use in the action bar
-		getMenuInflater().inflate(R.menu.profile_menu, menu);
+	public boolean onPrepareOptionsMenu (android.view.Menu menu) {
+		if (notPressedYet) {
+			menu.getItem(R.id.action_edit_profile).setVisible(true);
+			menu.getItem(R.id.action_save_profile).setVisible(false);
+		} else {
+			menu.getItem(R.id.action_edit_profile).setVisible(false);
+			menu.getItem(R.id.action_save_profile).setVisible(true);
+		}
 		return true;
 	}
 	
@@ -95,8 +116,31 @@ public class UserProfile extends Activity {
 		
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_edit_profile) {
-			Intent intent = new Intent(this, EditProfile.class);
-			startActivity(intent);
+			setContentView(R.layout.activity_edit_profile2);
+			eFirstName = (EditText) findViewById(R.id.f_name);
+			eLastName = (EditText) findViewById(R.id.l_name);
+			eUserName = (EditText) findViewById(R.id.u_name);
+			eGender = (EditText) findViewById(R.id.gender);
+			eAge = (EditText) findViewById(R.id.age);
+			eFirstName.setText(sFirstName);
+			eLastName.setText(sLastName);
+			eUserName.setText(sUserName);
+			eGender.setText(sGender);
+			eAge.setText(sAge);
+			notPressedYet = false;
+		} else if (item.getItemId() == R.id.action_save_profile) {
+			sFirstName = eFirstName.getText().toString();
+			sLastName = eLastName.getText().toString();
+			sUserName = eUserName.getText().toString();
+			sGender = eGender.getText().toString();
+			sAge = eAge.getText().toString();
+			setContentView(R.layout.activity_user_profile);
+			firstName.setText(sFirstName);
+			lastName.setText(sLastName);
+			userName.setText(sUserName);
+			gender.setText(sGender);
+			age.setText(sAge);
+			notPressedYet = true;
 		}
 		
 		return super.onOptionsItemSelected(item);
