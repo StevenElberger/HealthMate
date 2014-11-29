@@ -1,6 +1,7 @@
 package com.team9.healthmate.Notes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +18,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+/**
+ * Activity Class that Displays a List of Notes that have been
+ * created by the user through the application. The user can select
+ * a saved note and view its information. The user also has the
+ * option of creating new notes.
+ * @author Michael Sandoval
+ *
+ */
 public class ListOfNotes extends ListActivity {
 	
 		// Container for the list of notes that will
@@ -36,18 +45,25 @@ public class ListOfNotes extends ListActivity {
 			// A list of strings that will be displayed to the user
 			ArrayList<String> noteList = new ArrayList<String>();
 			
+			// Reverse the order of the list, this will
+			// allow the information of the list be in the
+			// order of the latest notes to be on the top of the list
+			Collections.reverse(notes);
+			
 			// The information that will be displayed to the user.
 			String noteInformation = "";
-			
-			// Object used to process each note
-			Map<String, String> note;
+			String[] dateInfo;
+			String date = "";
 			
 			// Go through all the notes and generate a list of Strings.
 			// This list will be used to generate a list with information about
 			// each note.
-			for (int i = 0; i < notes.size(); i++) {
-				note = notes.get(i);
+			for (Map<String, String> note : notes) {
 				noteInformation = note.get("title");
+				date = note.get("timestamp").substring(0, 10);
+				dateInfo = date.split("-");
+				noteInformation = note.get("title") + "\nDate Created: " + 
+						dateInfo[1] + "-" + dateInfo[2] + "-" + dateInfo[0];
 				noteList.add(noteInformation);
 			}
 			

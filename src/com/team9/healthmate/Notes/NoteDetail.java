@@ -15,6 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * Activity Class that Displays the information
+ * about a certain note. The title, and description
+ * of the note are displayed to the user.
+ * @author Michael Sandoval
+ *
+ */
 public class NoteDetail extends Activity {
 
 	// Map Object to contain the note details

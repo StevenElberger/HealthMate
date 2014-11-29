@@ -88,9 +88,18 @@
         <activity 
             android:name=".AppointmentDetail"
             android:label="@string/title_activity_appointment_detail"></activity>
-        <activity android:name=".Notes.ListOfNotes"></activity>
-        <activity android:name=".Notes.NoteDetail"></activity>
-        <activity android:name=".Notes.NoteEditor"></activity>
+        <activity 
+            android:name=".Notes.ListOfNotes"
+            android:label="@string/title_activity_note_list">
+        </activity>
+        <activity 
+            android:name=".Notes.NoteDetail"
+            android:label="@string/title_activity_note_detail">
+        </activity>
+        <activity 
+            android:name=".Notes.NoteEditor"
+            android:label="@string/title_activity_note_editor">
+        </activity>
         
     </application>
     

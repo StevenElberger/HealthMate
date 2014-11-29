@@ -8,12 +8,21 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+/**
+ * Activity Class that displays a form that is used to save Notes. The
+ * notes are stored in the internal storage of the device when the user
+ * selects the save button.
+ * @author Michael Sandoval
+ *
+ */
 public class NoteEditor extends Activity implements OnClickListener {
 
 	// Button to save the Note
@@ -24,6 +33,12 @@ public class NoteEditor extends Activity implements OnClickListener {
 	
 	// The container of the Note that will be deleted
 	Map<String, String> noteToDelete;
+	
+	// The container of the error message displayed to the user
+	TextView incorrectInputMessage;
+	
+	// Indicator for an error in the user input
+	boolean noteEditorError = false;
 
 	/**
 	 * Method that sets the listener for the save button and initializes the
@@ -54,6 +69,15 @@ public class NoteEditor extends Activity implements OnClickListener {
 		startActivity(intent);
 		finish();
 	}
+	
+	/**
+	* Method that sends the user back to the appointment list
+	* if the back button is selected.
+	*/
+	@Override
+	public void onBackPressed() {
+	noteList();
+	}
 
 	/**
 	 * Method that handles the event when the user clicks the save button. Input
@@ -67,17 +91,41 @@ public class NoteEditor extends Activity implements OnClickListener {
 			// Create a new object to hold the information entered
 			// by the user.
 			note = new HashMap<String, String>();
-
+			String input = "";
+			
 			// Go through all the input boxes, and store the information
 			// as key/value pairs in the Map object.
 			EditText userInput;
 
 			userInput = (EditText) findViewById(R.id.NoteEditorTitle);
-			note.put("title", userInput.getText().toString());
+			input = userInput.getText().toString();
+			
+			if (input.equals("")) {
+				// Create error message
+				incorrectInputMessage = (TextView) findViewById(R.id.NoteEditorTitleError);
+				incorrectInputMessage.setText("A title is required to save Appointment");
+				incorrectInputMessage.setTextColor(Color.RED);
+				noteEditorError = true;
+			}
+			else {
+				// Remove error message
+				incorrectInputMessage = (TextView) findViewById(R.id.NoteEditorTitleError);
+				incorrectInputMessage.setText("");
+				note.put("title", userInput.getText().toString());
+			}
+			
 
 			userInput = (EditText) findViewById(R.id.NoteEditorDescription);
 			note.put("description", userInput.getText().toString());
-
+			
+			
+			// Check if there is any error reported. If not,
+			// save information and delete the old appointment, if any.
+			// Otherwise notify the user and do not proceed.
+			if (noteEditorError == false) {
+			// Remove error message
+			incorrectInputMessage = (TextView) findViewById(R.id.NoteEditorError);
+			incorrectInputMessage.setText("");
 			// Check to see if the Appointment was being edited.
 			if (noteToDelete.get("timestamp") != null) {
 
@@ -90,6 +138,13 @@ public class NoteEditor extends Activity implements OnClickListener {
 
 			// Call method to go to the List of Notes Activity.
 			noteList();
+		} 
+		else {
+			// Create error Message
+			incorrectInputMessage = (TextView) findViewById(R.id.NoteEditorError);
+			incorrectInputMessage.setText("There is information that is required, please check input");
+			incorrectInputMessage.setTextColor(Color.RED);
+		}
 
 		} catch (Exception e) {
 			e.printStackTrace();

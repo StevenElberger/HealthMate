@@ -23,7 +23,7 @@ public class Menu extends Activity {
 		setContentView(R.layout.activity_menu);
 		
 		String [] menuString = {
-				"Moods","Medication","Steps","Find a Doctor","Note","Emergency", "Appointments", "Graphs", "Animated Graphs", "More Graphs"
+				"Moods","Medication","Steps","Find a Doctor","Notes","Emergency", "Appointments", "Graphs", "Animated Graphs", "More Graphs"
 
 		};
 		menu = (ListView) findViewById(R.id.menu);
