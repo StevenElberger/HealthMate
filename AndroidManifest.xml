@@ -52,10 +52,6 @@
             android:label="@string/title_activity_step_counter" >
         </activity>
         <activity
-            android:name=".Note"
-            android:label="@string/title_activity_note" >
-        </activity>
-        <activity
             android:name=".Medications.NewMedication"
             android:label="@string/title_activity_new_medication" >
         </activity>
@@ -92,6 +88,10 @@
         <activity 
             android:name=".AppointmentDetail"
             android:label="@string/title_activity_appointment_detail"></activity>
+        <activity android:name=".Notes.ListOfNotes"></activity>
+        <activity android:name=".Notes.NoteDetail"></activity>
+        <activity android:name=".Notes.NoteEditor"></activity>
+        
     </application>
-
+    
 </manifest>

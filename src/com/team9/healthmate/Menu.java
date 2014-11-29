@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.team9.healthmate.R;
 import com.team9.healthmate.Medications.Medication;
+import com.team9.healthmate.Notes.ListOfNotes;
 
 public class Menu extends Activity {
 	public ListView menu;
@@ -52,7 +53,7 @@ public class Menu extends Activity {
 			case 1: return Medication.class;
 			case 2: return StepCounter.class;
 			case 3:	return HealthLocation.class;
-			case 4:	return Note.class;
+			case 4:	return ListOfNotes.class;
 			case 5:	return Emergency.class;
 			case 6: return AppointmentsList.class;
 			case 7: return ChartDemo.class;
