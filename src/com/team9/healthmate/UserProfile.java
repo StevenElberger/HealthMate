@@ -41,7 +41,6 @@ import android.widget.TextView;
  * if so desired. The user may also upload a photograph
  * for their user profile picture.
  * @author Steve
- *
  */
 public class UserProfile extends Activity {
 	ImageView image;
@@ -217,6 +216,151 @@ public class UserProfile extends Activity {
 		}
 		return true;
 	}
+	
+	/**
+	 * Called when the user hits the edit menu button.
+	 * This will change the layout to the editing layout
+	 * and load the forms with their appropriate information.
+	 */
+	public void setUpEditLayout() {
+		// if the edit button was selected, load the
+		// appropriate layout
+		setContentView(R.layout.activity_edit_profile2);
+		
+		// grab forms on the new layout
+		eFirstName = (EditText) findViewById(R.id.f_name);
+		eLastName = (EditText) findViewById(R.id.l_name);
+		eUserName = (EditText) findViewById(R.id.u_name);
+		eGender = (Spinner) findViewById(R.id.gender);
+		eAge = (DatePicker) findViewById(R.id.bday);
+		ePassword = (EditText) findViewById(R.id.password);
+		image = (ImageView) findViewById(R.id.edit_profile_pic);
+		
+		// set up the upload button
+		uploadButton = (Button) findViewById(R.id.upload_profile_pic);
+		
+		uploadButton.setOnClickListener(new Button.OnClickListener() {
+			
+			// when clicked, launch the photo gallery
+			// so the user may select a profile picture
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Intent.ACTION_PICK,
+						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(intent, 0);
+			}
+		});
+		
+		// set up the gender spinner
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+	            R.array.sex, R.layout.sex_spinner_textview);
+	    adapter.setDropDownViewResource(R.layout.sex_spinner_textview);
+		eGender.setAdapter(adapter);
+		
+		if (sGender.equals("Male")) {
+			eGender.setSelection(0);
+		} else if (sGender.equals("Female")) {
+			eGender.setSelection(1);
+		} else {
+			eGender.setSelection(2);
+		}
+		
+		// set form values
+		eFirstName.setText(sFirstName);
+		eLastName.setText(sLastName);
+		eUserName.setText(sUserName);
+		
+		// load image
+		if (imagePath != null) {
+			File imgFile = new  File(imagePath);
+			Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+			image.setImageBitmap(bitmap);
+		}
+		
+		// set the datepicker
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		try {
+			Date age = sdf.parse(sAge);
+			Calendar c = Calendar.getInstance();
+			c.setTime(age);
+			eAge.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		// Set flag and call onCreateOptionsMenu
+		// to inflate the correct menu.
+		notPressedYet = false;
+		invalidateOptionsMenu();
+	}
+	
+	/**
+	 * Called when the user hits the save menu button.
+	 * It checks to make sure the user entered his/her
+	 * password before attempting to write the profile
+	 * information to the account file (including the
+	 * path to the user's profile picture) and then
+	 * brings the user back to the normal profile layout
+	 * with the new information and profile picture, if any.
+	 */
+	public void setUpNormalLayout() {
+		// grab form values
+		sFirstName = eFirstName.getText().toString();
+		sLastName = eLastName.getText().toString();
+		sUserName = eUserName.getText().toString();
+		sGender = eGender.getSelectedItem().toString();
+		
+		// grab from the datepicker
+		int day = eAge.getDayOfMonth();
+		int month = eAge.getMonth();
+		int year = eAge.getYear();
+		Calendar c = Calendar.getInstance();
+		c.set(year,  month, day);
+		Date userAge = c.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		String dateString = sdf.format(userAge);
+		sAge = dateString;
+		
+		// check to make sure user entered his/her password
+		sPassword = ePassword.getText().toString();
+		if (sPassword.equals("")) {
+			TextView warningLabel = (TextView) findViewById(R.id.no_password_label);
+			warningLabel.setTextColor(Color.RED);
+			warningLabel.setVisibility(0);
+		} else {
+			// bring the old layout back to present
+			// the updated account information and new
+			// profile picture, if any
+			setContentView(R.layout.activity_user_profile);
+			// grab new forms
+			firstName = (TextView) findViewById(R.id.f_name);
+			lastName = (TextView) findViewById(R.id.l_name);
+			userName = (TextView) findViewById(R.id.u_name);
+			gender = (TextView) findViewById(R.id.gender);
+			age = (TextView) findViewById(R.id.birthday);
+			image = (ImageView) findViewById(R.id.profile_pic);
+			
+			// set new forms' values
+			firstName.setText(sFirstName);
+			lastName.setText(sLastName);
+			userName.setText(sUserName);
+			gender.setText(sGender);
+			age.setText(sAge);
+			
+			// load new image
+			if (imagePath != null) {
+				File imgFile = new  File(imagePath);
+				Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+				image.setImageBitmap(bitmap);
+			}
+			
+			// write information to user account file
+			// and bring user back to the original layout
+			writeProfileInformation();
+			notPressedYet = true;
+			invalidateOptionsMenu();
+		}
+	}
 
 	/**
 	 * If the user clicked the edit button, show all of their
@@ -229,133 +373,9 @@ public class UserProfile extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_edit_profile) {
-			// if the edit button was selected, load the
-			// appropriate layout
-			setContentView(R.layout.activity_edit_profile2);
-			
-			// grab forms on the new layout
-			eFirstName = (EditText) findViewById(R.id.f_name);
-			eLastName = (EditText) findViewById(R.id.l_name);
-			eUserName = (EditText) findViewById(R.id.u_name);
-			eGender = (Spinner) findViewById(R.id.gender);
-			eAge = (DatePicker) findViewById(R.id.bday);
-			ePassword = (EditText) findViewById(R.id.password);
-			image = (ImageView) findViewById(R.id.edit_profile_pic);
-			
-			// set up the upload button
-			uploadButton = (Button) findViewById(R.id.upload_profile_pic);
-			
-			uploadButton.setOnClickListener(new Button.OnClickListener() {
-				
-				// when clicked, launch the photo gallery
-				// so the user may select a profile picture
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(Intent.ACTION_PICK,
-							android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-					startActivityForResult(intent, 0);
-				}
-			});
-			
-			// set up the gender spinner
-			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		            R.array.sex, R.layout.sex_spinner_textview);
-		    adapter.setDropDownViewResource(R.layout.sex_spinner_textview);
-			eGender.setAdapter(adapter);
-			
-			if (sGender.equals("Male")) {
-				eGender.setSelection(0);
-			} else if (sGender.equals("Female")) {
-				eGender.setSelection(1);
-			} else {
-				eGender.setSelection(2);
-			}
-			
-			// set form values
-			eFirstName.setText(sFirstName);
-			eLastName.setText(sLastName);
-			eUserName.setText(sUserName);
-			
-			// load image
-			if (imagePath != null) {
-				File imgFile = new  File(imagePath);
-				Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-				image.setImageBitmap(bitmap);
-			}
-			
-			// set the datepicker
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-			try {
-				Date age = sdf.parse(sAge);
-				Calendar c = Calendar.getInstance();
-				c.setTime(age);
-				eAge.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			
-			// Set flag and call onCreateOptionsMenu
-			// to inflate the correct menu.
-			notPressedYet = false;
-			invalidateOptionsMenu();
+			setUpEditLayout();
 		} else if (item.getItemId() == R.id.action_save_profile) {
-			// if the save button was selected, load
-			// the previous layout with the new values
-			// after writing the new values to the account file
-			
-			// grab form values
-			sFirstName = eFirstName.getText().toString();
-			sLastName = eLastName.getText().toString();
-			sUserName = eUserName.getText().toString();
-			sGender = eGender.getSelectedItem().toString();
-			
-			// grab from the datepicker
-			int day = eAge.getDayOfMonth();
-			int month = eAge.getMonth();
-			int year = eAge.getYear();
-			Calendar c = Calendar.getInstance();
-			c.set(year,  month, day);
-			Date userAge = c.getTime();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-			String dateString = sdf.format(userAge);
-			sAge = dateString;
-			
-			// check to make sure user entered his/her password
-			sPassword = ePassword.getText().toString();
-			if (sPassword.equals("")) {
-				TextView warningLabel = (TextView) findViewById(R.id.no_password_label);
-				warningLabel.setTextColor(Color.RED);
-				warningLabel.setVisibility(0);
-			} else {
-				setContentView(R.layout.activity_user_profile);
-				// grab new forms
-				firstName = (TextView) findViewById(R.id.f_name);
-				lastName = (TextView) findViewById(R.id.l_name);
-				userName = (TextView) findViewById(R.id.u_name);
-				gender = (TextView) findViewById(R.id.gender);
-				age = (TextView) findViewById(R.id.birthday);
-				image = (ImageView) findViewById(R.id.profile_pic);
-				
-				// set new forms' values
-				firstName.setText(sFirstName);
-				lastName.setText(sLastName);
-				userName.setText(sUserName);
-				gender.setText(sGender);
-				age.setText(sAge);
-				
-				// load new image
-				if (imagePath != null) {
-					File imgFile = new  File(imagePath);
-					Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-					image.setImageBitmap(bitmap);
-				}
-				
-				// write information to user account file
-				// and bring user back to the original layout
-				writeProfileInformation();
-				notPressedYet = true;
-				invalidateOptionsMenu();
-			}
+			setUpNormalLayout();
 		}
 		return super.onOptionsItemSelected(item);
 	}
