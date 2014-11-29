@@ -51,6 +51,8 @@ public class NotificationsManager {
 			intent.putExtra("date", message.get("date"));
 		}
 		
+		Log.v("Message Info", message.toString());
+		
 		// Create a pending intent that will be used when the alarm goes off
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 		

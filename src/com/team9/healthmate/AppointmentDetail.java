@@ -28,6 +28,9 @@ public class AppointmentDetail extends Activity {
 	
 	// Map Object to contain the appointment details
 	private Map<String, String> appointmentDetails;
+	
+	// Intent object passed in
+	Intent intent;
 
 	/**
 	 * Method retrieves information sent by the previous activity
@@ -42,7 +45,7 @@ public class AppointmentDetail extends Activity {
 		appointmentDetails = new HashMap<String, String>();
 		
 		// Get the intent sent by the previous activity
-		Intent intent = getIntent();
+		intent = getIntent();
 
 		// Insert information from the intent into the Map Object
 		appointmentDetails.put("timestamp", intent.getStringExtra("timestamp"));
@@ -91,7 +94,9 @@ public class AppointmentDetail extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.appointment_details, menu);
+		if (intent.getStringExtra("notification") == null) {
+			getMenuInflater().inflate(R.menu.appointment_details, menu);
+		}
 		return true;
 	}
 
@@ -111,7 +116,7 @@ public class AppointmentDetail extends Activity {
 				String description = "Appointment with: " + appointmentDetails.get("name") + 
 						"\n You have an appointment on " + appointmentDetails.get("date") + 
 						"\n Staring at: " + appointmentDetails.get("start time");
-				message.put("type", "appointment");
+				message.put("type", "appointments");
 				message.put("title", appointmentDetails.get("title"));
 				message.put("description", description);
 				NotificationsManager.unregisterNotification(this, message);

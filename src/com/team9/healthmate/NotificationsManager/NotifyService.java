@@ -95,6 +95,9 @@ public class NotifyService extends Service {
 		
 		resultIntent.putExtras(intent.getExtras());
 		
+		// Give the information that this is from notification.
+		resultIntent.putExtra("notification", "true");
+		
 		// Set the title of the notification
 		mBuilder.setContentTitle(title);
 		
