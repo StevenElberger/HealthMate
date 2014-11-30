@@ -51,10 +51,8 @@ public class NotificationsManager {
 			intent.putExtra("date", message.get("date"));
 		}
 		
-		Log.v("Message Info", message.toString());
-		
 		// Create a pending intent that will be used when the alarm goes off
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 		
 		// Get the alarm manager of the system
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -62,7 +60,7 @@ public class NotificationsManager {
 		// Register the alarm
 		alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 		
-		Log.v("Appointment Time: ", calendar.getTime().toString());
+		Log.v("Appointment Time: ", "" + calendar.getTimeInMillis());
 	}
 	
 	/**
@@ -88,7 +86,7 @@ public class NotificationsManager {
 		intent.putExtra("description", message.get("description"));
 		
 		// Create a pending intent that will be used when the alarm goes off
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 		
 		// Get the alarm manager of the system
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

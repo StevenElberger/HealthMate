@@ -1,8 +1,10 @@
 package com.team9.healthmate.NotificationsManager;
 
+import java.util.Calendar;
+
 import com.team9.healthmate.AppointmentDetail;
-import com.team9.healthmate.AppointmentsList;
 import com.team9.healthmate.Login;
+import com.team9.healthmate.Menu;
 import com.team9.healthmate.R;
 import com.team9.healthmate.Medications.Medication;
 
@@ -15,7 +17,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 /**
  * Service Class that creates notifications when the service
@@ -64,8 +65,6 @@ public class NotifyService extends Service {
 		// Container used to build a notification
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
 		
-		Log.v("Notif Type: ", intent.getStringExtra("type"));
-		
 		// Determine what kind of notification this will be.
 		// Set the icon and event that will occur for the notification.
 		switch(type) {
@@ -85,7 +84,7 @@ public class NotifyService extends Service {
 		case "change":
 			// Change Notification
 			mBuilder.setSmallIcon(R.drawable.ic_change_notification);
-			resultIntent = new Intent(context, AppointmentsList.class);
+			resultIntent = new Intent(context, Menu.class);
 			break;
 			
 		default:
@@ -93,6 +92,7 @@ public class NotifyService extends Service {
 			resultIntent = new Intent(context, Login.class);
 		}
 		
+		// Transfer the information of the given intent to the new intent
 		resultIntent.putExtras(intent.getExtras());
 		
 		// Give the information that this is from notification.
@@ -106,7 +106,9 @@ public class NotifyService extends Service {
 		
 		// Create a pending intent, this will be called when the user selects
 		// the notification action
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, 0);
+		// The request code of this pending intent is the current system time
+		// This allows for unique pending intents
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, (int)System.currentTimeMillis(), resultIntent, PendingIntent.FLAG_ONE_SHOT);
 		
 		// Set the intent for the notification
 		mBuilder.setContentIntent(pendingIntent);
@@ -118,11 +120,14 @@ public class NotifyService extends Service {
 		// The notification goes away when the user selects it
 		mBuilder.setAutoCancel(true);
 		
+		// Set the device to vibrate when notification received
+		mBuilder.setVibrate(new long[]{100, 200, 100, 500});
+		
 		// Get the notification manager system of the device
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		
 		// Register the notification
-		mNotificationManager.notify(0, mBuilder.build());
+		mNotificationManager.notify((int)Calendar.getInstance().getTimeInMillis(), mBuilder.build());
 		
 		// After sending the notification, stop the service
 		this.stopSelf();
