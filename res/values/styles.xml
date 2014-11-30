@@ -15,5 +15,7 @@
     <!--  	<item name="android:minHeight">22dip</item>
     	<item name="android:minWidth">43dip</item> -->
 	</style>    
+	<style name="HealthMateTheme" parent="@android:style/Theme.Holo">
+	</style>    
 
 </resources>

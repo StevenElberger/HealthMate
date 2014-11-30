@@ -87,6 +87,8 @@ public class Login extends Activity implements OnClickListener{
 		if (v.equals(register)) {
 			startRegistration();
 		} else if (v.equals(login)) {
+			//debug 
+			startMenu();
 			try {
 				// check the contents of the account file against
 				// the credentials provided by the user
