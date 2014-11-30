@@ -140,24 +140,24 @@ public class ContactMyDoctor extends Activity {
 	            saveContactList(ContactMyDoctor.this);
 	        }
 	    }	    
-	    else if (requestCode == OPTION_REQUEST && resultCode == 0)
+	    else if (requestCode == OPTION_REQUEST && resultCode == 1)
 	    {
 	    	Contact c = contacts.get(itemSelected);
 	    	Log.v("debugme", "Making a phone call to "+c.name);
 	    	makeACall(ContactMyDoctor.this, c);
 	    }
-	    else if (requestCode == OPTION_REQUEST && resultCode == 1)
+	    else if (requestCode == OPTION_REQUEST && resultCode == 2)
 	    {
 	    	Contact c = contacts.get(itemSelected);
 	    	Log.v("debugme", "Sending a text messageto "+c.name);
 	    	sendTextMessage(ContactMyDoctor.this, c);
 	    }
-	    else if (requestCode == OPTION_REQUEST && resultCode == 2)
+	    else if (requestCode == OPTION_REQUEST && resultCode == 3)
 	    {
 	    	Contact c = contacts.get(itemSelected);
 	    	sendEmail(ContactMyDoctor.this, c);
 	    }
-	    else if (requestCode == OPTION_REQUEST && resultCode == 3)
+	    else if (requestCode == OPTION_REQUEST && resultCode == 4)
 	    {
 	    	Contact c = contacts.get(itemSelected);
 	    	Log.v("debugme", "Removing "+c.name);

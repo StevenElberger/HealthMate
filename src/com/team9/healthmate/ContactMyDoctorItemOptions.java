@@ -58,7 +58,7 @@ public class ContactMyDoctorItemOptions extends Activity {
 					confirmRemove();						
 				else
 				{
-					setResult(position, intent);
+					setResult(position+1, intent);
 					finish();
 				}
 			}
@@ -80,7 +80,7 @@ public class ContactMyDoctorItemOptions extends Activity {
 		        @Override
 		        public void onClick(DialogInterface dialog, int which) {
 		        	Intent intent = new Intent();
-		        	setResult(3, intent);
+		        	setResult(4, intent);
 		        	finish();
 	        }})
 	    .setNegativeButton("No",new DialogInterface.OnClickListener()
