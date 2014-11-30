@@ -113,7 +113,7 @@ public class NotificationsManager {
 		intent.putExtra("description", message.get("description"));
 		
 		// Create a pending intent that will be used to cancel the alarm 
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 		
 		// Get the alarm manager of the system
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

@@ -111,14 +111,29 @@ public class AppointmentDetail extends Activity {
 		if (item.getItemId() == R.id.action_delete_appointment) {
 			
 			try { 
+				// Delete the appointment from the file of appointments
 				DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+				
+				// Create a new message that will be used to cancel any existing alarms
 				Map<String, String>  message = new HashMap<String, String>();
+				
+				// fill the message with the appointment information
+				message.putAll(appointmentDetails);
+				
+				// remove the time stamp, this was not in the original message used
+				// to create the alarm
+				message.remove("timestamp");
+				
+				// insert into message the information of the notification that
+				// would have be shown to the user
 				String description = "Appointment with: " + appointmentDetails.get("name") + 
 						"\n You have an appointment on " + appointmentDetails.get("date") + 
 						"\n Staring at: " + appointmentDetails.get("start time");
 				message.put("type", "appointments");
 				message.put("title", appointmentDetails.get("title"));
 				message.put("description", description);
+				
+				// Unregister the alarm for the notification
 				NotificationsManager.unregisterNotification(this, message);
 			} catch (Exception e) {
 				e.printStackTrace();
