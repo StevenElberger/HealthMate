@@ -26,7 +26,7 @@ import android.os.Build;
 	 
 */
 public class Moods extends FragmentActivity
-							implements ActionBar.TabListener{
+							implements ActionBar.TabListener {
 
 	private ViewPager viewPager;
     private MoodTabsPagerAdapter mAdapter;
@@ -40,7 +40,7 @@ public class Moods extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_moods);
 		
-		 Log.v("debugme1", "passed 1 to compile");
+		
 		  // Initilization
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
@@ -55,6 +55,27 @@ public class Moods extends FragmentActivity
             actionBar.addTab(actionBar.newTab().setText(tab_name)
                     .setTabListener(this));
         }        
+        
+        /**
+         * On swiping the ViewPager make respective tab selected
+         * */
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+ 
+            @Override
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                actionBar.setSelectedNavigationItem(position);
+            }
+ 
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+ 
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
 	}
 	
 	 //@Override
@@ -81,4 +102,6 @@ public class Moods extends FragmentActivity
 		// TODO Auto-generated method stub
 		
 	}		
+	
+	
 }

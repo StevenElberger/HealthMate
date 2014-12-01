@@ -55,6 +55,15 @@
         <item>Female</item>
         <item>Other</item>
     </string-array>
+    
+    <string-array name="mood_arrays">
+        <item>Happy</item>
+        <item>Motivated</item>
+        <item>Stressed</item>
+        <item>Angry</item>
+        <item>Tired</item>
+        <item>Depressed</item>       
+    </string-array>
 
     <string name="ok2">OK</string>
     <string name="title_activity_mood_page_viewer">MoodPageViewer</string>

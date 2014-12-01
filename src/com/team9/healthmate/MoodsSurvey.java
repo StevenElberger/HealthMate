@@ -76,7 +76,7 @@ public class MoodsSurvey extends Fragment
                Map<String, String> listOfItems = new HashMap<String, String>();
                try {
             	   for (int i = 0; i < seek.length; i++) {
-					listOfItems.put(lblMoods[0].getText().toString().trim() + ": ", lblCounter[0].getText().toString().trim());
+					listOfItems.put(lblMoods[i].getText().toString().trim(), lblCounter[i].getText().toString().trim());
 				}           	   
 				//Overwrites or creates a new file with the user data
 				DataStorageManager.writeJSONObject(getActivity(), "testdata", listOfItems, false);
