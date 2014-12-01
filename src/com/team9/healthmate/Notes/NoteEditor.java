@@ -87,7 +87,10 @@ public class NoteEditor extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		try {
-
+			
+			// No errors initially
+			noteEditorError = false;
+			
 			// Create a new object to hold the information entered
 			// by the user.
 			note = new HashMap<String, String>();
