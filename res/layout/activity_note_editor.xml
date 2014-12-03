@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="10dp" >
+
+        <EditText
+            android:id="@+id/NoteEditorTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/note_editor_title"
+            android:inputType="text"
+            android:paddingTop="5dp" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/NoteEditorTitleError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/NoteEditorDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/note_editor_description"
+            android:inputType="textMultiLine"
+            android:paddingTop="5dp" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/NoteEditorError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text=""
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/SaveButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/note_editor_save"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/SaveNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/appointment_form_save"
+            android:src="@drawable/ic_action_content_save" />
+    </LinearLayout>
+
+</ScrollView>
