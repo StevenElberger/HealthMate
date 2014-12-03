@@ -90,8 +90,8 @@ public class StepCounter extends Activity implements SensorEventListener {
 	private static DataStorageManager dataStorageManager;
 	private Calendar calendar;
 	private StepCounterData stepData;
-	private int saves = 1;
 	private Dialog goalDialog;
+	private long timeWhenStopped = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +178,7 @@ public class StepCounter extends Activity implements SensorEventListener {
 	 */
 	public void onStartStopButton(View v)	{
 		if(isStart)	{
+			timeWhenStopped = stopWatch.getBase() - SystemClock.elapsedRealtime();
 			stopWatch.stop();
 			startStopButton.setText("Start");
 			sensorManager.unregisterListener(this);
@@ -185,6 +186,7 @@ public class StepCounter extends Activity implements SensorEventListener {
 			
 		} else {
 			isStart = true;
+			stopWatch.setBase(SystemClock.elapsedRealtime()+timeWhenStopped);
 			stopWatch.start();
 			startStopButton.setText("Stop");
 			sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -200,9 +202,11 @@ public class StepCounter extends Activity implements SensorEventListener {
 	public void initCongratulationDialog()	{
 		congratzDialog = new Dialog(StepCounter.this);
 		congratzDialog.setContentView(R.layout.reached_goal_dialog);
-		congratzDialog.setTitle("Congratulation!");
+		congratzDialog.setTitle("Congratulations!");
 		TextView stepsAchieved = (TextView) congratzDialog.findViewById(R.id.steps_reached);
 		stepsAchieved.setText(""+stepGoal);
+		TextView timeView = (TextView) congratzDialog.findViewById(R.id.time_reached);
+		timeView.setText(stopWatch.getText());
 		congratzDialog.show();
 		Button save = (Button) congratzDialog.findViewById(R.id.save_button);
 		Button discard = (Button) congratzDialog.findViewById(R.id.discard_button);
@@ -229,7 +233,7 @@ public class StepCounter extends Activity implements SensorEventListener {
 		boolean isSaved = true;
 		if(id == R.id.save_button)	{
 			stepData = new StepCounterData(steps, stopWatch.getText().toString());
-			String filename = "StepCounter_"+calendar.getTime().getMonth()+"-"+calendar.getTime().getDay()+"-"+calendar.getTime().getYear()+"_"+saves;
+			String filename = "StepCounter_"+calendar.getTime().getMonth()+"-"+calendar.getTime().getDay()+"-"+calendar.getTime().getYear();
 			try {
 				DataStorageManager.writeJSONObject(getApplicationContext(),filename, stepData.getKeyMay(), false);
 			} catch (JSONException e) {
@@ -244,7 +248,6 @@ public class StepCounter extends Activity implements SensorEventListener {
 			}	else	{
 				Toast.makeText(getApplicationContext(), "This data wasn't saved!", Toast.LENGTH_SHORT).show();
 			}
-			saves++;
 		}
 		dialogBoxActive = false;
 		congratzDialog.dismiss();
@@ -257,9 +260,9 @@ public class StepCounter extends Activity implements SensorEventListener {
 	 * 
 	 */
 	public void resetCounter()	{
-		stopWatch.setText("00:00");
 		stopWatch.setBase(SystemClock.elapsedRealtime());
 		stopWatch.stop();
+		timeWhenStopped = 0;
 		steps = 0;
 		updateStepView();
 	}

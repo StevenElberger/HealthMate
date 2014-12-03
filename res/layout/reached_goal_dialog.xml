@@ -6,32 +6,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
-     <TextView
-        android:id="@+id/congratulation_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/congratulation_message"
-        android:textSize="20dp"
-        android:textAlignment="center" />
      
      <TextView
         android:id="@+id/steps_reached"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/congratulation_title"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
+        android:layout_marginTop="10dp"
         android:text="10000"
-        android:textSize="40dp"
-        android:textAlignment="center" />
+        android:textSize="40dp" />
      
      <TextView
         android:id="@+id/asking_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/steps_reached"
+        android:layout_below="@+id/time_reached"
         android:layout_centerHorizontal="true"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
@@ -73,8 +62,26 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/steps_reached"
         android:layout_alignBottom="@+id/steps_reached"
-        android:layout_alignRight="@+id/asking_save"
-        android:layout_marginRight="43dp"
+        android:layout_toRightOf="@+id/steps_reached"
         android:text="Steps" />
+
+    <TextView
+        android:id="@+id/time_reached"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/asking_save"
+        android:layout_below="@+id/steps_reached"
+        android:layout_marginBottom="10dp"
+        android:text="00:00"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/congratulation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/congratulation_message"
+        android:textAlignment="center"
+        android:textSize="20dp" />
 
 </RelativeLayout>
