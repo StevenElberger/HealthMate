@@ -61,7 +61,7 @@ public class MoodsGraph extends Fragment implements OnItemSelectedListener {
 					 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(), R.array.mood_arrays, android.R.layout.simple_spinner_item); 
 		
-		spinner1 = (Spinner)rootView.findViewById(R.id.spinner1);
+		spinner1 = (Spinner)rootView.findViewById(R.id.spinnerMood);
 		spinner1.setAdapter(adapter);
 		spinner1.setOnItemSelectedListener(this);
 		

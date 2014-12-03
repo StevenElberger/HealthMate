@@ -5,14 +5,15 @@
     android:orientation="vertical" >   
     
      <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/spinnerMood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize = "14pt"
        
         />
 
      <RelativeLayout
-          android:id="@+id/mood_graph_layout"
+         android:id="@+id/mood_graph_layout"
          android:layout_width="match_parent"
          android:layout_height="match_parent" >
      </RelativeLayout>

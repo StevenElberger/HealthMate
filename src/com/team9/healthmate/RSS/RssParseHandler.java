@@ -30,6 +30,12 @@ public class RssParseHandler extends DefaultHandler {
 	//Parsing link indicator
 	private boolean parsingLink;
 	
+	//Parsing description indicator
+	private boolean parsingDescription;
+	
+	//Parsing image indicator
+	private boolean parsingImage;
+	
 	public RssParseHandler(){
 		rssItems = new ArrayList<RssItem>();
 	}
@@ -60,6 +66,9 @@ public class RssParseHandler extends DefaultHandler {
 		else if ("link".equals(qName)){
 			parsingLink = true;
 		}		
+		else if ("description".equals(qName)){
+			parsingDescription = true;
+		}
 	}
 	
 	 /**
@@ -81,6 +90,9 @@ public class RssParseHandler extends DefaultHandler {
 		else if ("link".equals(qName)){
 			parsingLink = false;
 		}		
+		else if ("description".equals(qName)){
+			parsingDescription = false;
+		}
 	}
 	/** 
 	* 	Characters method fills current 
@@ -90,9 +102,7 @@ public class RssParseHandler extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
-		
 			
-		
 	if (parsingTitle){
 		if (currentItem != null)
 			currentItem.setTitle(new String(ch, start, length));
@@ -103,6 +113,11 @@ public class RssParseHandler extends DefaultHandler {
 			currentItem.setLink(new String(ch, start, length));
 			parsingLink = false;
 		}
+	}
+	else if (parsingDescription){
+		if (currentItem != null)
+			currentItem.setDescription(new String(ch, start, length));
+			parsingDescription = false;
 	}
 	
 	}

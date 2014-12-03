@@ -36,7 +36,7 @@ public class ListListener implements OnItemClickListener {
 		i.setData(Uri.parse(listItems.get(pos).getLink()));
 		// And start activity with our Intent
 		activity.startActivity(i);
-		
+			
 	}
 
 }

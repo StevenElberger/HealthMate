@@ -31,7 +31,9 @@ public class Moods extends FragmentActivity
 	private ViewPager viewPager;
     private MoodTabsPagerAdapter mAdapter;
     private ActionBar actionBar;
-    private MenuInflater mn;
+    private MenuInflater mn;    
+   private Menu TabMenu;
+    
  // Tab titles
     private String[] tabs = { "Moods Survey", "Moods Graph", "Helpful Tips" };    
 		
@@ -70,12 +72,29 @@ public class Moods extends FragmentActivity
  
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {
+            	
             }
  
             @Override
             public void onPageScrollStateChanged(int arg0) {
+            
             }
         });
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.mood_menu_items, menu);
+	    mn = inflater;
+	    TabMenu = menu;
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return super.onOptionsItemSelected(item);
 	}
 	
 	 //@Override
@@ -87,14 +106,37 @@ public class Moods extends FragmentActivity
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		 // on tab selected
+		// on tab selected
         // show respected fragment view
-        viewPager.setCurrentItem(tab.getPosition());	
+        viewPager.setCurrentItem(tab.getPosition());
+//        if (TabMenu != null) {
+//		switch (tab.getPosition()) {
+//		case 0:		
+//			
+//			mn.inflate(R.menu.mood_menu_items, TabMenu);
+//			break;			
+//		case 1:
+//			
+//			mn.inflate(R.menu.graphs, TabMenu);
+//			break;
+//		case 2:
+//			
+//			break;
+//
+//		default:
+//			
+//			mn.inflate(R.menu.mood_menu_items, TabMenu);
+//			break;
+//		}
+//        
+//        }
+//        
       }
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		
+//		ActionBar action = getActionBar();
+//		action.hide();
 	}
 
 	@Override
