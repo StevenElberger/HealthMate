@@ -52,6 +52,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	// Error notifier
 	boolean appointmentFormError = false;
 	
+	// The time the notification will be registered with
 	Calendar timeOfAppointment;
 
 	/**
