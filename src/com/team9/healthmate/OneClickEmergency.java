@@ -80,9 +80,14 @@ public class OneClickEmergency {
 	 * @param context the current context of the activity
 	 */ 
 	protected void makeACall(Context context){
+		try {
 		Intent callIntent = new Intent(Intent.ACTION_CALL);
 	    callIntent.setData(Uri.parse("tel:8053208737"));
-	    context.startActivity(callIntent);	
+	    context.startActivity(callIntent);	}
+		catch(android.content.ActivityNotFoundException ex){
+			 Toast.makeText(context.getApplicationContext(), 
+			 "Call faild, please try again later.", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }
