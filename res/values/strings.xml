@@ -102,6 +102,7 @@
     <string name="take_one_everey">Take one everey</string>
     <string name="moodSave">Save</string>
     <string name="moodEdit">Edit</string>
+    <string name="moodAdd">Add</string>
     <string name="moodExit">Exit</string>
 
     <string name="title_activity_chart_demo">ChartDemo</string>

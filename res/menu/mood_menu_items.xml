@@ -9,6 +9,10 @@
         android:title="@+string/moodEdit"
         android:showAsAction="never"></item>
     <item 
+        android:id="@+id/mAdd"
+        android:title="@+string/moodAdd"
+        android:showAsAction="never"></item>
+    <item 
         android:id="@+id/mExit"
         android:title="@+string/moodExit"
         android:showAsAction="never"></item>
