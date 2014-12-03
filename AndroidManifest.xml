@@ -5,14 +5,13 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="17"
         android:targetSdkVersion="21" />
-   
-	<uses-permission android:name="android.permission.CALL_PHONE">
-	    
-	</uses-permission> 
-	
-	<uses-permission android:name="android.permission.SEND_SMS"/>
+
+    <uses-permission android:name="android.permission.CALL_PHONE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -28,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Medications.Medication"
+            android:name=".Medications$Medication"
             android:label="@string/title_activity_medication" >
         </activity>
         <activity
@@ -56,14 +55,14 @@
             android:label="@string/title_activity_note" >
         </activity>
         <activity
-            android:name=".Medications.NewMedication"
+            android:name=".Medications$NewMedication"
             android:label="@string/title_activity_new_medication" >
         </activity>
-        <activity 
-            android:name=".Medications.MedicationDetails"
-            android:label="@string/title_activity_medication_details">
-       	</activity>
-       	<activity
+        <activity
+            android:name=".Medications$MedicationDetails"
+            android:label="@string/title_activity_medication_details" >
+        </activity>
+        <activity
             android:name=".Registration"
             android:label="@string/title_activity_registration" >
         </activity>
@@ -81,17 +80,26 @@
         </activity>
         <activity android:name=".MoodTabViewer" >
         </activity>
-        <activity 
+        <activity
             android:name=".AppointmentForm"
-            android:label="@string/title_activity_appointment_form">
+            android:label="@string/title_activity_appointment_form" >
         </activity>
-        <activity 
+        <activity
             android:name=".AppointmentsList"
-            android:label="@string/title_activity_appointment_list">
+            android:label="@string/title_activity_appointment_list" >
         </activity>
-        <activity 
+        <activity
             android:name=".AppointmentDetail"
-            android:label="@string/title_activity_appointment_detail"></activity>
+            android:label="@string/title_activity_appointment_detail" >
+        </activity>
+        <activity
+            android:name=".UserProfile"
+            android:label="@string/title_activity_user_profile" >
+        </activity>
+        <activity
+            android:name=".EditProfile"
+            android:label="@string/title_activity_edit_profile" >
+        </activity>
     </application>
 
 </manifest>

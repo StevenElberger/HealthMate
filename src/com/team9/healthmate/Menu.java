@@ -3,13 +3,14 @@ package com.team9.healthmate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.team9.healthmate.R;
+
 import com.team9.healthmate.Medications.Medication;
 
 public class Menu extends Activity {
@@ -45,7 +46,7 @@ public class Menu extends Activity {
 		startActivity(intent);
 	}
 	
-	/* switch statement to find the correct option to goto*/
+	/* switch statement to find the correct option to go to */
 	public Class<?> getMenuItem(int pos)	{
 		switch(pos)	{
 			case 0: return Moods.class; 
@@ -60,5 +61,31 @@ public class Menu extends Activity {
 			case 9: return PreviewChartDemo.class;
 		}
 		return null;
+	}
+	
+	/**
+	 * Set up the user profile button on the action bar.
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(android.view.Menu menu) {
+	    // Inflate the menu items for use in the action bar
+		getMenuInflater().inflate(R.menu.main_menu, menu);
+		return true;
+	}
+	
+	/**
+	 * User clicked on edit profile button so send them to their
+	 * profile page.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		// Check to see which option was selected by the user.
+		if (item.getItemId() == R.id.action_edit_profile) {
+			Intent intent = new Intent(this, UserProfile.class);
+			startActivity(intent);
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 }
