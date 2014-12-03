@@ -10,7 +10,6 @@
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_emergency">Emergency</string>
     <string name="title_activity_step_counter">StepCounter</string>
-    <string name="title_activity_note">Note</string>
     <string name="happy">Happy</string>
     <string name="ok">Just Ok</string>
     <string name="motivated">Motivated</string>
@@ -116,6 +115,7 @@
     <string name="action_create_new_appointment">New Appointment</string>
     <string name="action_edit_appointment">Edit</string>
     <string name="action_delete_appointment">Delete</string>
+
     <string name="title_activity_user_profile">UserProfile</string>
     <string name="action_edit_profile">Profile</string>
     <string name="gender">Gender</string>
@@ -125,5 +125,18 @@
     <string name="profile_pic">Profile Picture</string>
     <string name="enter_password">Enter your password to save changes</string>
     <string name="change_pic">Change</string>
+    
+    <string name="title_activity_note_list">Note List</string>
+    <string name="title_activity_note_detail">Note Detail</string>
+    <string name="title_activity_note_editor">Note Editor</string>
+    <string name="action_create_new_note">New Note</string>
+    <string name="note_detail_title">Note Information</string>
+    <string name="note_detail_name">Title: </string>
+    <string name="note_detail_description">Title: </string>
+    <string name="action_edit_note">Edit</string>
+    <string name="action_delete_note">Delete</string>
+    <string name="note_editor_save">Save Note</string>
+    <string name="note_editor_title">Title (Required)</string>
+    <string name="note_editor_description">Enter a Note</string>
 
 </resources>
