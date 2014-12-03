@@ -100,6 +100,11 @@ public class StepCounter extends Activity implements SensorEventListener {
 		init();
 		
 	}
+	/**
+	 * This method is called from the onCreate(). This method initializes most of the textview used in this activity.
+	 * Once the textviews are initializes, this method will call promptGoalDialog() which will allow the user to choose
+	 * their goal.
+	 */
 	public void init()	{
 		calendar = Calendar.getInstance();
 		stepData = new StepCounterData(steps);
@@ -121,23 +126,28 @@ public class StepCounter extends Activity implements SensorEventListener {
 		promptGoalDialog();
 	}
 	
-	
-	
-	
 	/**
-	 * This method is called when the goal textview is clicked. When called,
-	 * creates a dialog object and initializes the contentview and title. It continues
-	 * to grab all the views in the dialog so that goal's new value can be fetched.
-	 * @param view - This is the view from the goal textview.
+	 * This method calls the promptGoalDialog() to call the dialog box to allow the user to change
+	 * their goal.
+	 * @param view - this param is not used and is only here to allow the xml to find the onClick
+	 * button assigned to the button id
 	 */
 	public void onClick(View view)	{
 		promptGoalDialog();
 		
 	}
+	
+	/**
+	 * This method initializes the dialog variable by setting title and content view. Along with
+	 * initialize the goalDialog's buttons and textview. In addition, creates an onClickListener
+	 * for the comfirmation button give on the dialog box. See prompGoalDialog().onClick() for more
+	 * infomation
+	 */
 	public void promptGoalDialog()	{
 		goalDialog = new Dialog(StepCounter.this);
 		goalDialog.setContentView(R.layout.goal_changer_dialog);
 		goalDialog.setTitle("Choose Your Goal");
+		resetCounter();
 		
 		final EditText editGoal = (EditText) goalDialog.findViewById(R.id.set_goal);
 		editGoal.setText(""+stepGoal);
@@ -150,7 +160,6 @@ public class StepCounter extends Activity implements SensorEventListener {
 			 * @param v - This is the view that was clicked. This variable is not sused.
 			 */
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "hit", Toast.LENGTH_SHORT).show();
 				stepGoal = Integer.parseInt(editGoal.getText().toString());
 				updateStepView();
 				//saveStepRecord();
@@ -161,7 +170,12 @@ public class StepCounter extends Activity implements SensorEventListener {
 		
 		
 	}
-	
+	/**
+	 * This method is an onClick() method which allows the buttons to call onClick from XML. This
+	 * method specifically is for a start on stop button that start the Chronometer timer. Along with
+	 * registering and unregistering the STEP_COUNTER service.
+	 * @param v - This param is for the XML onClick() call, not used.
+	 */
 	public void onStartStopButton(View v)	{
 		if(isStart)	{
 			stopWatch.stop();
@@ -178,6 +192,11 @@ public class StepCounter extends Activity implements SensorEventListener {
 		}
 		
 	}
+	/**
+	 * This method initializes the congratulation dialog box for the user. This initializes all
+	 * the view in the dialog. Along with setting up an on click listener for the dialog's save
+	 * and discard button.
+	 */
 	public void initCongratulationDialog()	{
 		congratzDialog = new Dialog(StepCounter.this);
 		congratzDialog.setContentView(R.layout.reached_goal_dialog);
@@ -197,20 +216,34 @@ public class StepCounter extends Activity implements SensorEventListener {
 		discard.setOnClickListener(onClickListener);
 		
 	}
-
+	/**
+	 * This is on onClick() which is called from the XML. This method searches what view is calling
+	 * this method. If it is the save button then save to the StepCounterData object then write the
+	 * object to the DataManager and lastly, increment the save int. On default, flags the dialog box
+	 * not to duplicate dialog boxes and to reset views and Chronometer.
+	 * 
+	 * @param id - This variable is an ID of the view that is calling this method.
+	 * 
+	 */
 	public void onClickGoalReachedDialog(int id)	{
+		boolean isSaved = true;
 		if(id == R.id.save_button)	{
 			stepData = new StepCounterData(steps, stopWatch.getText().toString());
 			String filename = "StepCounter_"+calendar.getTime().getMonth()+"-"+calendar.getTime().getDay()+"-"+calendar.getTime().getYear()+"_"+saves;
-			/*try {
+			try {
 				DataStorageManager.writeJSONObject(getApplicationContext(),filename, stepData.getKeyMay(), false);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				isSaved = false;
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				isSaved = false;
 				e.printStackTrace();
-			}*/
+			}
+			if(isSaved)	{
+				Toast.makeText(getApplicationContext(), "This data was saved!", Toast.LENGTH_SHORT).show();
+			}	else	{
+				Toast.makeText(getApplicationContext(), "This data wasn't saved!", Toast.LENGTH_SHORT).show();
+			}
 			saves++;
 		}
 		dialogBoxActive = false;
@@ -218,12 +251,23 @@ public class StepCounter extends Activity implements SensorEventListener {
 		resetCounter();
 		
 	}
+	
+	/**
+	 * This method resets stopwatch timer and steps. Along with calling the updateStepView method
+	 * 
+	 */
 	public void resetCounter()	{
 		stopWatch.setText("00:00");
 		stopWatch.setBase(SystemClock.elapsedRealtime());
+		stopWatch.stop();
 		steps = 0;
 		updateStepView();
 	}
+	
+	/**
+	 * This method is to update textviews of the counter, goal and progress bar.
+	 * 
+	 */
 	public void updateStepView()	{
 		counter.setText(""+steps);
 		goal.setText("Goal :"+stepGoal);
@@ -252,6 +296,9 @@ public class StepCounter extends Activity implements SensorEventListener {
 		}
 
 	}
+	/**
+	 * This method is not USED, but is needed for the service
+	 */
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
