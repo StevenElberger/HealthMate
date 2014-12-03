@@ -29,23 +29,41 @@
 	    android:id="@+id/step_counter"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/progressBar1"
+	    android:layout_centerHorizontal="true"
 	    android:layout_centerVertical="true"
 	    android:text="0"
 	    android:textColor="#FFFFFF"
-	    android:textSize="50dp" />
+	    android:textSize="60dp" />
 
 	<TextView
 	    android:id="@+id/step_goal"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="2dp"
-	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/goal_progress_bar"
+	    android:layout_centerHorizontal="true"
 	    android:clickable="true"
 	    android:onClick="onClick"
 	    android:text="Goal: 100 steps"
 	    android:textColor="#01A9DB"
 	    android:textSize="15dp" />
+
+	<Button
+	    android:id="@+id/start_stop_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:onClick="onStartStopButton"
+	    android:text="Start" />
+
+	<Chronometer
+	    android:id="@+id/stop_watch"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/step_goal"
+	    android:layout_centerHorizontal="true"
+	    android:layout_margin="10dp"
+	    android:text="Chronometer"
+	    android:textSize="25dp" />
 
 </RelativeLayout>

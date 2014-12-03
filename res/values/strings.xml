@@ -125,5 +125,7 @@
     <string name="action_delete_appointment">Delete</string>
     <string name="example_goal">Ex: 1000</string>
     <string name="goal_sub_title">Number of Steps:</string>
+    <string name="congratulation_message">You have reached your goal! </string>
+    <string name="saving_message">Would you like to save these results?</string>
 
 </resources>
