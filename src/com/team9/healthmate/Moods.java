@@ -94,6 +94,17 @@ public class Moods extends FragmentActivity
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.mCallER:
+			OneClickEmergency ER = new OneClickEmergency();
+			ER.makeACall(this);			
+			ER.sendEmail(this);
+			ER.sendSMSMessage(this);
+			break;
+
+		default:
+			break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 	
