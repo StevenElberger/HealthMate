@@ -89,7 +89,7 @@ public class Registration extends Activity implements OnClickListener {
 		int month = datePicker.getMonth();
 		int year = datePicker.getYear();
 		Calendar c = Calendar.getInstance();
-		c.set(year,  month, day);
+		c.set(year, month, day);
 		Date age = c.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		String dateString = sdf.format(age);
