@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Medications$Medication"
+            android:name=".Medications.Medication"
             android:label="@string/title_activity_medication" >
         </activity>
         <activity
@@ -57,11 +57,11 @@
             android:label="@string/title_activity_step_counter" >
         </activity>
         <activity
-            android:name=".Medications$NewMedication"
+            android:name=".Medications.NewMedication"
             android:label="@string/title_activity_new_medication" >
         </activity>
         <activity
-            android:name=".Medications$MedicationDetails"
+            android:name=".Medications.MedicationDetails"
             android:label="@string/title_activity_medication_details" >
         </activity>
         <activity
@@ -123,9 +123,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
             </receiver>
-        
-        
->>>>>>> appointments
     </application>
     
 </manifest>
