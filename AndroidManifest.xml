@@ -117,12 +117,15 @@
         <service android:name=".NotificationsManager.HealthMateAlarmService"></service>
         <service android:name=".NotificationsManager.NotifyService"
             android:enabled="true"/>
-        <receiver android:name=".NotificationsManager.AlarmReceiver"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter >
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        <receiver android:name=".NotificationsManager.AlarmReceiver">
+            </receiver>            
+        <receiver
+            android:name=".NotificationsManager.RebootReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-            </receiver>
+        </receiver>
     </application>
     
 </manifest>

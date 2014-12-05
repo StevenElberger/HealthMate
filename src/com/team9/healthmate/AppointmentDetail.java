@@ -1,5 +1,6 @@
 package com.team9.healthmate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -111,8 +112,24 @@ public class AppointmentDetail extends Activity {
 		if (item.getItemId() == R.id.action_delete_appointment) {
 			
 			try { 
+				
+				// Container for registered notification information
+				ArrayList<Map<String, String>> registeredNotifications; 
+				
+				// Read all the registered single alarms for notifications
+				registeredNotifications = DataStorageManager.readJSONObject(this, "single alarms");
+				
 				// Delete the appointment from the file of appointments
 				DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+				
+				// Look for the registered notification for the given appointment based on the
+				// appointments time stamp. If found, delete the alarm from the file 
+				for (Map<String, String> map : registeredNotifications) {
+					
+					if (appointmentDetails.get("timestamp").equals(map.get("application timestamp"))) {
+						DataStorageManager.deleteJSONObject(this, "single alarms", map);
+					}
+				}
 				
 				// Create a new message that will be used to cancel any existing alarms
 				Map<String, String>  message = new HashMap<String, String>();

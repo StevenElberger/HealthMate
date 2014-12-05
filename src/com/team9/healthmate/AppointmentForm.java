@@ -3,6 +3,7 @@ package com.team9.healthmate;
 
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -109,6 +110,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			// Create a new object to hold the information entered
 			// by the user.
 			appointment = new HashMap<String, String>();
+			ArrayList<Map<String, String>> appointmentList = new ArrayList<Map<String, String>>();
 			String input = "";
 			appointmentFormError = false;
 
@@ -190,9 +192,27 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				
 				// Check to see if the Appointment was being edited.
 				if (appointmentTimeStamp.get("timestamp") != null) {
+					
+					// Container for alarm information having to do with notification generation
+					ArrayList<Map<String, String>> registeredNotifications;
+					
 
 					// Delete the old Appointment from the file.
 					DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
+					
+					// read the registered notifications for single alarms
+					registeredNotifications = DataStorageManager.readJSONObject(this, "single alarms");
+					
+					// Go through the registered alarms and remove the alarms associated with
+					// the specified appointment if any
+					for (Map<String, String> map : registeredNotifications) {
+						if (appointmentTimeStamp.get("timestamp").equals(map.get("application timestamp"))) {
+							DataStorageManager.deleteJSONObject(this, "single alarms", map);
+						}
+					}
+					
+					// Create the notification message that will be used to delete a notification
+					// with the same information
 					Map<String, String> deletionMessage = new HashMap<String, String>();
 					description = "Appointment with: " + appointmentToDelete.get("name") + 
 							"\n You have an appointment on " + appointmentToDelete.get("date") + 
@@ -200,10 +220,15 @@ public class AppointmentForm extends Activity implements OnClickListener {
 					deletionMessage.put("type", "appointments");
 					deletionMessage.put("title", appointmentToDelete.get("title"));
 					deletionMessage.put("description", description);
+					
+					// unregister the notification with the given message
 					NotificationsManager.unregisterNotification(this, deletionMessage);
 				}
 					// Save the new Appointment to the "appointments" file
 					DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
+					
+					// read the list of appointments in the updated file
+					appointmentList = DataStorageManager.readJSONObject(this, "appointments");
 					
 					// Create Notification
 					Map<String, String> message = new HashMap<String, String>();
@@ -215,6 +240,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 					message.put("type", "appointments");
 					message.put("description", description);
 					
+					// get the time stamp of the newly created appointment and add it to the message being sent
+					message.put("timestamp", appointmentList.get(appointmentList.size()-1).get("timestamp"));
 					NotificationsManager.registerNotification(this, message, timeOfAppointment);
 
 					// Call method to go to the Appointment List Activity.

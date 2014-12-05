@@ -1,11 +1,15 @@
 package com.team9.healthmate.NotificationsManager;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import com.team9.healthmate.AppointmentDetail;
 import com.team9.healthmate.Login;
 import com.team9.healthmate.Menu;
 import com.team9.healthmate.R;
+import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.Medications.Medication;
 
 import android.app.NotificationManager;
@@ -47,6 +51,12 @@ public class NotifyService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		
+		// Container for alarm information
+		Map<String, String> alarm = new HashMap<String, String>();
+		
+		// Get the time stamp of the alarm saved in the alarm file
+		alarm.put("timestamp", intent.getStringExtra("alarm timestamp"));
+		
 		// Retrieve the data from the intent that is necessary
 		// to create the notification.
 		String type = intent.getStringExtra("type");
@@ -73,6 +83,16 @@ public class NotifyService extends Service {
 			// Appointment Notification
 			mBuilder.setSmallIcon(R.drawable.ic_appointment_notification);
 			resultIntent = new Intent(context, AppointmentDetail.class);
+			
+			// Try to delete the alarm from the single alarm file, this ensures that
+			// the notification is not sent on reboot
+			try {
+				if (alarm.get("timestamp") != null) {
+					DataStorageManager.deleteJSONObject(context, "single alarms", alarm);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			break;
 			
 		case "medications":
@@ -97,6 +117,9 @@ public class NotifyService extends Service {
 		
 		// Give the information that this is from notification.
 		resultIntent.putExtra("notification", "true");
+		
+		// Clear the top of the Application Stack
+		resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		
 		// Set the title of the notification
 		mBuilder.setContentTitle(title);
