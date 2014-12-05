@@ -21,7 +21,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 /**
  * Service Class that creates notifications when the service
@@ -52,7 +51,10 @@ public class NotifyService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		
+		// Container for alarm information
 		Map<String, String> alarm = new HashMap<String, String>();
+		
+		// Get the time stamp of the alarm saved in the alarm file
 		alarm.put("timestamp", intent.getStringExtra("alarm timestamp"));
 		
 		// Retrieve the data from the intent that is necessary
@@ -81,13 +83,12 @@ public class NotifyService extends Service {
 			// Appointment Notification
 			mBuilder.setSmallIcon(R.drawable.ic_appointment_notification);
 			resultIntent = new Intent(context, AppointmentDetail.class);
+			
+			// Try to delete the alarm from the single alarm file, this ensures that
+			// the notification is not sent on reboot
 			try {
 				if (alarm.get("timestamp") != null) {
 					DataStorageManager.deleteJSONObject(context, "single alarms", alarm);
-				}
-				else
-				{
-					Log.v("Notify Service", "Null TimeStamp");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -116,6 +117,9 @@ public class NotifyService extends Service {
 		
 		// Give the information that this is from notification.
 		resultIntent.putExtra("notification", "true");
+		
+		// Clear the top of the Application Stack
+		resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		
 		// Set the title of the notification
 		mBuilder.setContentTitle(title);

@@ -13,7 +13,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /** Class that registers notifications to be created at a specified time.
  * 	There are two types of notifications that can be registered, single time
@@ -42,6 +41,8 @@ public class NotificationsManager {
 		
 		// Create an intent 
 		Intent intent = new Intent(context, AlarmReceiver.class);
+		
+		// Container for the alarms registered
 		ArrayList<Map<String, String>> alarms;
 		
 		// Pass the information for the notification
@@ -62,7 +63,6 @@ public class NotificationsManager {
 		
 		// set the time stamp that will indicate which notification belongs to which
 		intent.putExtra("application timestamp", message.get("timestamp"));
-		Log.v("Notif TimeStamp", message.get("timestamp"));
 		message.put("time of alarm", "" + calendar.getTimeInMillis());
 		message.put("application timestamp", message.get("timestamp"));
 		
@@ -106,9 +106,14 @@ public class NotificationsManager {
 		intent.putExtra("title", message.get("title"));
 		intent.putExtra("description", message.get("description"));
 		
+		// used to remove the alarm saved in the alarm registration file
+		intent.putExtra("application timestamp", message.get("timestamp"));
+		
+		// add relevant information for the alarm registration
 		message.put("time of alarm", "" + calendar.getTimeInMillis());
 		message.put("interval", "" + intervalTimer);
-		message.put("feature timestamp", "feature timestamp");
+		message.put("application timestamp", message.get("timestamp"));
+		
 		
 		// save notification information
 		DataStorageManager.writeJSONObject(context, "repeated alarms", message, false);
