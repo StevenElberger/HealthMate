@@ -1,7 +1,13 @@
 package com.team9.healthmate.NotificationsManager;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
+
+import org.json.JSONException;
+
+import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -29,11 +35,14 @@ public class NotificationsManager {
 	 * @param context the current context of the application
 	 * @param message The information that will be used to create the notification
 	 * @param calendar The time the notification will be activated
+	 * @throws IOException 
+	 * @throws JSONException 
 	 */
-	public static void registerNotification(Context context, Map<String, String> message, Calendar calendar) {
+	public static void registerNotification(Context context, Map<String, String> message, Calendar calendar) throws JSONException, IOException {
 		
 		// Create an intent 
 		Intent intent = new Intent(context, AlarmReceiver.class);
+		ArrayList<Map<String, String>> alarms;
 		
 		// Pass the information for the notification
 		intent.putExtra("type", message.get("type"));
@@ -51,6 +60,17 @@ public class NotificationsManager {
 			intent.putExtra("date", message.get("date"));
 		}
 		
+		// set the time stamp that will indicate which notification belongs to which
+		intent.putExtra("application timestamp", message.get("timestamp"));
+		Log.v("Notif TimeStamp", message.get("timestamp"));
+		message.put("time of alarm", "" + calendar.getTimeInMillis());
+		message.put("application timestamp", message.get("timestamp"));
+		
+		// save notification information
+		DataStorageManager.writeJSONObject(context, "single alarms", message, false);
+		alarms = DataStorageManager.readJSONObject(context, "single alarms");
+		intent.putExtra("alarm timestamp", alarms.get(alarms.size() - 1).get("timestamp"));
+		
 		// Create a pending intent that will be used when the alarm goes off
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 		
@@ -59,8 +79,6 @@ public class NotificationsManager {
 		
 		// Register the alarm
 		alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-		
-		Log.v("Appointment Time: ", "" + calendar.getTimeInMillis());
 	}
 	
 	/**
@@ -74,16 +92,28 @@ public class NotificationsManager {
 	 * @param message The information that will be used to create the notification
 	 * @param calendar The time the notification will be activated
 	 * @param intervalTimer The time that will pass before the notification to be activated again.
+	 * @throws IOException 
+	 * @throws JSONException 
 	 */
-	public static void registerRepeatNotification(Context context, Map<String, String> message, Calendar calendar, long intervalTimer) {
+	public static void registerRepeatNotification(Context context, Map<String, String> message, Calendar calendar, long intervalTimer) throws JSONException, IOException {
 		
 		// Create an intent
 		Intent intent = new Intent(context, AlarmReceiver.class);
+		ArrayList<Map<String, String>> alarms;
 		
 		// Pass the information for the notification
 		intent.putExtra("type", message.get("type"));
 		intent.putExtra("title", message.get("title"));
 		intent.putExtra("description", message.get("description"));
+		
+		message.put("time of alarm", "" + calendar.getTimeInMillis());
+		message.put("interval", "" + intervalTimer);
+		message.put("feature timestamp", "feature timestamp");
+		
+		// save notification information
+		DataStorageManager.writeJSONObject(context, "repeated alarms", message, false);
+		alarms = DataStorageManager.readJSONObject(context, "repeated alarms");
+		intent.putExtra("alarm timestamp", alarms.get(alarms.size() - 1).get("timestamp"));
 		
 		// Create a pending intent that will be used when the alarm goes off
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);

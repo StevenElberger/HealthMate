@@ -3,6 +3,7 @@ package com.team9.healthmate;
 
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -109,6 +110,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			// Create a new object to hold the information entered
 			// by the user.
 			appointment = new HashMap<String, String>();
+			ArrayList<Map<String, String>> appointmentList = new ArrayList<Map<String, String>>();
 			String input = "";
 			appointmentFormError = false;
 
@@ -190,9 +192,22 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				
 				// Check to see if the Appointment was being edited.
 				if (appointmentTimeStamp.get("timestamp") != null) {
+					
+					ArrayList<Map<String, String>> registeredNotifications; 
+					Log.v("TimeStamp", appointmentTimeStamp.get("timestamp"));
+					
 
 					// Delete the old Appointment from the file.
 					DataStorageManager.deleteJSONObject(this, "appointments", appointmentTimeStamp);
+					registeredNotifications = DataStorageManager.readJSONObject(this, "single alarms");
+					
+					for (Map<String, String> map : registeredNotifications) {
+						Log.v("Application TimeStamp", map.get("application timestamp"));
+						if (appointmentTimeStamp.get("timestamp").equals(map.get("application timestamp"))) {
+							DataStorageManager.deleteJSONObject(this, "single alarms", map);
+						}
+					}
+					
 					Map<String, String> deletionMessage = new HashMap<String, String>();
 					description = "Appointment with: " + appointmentToDelete.get("name") + 
 							"\n You have an appointment on " + appointmentToDelete.get("date") + 
@@ -204,6 +219,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				}
 					// Save the new Appointment to the "appointments" file
 					DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
+					appointmentList = DataStorageManager.readJSONObject(this, "appointments");
 					
 					// Create Notification
 					Map<String, String> message = new HashMap<String, String>();
@@ -214,7 +230,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 					message.putAll(appointment);
 					message.put("type", "appointments");
 					message.put("description", description);
-					
+					message.put("timestamp", appointmentList.get(appointmentList.size()-1).get("timestamp"));
 					NotificationsManager.registerNotification(this, message, timeOfAppointment);
 
 					// Call method to go to the Appointment List Activity.

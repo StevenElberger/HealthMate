@@ -1,11 +1,15 @@
 package com.team9.healthmate.NotificationsManager;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import com.team9.healthmate.AppointmentDetail;
 import com.team9.healthmate.Login;
 import com.team9.healthmate.Menu;
 import com.team9.healthmate.R;
+import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.Medications.Medication;
 
 import android.app.NotificationManager;
@@ -17,6 +21,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 /**
  * Service Class that creates notifications when the service
@@ -47,6 +52,9 @@ public class NotifyService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		
+		Map<String, String> alarm = new HashMap<String, String>();
+		alarm.put("timestamp", intent.getStringExtra("alarm timestamp"));
+		
 		// Retrieve the data from the intent that is necessary
 		// to create the notification.
 		String type = intent.getStringExtra("type");
@@ -73,6 +81,17 @@ public class NotifyService extends Service {
 			// Appointment Notification
 			mBuilder.setSmallIcon(R.drawable.ic_appointment_notification);
 			resultIntent = new Intent(context, AppointmentDetail.class);
+			try {
+				if (alarm.get("timestamp") != null) {
+					DataStorageManager.deleteJSONObject(context, "single alarms", alarm);
+				}
+				else
+				{
+					Log.v("Notify Service", "Null TimeStamp");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			break;
 			
 		case "medications":
