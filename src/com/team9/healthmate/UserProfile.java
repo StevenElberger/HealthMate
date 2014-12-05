@@ -91,7 +91,7 @@ public class UserProfile extends Activity {
 		    }
 		}
 	}
-	
+
 	/**
 	 * Grabs the data returned from the photo gallery.
 	 * This will be used to load the profile picture in the
@@ -103,7 +103,7 @@ public class UserProfile extends Activity {
 		 
 		 // grab the image's path to save it
 		 // to the account file and load the image
-		 if (resultCode == RESULT_OK){
+		 if (resultCode == RESULT_OK) {
 			 Uri targetUri = data.getData();
 			 imagePath = getRealPathFromURI(getApplicationContext(), targetUri);
 			 Bitmap bitmap;
