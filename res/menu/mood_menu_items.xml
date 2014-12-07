@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item 
+        android:id="@+id/mSave"
+        android:title="@+string/moodSave"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/mEdit"
+        android:title="@+string/moodEdit"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/mAdd"
+        android:title="@+string/moodAdd"
+        android:showAsAction="never"></item>
+     <item 
+        android:id="@+id/mCallER"
+        android:title="@+string/moodER"
+        android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/mExit"
+        android:title="@+string/moodExit"
+        android:showAsAction="never"></item>
+   
+</menu>

@@ -51,6 +51,7 @@ public class Menu extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Toast.makeText(Menu.this, ""+position, Toast.LENGTH_SHORT).show();
 				changeActivity(position);
+				
 			}
 		});
 	}
