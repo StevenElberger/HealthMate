@@ -40,7 +40,6 @@
     <string name="confirm_password">Confirm</string>
     <string name="enter_bday">Please enter your birthday:</string>
     <string name="enter_sex">Please enter your sex:</string>
-
     <string name="JustOk">Just Ok</string>
     
 	<string name="image_mood">List Image</string>
@@ -136,7 +135,7 @@
     <string name="action_create_new_appointment">New Appointment</string>
     <string name="action_edit_appointment">Edit</string>
     <string name="action_delete_appointment">Delete</string>
-    
+
     <string name="title_activity_notification">Notification Manager</string>
 
     <string name="title_activity_user_profile">UserProfile</string>
@@ -161,5 +160,9 @@
     <string name="note_editor_save">Save Note</string>
     <string name="note_editor_title">Title (Required)</string>
     <string name="note_editor_description">Enter a Note</string>
+
+    <string name="title_activity_contact_my_doctor">ContactMyDoctor</string>
+    <string name="title_activity_contact_my_doctor_item_options">ContactMyDoctorItemOptions</string>
+
 
 </resources>

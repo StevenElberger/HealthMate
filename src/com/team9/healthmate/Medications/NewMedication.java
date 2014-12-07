@@ -7,6 +7,7 @@ import com.team9.healthmate.Medications.MedicationObject.FrequencyType;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,8 +16,23 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+/**
+ * The NewMedication class implements the functionalities for the creation of
+ * a new medication form. 
+ * 
+ * @author Gustavo Arce
+ */
+
 public class NewMedication extends Activity {
 	private boolean updatingMedication = false;	
+	
+	/**
+	 * Android's onCreate method. Called on the start of the activity.
+	 * Here is where all fields are filled method is called if the user 
+	 * is editing an existing medication.
+	 * 
+	 * @param Bundle savedInstaceState as requested by Android
+	 */
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +66,8 @@ public class NewMedication extends Activity {
   		button = (Button) findViewById(R.id.new_medication_save);
           button.setOnClickListener(new View.OnClickListener() {
               public void onClick(View v) {
+            	if (!isValidForm())
+            		return;
             	updateMedicationList();
             	Medication.adapter.notifyDataSetChanged();
             	Medication.saveMedication(NewMedication.this);
@@ -59,6 +77,13 @@ public class NewMedication extends Activity {
           });
 	}
 	
+	/**
+	 * fillFormWithMedication method populates all the fields on
+	 * the form with the information of the given medication.
+	 * 
+	 * @param med is the existing medication object that contains
+	 * all the necessary information to fill up the fields.
+	 */
 	private void fillFormWithMedication(MedicationObject med)
 	{
 		EditText name = (EditText) findViewById(R.id.new_medication_name);
@@ -93,6 +118,11 @@ public class NewMedication extends Activity {
 		button.setText("Update");
 	}
 	
+	/**
+	 * Takes all the medication information from the fields and saves it to the
+	 * medication list. It either updates the medication if it already exist or
+	 * creates a new entry otherwise.
+	 */
 	private void updateMedicationList()	{
 		String name;
 		int frequencyValue, dosageValue;
@@ -151,12 +181,22 @@ public class NewMedication extends Activity {
 		}
 	}
 		
+	/**
+	 * Custom number picker that increases the displayed number on the form.
+	 * @param v is the View requested by Android for all event listeners called
+	 * from the XML file.
+	 */
 	public void increaseNumberPicker(View v) {
 		EditText numberPicker = (EditText) findViewById(R.id.new_medication_dosage_frequency);
 		int currentValue = Integer.parseInt(numberPicker.getText().toString());
 		numberPicker.setText(""+(currentValue+1));
 	}
 	
+	/**
+	 * Custom number picker that decreases the displayed number on the form.
+	 * @param v is the View requested by Android for all event listeners called
+	 * from the XML file.
+	 */
 	public void decreaseNumberPicker(View v) {
 		EditText numberPicker = (EditText) findViewById(R.id.new_medication_dosage_frequency);
 		int currentValue = Integer.parseInt(numberPicker.getText().toString());
@@ -165,6 +205,9 @@ public class NewMedication extends Activity {
 		}
 	}
 	
+	/**
+	 * Sets the values for the frequency spinner.
+	 */
 	private void populateFrequencySpinner() {
 		Spinner spinner = (Spinner) findViewById(R.id.new_medication_frequency_type);
 		String[] spinnerValues = {"Hour", "Day", "Week", "Month"};
@@ -175,6 +218,9 @@ public class NewMedication extends Activity {
 		spinner.setAdapter(adapter);
 	}
 	
+	/**
+	 * Sets the values for the medication type spinner.
+	 */
 	private void populateMedicationTypeSpinner() {
 		Spinner spinner = (Spinner) findViewById(R.id.new_medication_medication_type_spinner);
 		String[] spinnerValues = {"mg", "mL", "cc"};
@@ -185,6 +231,11 @@ public class NewMedication extends Activity {
 		spinner.setAdapter(adapter);
 	}
 	
+	/**
+	 * Enables the frequency picker.
+	 * @param v is the View requested by Android for all event listeners called
+	 * from the XML file.
+	 */
 	public void enableFrequencyPicker(View v) {
 		Button b = (Button) findViewById(R.id.new_medication_numer_picker_increase);
 		b.setEnabled(true);
@@ -194,6 +245,11 @@ public class NewMedication extends Activity {
 		spinner.setClickable(true);
 	}
 	
+	/**
+	 * Disables the frequency picker.
+	 * @param v is the View requested by Android for all event listeners called
+	 * from the XML file.
+	 */
 	public void disableFrequencyPicker(View v) {
 		Button b = (Button) findViewById(R.id.new_medication_numer_picker_increase);
 		b.setEnabled(false);
@@ -201,6 +257,54 @@ public class NewMedication extends Activity {
 		b.setEnabled(false);
 		Spinner spinner = (Spinner) findViewById(R.id.new_medication_frequency_type);
 		spinner.setClickable(false);
+	}
+	
+	/**
+	 * isValidForm method validates all the form fields. Returns true if everything is
+	 * valid, false if one of the fields are wrong
+	 * 
+	 * @return boolean value representing if the form is valid or not
+	 */
+	public boolean isValidForm() {
+		boolean isValid = false;
+		
+		String name;
+		int frequencyValue, dosageValue;
+		TextView nameTextView, frequencyValueTextView, dosageValueTextView;
+				
+		nameTextView           = (TextView) findViewById(R.id.new_medication_name);
+		frequencyValueTextView = (TextView) findViewById(R.id.new_medication_dosage_frequency);
+		dosageValueTextView    = (TextView) findViewById(R.id.new_medication_dosage_strength);
+		
+		name = nameTextView.getText().toString();
+		String strDosageValue = dosageValueTextView.getText().toString();
+		if (!strDosageValue.equals("")) {
+			dosageValue = Integer.parseInt(strDosageValue);
+		}
+		else  {
+			dosageValue = 0;
+		}
+		
+		if (((RadioButton) findViewById(R.id.new_medication_frequency_radio_A)).isChecked()) {
+			frequencyValue = 1;
+		}
+		else if (((RadioButton) findViewById(R.id.new_medication_frequency_radio_B)).isChecked()) {
+			frequencyValue = 2;
+		}
+		else if (((RadioButton) findViewById(R.id.new_medication_frequency_radio_C)).isChecked()) {
+			frequencyValue = 1;			
+		}
+		else if (((RadioButton) findViewById(R.id.new_medication_frequency_radio_D)).isChecked()) {
+			frequencyValue = Integer.parseInt(frequencyValueTextView.getText().toString());
+		}
+		else {
+			return false;
+		}
+		
+		if (name != null && dosageValue > 0 && frequencyValue > 0)
+			isValid = true;
+
+		return isValid;
 	}
 	
 	public void onReminderToggleSwitch(View v) {		

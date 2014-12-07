@@ -37,8 +37,7 @@ public class Menu extends Activity {
 		setContentView(R.layout.activity_menu);
 		
 		String [] menuString = {
-				"Moods","Medication","Steps","Find a Doctor","Notes","Emergency", "Appointments", "Graphs", "Animated Graphs", "More Graphs"
-
+				"Moods","Medication","Steps","Find a Doctor","Notes","Emergency", "Appointments", "Graphs", "Animated Graphs", "More Graphs", "Contact My Doctor"
 		};
 		menu = (ListView) findViewById(R.id.menu);
 		
@@ -74,6 +73,7 @@ public class Menu extends Activity {
 			case 7: return ChartDemo.class;
 			case 8: return AnimatedChartDemo.class;
 			case 9: return PreviewChartDemo.class;
+			case 10: return ContactMyDoctor.class;
 		}
 		return null;
 	}
