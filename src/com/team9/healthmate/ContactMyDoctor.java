@@ -283,7 +283,7 @@ public class ContactMyDoctor extends Activity {
         return contactNumber;
     }
 	
-	/**
+	/** To-do: Fix me!
 	 * Gets the contact e-mail address from the phone's contact-list given the contact URI.
 	 * On success the method returns the contact phone number. On failure it returns
 	 * an empty string.
@@ -292,30 +292,33 @@ public class ContactMyDoctor extends Activity {
 	 * @return
 	 */
 	private String retriveContactEmail(Uri uriContact) {
-		/*
-		String contactNumber = null;
+		//Log.v("debugme", uriContact.toString());
+		
+		String contactEmail = null;
 		String contactID = "";
+		String projection[] = new String[]{ContactsContract.Contacts._ID};
         // getting contacts ID
         Cursor cursorID = getContentResolver().query(uriContact,
-                new String[]{ContactsContract.Contacts._ID},
-                null, null, null);
+                projection, null, null, null);
  
         if (cursorID.moveToFirst()) {
             contactID = cursorID.getString(cursorID.getColumnIndex(ContactsContract.Contacts._ID));
         }
         cursorID.close();
- 
+        
      // Using the contact ID now we will get contact email address
-        Cursor emailCur = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", new String[]{contactID},null); 
-        while (emailCur.moveToNext()) { 
-                contactNumber = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
-                Log.e("debugme","email: "+contactNumber);
-            } 
-            emailCur.close();
+        String emailProjection[] = new String[] {ContactsContract.CommonDataKinds.Email.DATA};
+        Cursor emailCur = getContentResolver().query(
+        						uriContact,
+        						emailProjection,
+        						null,
+        						null,
+        						null);
+        emailCur.moveToFirst();
+        contactEmail = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
         
         Log.d("debugme", "Contact ID: " + contactID);
-        Log.d("debugme", "Email: "+contactNumber);
-        */
+        Log.d("debugme", "Email: "+contactEmail);
 		return "";
 	}
 	
@@ -364,17 +367,10 @@ public class ContactMyDoctor extends Activity {
 
 	protected void sendEmail(Context context, Contact c) {
 		String recipient = c.email;
-		//String subject = "An emergency call was made by Dave at this time: " + dateFormat.format(date);
-		//String body = "Emergency Call";
-				
-		//String[] recipients = {recipient};
-		 Intent email = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
+		Intent email = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
 		// prompts email clients only
-		 email.setType("message/rfc822");
-		 
+		 email.setType("message/rfc822"); 
 		 email.putExtra(Intent.EXTRA_EMAIL, recipient);
-		 //email.putExtra(Intent.EXTRA_SUBJECT, subject);
-		 //email.putExtra(Intent.EXTRA_TEXT, body);
 	
 		 try {
 			 // the user can choose the email client
