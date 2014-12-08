@@ -16,7 +16,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -514,8 +513,6 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				timeOfAppointment.set(Calendar.YEAR, year);
 				timeOfAppointment.set(Calendar.MONTH, month - 1);
 				timeOfAppointment.set(Calendar.DAY_OF_MONTH, day);
-				Log.w("Time of Appointment: ", timeOfAppointment.getTime().toString());
-				
 				
 				// Set the format text it will be saved in.
 				String formatedDate = month + "-" + day + "-" + year;

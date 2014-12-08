@@ -21,7 +21,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 /**
  * Service Class that creates notifications when the service
@@ -63,8 +62,6 @@ public class NotifyService extends Service {
 		String type = intent.getStringExtra("type");
 		String title = intent.getStringExtra("title");
 		String description = intent.getStringExtra("description");
-		
-		Log.v("Notification Name: ", "" + intent.getStringExtra("name"));
 		
 		// Intent that will be set with the notification
 		Intent resultIntent;
