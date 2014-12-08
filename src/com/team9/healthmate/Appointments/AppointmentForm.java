@@ -1,4 +1,4 @@
-package com.team9.healthmate;
+package com.team9.healthmate.Appointments;
 
 
 import java.util.Calendar;
@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.NotificationsManager.NotificationsManager;
 
@@ -66,9 +67,9 @@ public class AppointmentForm extends Activity implements OnClickListener {
 
 		save = (ImageButton) findViewById(R.id.SaveAppointment);
 		save.setOnClickListener((OnClickListener) this);
-
-		appointmentTimeStamp = new HashMap<String, String>();
 		
+		// Initialize map objects
+		appointmentTimeStamp = new HashMap<String, String>();
 		appointmentToDelete = new HashMap<String, String>();
 
 		// Check if the user is editing a previous appointment.
@@ -156,7 +157,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			} else {
 				
 				// Remove error message
-				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormTitleError);
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormNameError);
 				incorrectInputMessage.setText("");
 				appointment.put("name", userInput.getText().toString());
 				
