@@ -63,8 +63,9 @@ public class NotificationsManager {
 		
 		// set the time stamp that will indicate which notification belongs to which
 		intent.putExtra("application timestamp", message.get("timestamp"));
-		message.put("time of alarm", "" + calendar.getTimeInMillis());
 		message.put("application timestamp", message.get("timestamp"));
+		message.put("time of alarm", "" + calendar.getTimeInMillis());
+		
 		
 		// save notification information
 		DataStorageManager.writeJSONObject(context, "single alarms", message, false);
@@ -72,7 +73,7 @@ public class NotificationsManager {
 		intent.putExtra("alarm timestamp", alarms.get(alarms.size() - 1).get("timestamp"));
 		
 		// Create a pending intent that will be used when the alarm goes off
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)Calendar.getInstance().getTimeInMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
 		
 		// Get the alarm manager of the system
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -106,6 +107,17 @@ public class NotificationsManager {
 		intent.putExtra("title", message.get("title"));
 		intent.putExtra("description", message.get("description"));
 		
+		if (intent.getStringExtra("type").equals("appointments")) {
+			intent.putExtra("name", message.get("name"));
+			intent.putExtra("location", message.get("location"));
+			intent.putExtra("phone", message.get("phone"));
+			intent.putExtra("email", message.get("email"));
+			intent.putExtra("comment", message.get("comment"));
+			intent.putExtra("start time", message.get("start time"));
+			intent.putExtra("end time", message.get("end time"));
+			intent.putExtra("date", message.get("date"));
+		}
+		
 		// used to remove the alarm saved in the alarm registration file
 		intent.putExtra("application timestamp", message.get("timestamp"));
 		
@@ -121,7 +133,7 @@ public class NotificationsManager {
 		intent.putExtra("alarm timestamp", alarms.get(alarms.size() - 1).get("timestamp"));
 		
 		// Create a pending intent that will be used when the alarm goes off
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)Calendar.getInstance().getTimeInMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
 		
 		// Get the alarm manager of the system
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

@@ -20,7 +20,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.widget.TextView;
 
 /**
@@ -83,7 +82,6 @@ public class DataStorageManager {
 
 		// Get the JSON object information in a string format
 		String text = data.toString() + "\n";
-		Log.w("Data Written", text);
 
 		// If overwrite is true, the file will be overwritten if it already
 		// exists.
@@ -341,7 +339,6 @@ public class DataStorageManager {
 			// If it is, do not add it to the data that will be written to the file.
 			if (informationToBeDeleted.compareTo(currentDataPacket.get("timestamp").toString()) == 0) {
 				dataRemoved = true;
-				Log.v("Data Removed", fileName);
 			}
 			else {
 				
