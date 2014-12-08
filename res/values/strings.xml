@@ -11,7 +11,7 @@
     <string name="title_activity_emergency">Emergency</string>
     <string name="title_activity_step_counter">StepCounter</string>
     <string name="happy">Happy</string>
-    <string name="ok">Just Ok</string>
+    <string name="ok">Ok</string>
     <string name="motivated">Motivated</string>
     <string name="stressed">Stressed</string>
     <string name="angry">Angry</string>
@@ -41,6 +41,9 @@
     <string name="enter_bday">Please enter your birthday:</string>
     <string name="enter_sex">Please enter your sex:</string>
     <string name="JustOk">Just Ok</string>
+    
+	<string name="image_mood">List Image</string>
+	
     <string name="Happy">Happy</string>
     <string name="Motivated">Motivated</string>
     <string name="Stressed">Stressed</string>
@@ -53,7 +56,17 @@
         <item>Female</item>
         <item>Other</item>
     </string-array>
-
+    
+    <string-array name="mood_arrays">
+        <item>Happy</item>
+        <item>Motivated</item>
+        <item>Stressed</item>
+        <item>Angry</item>
+        <item>Tired</item>
+        <item>Depressed</item>       
+    </string-array>
+    
+    
     <string name="ok2">OK</string>
     <string name="title_activity_mood_page_viewer">MoodPageViewer</string>
     <string name="name_">"Name: "</string>
@@ -87,6 +100,13 @@
     <string name="_plus">+</string>
     <string name="reminder">reminder</string>
     <string name="take_one_everey">Take one everey</string>
+
+    <string name="moodSave">Save</string>
+    <string name="moodEdit">Edit</string>
+    <string name="moodAdd">Add</string>
+    <string name="moodER">Call ER</string>
+    <string name="moodExit">Exit</string>
+
     <string name="title_activity_chart_demo">ChartDemo</string>
     <string name="title_activity_animated_chart_demo">AnimatedChartDemo</string>
     <string name="title_activity_preview_chart_demo">PreviewChartDemo</string>
@@ -115,7 +135,7 @@
     <string name="action_create_new_appointment">New Appointment</string>
     <string name="action_edit_appointment">Edit</string>
     <string name="action_delete_appointment">Delete</string>
-    
+
     <string name="title_activity_notification">Notification Manager</string>
 
     <string name="title_activity_user_profile">UserProfile</string>
@@ -140,5 +160,9 @@
     <string name="note_editor_save">Save Note</string>
     <string name="note_editor_title">Title (Required)</string>
     <string name="note_editor_description">Enter a Note</string>
+
+    <string name="title_activity_contact_my_doctor">ContactMyDoctor</string>
+    <string name="title_activity_contact_my_doctor_item_options">ContactMyDoctorItemOptions</string>
+
 
 </resources>

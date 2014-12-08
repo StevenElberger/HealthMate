@@ -21,9 +21,7 @@ import android.widget.TextView;
 
 /**
  * The Medication class implements the functionalities for the main activity of
- * the Medication component. This includes the display of the medication list,
- * call for the medication detail activity and new medication activity, as well
- * as reading and writing from the medication file stored on the phone.
+ * the medication component. 
  * @author Gustavo Arce
  * 
  */
@@ -33,6 +31,13 @@ public class Medication extends Activity {
 	public static ArrayAdapter<MedicationObject> adapter;
 	public ListView medicationList;
 	
+	/**
+	 * Android's onCreate method. Called on the start of the activity.
+	 * Here is where all fields are filled method is called if the user 
+	 * is editing an existing medication
+	 * 
+	 * @param Bundle savedInstaceState as requested by Android
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +46,9 @@ public class Medication extends Activity {
 		onItemListClick();
 	}	
 	
+	/**
+	 * Populates the medication list
+	 */
 	public void populateMedicationList() {
 		medicationList = (ListView) findViewById(R.id.listViewMedications);			
 		medications = new ArrayList<MedicationObject>(readMedicationFile());
@@ -48,6 +56,9 @@ public class Medication extends Activity {
 		medicationList.setAdapter(adapter);
 	}
 	
+	/**
+	 * Sets listeners for the every item list
+	 */
 	public void onItemListClick() {
 		ListView list = (ListView) findViewById(R.id.listViewMedications);		
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,6 +75,10 @@ public class Medication extends Activity {
 		});
 	}
 	
+	/**
+	 * Read file from local storage to retrieve all saved medications
+	 * @return an array list containing all the medications stored
+	 */
 	private ArrayList<MedicationObject> readMedicationFile() {			
 		try {
 			String name, frequencyType, frequencyValue, dosageType, dosageValue;
@@ -98,7 +113,11 @@ public class Medication extends Activity {
 		     throw new Error(e);
 		}
 	}
-			
+	
+	/**
+	 * Saves the medication list to local storage
+	 * @param context of the activity
+	 */
 	static void saveMedication(Context context) {
 		try {
 			boolean firstElement = true;			
@@ -120,10 +139,17 @@ public class Medication extends Activity {
 		} 
 	}
 	
+	/**
+	 * Calls NewMedication activity
+	 * @param View required by Android when called from an XML button
+	 */
 	public void createMedication(View V) {
 		this.startActivityForResult(new Intent(this,NewMedication.class),1);		
 	}
 	
+	/**
+	 * Adapter private class used to create a list with both title and description
+	 */
 	private class TwoLinesAdapter extends ArrayAdapter<MedicationObject> {
 		public TwoLinesAdapter() {
 			super(Medication.this, R.layout.list_item, medications);
@@ -145,6 +171,10 @@ public class Medication extends Activity {
 		}
 	}
 	
+	/**
+	 * Method used to debug code
+	 * @param msg text to be logged
+	 */
 	public static void Debug(String msg) {
 		Log.v("debugme", msg);
 	}
