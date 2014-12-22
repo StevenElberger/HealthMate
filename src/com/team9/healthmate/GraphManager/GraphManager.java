@@ -218,12 +218,12 @@ public class GraphManager {
 	/*
 	 * Methods that actually initialize and generate graphs:
 	 * 
-	 * void generateMoodColumnGraph
-	 * void generateMoodLineGraph
-	 * void setUpMoodColumnGraph
-	 * void updateLineData
-	 * void setUpInitialLineChart
-	 * void generateMoodColumnGraphWithChart
+	 * void generateMoodColumnGraph 			(null graph OK)
+	 * void generateMoodLineGraph				(null graph OK)
+	 * void setUpMoodColumnGraph				(null graph NOT OK -- error checking involved)
+	 * void updateLineData						(null graph OK)
+	 * void setUpInitialLineChart				(null graph OK -- error checking involved for aesthetics)
+	 * void generateMoodColumnGraphWithChart	(null graph OK)
 	 */
 	
 	/**
@@ -318,7 +318,6 @@ public class GraphManager {
 	public static void setUpMoodColumnGraph(Context appContext, ColumnChartView ccv) {
 		// values for the mood column we want
 		Map<String, List<ColumnValue>> givenValues = getAllMoodColumnData(appContext, "testdata");
-		
 		String[] moods = {"Just Ok", "Happy", "Motivated", "Stressed", "Angry", "Tired", "Depressed"};
 		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.RED, Color.LTGRAY, Color.DKGRAY};
 		
@@ -337,10 +336,17 @@ public class GraphManager {
 			}
 			// stick the average in a column
 			List<ColumnValue> avgValue = new ArrayList<ColumnValue>();
-			avgValue.add(new ColumnValue(sum / colValues.size(), colors[i]));
-			Column column = new Column(avgValue);
-			column.setHasLabelsOnlyForSelected(true);
-			columns.add(column);
+			if (colValues.size() > 0) {
+				avgValue.add(new ColumnValue(sum / colValues.size(), colors[i]));
+				Column column = new Column(avgValue);
+				column.setHasLabelsOnlyForSelected(true);
+				columns.add(column);
+			} else {
+				avgValue.add(new ColumnValue(0, colors[i]));
+				Column column = new Column(avgValue);
+				column.setHasLabelsOnlyForSelected(true);
+				columns.add(column);
+			}
 		}
 		
 		// set up axes
@@ -476,7 +482,7 @@ public class GraphManager {
 		lcv.setMaxViewport(v);
 		lcv.setCurrentViewport(v, false);
 
-		lcv.setZoomType(ZoomType.HORIZONTAL);		
+		lcv.setZoomType(ZoomType.HORIZONTAL);
 	}
 
 	/**
@@ -491,31 +497,52 @@ public class GraphManager {
 	public static void generateMoodColumnGraphWithChart(Context appContext, ColumnChartView ccv, PreviewColumnChartView pccv, int color, String mood) {
 		// values for the mood column we want
 		List<ColumnValue> givenValues = getColumnData(appContext, "testdata", color, mood);
-		
-		List<Column> columns = setUpColumns(givenValues);
-		
-		// set up axes
-		Axis xAxis = new Axis();
-		Axis yAxis = setUpYAxis();
-		
-		// set up chart
-		ColumnChartData data = new ColumnChartData(columns);
-		data.setAxisXBottom(xAxis);
-		data.setAxisYLeft(yAxis);
-		
-		// set up the preview chart
-		ColumnChartData pData = new ColumnChartData(data);
-		for (Column column : pData.getColumns()) {
-			for (ColumnValue value : column.getValues()) {
-				value.setColor(Utils.DEFAULT_DARKEN_COLOR);
+		if (givenValues.size() > 0) {
+			List<Column> columns = setUpColumns(givenValues);
+			
+			// set up axes
+			Axis xAxis = new Axis();
+			Axis yAxis = setUpYAxis();
+			
+			// set up chart
+			ColumnChartData data = new ColumnChartData(columns);
+			data.setAxisXBottom(xAxis);
+			data.setAxisYLeft(yAxis);
+			
+			// set up the preview chart
+			ColumnChartData pData = new ColumnChartData(data);
+			for (Column column : pData.getColumns()) {
+				for (ColumnValue value : column.getValues()) {
+					value.setColor(Utils.DEFAULT_DARKEN_COLOR);
+				}
 			}
+			pData.setAxisXBottom(xAxis);
+			pData.setAxisYLeft(yAxis);
+			pccv.setColumnChartData(pData);
+			pccv.setPreviewColor(Color.RED);
+			
+			ccv.setColumnChartData(data);
+		} else {
+			List<Column> columns = setUpColumns(givenValues);
+			
+			Axis xAxis = new Axis();
+			Axis yAxis = setUpYAxis();
+			
+			xAxis.setName("Days");
+			yAxis.setName("Mood values");
+			
+			ColumnChartData data = new ColumnChartData(columns);
+			data.setAxisXBottom(xAxis);
+			data.setAxisYLeft(yAxis);
+			
+			ColumnChartData pData = new ColumnChartData(data);
+			pData.setAxisXBottom(xAxis);
+			pData.setAxisYLeft(yAxis);
+			pccv.setColumnChartData(pData);
+			pccv.setPreviewColor(Color.RED);
+			
+			ccv.setColumnChartData(data);
 		}
-		pData.setAxisXBottom(xAxis);
-		pData.setAxisYLeft(yAxis);
-		pccv.setColumnChartData(pData);
-		pccv.setPreviewColor(Color.RED);
-		
-		ccv.setColumnChartData(data);
 	}
 	
 	/*

@@ -10,7 +10,6 @@
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_emergency">Emergency</string>
     <string name="title_activity_step_counter">StepCounter</string>
-    <string name="title_activity_note">Note</string>
     <string name="happy">Happy</string>
     <string name="ok">Ok</string>
     <string name="motivated">Motivated</string>
@@ -41,8 +40,10 @@
     <string name="confirm_password">Confirm</string>
     <string name="enter_bday">Please enter your birthday:</string>
     <string name="enter_sex">Please enter your sex:</string>
+    <string name="JustOk">Just Ok</string>
+    
 	<string name="image_mood">List Image</string>
-   
+	
     <string name="Happy">Happy</string>
     <string name="Motivated">Motivated</string>
     <string name="Stressed">Stressed</string>
@@ -68,7 +69,6 @@
     
     <string name="ok2">OK</string>
     <string name="title_activity_mood_page_viewer">MoodPageViewer</string>
-    
     <string name="name_">"Name: "</string>
     <string name="medication_name">medication_name</string>
     <string name="adding_a_new_medication">Adding a new Medication</string>
@@ -100,6 +100,7 @@
     <string name="_plus">+</string>
     <string name="reminder">reminder</string>
     <string name="take_one_everey">Take one everey</string>
+
     <string name="moodSave">Save</string>
     <string name="moodEdit">Edit</string>
     <string name="moodAdd">Add</string>
@@ -109,13 +110,12 @@
     <string name="title_activity_chart_demo">ChartDemo</string>
     <string name="title_activity_animated_chart_demo">AnimatedChartDemo</string>
     <string name="title_activity_preview_chart_demo">PreviewChartDemo</string>
-    
     <string name="appointment_form_header">Appointment Form</string>
-    <string name="appointment_form_title">Appointment Title</string>
+    <string name="appointment_form_title">Appointment Title (Required)</string>
     <string name="appointment_form_start_time_title">Start Time of Appointment</string>
     <string name="appointment_form_end_time_title">End Time of Appointment</string>
     <string name="appointment_form_date_title">Date of Appointment</string>
-    <string name="appointment_form_name">Enter a Doctor\'s Name</string>
+    <string name="appointment_form_name">Enter a Doctor\'s Name (Required)</string>
     <string name="appointment_form_address">Enter a Address</string>
     <string name="appointment_form_phone_number">Enter a Phone Number</string>
     <string name="appointment_form_email">Enter Email Address</string>
@@ -123,8 +123,6 @@
     <string name="appointment_form_save">Save</string>
     <string name="title_activity_appointment_form">Appointment Form</string>
     <string name="title_activity_appointment_list">Appointment List</string>
-    
-    
     <string name="appointment_detail_title">Appointment Information</string>
     <string name="appointment_detail_name">Doctor\'s Name: </string>
     <string name="appointment_detail_address">Location: </string>
@@ -134,9 +132,37 @@
     <string name="appointment_detail_end_time">Time: </string>
     <string name="appointment_detail_comment">Comment: </string>
     <string name="title_activity_appointment_detail">Appointment Information</string>
-    
     <string name="action_create_new_appointment">New Appointment</string>
     <string name="action_edit_appointment">Edit</string>
     <string name="action_delete_appointment">Delete</string>
+
+    <string name="title_activity_notification">Notification Manager</string>
+
+    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="action_edit_profile">Profile</string>
+    <string name="gender">Gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
+    <string name="edit_profile_label">Edit Your Profile</string>
+    <string name="profile_pic">Profile Picture</string>
+    <string name="enter_password">Enter your password to save changes</string>
+    <string name="change_pic">Change</string>
+    
+    <string name="title_activity_note_list">Note List</string>
+    <string name="title_activity_note_detail">Note Detail</string>
+    <string name="title_activity_note_editor">Note Editor</string>
+    <string name="action_create_new_note">New Note</string>
+    <string name="note_detail_title">Note Information</string>
+    <string name="note_detail_name">Title: </string>
+    <string name="note_detail_description">Title: </string>
+    <string name="action_edit_note">Edit</string>
+    <string name="action_delete_note">Delete</string>
+    <string name="note_editor_save">Save Note</string>
+    <string name="note_editor_title">Title (Required)</string>
+    <string name="note_editor_description">Enter a Note</string>
+
+    <string name="title_activity_contact_my_doctor">ContactMyDoctor</string>
+    <string name="title_activity_contact_my_doctor_item_options">ContactMyDoctorItemOptions</string>
+
 
 </resources>

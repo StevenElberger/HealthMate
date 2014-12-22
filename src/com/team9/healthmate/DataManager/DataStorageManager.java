@@ -341,6 +341,7 @@ public class DataStorageManager {
 			// If it is, do not add it to the data that will be written to the file.
 			if (informationToBeDeleted.compareTo(currentDataPacket.get("timestamp").toString()) == 0) {
 				dataRemoved = true;
+				Log.v("Data Removed", fileName);
 			}
 			else {
 				

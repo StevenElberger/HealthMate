@@ -31,6 +31,7 @@ public class Login extends Activity implements OnClickListener{
 	EditText pass;
 	TextView debugText;
 	boolean debugMode = false;
+	
 
 	
 	/**
@@ -56,7 +57,6 @@ public class Login extends Activity implements OnClickListener{
 			debugText.setVisibility(1);
 			debugText.setText("Debug values");
 		}
-
 	}
 	
 	/**

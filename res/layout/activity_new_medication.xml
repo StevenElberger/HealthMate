@@ -149,6 +149,7 @@
 			    android:layout_height="wrap_content"
 			    android:gravity="center"
 			    android:inputType="number"
+			    android:text="@string/_0"
 			    android:hint="@string/_e_g_200_"/>
 			   
 			   <Spinner

@@ -1,5 +1,6 @@
 package com.team9.healthmate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 
 import com.team9.healthmate.DataManager.DataStorageManager;
+import com.team9.healthmate.NotificationsManager.NotificationsManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,6 +29,9 @@ public class AppointmentDetail extends Activity {
 	
 	// Map Object to contain the appointment details
 	private Map<String, String> appointmentDetails;
+	
+	// Intent object passed in
+	Intent intent;
 
 	/**
 	 * Method retrieves information sent by the previous activity
@@ -41,7 +46,7 @@ public class AppointmentDetail extends Activity {
 		appointmentDetails = new HashMap<String, String>();
 		
 		// Get the intent sent by the previous activity
-		Intent intent = getIntent();
+		intent = getIntent();
 
 		// Insert information from the intent into the Map Object
 		appointmentDetails.put("timestamp", intent.getStringExtra("timestamp"));
@@ -90,7 +95,9 @@ public class AppointmentDetail extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.appointment_details, menu);
+		if (intent.getStringExtra("notification") == null) {
+			getMenuInflater().inflate(R.menu.appointment_details, menu);
+		}
 		return true;
 	}
 
@@ -105,7 +112,46 @@ public class AppointmentDetail extends Activity {
 		if (item.getItemId() == R.id.action_delete_appointment) {
 			
 			try { 
+				
+				// Container for registered notification information
+				ArrayList<Map<String, String>> registeredNotifications; 
+				
+				// Read all the registered single alarms for notifications
+				registeredNotifications = DataStorageManager.readJSONObject(this, "single alarms");
+				
+				// Delete the appointment from the file of appointments
 				DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+				
+				// Look for the registered notification for the given appointment based on the
+				// appointments time stamp. If found, delete the alarm from the file 
+				for (Map<String, String> map : registeredNotifications) {
+					
+					if (appointmentDetails.get("timestamp").equals(map.get("application timestamp"))) {
+						DataStorageManager.deleteJSONObject(this, "single alarms", map);
+					}
+				}
+				
+				// Create a new message that will be used to cancel any existing alarms
+				Map<String, String>  message = new HashMap<String, String>();
+				
+				// fill the message with the appointment information
+				message.putAll(appointmentDetails);
+				
+				// remove the time stamp, this was not in the original message used
+				// to create the alarm
+				message.remove("timestamp");
+				
+				// insert into message the information of the notification that
+				// would have be shown to the user
+				String description = "Appointment with: " + appointmentDetails.get("name") + 
+						"\n You have an appointment on " + appointmentDetails.get("date") + 
+						"\n Staring at: " + appointmentDetails.get("start time");
+				message.put("type", "appointments");
+				message.put("title", appointmentDetails.get("title"));
+				message.put("description", description);
+				
+				// Unregister the alarm for the notification
+				NotificationsManager.unregisterNotification(this, message);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
