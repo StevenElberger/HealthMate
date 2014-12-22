@@ -5,7 +5,10 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -33,6 +36,7 @@ public class Moods extends FragmentActivity
     private ActionBar actionBar;
     private MenuInflater mn;    
    private Menu TabMenu;
+   private Context context;
     
  // Tab titles
     private String[] tabs = { "Moods Survey", "Moods Graph", "Helpful Tips" };    
@@ -80,6 +84,8 @@ public class Moods extends FragmentActivity
             
             }
         });
+        
+        context = getApplicationContext();
 	}
 	
 	@Override
@@ -96,10 +102,30 @@ public class Moods extends FragmentActivity
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.mCallER:
-			OneClickEmergency ER = new OneClickEmergency();
-			ER.makeACall(this);			
-			ER.sendEmail(this);
-			ER.sendSMSMessage(this);
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			Log.v("Debug", "ER start");
+			// Add the buttons
+			//builder.setTitle("Would you like to make an Emergency Call?");
+			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               // User clicked OK button
+			        	   Log.v("Debug", "ER0");
+			        	OneClickEmergency ER = new OneClickEmergency();
+			   			ER.makeACall(context);			
+			   			ER.sendEmail(context);
+			   			ER.sendSMSMessage(context);
+			   			Log.v("Debug", "ER1");
+			           }
+			       });
+			builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               // User cancelled the dialog
+			        	   finish();
+			           }
+			       });
+			
+			// Create the AlertDialog
+			AlertDialog dialog = builder.create();			
 			break;
 
 		default:
@@ -108,6 +134,7 @@ public class Moods extends FragmentActivity
 		return super.onOptionsItemSelected(item);
 	}
 	
+		
 	 //@Override
 //	    public boolean onCreateOptionsMenu(Menu menu) {
 //	        MenuInflater inflater = getMenuInflater();
