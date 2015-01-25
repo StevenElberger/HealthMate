@@ -15,7 +15,7 @@
         
         	<ImageView
 		        android:id="@+id/profile_pic"
-		        android:contentDescription="@string/profile_pic"
+		        android:contentDescription="@string/user_profile_profile_pic"
 		        android:layout_width="50dp"
 		        android:layout_height="50dp"
 		        android:maxWidth="50dp"
@@ -38,7 +38,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="@string/first_name" />
+	        android:text="@string/user_profile_first_name" />
 	    
 	    <TextView
 	        android:id="@+id/f_name"
@@ -46,7 +46,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:gravity="end"
-	        android:text="@string/first_name" />
+	        android:text="@string/user_profile_first_name" />
 	</LinearLayout>
 	
 	<LinearLayout
@@ -63,7 +63,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="@string/last_name" />
+	        android:text="@string/user_profile_last_name" />
 	    
 	    <TextView
 	        android:id="@+id/l_name"
@@ -71,7 +71,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:gravity="end"
-	        android:text="@string/last_name" />
+	        android:text="@string/user_profile_last_name" />
 	    
 	</LinearLayout>
 	
@@ -89,7 +89,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="@string/username" />
+	        android:text="@string/user_profile_username" />
 	    
 	    <TextView
 	        android:id="@+id/u_name"
@@ -97,7 +97,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:gravity="end"
-	        android:text="@string/username" />
+	        android:text="@string/user_profile_username" />
 	    
 	</LinearLayout>
 	
@@ -115,7 +115,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="@string/gender" />
+	        android:text="@string/user_profile_gender" />
 	    
 	    <TextView
 	        android:id="@+id/gender"
@@ -123,7 +123,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:gravity="end"
-	        android:text="@string/gender" />
+	        android:text="@string/user_profile_gender" />
 	    
 	</LinearLayout>
 	
@@ -141,7 +141,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="@string/birthday" />
+	        android:text="@string/user_profile_birthday" />
 	    
 	    <TextView
 	        android:id="@+id/birthday"
@@ -149,7 +149,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:gravity="end"
-	        android:text="@string/birthday" />
+	        android:text="@string/user_profile_birthday" />
 	    
 	</LinearLayout>
 	

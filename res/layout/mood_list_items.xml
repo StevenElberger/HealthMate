@@ -13,7 +13,7 @@ android:padding="10dp" >
    	android:layout_alignParentLeft="true"
    	android:layout_alignParentTop="true"
     android:src="@drawable/ic_heart"  
-    android:contentDescription="@string/image_mood"
+    android:contentDescription="@string/mood_list_item_image_mood"
    />         
  
 

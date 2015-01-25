@@ -17,7 +17,7 @@
         android:id="@+id/new_medication_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/adding_a_new_medication"
+        android:text="@string/new_medication_adding_a_new_medication"
         />
 
 	 <LinearLayout
@@ -34,7 +34,7 @@
         android:layout_weight="1"
         android:layout_marginTop="5.0dip"
         android:layout_marginBottom="1.0dip"
-        android:text="@string/name_" />
+        android:text="@string/new_medication_name" />
 
 	   <EditText
 	       android:id="@+id/new_medication_name"
@@ -46,14 +46,14 @@
 	       android:gravity="center"
 	       android:inputType="text"
 	       android:imeOptions="actionDone"
-	       android:hint="@string/medication_name" />
+	       android:hint="@string/new_medication_medication_name" />
 	   
 	   <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginTop="10.0dip"
 	        android:layout_marginBottom="1.0dip"
-	        android:text="@string/frequency_" />
+	        android:text="@string/new_medication_frequency" />
 	   
 	  	<RadioGroup
 	  	    android:layout_width="fill_parent"
@@ -65,25 +65,25 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="5.0dip"
-		        android:text="@string/once_a_day"
+		        android:text="@string/new_medication_once_a_day"
 		        android:onClick="disableFrequencyPicker"/>
    	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_B"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="5.0dip"	        
-		        android:text="@string/twice_a_day"
+		        android:text="@string/new_medication_twice_a_day"
 		        android:onClick="disableFrequencyPicker"/>
    	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_C"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="5.0dip"
-		        android:text="@string/once_a_week"
+		        android:text="@string/new_medication_once_a_week"
 		        android:onClick="disableFrequencyPicker"/>
    	  	    <RadioButton android:id="@+id/new_medication_frequency_radio_D"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
        	        android:layout_marginTop="5.0dip"
-		        android:text="@string/other_"
+		        android:text="@string/new_medication_other"
 		        android:onClick="enableFrequencyPicker"/>
 	  	</RadioGroup>
 	  	
@@ -102,14 +102,14 @@
 		   	    android:layout_width="40dip"
 		   	    android:layout_height="40dip"
 		   	    android:onClick="decreaseNumberPicker"
-				android:text="@string/_minus"
+				android:text="@string/new_medication_minus"
 				android:enabled="false" />
 			   <EditText 
 			    android:id="@+id/new_medication_dosage_frequency"
 				android:layout_width="wrap_content"
 			    android:layout_height="40dip"
 			    android:gravity="center"
-			    android:text="@string/_0" 
+			    android:text="@string/new_medication_0" 
 			    android:inputType="number"
 			    android:enabled="false"
 			    android:imeOptions="actionDone"/>
@@ -118,7 +118,7 @@
 		   	    android:layout_width="40dip"
 		   	    android:layout_height="40dip"
 		   	    android:onClick="increaseNumberPicker"
-				android:text="@string/_plus"
+				android:text="@string/new_medication_plus"
 				android:enabled="false" />
 				   		
 
@@ -135,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10.0dip"
         android:layout_marginBottom="1.0dip"
-        android:text="@string/dosage_strength_" />
+        android:text="@string/new_medication_dosage_strength" />
 		
 		 <LinearLayout
 		    android:layout_width="fill_parent"
@@ -149,8 +149,8 @@
 			    android:layout_height="wrap_content"
 			    android:gravity="center"
 			    android:inputType="number"
-			    android:text="@string/_0"
-			    android:hint="@string/_e_g_200_"/>
+			    android:text="@string/new_medication_0"
+			    android:hint="@string/new_medication_e_g_200"/>
 			   
 			   <Spinner
 		       android:id="@+id/new_medication_medication_type_spinner"
@@ -164,7 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10.0dip"
         android:layout_marginBottom="1.0dip"
-        android:text="@string/set_reminder" />
+        android:text="@string/new_medication_set_reminder" />
 
 		<Switch
 		    android:id="@+id/new_medication_reminder_switch"
@@ -189,14 +189,14 @@
 	        android:id="@+id/new_medication_cancel"
 	        android:layout_width="150dp"
 	        android:layout_height="wrap_content"
-	        android:text="@string/cancel"
+	        android:text="@string/new_medication_cancel"
 	        style="?android:attr/buttonBarButtonStyle" />
 
 	    <Button
 	        android:id="@+id/new_medication_save"
 	        android:layout_width="150dp"
 	        android:layout_height="wrap_content"
-	        android:text="@string/save" 
+	        android:text="@string/new_medication_save" 
 	        style="?android:attr/buttonBarButtonStyle" />
 	    </LinearLayout>
 	</LinearLayout>

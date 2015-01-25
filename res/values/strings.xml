@@ -1,56 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Strings for Android Manifest -->
     <string name="app_name">Health Mate</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    
+    <!-- Strings for Activity Titles -->
     <string name="title_activity_medication">Medication</string>
     <string name="title_activity_health_location">HealthLocation</string>
     <string name="title_activity_moods">Moods</string>
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_emergency">Emergency</string>
     <string name="title_activity_step_counter">StepCounter</string>
-    <string name="happy">Happy</string>
-    <string name="ok">Ok</string>
-    <string name="motivated">Motivated</string>
-    <string name="stressed">Stressed</string>
-    <string name="angry">Angry</string>
-    <string name="tired">Tired</string>
-    <string name="depressed">Depressed</string>
-    <string name="reset">Reset</string>
-    <string name="submit">Submit</string>
-    <string name="happyCounter">""</string>
-    <string name="okCounter">" "</string>
-    <string name="motivatedCounter">" "</string>
-    <string name="stressedCounter">" "</string>
-    <string name="angryCounter">" "</string>
-    <string name="tiredCounter">" "</string>
-    <string name="depressedCounter">" "</string>
     <string name="title_activity_new_medication">NewMedication</string>
     <string name="title_activity_medication_details">MedicationDetails</string>
-    <string name="welcome_label">Welcome</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="login_button">Login</string>
-    <string name="register_button">Register</string>
     <string name="title_activity_registration">Registration</string>
-    <string name="create_account">Create an Account</string>
-    <string name="first_name">First name</string>
-    <string name="last_name">Last name</string>
-    <string name="confirm_password">Confirm</string>
-    <string name="enter_bday">Please enter your birthday:</string>
-    <string name="enter_sex">Please enter your sex:</string>
-    <string name="JustOk">Just Ok</string>
+    <string name="title_activity_chart_demo">ChartDemo</string>
+    <string name="title_activity_animated_chart_demo">AnimatedChartDemo</string>
+    <string name="title_activity_preview_chart_demo">PreviewChartDemo</string>
+    <string name="title_activity_appointment_form">Appointment Form</string>
+    <string name="title_activity_appointment_list">Appointment List</string>
+    <string name="title_activity_appointment_detail">Appointment Information</string>
+    <string name="title_activity_notification">Notification Manager</string>
+    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
+    <string name="title_activity_note_list">Note List</string>
+    <string name="title_activity_note_detail">Note Detail</string>
+    <string name="title_activity_note_editor">Note Editor</string>
+    <string name="title_activity_contact_my_doctor">ContactMyDoctor</string>
+    <string name="title_activity_contact_my_doctor_item_options">ContactMyDoctorItemOptions</string>
+    <string name="title_activity_mood_page_viewer">MoodPageViewer</string>
     
-	<string name="image_mood">List Image</string>
+	<!-- Strings for Login Activity -->
+	<string name="login_welcome_label">Welcome</string>
+	<string name="login_username">Username</string>
+	<string name="login_password">Password</string>
+	<string name="login_login_button">Login</string>
+	<string name="login_register_button">Register</string>
 	
-    <string name="Happy">Happy</string>
-    <string name="Motivated">Motivated</string>
-    <string name="Stressed">Stressed</string>
-    <string name="Angry">Angry</string>
-    <string name="Tired">Tired</string>
-    <string name="Depressed">Depressed</string>
-
+	<!-- Strings for Registration Activity -->
+	<string name="registration_create_account">Create an Account</string>
+	<string name="registration_first_name">First name</string>
+	<string name="registration_last_name">Last name</string>
+    <string name="registration_login_username">Username</string>
+    <string name="registration_password">Password</string>
+    <string name="registration_confirm_password">Confirm password</string>
+    <string name="registration_enter_sex">Please enter your sex:</string>
+    <string name="registration_enter_bday">Please enter your birthday:</string>
+    <string name="registration_OK">OK</string>
+    
+	<!-- Strings for EditProfile Activity -->
+	<string name="edit_profile_label">Edit Your Profile</string>
+	<string name="edit_profile_first_name">First name</string>
+	<string name="edit_profile_last_name">Last name</string>
+	<string name="edit_profile_username">Username</string>
+	<string name="edit_profile_password">Password</string>
+	<string name="edit_profile_confirm_password">Confirm password</string>
+	<string name="edit_profile_enter_sex">Please enter your sex:</string>
+	<string name="edit_profile_enter_bday">Please enter your birthday:</string>
+	<string name="edit_profile_OK">OK</string>
+	
+	<!-- Strings for AppointmentDetail Activity -->
+	<string name="appointment_detail_title">Appointment Information</string>
+	<string name="appointment_detail_name">Doctor\'s Name: </string>
+    <string name="appointment_detail_address">Location: </string>
+	<string name="appointment_detail_contact_information">Contact Information\:</string>
+    <string name="appointment_detail_date">Date: </string>
+    <string name="appointment_detail_start_time">Time: </string>
+    <string name="appointment_detail_end_time">Time: </string>
+    <string name="appointment_detail_comment">Comment: </string>
+    
+    <!-- Strings for AppointmentForm Activity -->
+    <string name="appointment_form_header">Appointment Form</string>
+    <string name="appointment_form_title">Appointment Title (Required)</string>
+    <string name="appointment_form_name">Enter a Doctor\'s Name (Required)</string>
+    <string name="appointment_form_address">Enter a Address</string>
+    <string name="appointment_form_phone_number">Enter a Phone Number</string>
+    <string name="appointment_form_email">Enter Email Address</string>
+    <string name="appointment_form_comment">Enter a Comment</string>
+    <string name="appointment_form_date_title">Date of Appointment</string>
+    <string name="appointment_form_start_time_title">Start Time of Appointment</string>
+    <string name="appointment_form_end_time_title">End Time of Appointment</string>
+    <string name="appointment_form_save">Save</string>
+    
+    <!-- Strings for MedicationDetails Activity -->
+    <string name="medication_details_name">medication_name</string>
+    <string name="medication_details_frequency">"Frequency: "</string>
+    <string name="medication_details_frequency_goes_here">frequency_goes_here</string>
+    <string name="medication_details_dosage">dosage</string>
+    <string name="medication_details_dosage_goes_here">dosage_goes_here</string>
+    <string name="medication_details_reminder">"Reminder: "</string>
+    <string name="medication_details_off">off</string>
+    <string name="medication_details_back">back</string>
+    <string name="medication_details_remove">remove</string>
+    <string name="medication_details_edit">edit</string>
+    
+    <!-- Strings for Medication Activity -->
+    <string name="medication_list_of_medications">List of medications</string>
+    <string name="medication_add_new_medication">Add new Medication</string>
+    
+    <!-- Strings for NewMedication Activity -->
+    <string name="new_medication_adding_a_new_medication">Adding a new Medication</string>
+    <string name="new_medication_name">"Name: "</string>
+    <string name="new_medication_medication_name">medication name:</string>
+    <string name="new_medication_frequency">frequency</string>
+    <string name="new_medication_once_a_day">Once a day</string>
+    <string name="new_medication_twice_a_day">Twice a day</string>
+    <string name="new_medication_once_a_week">Once a week</string>
+    <string name="new_medication_other">Other</string>
+    <string name="new_medication_minus">-</string>
+    <string name="new_medication_0">0</string>
+    <string name="new_medication_plus">+</string>
+    <string name="new_medication_set_reminder">Set Reminder</string>
+    <string name="new_medication_cancel">Cancel</string>
+    <string name="new_medication_save">save</string>
+    
+    <!-- Strings for NoteDetail Activity -->
+    <string name="note_detail_title">Note Information</string>
+    <string name="note_detail_name">Title: </string>
+    <string name="note_detail_description">Title: </string>
+    
+    <!-- Strings for NoteEditor Activity -->
+    <string name="note_editor_title">Title (Required)</string>
+    <string name="note_editor_description">Enter a Note</string>
+    <string name="note_editor_save_note">Save Note</string>
+    <string name="note_editor_save">Save</string>
+    
+    <!-- Strings for UserProfile Activity -->
+    <string name="user_profile_profile_pic">Profile Picture</string>
+    <string name="user_profile_first_name">First name</string>
+	<string name="user_profile_last_name">Last name</string>
+    <string name="user_profile_username">Username</string>
+    <string name="user_profile_gender">Gender</string>
+    <string name="user_profile_birthday">Birthday</string>
+    
+    <!-- Strings for MoodsSurvey Activity -->
+    <string name="moods_survey_happy">Happy</string>
+    <string name="moods_survey_happyCounter">""</string>
+    <string name="moods_survey_motivated">Motivated</string>
+    <string name="moods_survey_motivatedCounter">""</string>
+    <string name="moods_survey_stressed">Stressed</string>
+    <string name="moods_survey_stressedCounter">""</string>
+    <string name="moods_survey_angry">Angry</string>
+    <string name="moods_survey_angryCounter">""</string>
+    <string name="moods_survey_tired">Tired</string>
+    <string name="moods_survey_tiredCounter">""</string>
+    <string name="moods_survey_depressed">Depressed</string>
+    <string name="moods_survey_depressedCounter">""</string>
+    <string name="moods_survey_reset">Reset</string>
+    <string name="moods_survey_submit">Submit</string>
+    
+    <!-- Strings for EditProfile2 Activity -->
+    <string name="edit_profile_2_change_pic">Change</string>
+    <string name="edit_profile_2_enter_password">Enter your password to save changes</string>
+    <string name="edit_profile_2_password">Password</string>
+    
+    <!-- Strings for NewMedication Activity -->
+    <string name="new_medication_dosage_strength">"Dosage strength: "</string>
+    <string name="new_medication_e_g_200">(e.g. 200)</string>
+    
+    <!-- Strings for MoodListItems -->
+    <string name="mood_list_item_image_mood">List Image</string>
+    
+    <!-- Strings for Menus -->
+    <string name="action_settings">Settings</string>
+    <string name="action_edit_appointment">Edit</string>
+    <string name="action_delete_appointment">Delete</string>
+    <string name="action_create_new_appointment">New Appointment</string>
+    <string name="action_edit_profile">Profile</string>
+    <string name="action_create_new_note">New Note</string>
+    <string name="action_edit_note">Edit</string>
+    <string name="action_delete_note">Delete</string>
+    
+    <!-- String Arrays for Form Components -->
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
@@ -66,103 +186,4 @@
         <item>Depressed</item>       
     </string-array>
     
-    
-    <string name="ok2">OK</string>
-    <string name="title_activity_mood_page_viewer">MoodPageViewer</string>
-    <string name="name_">"Name: "</string>
-    <string name="medication_name">medication_name</string>
-    <string name="adding_a_new_medication">Adding a new Medication</string>
-    <string name="frequency_">"Frequency: "</string>
-    <string name="once_a_day">Once a day</string>
-    <string name="twice_a_day">Twice a day</string>
-    <string name="once_a_week">Once a week</string>
-    <string name="other_">Other</string>
-    <string name="_">"Dosage strength: "</string>
-    <string name="_0">0</string>
-    <string name="_times_a_">" times a "</string>
-    <string name="dosage_strength_">"Dosage strength: "</string>
-    <string name="_e_g_200_">(e.g. 200)</string>
-    <string name="set_reminder">Set Reminder</string>
-    <string name="cancel">Cancel</string>
-    <string name="save">save</string>
-    <string name="frequency">frequency</string>
-    <string name="frequency_goes_here">frequency_goes_here</string>
-    <string name="dosage">dosage</string>
-    <string name="dosage_goes_here">dosage_goes_here</string>
-    <string name="reminder_">"Reminder: "</string>
-    <string name="off">off</string>
-    <string name="back">back</string>
-    <string name="remove">remove</string>
-    <string name="edit">edit</string>
-    <string name="add_new_medication">Add new Medication</string>
-    <string name="list_of_medications">List of medications</string>
-    <string name="_minus">-</string>
-    <string name="_plus">+</string>
-    <string name="reminder">reminder</string>
-    <string name="take_one_everey">Take one everey</string>
-
-    <string name="moodSave">Save</string>
-    <string name="moodEdit">Edit</string>
-    <string name="moodAdd">Add</string>
-    <string name="moodER">Call ER</string>
-    <string name="moodExit">Exit</string>
-
-    <string name="title_activity_chart_demo">ChartDemo</string>
-    <string name="title_activity_animated_chart_demo">AnimatedChartDemo</string>
-    <string name="title_activity_preview_chart_demo">PreviewChartDemo</string>
-    <string name="appointment_form_header">Appointment Form</string>
-    <string name="appointment_form_title">Appointment Title (Required)</string>
-    <string name="appointment_form_start_time_title">Start Time of Appointment</string>
-    <string name="appointment_form_end_time_title">End Time of Appointment</string>
-    <string name="appointment_form_date_title">Date of Appointment</string>
-    <string name="appointment_form_name">Enter a Doctor\'s Name (Required)</string>
-    <string name="appointment_form_address">Enter a Address</string>
-    <string name="appointment_form_phone_number">Enter a Phone Number</string>
-    <string name="appointment_form_email">Enter Email Address</string>
-    <string name="appointment_form_comment">Enter a Comment</string>
-    <string name="appointment_form_save">Save</string>
-    <string name="title_activity_appointment_form">Appointment Form</string>
-    <string name="title_activity_appointment_list">Appointment List</string>
-    <string name="appointment_detail_title">Appointment Information</string>
-    <string name="appointment_detail_name">Doctor\'s Name: </string>
-    <string name="appointment_detail_address">Location: </string>
-    <string name="appointment_detail_contact_information">Contact Information\:</string>
-    <string name="appointment_detail_date">Date: </string>
-    <string name="appointment_detail_start_time">Time: </string>
-    <string name="appointment_detail_end_time">Time: </string>
-    <string name="appointment_detail_comment">Comment: </string>
-    <string name="title_activity_appointment_detail">Appointment Information</string>
-    <string name="action_create_new_appointment">New Appointment</string>
-    <string name="action_edit_appointment">Edit</string>
-    <string name="action_delete_appointment">Delete</string>
-
-    <string name="title_activity_notification">Notification Manager</string>
-
-    <string name="title_activity_user_profile">UserProfile</string>
-    <string name="action_edit_profile">Profile</string>
-    <string name="gender">Gender</string>
-    <string name="birthday">Birthday</string>
-    <string name="title_activity_edit_profile">EditProfile</string>
-    <string name="edit_profile_label">Edit Your Profile</string>
-    <string name="profile_pic">Profile Picture</string>
-    <string name="enter_password">Enter your password to save changes</string>
-    <string name="change_pic">Change</string>
-    
-    <string name="title_activity_note_list">Note List</string>
-    <string name="title_activity_note_detail">Note Detail</string>
-    <string name="title_activity_note_editor">Note Editor</string>
-    <string name="action_create_new_note">New Note</string>
-    <string name="note_detail_title">Note Information</string>
-    <string name="note_detail_name">Title: </string>
-    <string name="note_detail_description">Title: </string>
-    <string name="action_edit_note">Edit</string>
-    <string name="action_delete_note">Delete</string>
-    <string name="note_editor_save">Save Note</string>
-    <string name="note_editor_title">Title (Required)</string>
-    <string name="note_editor_description">Enter a Note</string>
-
-    <string name="title_activity_contact_my_doctor">ContactMyDoctor</string>
-    <string name="title_activity_contact_my_doctor_item_options">ContactMyDoctorItemOptions</string>
-
-
 </resources>

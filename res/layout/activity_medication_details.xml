@@ -18,7 +18,7 @@
             android:id="@+id/medication_details_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/medication_name"
+            android:text="@string/medication_details_name"
             android:textSize="22sp" />
 
         <TableLayout
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/frequency"
+            android:text="@string/medication_details_frequency"
             android:textSize="18sp" />
 
         <TextView
@@ -39,14 +39,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
-            android:text="@string/frequency_goes_here"
+            android:text="@string/medication_details_frequency_goes_here"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/dosage"
+            android:text="@string/medication_details_dosage"
             android:textSize="18sp" />
 
         <TextView
@@ -54,14 +54,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
-            android:text="@string/dosage_goes_here"
+            android:text="@string/medication_details_dosage_goes_here"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/reminder"
+            android:text="@string/medication_details_reminder"
             android:textSize="18sp" />
 
         <TextView
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
-            android:text="@string/off"
+            android:text="@string/medication_details_off"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -86,21 +86,21 @@
 	        android:id="@+id/medication_details_button_back"
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
-	        android:text="@string/back"
+	        android:text="@string/medication_details_back"
 	        style="?android:attr/buttonBarButtonStyle" />
 
 	    <Button
 	        android:id="@+id/medication_details_button_remove"
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
-	        android:text="@string/remove" 
+	        android:text="@string/medication_details_remove" 
 	        style="?android:attr/buttonBarButtonStyle" />
 	    
 	    <Button
 	        android:id="@+id/medication_details_button_edit"
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
-	        android:text="@string/edit"
+	        android:text="@string/medication_details_edit"
 	        style="?android:attr/buttonBarButtonStyle" />
 	</LinearLayout>
 </RelativeLayout>

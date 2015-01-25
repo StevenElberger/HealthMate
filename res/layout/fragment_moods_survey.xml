@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="1"
-                android:text="@string/happy"
+                android:text="@string/moods_survey_happy"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/happyCounter"
+                android:text="@string/moods_survey_happyCounter"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
 
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="2"
-                android:text="@string/motivated"
+                android:text="@string/moods_survey_motivated"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/motivatedCounter"
+                android:text="@string/moods_survey_motivatedCounter"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
 
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="3"
-                android:text="@string/stressed"
+                android:text="@string/moods_survey_stressed"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/stressedCounter"
+                android:text="@string/moods_survey_stressedCounter"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
 
@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="4"
-                android:text="@string/angry"
+                android:text="@string/moods_survey_angry"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/angryCounter"
+                android:text="@string/moods_survey_angryCounter"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
 
@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="5"
-                android:text="@string/tired"
+                android:text="@string/moods_survey_tired"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/tiredCounter"
+                android:text="@string/moods_survey_tiredCounter"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
 
@@ -168,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="6"
-                android:text="@string/depressed"
+                android:text="@string/moods_survey_depressed"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/depressedCounter"
+                android:text="@string/moods_survey_depressedCounter"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
 
@@ -206,7 +206,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="9dp"
-            android:text="@string/reset"
+            android:text="@string/moods_survey_reset"
             android:textSize="26sp" />
 
         <Button
@@ -218,7 +218,7 @@
             android:layout_alignBottom="@+id/cmdReset"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="12dp"
-            android:text="@string/submit"
+            android:text="@string/moods_survey_submit"
             android:textSize="26sp" />
 
     </RelativeLayout>

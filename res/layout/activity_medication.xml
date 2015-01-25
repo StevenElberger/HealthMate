@@ -12,7 +12,7 @@
         android:id="@+id/titleMedication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/list_of_medications" />
+        android:text="@string/medication_list_of_medications" />
 
     <ListView
         android:id="@+id/listViewMedications"
@@ -27,7 +27,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_centerHorizontal="true" 
 	    android:layout_alignParentBottom="true"
-	    android:text="@string/add_new_medication" 
+	    android:text="@string/medication_add_new_medication" 
 	    android:onClick="createMedication"
 	    />
 </RelativeLayout>

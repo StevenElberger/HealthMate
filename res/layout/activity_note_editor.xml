@@ -52,14 +52,14 @@
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="@string/note_editor_save"
+            android:text="@string/note_editor_save_note"
             android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/SaveNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/appointment_form_save"
+            android:contentDescription="@string/note_editor_save"
             android:src="@drawable/ic_action_content_save" />
     </LinearLayout>
 

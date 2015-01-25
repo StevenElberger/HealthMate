@@ -25,7 +25,7 @@
 		        android:layout_weight="1"
 		        android:gravity="center_horizontal"
 		        android:visibility="invisible"
-		        android:text="@string/enter_password" />
+		        android:text="@string/edit_profile_2_enter_password" />
 	        	
 	    </LinearLayout>
 	    
@@ -40,7 +40,7 @@
 	        
 	        	<ImageView
 			        android:id="@+id/edit_profile_pic"
-			        android:contentDescription="@string/profile_pic"
+			        android:contentDescription="@string/user_profile_profile_pic"
 			        android:layout_weight="1"
 			        android:layout_width="50dp"
 			        android:layout_height="50dp"
@@ -55,7 +55,7 @@
 				    android:layout_height="wrap_content"
 				    android:gravity="center"
 				    android:layout_gravity="center_vertical"
-				    android:text="@string/change_pic" />
+				    android:text="@string/edit_profile_2_change_pic" />
 	        	
 	    </LinearLayout>
 	    
@@ -73,7 +73,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/first_name" />
+		        android:text="@string/registration_first_name" />
 		    
 		    <EditText
 		        android:id="@+id/f_name"
@@ -81,7 +81,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
 		        android:gravity="end"
-		        android:hint="@string/first_name"/>
+		        android:hint="@string/registration_first_name"/>
 		</LinearLayout>
 		
 		<LinearLayout
@@ -98,7 +98,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/last_name" />
+		        android:text="@string/registration_last_name" />
 		    
 		    <EditText
 		        android:id="@+id/l_name"
@@ -106,7 +106,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
 		        android:gravity="end"
-		        android:hint="@string/last_name" />
+		        android:hint="@string/registration_last_name" />
 		    
 		</LinearLayout>
 		
@@ -124,7 +124,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/username" />
+		        android:text="@string/login_username" />
 		    
 		    <EditText
 		        android:id="@+id/u_name"
@@ -132,7 +132,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
 		        android:gravity="end"
-		        android:hint="@string/username" />
+		        android:hint="@string/login_username" />
 		    
 		</LinearLayout>
 		
@@ -150,7 +150,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/gender" />
+		        android:text="@string/user_profile_gender" />
 		    
 		    <Spinner
 				android:id="@+id/gender"
@@ -175,7 +175,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/birthday" />
+		        android:text="@string/user_profile_birthday" />
 		    
 		    <DatePicker
 			   	android:id="@+id/bday"
@@ -206,7 +206,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/password" />
+		        android:text="@string/login_password" />
 		    
 		    <EditText
 		        android:id="@+id/password"
@@ -215,7 +215,7 @@
 		        android:layout_weight="1"
 		        android:gravity="end"
 		        android:inputType="textPassword"
-		        android:hint="@+string/password" />
+		        android:hint="@+string/edit_profile_2_password" />
 		    
 		</LinearLayout>
 		
