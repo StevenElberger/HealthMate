@@ -45,15 +45,6 @@
             android:layout_margin="10dp"
             android:text=""
             android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/SaveButtonText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="@string/note_editor_save"
-            android:textSize="20sp" />
     </LinearLayout>
 
 </ScrollView>
