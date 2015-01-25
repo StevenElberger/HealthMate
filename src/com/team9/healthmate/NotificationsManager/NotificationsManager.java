@@ -50,6 +50,8 @@ public class NotificationsManager {
 		intent.putExtra("title", message.get("title"));
 		intent.putExtra("description", message.get("description"));
 		
+		// If the notification is meant for appointments, send the appropriate
+		// references and data to the alarm.
 		if (intent.getStringExtra("type").equals("appointments")) {
 			intent.putExtra("name", message.get("name"));
 			intent.putExtra("location", message.get("location"));
@@ -59,6 +61,14 @@ public class NotificationsManager {
 			intent.putExtra("start time", message.get("start time"));
 			intent.putExtra("end time", message.get("end time"));
 			intent.putExtra("date", message.get("date"));
+		}
+		
+		// If the notification is meant for medications, send the appropriate
+		// references and data to the alarm.
+		if (intent.getStringExtra("type").equals("medications")) {
+			
+			// This needs to be filled with medication information
+			
 		}
 		
 		// set the time stamp that will indicate which notification belongs to which
@@ -107,6 +117,8 @@ public class NotificationsManager {
 		intent.putExtra("title", message.get("title"));
 		intent.putExtra("description", message.get("description"));
 		
+		// If the notification is meant for appointments, send the appropriate
+		// references and data to the alarm.
 		if (intent.getStringExtra("type").equals("appointments")) {
 			intent.putExtra("name", message.get("name"));
 			intent.putExtra("location", message.get("location"));
@@ -118,6 +130,14 @@ public class NotificationsManager {
 			intent.putExtra("date", message.get("date"));
 		}
 		
+		// If the notification is meant for medications, send the appropriate
+		// references and data to the alarm.
+		if (intent.getStringExtra("type").equals("medications")) {
+					
+			// This needs to be filled with medication information
+					
+		}
+
 		// used to remove the alarm saved in the alarm registration file
 		intent.putExtra("application timestamp", message.get("timestamp"));
 		
