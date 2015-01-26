@@ -84,15 +84,15 @@
         <activity android:name=".MoodTabViewer" >
         </activity>
         <activity
-            android:name=".AppointmentForm"
+            android:name=".Appointments.AppointmentForm"
             android:label="@string/title_activity_appointment_form" >
         </activity>
         <activity
-            android:name=".AppointmentsList"
+            android:name=".Appointments.AppointmentsList"
             android:label="@string/title_activity_appointment_list" >
         </activity>
         <activity
-            android:name=".AppointmentDetail"
+            android:name=".Appointments.AppointmentDetail"
             android:label="@string/title_activity_appointment_detail" >
         </activity>
         <activity

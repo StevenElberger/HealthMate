@@ -1,4 +1,4 @@
-package com.team9.healthmate;
+package com.team9.healthmate.Appointments;
 
 
 import java.util.Calendar;
@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.NotificationsManager.NotificationsManager;
 
@@ -16,12 +17,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -33,10 +32,7 @@ import android.widget.TimePicker;
  * @author Michael Sandoval
  * 
  */
-public class AppointmentForm extends Activity implements OnClickListener {
-
-	// Button to save the Appointment
-	ImageButton save;
+public class AppointmentForm extends Activity {
 
 	// The container of the time stamp that will be deleted
 	Map<String, String> appointmentTimeStamp;
@@ -64,17 +60,41 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_form);
-
-		save = (ImageButton) findViewById(R.id.SaveAppointment);
-		save.setOnClickListener((OnClickListener) this);
-
-		appointmentTimeStamp = new HashMap<String, String>();
 		
+		// Initialize map objects
+		appointmentTimeStamp = new HashMap<String, String>();
 		appointmentToDelete = new HashMap<String, String>();
 
 		// Check if the user is editing a previous appointment.
 		checkIfInEditorMode();
 
+	}
+	
+	/**
+	 * Method sets up the options available to the user.
+	 * An icon of an addition sign is displayed to the user as an option. 
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.appointment_form, menu);
+		return true;
+	}
+	
+	/**
+	 * Method to activate the user options in the Action Bar.
+	 * The only option is to save an appointment, this leads
+	 * to the appointment list class.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		// Check to see which option was selected by the user.
+		if (item.getItemId() == R.id.action_save_appointment) {
+			saveAppointment();
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -103,8 +123,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 	 * device in a file named "appointments". There is error checking done for the
 	 * user input.
 	 */
-	@Override
-	public void onClick(View v) {
+	public void saveAppointment() {
 		try {
 
 			// Create a new object to hold the information entered
@@ -157,7 +176,7 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			} else {
 				
 				// Remove error message
-				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormTitleError);
+				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormNameError);
 				incorrectInputMessage.setText("");
 				appointment.put("name", userInput.getText().toString());
 				
@@ -178,6 +197,8 @@ public class AppointmentForm extends Activity implements OnClickListener {
 			// Call method to handle the storing of Date and Time
 			// information entered by the user.
 			saveDateAndTime();
+			
+			/////////////////////////////////////////////////////////////////////////////////////////////
 
 			// Check if there is any error reported. If not, 
 			// save information and delete the old appointment, if any.
@@ -240,6 +261,9 @@ public class AppointmentForm extends Activity implements OnClickListener {
 					message.put("type", "appointments");
 					message.put("description", description);
 					
+					// Find when to set the Notification time of the Appointment
+					determineTimeOfNotification();
+					
 					// get the time stamp of the newly created appointment and add it to the message being sent
 					message.put("timestamp", appointmentList.get(appointmentList.size()-1).get("timestamp"));
 					NotificationsManager.registerNotification(this, message, timeOfAppointment);
@@ -258,7 +282,42 @@ public class AppointmentForm extends Activity implements OnClickListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	/**
+	 * Method to determine when the notification should be set for a saved appointment.
+	 * The notification would be set to go off either at the start of the day when the
+	 * appointment is set. Or it would be set an hour before the appointment, if the appointment
+	 * is set on be on the same day in which it was created.
+	 * @author Michael Sandoval
+	 */
+	private void determineTimeOfNotification() {
+		
+		// Get the current date of the system
+		Calendar currentDate = Calendar.getInstance(Locale.US);
+		
+		
+		// The desired time of the notification
+		// is a the day of the appointment
+		Calendar desiredNotificationDate = Calendar.getInstance(Locale.US);
+		
+		// Set the desired notification time to be at the start of the day when the appointment occurs
+		desiredNotificationDate.set(timeOfAppointment.get(Calendar.YEAR), 
+				timeOfAppointment.get(Calendar.MONTH), timeOfAppointment.get(Calendar.DAY_OF_MONTH));
+		
+		// Set the time of the notification to go off at 12am on the appointment date.
+		desiredNotificationDate.set(Calendar.HOUR_OF_DAY, 0);
+		desiredNotificationDate.set(Calendar.MINUTE, 0);
+		desiredNotificationDate.set(Calendar.SECOND, 0);
+		
+		// If the appointment is set on a date, then set the notification to be at the start of the notification date.
+		// Otherwise set the notification to be an hour before the appointments time.
+		if (!desiredNotificationDate.before(currentDate)) {
+			timeOfAppointment = desiredNotificationDate;
+		}
+		else {
+			timeOfAppointment.set(Calendar.HOUR_OF_DAY, timeOfAppointment.get(Calendar.HOUR_OF_DAY) - 1);
+		}
 	}
 
 	/**
@@ -514,8 +573,6 @@ public class AppointmentForm extends Activity implements OnClickListener {
 				timeOfAppointment.set(Calendar.YEAR, year);
 				timeOfAppointment.set(Calendar.MONTH, month - 1);
 				timeOfAppointment.set(Calendar.DAY_OF_MONTH, day);
-				Log.w("Time of Appointment: ", timeOfAppointment.getTime().toString());
-				
 				
 				// Set the format text it will be saved in.
 				String formatedDate = month + "-" + day + "-" + year;
