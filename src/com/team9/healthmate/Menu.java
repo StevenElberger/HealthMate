@@ -136,7 +136,7 @@ public class Menu extends Activity {
 		
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_edit_profile) {
-			Intent intent = new Intent(this, UserProfile.class);
+			Intent intent = new Intent(this, Profile.class); // used to be UserProfile.class
 			startActivity(intent);
 		}
 		
