@@ -21,7 +21,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /** 
@@ -33,8 +36,9 @@ import android.widget.TextView;
  * @author Steve
  */
 public class Profile extends Activity {
-	String sFirstName, sLastName, sUserName, sGender, sAge;
+	String sFirstName, sLastName, sUserName, sGender, sAge, sImagePath;
 	boolean notPressedYet = true;
+	private static final String IMAGE_PATH = "Image_Path";
 	private static final String FIRST_NAME = "First_Name";
 	private static final String LAST_NAME = "Last_Name";
 	private static final String USERNAME = "Username";
@@ -47,8 +51,10 @@ public class Profile extends Activity {
 		setContentView(R.layout.activity_profile);
 		if (savedInstanceState == null) {
 			loadProfileInformation();
+			// Bundle the information and send it to the fragment
 			DisplayFragment df = new DisplayFragment();
 			Bundle profileInformation = new Bundle();
+			profileInformation.putString(IMAGE_PATH, sImagePath);
 			profileInformation.putString(FIRST_NAME, sFirstName);
 			profileInformation.putString(LAST_NAME, sLastName);
 			profileInformation.putString(USERNAME, sUserName);
@@ -78,8 +84,17 @@ public class Profile extends Activity {
 		FragmentManager fm = getFragmentManager();
 		
 		if (item.getItemId() == R.id.action_edit_profile) {
-			// Show the EditFragment
-			fm.beginTransaction().replace(R.id.profile_container, new EditFragment()).commit();
+			EditFragment ef = new EditFragment();
+			// Bundle the info and send it to the new fragment
+			Bundle profileInformation = new Bundle();
+			profileInformation.putString(IMAGE_PATH, sImagePath);
+			profileInformation.putString(FIRST_NAME, sFirstName);
+			profileInformation.putString(LAST_NAME, sLastName);
+			profileInformation.putString(USERNAME, sUserName);
+			profileInformation.putString(GENDER, sGender);
+			profileInformation.putString(AGE, sAge);
+			ef.setArguments(profileInformation);
+			fm.beginTransaction().replace(R.id.profile_container, ef).commit(); // really should just be hidden instead of replaced
 		} else if (item.getItemId() == R.id.action_save_profile) {
 			// Show the DisplayFragment with new information
 			//getFragmentManager().beginTransaction().replace(R.id.profile_container, new DisplayFragment()).commit();
@@ -133,13 +148,7 @@ public class Profile extends Activity {
 							sAge = value;
 							break;
 						case "picture":
-							// load the image from the file path stored
-//							if (!value.equals("")) {
-//								File imgFile = new  File(value);
-//								Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//								image.setImageBitmap(bitmap);
-//							}
-//							imagePath = value;
+							sImagePath = value;
 						default:
 							break;
 					}
@@ -156,7 +165,8 @@ public class Profile extends Activity {
 	 * data. 
 	 */
 	public static class DisplayFragment extends Fragment {
-		String sFirstName, sLastName, sUserName, sGender, sAge;
+		ImageView profileImage;
+		String sFirstName, sLastName, sUserName, sGender, sAge, sImagePath;
 		TextView firstName, lastName, userName, gender, age;
 		
 		public DisplayFragment() {}
@@ -166,6 +176,7 @@ public class Profile extends Activity {
 			View rootView = inflater.inflate(R.layout.fragment_display_profile, container, false);
 			
 			// Wire the widgets
+			profileImage = (ImageView) rootView.findViewById(R.id.display_profile_fragment_profile_pic);
 			firstName = (TextView) rootView.findViewById(R.id.display_profile_fragment_first_name_textview);
 			lastName = (TextView) rootView.findViewById(R.id.display_profile_fragment_last_name_textview);
 			userName = (TextView) rootView.findViewById(R.id.display_profile_fragment_username_textview);
@@ -173,18 +184,25 @@ public class Profile extends Activity {
 			age = (TextView) rootView.findViewById(R.id.display_profile_fragment_age_textview);
 			
 			// Grab the profile info
+			sImagePath = getArguments().getString(IMAGE_PATH);
 			sFirstName = getArguments().getString(FIRST_NAME);
 			sLastName = getArguments().getString(LAST_NAME);
 			sUserName = getArguments().getString(USERNAME);
 			sGender = getArguments().getString(GENDER);
 			sAge = getArguments().getString(AGE);
 			
-			// Save it to the fragment's state - might not be necessary
+			// Display the information
 			firstName.setText(sFirstName);
 			lastName.setText(sLastName);
 			userName.setText(sUserName);
 			gender.setText(sGender);
 			age.setText(sAge);
+			
+			if (!sImagePath.equals("")) {
+				File imgFile = new  File(sImagePath);
+				Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+				profileImage.setImageBitmap(bitmap);
+			}
 			
 			return rootView;
 		}
@@ -195,6 +213,10 @@ public class Profile extends Activity {
 	 * data. 
 	 */
 	public static class EditFragment extends Fragment {
+		ImageView profileImage;
+		Spinner gender;
+		DatePicker age;
+		String sFirstName, sLastName, sUserName, sGender, sAge, sImagePath;
 		EditText eFirstName, eLastName, eUserName, ePassword;
 		
 		public EditFragment() {}
@@ -202,6 +224,15 @@ public class Profile extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+			
+			// Wire the widgets
+			profileImage = (ImageView) rootView.findViewById(R.id.display_profile_fragment_profile_pic);
+			eFirstName = (EditText) rootView.findViewById(R.id.edit_profile_fragment_f_name);
+			eLastName = (EditText) rootView.findViewById(R.id.edit_profile_fragment_l_name);
+			eUserName = (EditText) rootView.findViewById(R.id.edit_profile_fragment_u_name);
+			gender = (Spinner) rootView.findViewById(R.id.edit_profile_fragment_gender);
+			age = (DatePicker) rootView.findViewById(R.id.edit_profile_fragment_bday);
+			
 			return rootView;
 		}
 	}

@@ -182,13 +182,14 @@
     
     <!-- Strings for Edit Fragment -->
 	<string name="edit_profile_fragment_label">Edit Your Profile</string>
+	<string name="edit_profile_fragment_change_pic">Profile Picture</string>
     <string name="edit_profile_fragment_first_name">First name</string>
     <string name="edit_profile_fragment_last_name">Last name</string>
     <string name="edit_profile_fragment_username">Username</string>
     <string name="edit_profile_fragment_password">Password</string>
     <string name="edit_profile_fragment_confirm_password">Confirm</string>
-    <string name="edit_profile_fragment_enter_sex">Please enter your sex:</string>
-    <string name="edit_profile_fragment_enter_bday">Please enter your birthday:</string>
+    <string name="edit_profile_fragment_gender">Please enter your sex:</string>
+    <string name="edit_profile_fragment_birthday">Please enter your birthday:</string>
     <string name="edit_profile_fragment_OK">OK</string>
     
     <!-- String Arrays for Form Components -->
