@@ -9,7 +9,7 @@
     tools:context="com.team9.healthmate.Profile$PlaceholderFragment" >
 
      <LinearLayout
-	    android:id="@+id/profile_relative_layout0"
+	    android:id="@+id/display_profile_fragment_relative_layout0"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -17,7 +17,7 @@
         android:paddingTop="10dp" >
         
         	<ImageView
-		        android:id="@+id/profile_pic"
+		        android:id="@+id/display_profile_fragment_profile_pic"
 		        android:contentDescription="@string/display_profile_fragment_profile_pic"
 		        android:layout_width="50dp"
 		        android:layout_height="50dp"
@@ -28,23 +28,23 @@
     </LinearLayout>
     
 	<LinearLayout
-	    android:id="@+id/profile_relative_layout1"
+	    android:id="@+id/display_profile_fragment_relative_layout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingTop="10dp"
-        android:layout_below="@+id/profile_relative_layout0" >
+        android:layout_below="@+id/display_profile_fragment_relative_layout0" >
         
 	    <TextView
-	        android:id="@+id/f_name_label"
+	        android:id="@+id/display_profile_fragment_first_name_label"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/display_profile_fragment_first_name" />
 	    
 	    <TextView
-	        android:id="@+id/f_name"
+	        android:id="@+id/display_profile_fragment_first_name_textview"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
@@ -53,23 +53,23 @@
 	</LinearLayout>
 	
 	<LinearLayout
-	    android:id="@+id/profile_relative_layout2"
+	    android:id="@+id/display_profile_fragment_relative_layout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingTop="10dp" 
-        android:layout_below="@+id/profile_relative_layout1" >
+        android:layout_below="@+id/display_profile_fragment_relative_layout1" >
 	    
 	    <TextView
-	        android:id="@+id/l_name_label"
+	        android:id="@+id/display_profile_fragment_last_name_label"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/display_profile_fragment_last_name" />
 	    
 	    <TextView
-	        android:id="@+id/l_name"
+	        android:id="@+id/display_profile_fragment_last_name_textview"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
@@ -79,23 +79,23 @@
 	</LinearLayout>
 	
 	<LinearLayout
-	    android:id="@+id/profile_relative_layout3"
+	    android:id="@+id/display_profile_fragment_relative_layout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingTop="10dp" 
-        android:layout_below="@+id/profile_relative_layout2" >
+        android:layout_below="@+id/display_profile_fragment_relative_layout2" >
 	    
 	    <TextView
-	        android:id="@+id/u_name_label"
+	        android:id="@+id/display_profile_fragment_username_label"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/display_profile_fragment_username" />
 	    
 	    <TextView
-	        android:id="@+id/u_name"
+	        android:id="@+id/display_profile_fragment_username_textview"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
@@ -105,23 +105,23 @@
 	</LinearLayout>
 	
 	<LinearLayout
-	    android:id="@+id/profile_relative_layout4"
+	    android:id="@+id/display_profile_fragment_relative_layout4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingTop="10dp" 
-        android:layout_below="@+id/profile_relative_layout3" >
+        android:layout_below="@+id/display_profile_fragment_relative_layout3" >
 		
 	    <TextView
-	        android:id="@+id/gender_label"
+	        android:id="@+id/display_profile_fragment_gender_label"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/display_profile_fragment_gender" />
 	    
 	    <TextView
-	        android:id="@+id/gender"
+	        android:id="@+id/display_profile_fragment_gender_textview"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
@@ -131,23 +131,23 @@
 	</LinearLayout>
 	
 	<LinearLayout
-	    android:id="@+id/profile_relative_layout5"
+	    android:id="@+id/display_profile_fragment_relative_layout5"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingTop="10dp" 
-        android:layout_below="@+id/profile_relative_layout4" >
+        android:layout_below="@+id/display_profile_fragment_relative_layout4" >
 	    
 	    <TextView
-	        android:id="@+id/age_label"
+	        android:id="@+id/display_profile_fragment_age_label"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/display_profile_fragment_birthday" />
 	    
 	    <TextView
-	        android:id="@+id/birthday"
+	        android:id="@+id/display_profile_fragment_age_textview"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"

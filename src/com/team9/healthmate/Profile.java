@@ -1,13 +1,28 @@
 package com.team9.healthmate;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import com.team9.healthmate.DataManager.DataStorageManager;
+
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 /** 
  * Displays user profile information to the
@@ -18,15 +33,29 @@ import android.view.ViewGroup;
  * @author Steve
  */
 public class Profile extends Activity {
+	String sFirstName, sLastName, sUserName, sGender, sAge;
 	boolean notPressedYet = true;
-
+	private static final String FIRST_NAME = "First_Name";
+	private static final String LAST_NAME = "Last_Name";
+	private static final String USERNAME = "Username";
+	private static final String GENDER = "Gender";
+	private static final String AGE = "Age";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.profile_container, new DisplayFragment()).commit();
+			loadProfileInformation();
+			DisplayFragment df = new DisplayFragment();
+			Bundle profileInformation = new Bundle();
+			profileInformation.putString(FIRST_NAME, sFirstName);
+			profileInformation.putString(LAST_NAME, sLastName);
+			profileInformation.putString(USERNAME, sUserName);
+			profileInformation.putString(GENDER, sGender);
+			profileInformation.putString(AGE, sAge);
+			df.setArguments(profileInformation);
+			getFragmentManager().beginTransaction().add(R.id.profile_container, df).commit();
 		}
 	}
 
@@ -40,34 +69,123 @@ public class Profile extends Activity {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * Responsible for swapping the fragments out and transferring data between them.
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+		FragmentManager fm = getFragmentManager();
+		
 		if (item.getItemId() == R.id.action_edit_profile) {
-			//setUpEditLayout();
+			// Show the EditFragment
+			fm.beginTransaction().replace(R.id.profile_container, new EditFragment()).commit();
 		} else if (item.getItemId() == R.id.action_save_profile) {
-			//setUpNormalLayout();
+			// Show the DisplayFragment with new information
+			//getFragmentManager().beginTransaction().replace(R.id.profile_container, new DisplayFragment()).commit();
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putString(FIRST_NAME, sFirstName);
+		savedInstanceState.putString(LAST_NAME, sLastName);
+		savedInstanceState.putString(USERNAME, sUserName);
+		savedInstanceState.putString(GENDER, sGender);
+		savedInstanceState.putString(AGE, sAge);
+	}
+	
+	/**
+	 * Takes account information from local storage.
+	 */
+	public void loadProfileInformation() {
+		try {
+			Context context = getApplicationContext();
+			ArrayList<Map<String, String>> credentials = DataStorageManager.readJSONObject(context, "account");
+			Iterator<Map<String, String>> iterator = credentials.iterator();
+
+			Map<String, String> dataSet = new HashMap<String, String>();
+			// attempt to authenticate the user
+			while (iterator.hasNext()) {
+				// go through all the keys
+				dataSet = iterator.next();
+				Iterator<String> it = dataSet.keySet().iterator();
+				while (it.hasNext()) {
+					String key = it.next();
+					String value = dataSet.get(key);
+					// make sure we only check the username & password keys
+					switch (key) {
+						case "username":
+							sUserName = value;
+							break;
+						case "first_name":
+							sFirstName = value;
+							break;
+						case "last_name":
+							sLastName = value;
+							break;
+						case "sex":
+							sGender = value;
+							break;
+						case "age":
+							sAge = value;
+							break;
+						case "picture":
+							// load the image from the file path stored
+//							if (!value.equals("")) {
+//								File imgFile = new  File(value);
+//								Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+//								image.setImageBitmap(bitmap);
+//							}
+//							imagePath = value;
+						default:
+							break;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	/**
 	 * This fragment is responsible for displaying the profile
 	 * data. 
 	 */
 	public static class DisplayFragment extends Fragment {
-
+		String sFirstName, sLastName, sUserName, sGender, sAge;
+		TextView firstName, lastName, userName, gender, age;
+		
 		public DisplayFragment() {}
-
+		
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState)
-		{
-			View rootView = inflater.inflate(R.layout.fragment_display_profile,
-					container, false);
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_display_profile, container, false);
+			
+			// Wire the widgets
+			firstName = (TextView) rootView.findViewById(R.id.display_profile_fragment_first_name_textview);
+			lastName = (TextView) rootView.findViewById(R.id.display_profile_fragment_last_name_textview);
+			userName = (TextView) rootView.findViewById(R.id.display_profile_fragment_username_textview);
+			gender = (TextView) rootView.findViewById(R.id.display_profile_fragment_gender_textview);
+			age = (TextView) rootView.findViewById(R.id.display_profile_fragment_age_textview);
+			
+			// Grab the profile info
+			sFirstName = getArguments().getString(FIRST_NAME);
+			sLastName = getArguments().getString(LAST_NAME);
+			sUserName = getArguments().getString(USERNAME);
+			sGender = getArguments().getString(GENDER);
+			sAge = getArguments().getString(AGE);
+			
+			// Save it to the fragment's state - might not be necessary
+			firstName.setText(sFirstName);
+			lastName.setText(sLastName);
+			userName.setText(sUserName);
+			gender.setText(sGender);
+			age.setText(sAge);
+			
 			return rootView;
 		}
 	}
@@ -77,15 +195,13 @@ public class Profile extends Activity {
 	 * data. 
 	 */
 	public static class EditFragment extends Fragment {
-
+		EditText eFirstName, eLastName, eUserName, ePassword;
+		
 		public EditFragment() {}
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState)
-		{
-			View rootView = inflater.inflate(R.layout.fragment_edit_profile,
-					container, false);
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 			return rootView;
 		}
 	}
