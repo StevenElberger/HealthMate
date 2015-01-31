@@ -139,9 +139,17 @@ public class Profile extends Activity {
 				warningLabel.setTextColor(Color.RED);
 				warningLabel.setVisibility(0);
 			} else {
+				String imagePath = ef.sImagePath;
+				String firstName = ef.eFirstName.getText().toString();
+				String lastName = ef.eLastName.getText().toString();
+				String userName = ef.eUserName.getText().toString();
+				String password = ef.ePassword.getText().toString();
+				String gender = ef.gender.getSelectedItem().toString();
+				String age = sUserAge;
+				
 				// Write information to user account file
 				// and bring user back to the display fragment
-				writeProfileInformation();
+				writeProfileInformation(userName, firstName, lastName, gender, age, password, imagePath);
 				
 				// Show the DisplayFragment with new information
 				Bundle profileInformation = new Bundle();
@@ -212,25 +220,32 @@ public class Profile extends Activity {
 	 * Takes account information from forms being displayed
 	 * and writes them to the user account file.
 	 */
-	public void writeProfileInformation() {
+	public void writeProfileInformation(String userName, String firstName, String lastName, String gender, String age, String password, String imagePath) {
 		try {
 			Context context = getApplicationContext();
 			Map<String, String> dataSet = new HashMap<String, String>();
-			dataSet.put("username", sUserName);
-			dataSet.put("first_name", sFirstName);
-			dataSet.put("last_name", sLastName);
-			dataSet.put("sex", sGender);
-			dataSet.put("age", sAge);
-			dataSet.put("password", sPassword);
-			if (sImagePath == null) {
-				sImagePath = "";
+			dataSet.put("username", userName);
+			dataSet.put("first_name", firstName);
+			dataSet.put("last_name", lastName);
+			dataSet.put("sex", gender);
+			dataSet.put("age", age);
+			dataSet.put("password", password);
+			if (imagePath == null) {
+				imagePath = "";
 			}
-			dataSet.put("picture", sImagePath);
+			dataSet.put("picture", imagePath);
 			DataStorageManager.writeJSONObject(context, "account", dataSet, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+    public void onBackPressed() {
+            super.onBackPressed();
+            this.finish();
+    }
+	
 	/**
 	 * This fragment is responsible for displaying the profile
 	 * data. 
@@ -269,7 +284,7 @@ public class Profile extends Activity {
 			gender.setText(sGender);
 			age.setText(sAge);
 			
-			if (!sImagePath.equals("")) {
+			if (sImagePath != null) {
 				File imgFile = new  File(sImagePath);
 				Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 				profileImage.setImageBitmap(bitmap);

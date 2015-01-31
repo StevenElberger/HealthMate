@@ -192,7 +192,7 @@
 			   	android:id="@+id/edit_profile_fragment_bday"
 			   	android:calendarViewShown="false"
 			   	android:endYear="2014"
-			   	android:maxDate="01/01/2014"
+			   	android:maxDate="12/31/2015"
 			   	android:minDate="01/01/1900"
 			   	android:spinnersShown="true"
 			   	android:startYear="1900"
