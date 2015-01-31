@@ -169,13 +169,24 @@
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp" 
 	        android:layout_below="@+id/edit_profile_fragment_relative_layout4" >
-		    
-		    <TextView
+		
+		<TextView
 		        android:id="@+id/edit_profile_fragment_age_label"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
+
 		        android:text="@string/edit_profile_fragment_birthday" />
+		
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout6"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp" 
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout5" >
 		    
 		    <DatePicker
 			   	android:id="@+id/edit_profile_fragment_bday"
@@ -193,13 +204,13 @@
 		</LinearLayout>
 		
 			<LinearLayout
-		    android:id="@+id/edit_profile_fragment_relative_layout6"
+		    android:id="@+id/edit_profile_fragment_relative_layout7"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp"
-	        android:layout_below="@+id/edit_profile_fragment_relative_layout5" >
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout6" >
 		    
 		    <TextView
 		        android:id="@+id/edit_profile_fragment_password_label"

@@ -1,9 +1,14 @@
 package com.team9.healthmate;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import com.team9.healthmate.DataManager.DataStorageManager;
@@ -21,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,6 +101,7 @@ public class Profile extends Activity {
 			profileInformation.putString(AGE, sAge);
 			ef.setArguments(profileInformation);
 			fm.beginTransaction().replace(R.id.profile_container, ef).commit(); // really should just be hidden instead of replaced
+			notPressedYet = false;
 		} else if (item.getItemId() == R.id.action_save_profile) {
 			// Show the DisplayFragment with new information
 			//getFragmentManager().beginTransaction().replace(R.id.profile_container, new DisplayFragment()).commit();
@@ -226,12 +233,58 @@ public class Profile extends Activity {
 			View rootView = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 			
 			// Wire the widgets
-			profileImage = (ImageView) rootView.findViewById(R.id.display_profile_fragment_profile_pic);
+			profileImage = (ImageView) rootView.findViewById(R.id.edit_profile_fragment_edit_profile_pic);
 			eFirstName = (EditText) rootView.findViewById(R.id.edit_profile_fragment_f_name);
 			eLastName = (EditText) rootView.findViewById(R.id.edit_profile_fragment_l_name);
 			eUserName = (EditText) rootView.findViewById(R.id.edit_profile_fragment_u_name);
 			gender = (Spinner) rootView.findViewById(R.id.edit_profile_fragment_gender);
 			age = (DatePicker) rootView.findViewById(R.id.edit_profile_fragment_bday);
+			
+			// Set up the gender spinner -- grab the activity's context
+			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(),
+		            R.array.sex, R.layout.sex_spinner_textview);
+		    adapter.setDropDownViewResource(R.layout.sex_spinner_textview);
+			gender.setAdapter(adapter);
+			
+			// Grab the profile info
+			sImagePath = getArguments().getString(IMAGE_PATH);
+			sFirstName = getArguments().getString(FIRST_NAME);
+			sLastName = getArguments().getString(LAST_NAME);
+			sUserName = getArguments().getString(USERNAME);
+			sGender = getArguments().getString(GENDER);
+			sAge = getArguments().getString(AGE);
+			
+			// Display the information
+			eFirstName.setText(sFirstName);
+			eLastName.setText(sLastName);
+			eUserName.setText(sUserName);
+			
+			// Show the gender
+			if (sGender.equals("Male")) {
+				gender.setSelection(0);
+			} else if (sGender.equals("Female")) {
+				gender.setSelection(1);
+			} else {
+				gender.setSelection(2);
+			}
+			
+			// Show the birthday
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+			try {
+				Date userAge = sdf.parse(sAge);
+				Calendar c = Calendar.getInstance();
+				c.setTime(userAge);
+				age.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			// Show the profile picture
+			if (sImagePath != null) {
+				File imgFile = new  File(sImagePath);
+				Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+				profileImage.setImageBitmap(bitmap);
+			}
 			
 			return rootView;
 		}
