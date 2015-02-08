@@ -10,20 +10,17 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-   
-	<uses-permission android:name="android.permission.VIBRATE" />
-	
-	<uses-permission android:name="android.permission.WAKE_LOCK"/>
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
          >
-        
+
         <activity
             android:name=".Login"
             android:label="@string/app_name" >
@@ -84,15 +81,15 @@
         <activity android:name=".MoodTabViewer" >
         </activity>
         <activity
-            android:name=".AppointmentForm"
+            android:name=".Appointments.AppointmentForm"
             android:label="@string/title_activity_appointment_form" >
         </activity>
         <activity
-            android:name=".AppointmentsList"
+            android:name=".Appointments.AppointmentsList"
             android:label="@string/title_activity_appointment_list" >
         </activity>
         <activity
-            android:name=".AppointmentDetail"
+            android:name=".Appointments.AppointmentDetail"
             android:label="@string/title_activity_appointment_detail" >
         </activity>
         <activity
@@ -103,23 +100,27 @@
             android:name=".EditProfile"
             android:label="@string/title_activity_edit_profile" >
         </activity>
-        <activity 
+        <activity
             android:name=".Notes.ListOfNotes"
-            android:label="@string/title_activity_note_list">
+            android:label="@string/title_activity_note_list" >
         </activity>
-        <activity 
+        <activity
             android:name=".Notes.NoteDetail"
-            android:label="@string/title_activity_note_detail">
+            android:label="@string/title_activity_note_detail" >
         </activity>
-        <activity 
+        <activity
             android:name=".Notes.NoteEditor"
-            android:label="@string/title_activity_note_editor">
+            android:label="@string/title_activity_note_editor" >
         </activity>
-        <service android:name=".NotificationsManager.HealthMateAlarmService"></service>
-        <service android:name=".NotificationsManager.NotifyService"
-            android:enabled="true"/>
-        <receiver android:name=".NotificationsManager.AlarmReceiver">
-            </receiver>            
+
+        <service android:name=".NotificationsManager.HealthMateAlarmService" >
+        </service>
+        <service
+            android:name=".NotificationsManager.NotifyService"
+            android:enabled="true" />
+
+        <receiver android:name=".NotificationsManager.AlarmReceiver" >
+        </receiver>
         <receiver
             android:name=".NotificationsManager.RebootReceiver"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
@@ -127,6 +128,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".ContactMyDoctor"
             android:label="@string/title_activity_contact_my_doctor" >
@@ -135,6 +137,10 @@
             android:name=".ContactMyDoctorItemOptions"
             android:label="@string/title_activity_contact_my_doctor_item_options" >
         </activity>
+        <activity
+            android:name=".Profile"
+            android:label="@string/title_activity_profile" >
+        </activity>
     </application>
-    
+
 </manifest>

@@ -1,4 +1,4 @@
-package com.team9.healthmate;
+package com.team9.healthmate.Appointments;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.ListActivity;

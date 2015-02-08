@@ -13,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/welcome_label" />
+        android:text="@string/login_welcome_label" />
 
     <RelativeLayout
         android:id="@+id/login_fields"
@@ -31,7 +31,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="@string/username" />
+            android:hint="@string/login_username" />
 
         <EditText
             android:id="@+id/password"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/username"
             android:gravity="center"
-            android:hint="@string/password"
+            android:hint="@string/login_password"
             android:inputType="textPassword" />
     </RelativeLayout>
 
@@ -58,7 +58,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:gravity="center"
-	        android:text="@string/login_button"
+	        android:text="@string/login_login_button"
 	        />
 	    <Button
 	        android:id="@+id/register_button"
@@ -66,7 +66,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:gravity="center"
-	        android:text="@string/register_button"
+	        android:text="@string/login_register_button"
 	        />
 	    <TextView
         android:id="@+id/debug_text"

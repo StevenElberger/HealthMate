@@ -73,6 +73,13 @@ public class RebootReceiver extends BroadcastReceiver {
 					singleAlarmIntent.putExtra("date", message.get("date"));
 				}
 				
+				// Set the information that will be used to generate the notification
+				// If the notification is for an medications set the appropriate information
+				if (singleAlarmIntent.getStringExtra("type").equals("medications")) {
+					
+					// Medication information needs to go here
+				}
+				
 				// Set the alarm's time stamp and the appointments time stamp
 				singleAlarmIntent.putExtra("alarm timestamp", message.get("timestamp"));
 				singleAlarmIntent.putExtra("application timestamp", message.get("application timestamp"));
@@ -115,6 +122,13 @@ public class RebootReceiver extends BroadcastReceiver {
 					repeatedAlarmIntent.putExtra("start time", message.get("start time"));
 					repeatedAlarmIntent.putExtra("end time", message.get("end time"));
 					repeatedAlarmIntent.putExtra("date", message.get("date"));
+				}
+				
+				// Set the information that will be used to generate the notification
+				// If the notification is for an medications set the appropriate information
+				if (repeatedAlarmIntent.getStringExtra("type").equals("medications")) {
+					
+					// Medication information needs to go here
 				}
 				
 				// Set the alarm's time stamp and the appointments time stamp

@@ -11,7 +11,7 @@
 	    android:orientation="vertical" >
 		
 	    <LinearLayout
-		    android:id="@+id/profile_relative_layout"
+		    android:id="@+id/edit_profile_fragment_relative_layout"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
@@ -19,27 +19,27 @@
 	        android:paddingTop="10dp" >
 	        
 	        	<TextView
-		        android:id="@+id/no_password_label"
+		        android:id="@+id/edit_profile_fragment_no_password_label"
 		        android:layout_width="0dp"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
 		        android:gravity="center_horizontal"
 		        android:visibility="invisible"
-		        android:text="@string/edit_profile_2_enter_password" />
+		        android:text="@string/edit_profile_fragment_password" />
 	        	
 	    </LinearLayout>
 	    
 	    <LinearLayout
-		    android:id="@+id/profile_relative_layout0"
+		    android:id="@+id/edit_profile_fragment_relative_layout0"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp"
-	        android:layout_below="@+id/profile_relative_layout" >
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout" >
 	        
 	        	<ImageView
-			        android:id="@+id/edit_profile_pic"
+			        android:id="@+id/edit_profile_fragment_edit_profile_pic"
 			        android:contentDescription="@string/user_profile_profile_pic"
 			        android:layout_weight="1"
 			        android:layout_width="50dp"
@@ -49,111 +49,111 @@
 			        android:src="@drawable/ic_launcher" />
 	        	
 	        	<Button
-				    android:id="@+id/upload_profile_pic"
+				    android:id="@+id/edit_profile_fragment_upload_profile_pic"
 				    android:layout_weight="1"
 				    android:layout_width="0dp"
 				    android:layout_height="wrap_content"
 				    android:gravity="center"
 				    android:layout_gravity="center_vertical"
-				    android:text="@string/edit_profile_2_change_pic" />
+				    android:text="@string/edit_profile_fragment_change_pic" />
 	        	
 	    </LinearLayout>
 	    
 		<LinearLayout
-		    android:id="@+id/profile_relative_layout1"
+		    android:id="@+id/edit_profile_fragment_relative_layout1"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp"
-	        android:layout_below="@+id/profile_relative_layout0" >
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout0" >
 	        
 		    <TextView
-		        android:id="@+id/f_name_label"
+		        android:id="@+id/edit_profile_fragment_f_name_label"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/registration_first_name" />
+		        android:text="@string/edit_profile_fragment_first_name" />
 		    
 		    <EditText
-		        android:id="@+id/f_name"
+		        android:id="@+id/edit_profile_fragment_f_name"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
 		        android:gravity="end"
-		        android:hint="@string/registration_first_name"/>
+		        android:hint="@string/edit_profile_fragment_first_name"/>
 		</LinearLayout>
 		
 		<LinearLayout
-		    android:id="@+id/profile_relative_layout2"
+		    android:id="@+id/edit_profile_fragment_relative_layout2"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp" 
-	        android:layout_below="@+id/profile_relative_layout1" >
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout1" >
 		    
 		    <TextView
-		        android:id="@+id/l_name_label"
+		        android:id="@+id/edit_profile_fragment_l_name_label"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/registration_last_name" />
+		        android:text="@string/edit_profile_fragment_last_name" />
 		    
 		    <EditText
-		        android:id="@+id/l_name"
+		        android:id="@+id/edit_profile_fragment_l_name"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
 		        android:gravity="end"
-		        android:hint="@string/registration_last_name" />
+		        android:hint="@string/edit_profile_fragment_last_name" />
 		    
 		</LinearLayout>
 		
 		<LinearLayout
-		    android:id="@+id/profile_relative_layout3"
+		    android:id="@+id/edit_profile_fragment_relative_layout3"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp" 
-	        android:layout_below="@+id/profile_relative_layout2" >
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout2" >
 		    
 		    <TextView
-		        android:id="@+id/u_name_label"
+		        android:id="@+id/edit_profile_fragment_u_name_label"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/login_username" />
+		        android:text="@string/edit_profile_fragment_username" />
 		    
 		    <EditText
-		        android:id="@+id/u_name"
+		        android:id="@+id/edit_profile_fragment_u_name"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
 		        android:gravity="end"
-		        android:hint="@string/login_username" />
+		        android:hint="@string/edit_profile_fragment_username" />
 		    
 		</LinearLayout>
 		
 		<LinearLayout
-		    android:id="@+id/profile_relative_layout4"
+		    android:id="@+id/edit_profile_fragment_relative_layout4"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp" 
-	        android:layout_below="@+id/profile_relative_layout3" >
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout3" >
 			
 		    <TextView
-		        android:id="@+id/gender_label"
+		        android:id="@+id/edit_profile_fragment_gender_label"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/user_profile_gender" />
+		        android:text="@string/edit_profile_fragment_gender" />
 		    
 		    <Spinner
-				android:id="@+id/gender"
+				android:id="@+id/edit_profile_fragment_gender"
 				android:layout_weight="1"
 				android:layout_width="0dp"
 				android:gravity="center"
@@ -162,26 +162,37 @@
 		</LinearLayout>
 		
 		<LinearLayout
-		    android:id="@+id/profile_relative_layout5"
+		    android:id="@+id/edit_profile_fragment_relative_layout5"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp" 
-	        android:layout_below="@+id/profile_relative_layout4" >
-		    
-		    <TextView
-		        android:id="@+id/age_label"
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout4" >
+		
+		<TextView
+		        android:id="@+id/edit_profile_fragment_age_label"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        android:text="@string/user_profile_birthday" />
+
+		        android:text="@string/edit_profile_fragment_birthday" />
+		
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout6"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp" 
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout5" >
 		    
 		    <DatePicker
-			   	android:id="@+id/bday"
+			   	android:id="@+id/edit_profile_fragment_bday"
 			   	android:calendarViewShown="false"
 			   	android:endYear="2014"
-			   	android:maxDate="01/01/2014"
+			   	android:maxDate="12/31/2015"
 			   	android:minDate="01/01/1900"
 			   	android:spinnersShown="true"
 			   	android:startYear="1900"
@@ -193,29 +204,29 @@
 		</LinearLayout>
 		
 			<LinearLayout
-		    android:id="@+id/profile_relative_layout6"
+		    android:id="@+id/edit_profile_fragment_relative_layout7"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
 	        android:orientation="horizontal"
 	        android:paddingTop="10dp"
-	        android:layout_below="@+id/profile_relative_layout5" >
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout6" >
 		    
 		    <TextView
-		        android:id="@+id/password_label"
+		        android:id="@+id/edit_profile_fragment_password_label"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="@string/login_password" />
+		        android:text="@string/edit_profile_fragment_password" />
 		    
 		    <EditText
-		        android:id="@+id/password"
+		        android:id="@+id/edit_profile_fragment_password"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
 		        android:gravity="end"
 		        android:inputType="textPassword"
-		        android:hint="@+string/edit_profile_2_password" />
+		        android:hint="@+string/edit_profile_fragment_password" />
 		    
 		</LinearLayout>
 		

@@ -108,7 +108,7 @@ public class Moods extends FragmentActivity
 			Log.v("Debug", "ER start");
 			// Add the buttons
 			//builder.setTitle("Would you like to make an Emergency Call?");
-			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			builder.setPositiveButton(R.string.ok2, new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			               // User clicked OK button
 			        	   Log.v("Debug", "ER0");

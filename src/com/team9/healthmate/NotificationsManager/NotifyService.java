@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-import com.team9.healthmate.AppointmentDetail;
 import com.team9.healthmate.Login;
 import com.team9.healthmate.Menu;
 import com.team9.healthmate.R;
+import com.team9.healthmate.Appointments.AppointmentDetail;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.Medications.Medication;
 

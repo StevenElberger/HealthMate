@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.team9.healthmate.Appointments.AppointmentsList;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.Medications.Medication;
 import com.team9.healthmate.Notes.ListOfNotes;
@@ -37,7 +38,7 @@ public class Menu extends Activity {
 		setContentView(R.layout.activity_menu);
 		
 		String [] menuString = {
-				"Moods","Medication","Steps","Find a Doctor","Notes","Emergency", "Appointments", "Graphs", "Animated Graphs", "More Graphs", "Contact My Doctor"
+				"Moods","Medication","Steps","Health Locations","Notes", "Appointments", "Graphs", "Animated Graphs", "More Graphs", "Contact My Doctor"
 		};
 		menu = (ListView) findViewById(R.id.menu);
 		
@@ -48,9 +49,9 @@ public class Menu extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(Menu.this, ""+position, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(Menu.this, ""+position, Toast.LENGTH_SHORT).show();
 				changeActivity(position);
-				
+
 			}
 		});
 	}
@@ -68,12 +69,11 @@ public class Menu extends Activity {
 			case 2: return StepCounter.class;
 			case 3:	return HealthLocation.class;
 			case 4:	return ListOfNotes.class;
-			case 5:	return Emergency.class;
-			case 6: return AppointmentsList.class;
-			case 7: return ChartDemo.class;
-			case 8: return AnimatedChartDemo.class;
-			case 9: return PreviewChartDemo.class;
-			case 10: return ContactMyDoctor.class;
+			case 5: return AppointmentsList.class;
+			case 6: return ChartDemo.class;
+			case 7: return AnimatedChartDemo.class;
+			case 8: return PreviewChartDemo.class;
+			case 9: return ContactMyDoctor.class;
 		}
 		return null;
 	}
@@ -136,7 +136,7 @@ public class Menu extends Activity {
 		
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_edit_profile) {
-			Intent intent = new Intent(this, UserProfile.class);
+			Intent intent = new Intent(this, Profile.class); // used to be UserProfile.class
 			startActivity(intent);
 		}
 		

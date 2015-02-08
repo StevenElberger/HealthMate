@@ -30,7 +30,7 @@
 	    android:layout_width="0dp"
 	    android:layout_height="wrap_content"
 	    android:gravity="center"
-	    android:hint="@string/first_name"
+	    android:hint="@string/edit_profile_first_name"
 	    />
 	   	<EditText
 	    android:id="@+id/last_name"
@@ -38,7 +38,7 @@
 	    android:layout_width="0dp"
 	    android:layout_height="wrap_content"
 	    android:gravity="center"
-	    android:hint="@string/last_name"
+	    android:hint="@string/edit_profile_last_name"
 	    />
     </LinearLayout>
    	<EditText 
@@ -47,7 +47,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_below="@+id/name_fields"
-    android:hint="@string/username"
+    android:hint="@string/edit_profile_username"
     />
    	<LinearLayout
         android:id="@+id/passwords"
@@ -65,7 +65,7 @@
 		android:layout_width="0dp"
 	    android:layout_height="wrap_content"
 	    android:gravity="center"
-	    android:hint="@string/password"
+	    android:hint="@string/edit_profile_password"
 	    android:inputType="textPassword"
 	    />
 	   	<EditText 
@@ -74,7 +74,7 @@
 		android:layout_width="0dp"
 	    android:layout_height="wrap_content"
 	    android:gravity="center"
-	    android:hint="@string/confirm_password"
+	    android:hint="@string/edit_profile_confirm_password"
 	    android:inputType="textPassword"
 	    />
    	</LinearLayout>
@@ -94,7 +94,7 @@
 		android:layout_width="0dp"
 	    android:layout_height="wrap_content"
 	    android:gravity="center"
-	    android:text="@string/enter_sex"
+	    android:text="@string/edit_profile_enter_sex"
 	    />
 	   	<Spinner
 		android:id="@+id/sex"
@@ -109,7 +109,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/input_sex"
-    android:text="@string/enter_bday"
+    android:text="@string/edit_profile_enter_bday"
     />
    	<LinearLayout
     android:id="@+id/bday_confirm"
@@ -141,7 +141,7 @@
 	    android:layout_height="wrap_content"
 	    android:gravity="center"
 	    android:layout_gravity="center_vertical"
-	    android:text="@string/ok"
+	    android:text="@string/edit_profile_OK"
 	    />
 	</LinearLayout>
 </RelativeLayout>
