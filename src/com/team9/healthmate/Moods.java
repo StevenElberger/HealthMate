@@ -10,6 +10,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -37,6 +38,7 @@ public class Moods extends FragmentActivity
     private MenuInflater mn;    
    private Menu TabMenu;
    private Context context;
+   private Intent intent2;
     
  // Tab titles
     private String[] tabs = { "Moods Survey", "Moods Graph", "Helpful Tips" };    
@@ -120,14 +122,37 @@ public class Moods extends FragmentActivity
 			builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			               // User cancelled the dialog
-			        	   finish();
+			        	   
 			           }
 			       });
 			
 			// Create the AlertDialog
-			AlertDialog dialog = builder.create();			
+			AlertDialog dialog = builder.create();	
+			dialog.show();
 			break;
+		case R.id.mAddRssFeed:
+			 AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+			    // Get the layout inflater
+			    LayoutInflater inflater = this.getLayoutInflater();
 
+			    // Inflate and set the layout for the dialog
+			    // Pass null as the parent view because its going in the dialog layout
+			    builder2.setView(inflater.inflate(R.layout.dialog_rss_feed, null))
+			    // Add action buttons
+			           .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+			               @Override
+			               public void onClick(DialogInterface dialog, int id) {
+			                   // sign in the user ...
+			               }
+			           })
+			           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			               public void onClick(DialogInterface dialog, int id) {
+			                  
+			               }
+			           });      
+			   builder2.create();
+			builder2.show();
+			break;
 		default:
 			break;
 		}

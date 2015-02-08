@@ -106,6 +106,7 @@
     <string name="moodAdd">Add</string>
     <string name="moodER">Call ER</string>
     <string name="moodExit">Exit</string>
+    <string name="moodRssFeed">Add Rss Feed</string>
 
     <string name="title_activity_chart_demo">ChartDemo</string>
     <string name="title_activity_animated_chart_demo">AnimatedChartDemo</string>

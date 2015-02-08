@@ -20,5 +20,9 @@
         android:id="@+id/mExit"
         android:title="@+string/moodExit"
         android:showAsAction="never"></item>
+    <item 
+        android:id="@+id/mAddRssFeed"
+        android:title="@+string/moodRssFeed"
+        android:showAsAction="never"></item>
    
 </menu>
