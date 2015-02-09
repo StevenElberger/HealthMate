@@ -120,7 +120,8 @@ public class Medication extends Activity {
 	 */
 	static void saveMedication(Context context) {
 		try {
-			boolean firstElement = true;			
+			boolean firstElement = true;
+			DataStorageManager.deleteFile(context, "medications");
 			for(MedicationObject med : medications)
 			{		
 				Map<String,String> medMap = new HashMap<String,String>();		
