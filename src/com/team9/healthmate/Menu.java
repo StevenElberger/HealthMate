@@ -38,8 +38,8 @@ public class Menu extends Activity {
 		setContentView(R.layout.activity_menu);
 		
 		String [] menuString = {
-				"Moods","Medication","Steps","Health Locations","Notes", "Appointments", "Graphs", "Animated Graphs", "More Graphs", "Contact My Doctor"
-		};
+				"Moods","Medication","Steps","Health Locations","Notes", "Appointments", "Contact My Doctor"
+		}; // "Graphs", "Animated Graphs", "More Graphs",
 		menu = (ListView) findViewById(R.id.menu);
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,menuString);
@@ -70,10 +70,10 @@ public class Menu extends Activity {
 			case 3:	return HealthLocation.class;
 			case 4:	return ListOfNotes.class;
 			case 5: return AppointmentsList.class;
-			case 6: return ChartDemo.class;
-			case 7: return AnimatedChartDemo.class;
-			case 8: return PreviewChartDemo.class;
-			case 9: return ContactMyDoctor.class;
+//			case 6: return ChartDemo.class;
+//			case 7: return AnimatedChartDemo.class;
+//			case 8: return PreviewChartDemo.class;
+			case 6: return ContactMyDoctor.class;
 		}
 		return null;
 	}

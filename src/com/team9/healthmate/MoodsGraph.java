@@ -59,7 +59,7 @@ public class MoodsGraph extends Fragment implements OnItemSelectedListener {
             Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_moods_graph, container, false);
 					 
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(), R.array.mood_arrays, android.R.layout.simple_spinner_item); 
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.mood_arrays, android.R.layout.simple_spinner_item); 
 		
 		spinner1 = (Spinner)rootView.findViewById(R.id.spinnerMood);
 		spinner1.setAdapter(adapter);
@@ -124,7 +124,7 @@ public class MoodsGraph extends Fragment implements OnItemSelectedListener {
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
-		// TODO Auto-generated method stub
+		
 		
 	}		
 	

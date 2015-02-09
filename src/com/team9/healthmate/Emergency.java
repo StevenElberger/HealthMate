@@ -29,9 +29,9 @@ public class Emergency extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		switch (item.getItemId()) {
-		case R.id.mAdd:
-			
-			return true;
+//		case R.id.mAdd:
+//			
+//			return true;
 			
 		default:
 			return super.onOptionsItemSelected(item);

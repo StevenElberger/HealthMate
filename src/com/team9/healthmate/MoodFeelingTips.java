@@ -22,6 +22,7 @@ import com.team9.healthmate.RSS.RssItem;
 import com.team9.healthmate.RSS.RssReader;
 
 
+import android.R.string;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -48,6 +49,7 @@ public class MoodFeelingTips extends Fragment {
 	private ProgressDialog progress;
 	private Context context = this.getActivity();
 	public static List<RssItem> result;
+	public static String rssFeedVar  = "";  
 
 	
 	
@@ -61,8 +63,13 @@ public class MoodFeelingTips extends Fragment {
 	        GetRSSDataTask task = new GetRSSDataTask();	         
 	       
 	        // Start download RSS task
-	        task.execute("http://www.health.com/health/healthy-happy/feed");       
-	        
+	        if  (rssFeedVar.isEmpty()){
+	        task.execute("http://www.health.com/health/healthy-happy/feed"); 
+	        }
+	        else{
+	        	task.execute(rssFeedVar);
+	        }
+	        	
 	        // Debug the thread name
 	        //Log.d("RssReader", Thread.currentThread().getName());
 	        

@@ -5,6 +5,7 @@
     <string name="app_name">Health Mate</string>
 
     <!-- Strings for Activity Titles -->
+    <string name="title_activity_login">Login</string>
     <string name="title_activity_medication">Medication</string>
     <string name="title_activity_health_location">HealthLocation</string>
     <string name="title_activity_moods">Moods</string>
@@ -67,6 +68,15 @@
         <item>Depressed</item>       
     </string-array>
     
+      <string-array name="rssfeed_mood_arrays">
+        <item>Diet and Fitness</item>
+        <item>Beauty and Style</item>
+        <item>Asthma</item>
+        <item>Smoking</item>
+        <item>Heart Disease</item>
+        <item>Cholesterol</item>       
+    </string-array>
+    
     
     <string name="ok2">OK</string>
     
@@ -108,7 +118,7 @@
     <string name="moodER">Call ER</string>
     <string name="moodExit">Exit</string>
     <string name="moodRssFeed">Add Rss Feed</string>
-    <string name="Rss_Username">Username</string>
+    <string name="Rss_Username">Rss Feed</string>
     <string name="Rss_password">Password</string>   
 
     <!-- Strings for Registration Activity -->

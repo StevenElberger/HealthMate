@@ -82,7 +82,10 @@ public class MoodsSurvey extends Fragment
 				DataStorageManager.writeJSONObject(getActivity(), "testdata", listOfItems, false);
 				Toast toast = Toast.makeText(getActivity(), "The file is successfully writen.", Toast.LENGTH_LONG);
 				toast.show();							
-				getActivity().finish();
+				//getActivity().finish();
+				  for (int i = 0; i < seek.length; i++) {
+						seek[i].setProgress(0);
+		               }
 				//Throws an exception if there is an issue creating JSON object
 			} catch (JSONException e) {
 				Toast toast = Toast.makeText(getActivity(), "JSON Exception", Toast.LENGTH_LONG);
