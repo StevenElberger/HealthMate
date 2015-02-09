@@ -82,9 +82,8 @@ public class ContactMyDoctor extends Activity {
 									int position, 
 									long id) {				
 				itemSelected = position;
-				Intent intent = new Intent(ContactMyDoctor.this, 
-										   ContactMyDoctorItemOptions.class);
-				startActivityForResult(intent, OPTION_REQUEST);			
+				Intent intent = new Intent(ContactMyDoctor.this, ContactMyDoctorItemOptions.class);
+				startActivityForResult(intent, OPTION_REQUEST);
 			}
 		});
 	}
@@ -120,7 +119,6 @@ public class ContactMyDoctor extends Activity {
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    Log.v("debugme", "requestCode ="+requestCode+" - resultCode: "+resultCode);
 		// Check which request it is that we're responding to		
 	    if (requestCode == PICK_REQUEST) {
 	        // Make sure the request was successful
@@ -133,6 +131,7 @@ public class ContactMyDoctor extends Activity {
 	            if(name.isEmpty() || number.isEmpty())
 	            	return;
 	            
+	            Log.v("debugme", "Name:" +name +" Phone:" + number +" Email: "+ email );
 	            contacts.add(new Contact(contactUri, name, number, email));
 	            adapter.notifyDataSetChanged();
 	           
@@ -279,7 +278,6 @@ public class ContactMyDoctor extends Activity {
         int column = cursor.getColumnIndex(Phone.NUMBER);
         contactNumber = cursor.getString(column);
         
-        Log.v("debugme", "Contact Phone Number: " + contactNumber);
         return contactNumber;
     }
 	
@@ -292,34 +290,32 @@ public class ContactMyDoctor extends Activity {
 	 * @return
 	 */
 	private String retriveContactEmail(Uri uriContact) {
-		//Log.v("debugme", uriContact.toString());
 		
-		String contactEmail = null;
+		String contactEmail = "";
 		String contactID = "";
-		String projection[] = new String[]{ContactsContract.Contacts._ID};
+		
         // getting contacts ID
         Cursor cursorID = getContentResolver().query(uriContact,
-                projection, null, null, null);
+                null, null, null, null);
  
-        if (cursorID.moveToFirst()) {
-            contactID = cursorID.getString(cursorID.getColumnIndex(ContactsContract.Contacts._ID));
-        }
+        if (cursorID.moveToFirst()) 
+            contactID = cursorID.getString(cursorID.getColumnIndex("contact_id"));        
         cursorID.close();
         
-     // Using the contact ID now we will get contact email address
-        String emailProjection[] = new String[] {ContactsContract.CommonDataKinds.Email.DATA};
+        // Using the contact ID now we will get contact email address
         Cursor emailCur = getContentResolver().query(
-        						uriContact,
-        						emailProjection,
+        						ContactsContract.CommonDataKinds.Email.CONTENT_URI,
         						null,
+        						ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+                                + " = ?", new String[] { contactID },
         						null,
         						null);
-        emailCur.moveToFirst();
-        contactEmail = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
         
-        Log.d("debugme", "Contact ID: " + contactID);
-        Log.d("debugme", "Email: "+contactEmail);
-		return "";
+        while(emailCur.moveToNext())        
+        	contactEmail = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));  
+        
+        emailCur.close();
+		return contactEmail;
 	}
 	
 	/**
@@ -343,7 +339,6 @@ public class ContactMyDoctor extends Activity {
             		ContactsContract.Contacts.DISPLAY_NAME));
         } 
         cursor.close(); 
-        Log.v("debugme", "Contact Name: " + contactName); 
         return contactName;
     }
     
@@ -370,8 +365,8 @@ public class ContactMyDoctor extends Activity {
 		Intent email = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
 		// prompts email clients only
 		 email.setType("message/rfc822"); 
-		 email.putExtra(Intent.EXTRA_EMAIL, recipient);
-	
+		 email.putExtra(Intent.EXTRA_EMAIL, new String[] {recipient});
+		 Log.v("debugme","Sending an email to: " +recipient);
 		 try {
 			 // the user can choose the email client
 			 context.startActivity(Intent.createChooser(email, "Choose an email client from..."));
