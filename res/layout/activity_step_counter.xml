@@ -7,63 +7,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team9.healthmate.StepCounter" >
+    
+    <ListView 
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        
+    </ListView>
 
-	<TextView
-	    android:id="@+id/unit"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBaseline="@+id/step_counter"
-	    android:layout_alignBottom="@+id/step_counter"
-	    android:layout_toRightOf="@+id/step_counter"
-	    android:text="Steps" />
-
-	<ProgressBar
-	    android:id="@+id/goal_progress_bar"
-	    style="?android:attr/progressBarStyleHorizontal"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/step_counter"
-	    android:layout_centerHorizontal="true" />
-
-	<TextView
-	    android:id="@+id/step_counter"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_centerHorizontal="true"
-	    android:layout_centerVertical="true"
-	    android:text="0"
-	    android:textColor="#FFFFFF"
-	    android:textSize="60dp" />
-
-	<TextView
-	    android:id="@+id/step_goal"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/goal_progress_bar"
-	    android:layout_centerHorizontal="true"
-	    android:clickable="true"
-	    android:onClick="onClick"
-	    android:text="Goal: 100 steps"
-	    android:textColor="#01A9DB"
-	    android:textSize="15dp" />
-
-	<Button
-	    android:id="@+id/start_stop_button"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-	    android:layout_centerHorizontal="true"
-	    android:onClick="onStartStopButton"
-	    android:text="Start" />
-
-	<Chronometer
-	    android:id="@+id/stop_watch"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/step_goal"
-	    android:layout_centerHorizontal="true"
-	    android:layout_margin="10dp"
-	    android:text="Chronometer"
-	    android:textSize="25dp" />
+	
 
 </RelativeLayout>
