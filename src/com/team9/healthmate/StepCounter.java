@@ -50,9 +50,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-
-import com.google.android.gms.internal.cn;
-import com.google.android.gms.maps.LocationSource;
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 
@@ -134,7 +131,6 @@ public class StepCounter extends Activity implements SensorEventListener {
 	 */
 	public void onClick(View view)	{
 		promptGoalDialog();
-		
 	}
 	
 	/**
