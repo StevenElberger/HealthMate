@@ -67,7 +67,7 @@
             android:label="@string/title_activity_emergency" >
         </activity>
         <activity
-            android:name=".StepCounter"
+            android:name=".StepCounter.StepCounter"
             android:label="@string/title_activity_step_counter" >
         </activity>
         <activity
@@ -111,6 +111,14 @@
         <activity
             android:name=".AppointmentDetail"
             android:label="@string/title_activity_appointment_detail" >
+        </activity>
+        <activity
+            android:name=".StepCounter.HeightActivity"
+            android:label="@string/title_activity_height" >
+        </activity>
+        <activity
+            android:name="com.team9.healthmate.StepCounter.WeightActivity"
+            android:label="@string/title_activity_weight" >
         </activity>
     </application>
 
