@@ -36,6 +36,7 @@ public class ListOfNotes extends ListActivity {
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_appointment_list);
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 			
 			// Attempt to read from the Notes file
 			try {

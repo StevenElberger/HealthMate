@@ -57,6 +57,8 @@ public class UserProfile extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_profile);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		firstName = (TextView) findViewById(R.id.f_name);
 		lastName = (TextView) findViewById(R.id.l_name);
 		userName = (TextView) findViewById(R.id.u_name);

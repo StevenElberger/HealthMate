@@ -61,6 +61,8 @@ public class AppointmentForm extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_form);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		// Initialize map objects
 		appointmentTimeStamp = new HashMap<String, String>();
 		appointmentToDelete = new HashMap<String, String>();

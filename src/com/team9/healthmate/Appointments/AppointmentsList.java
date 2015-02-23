@@ -38,6 +38,8 @@ public class AppointmentsList extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_list);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		// Attempt to read from the Appointments file
 		try {
 			

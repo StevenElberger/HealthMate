@@ -35,6 +35,7 @@ public class NoteDetail extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note_details);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Create a new Map Object
 		noteDetails = new HashMap<String, String>();

@@ -50,6 +50,7 @@ public class Registration extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		// User's birthday
 	    datePicker = (DatePicker) findViewById(R.id.bday);
 	    

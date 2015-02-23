@@ -38,6 +38,8 @@ public class NewMedication extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_medication);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		
 		populateFrequencySpinner();
 		populateMedicationTypeSpinner();

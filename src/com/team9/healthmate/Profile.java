@@ -62,6 +62,9 @@ public class Profile extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		if (savedInstanceState == null) {
 			loadProfileInformation();
 			// Bundle the information and send it to the fragment

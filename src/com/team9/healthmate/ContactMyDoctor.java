@@ -52,6 +52,7 @@ public class ContactMyDoctor extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_my_doctor);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		//Reads contacts stored on the file and populate contact-list
 		populateContactList();
 		

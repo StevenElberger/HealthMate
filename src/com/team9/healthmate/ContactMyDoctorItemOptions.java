@@ -31,6 +31,9 @@ public class ContactMyDoctorItemOptions extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_my_doctor_item_options);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		buildMenuOption();	
 	}
 	

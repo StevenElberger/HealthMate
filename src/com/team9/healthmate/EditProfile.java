@@ -40,6 +40,8 @@ public class EditProfile extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		firstName = (EditText) findViewById(R.id.first_name);
 		lastName = (EditText) findViewById(R.id.last_name);
 		userName = (EditText) findViewById(R.id.username);

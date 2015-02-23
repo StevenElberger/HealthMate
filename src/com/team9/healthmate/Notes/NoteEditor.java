@@ -43,6 +43,7 @@ public class NoteEditor extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note_editor);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		noteToDelete = new HashMap<String, String>();
 

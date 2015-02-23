@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -39,15 +40,18 @@
         </activity>
         <activity
             android:name=".Medications.Medication"
-            android:label="@string/title_activity_medication" >
+            android:label="@string/title_activity_medication" 
+            android:parentActivityName="com.team9.healthmate.Menu">
         </activity>
         <activity
             android:name=".HealthLocation"
-            android:label="@string/title_activity_health_location" >
+            android:label="@string/title_activity_health_location" 
+            android:parentActivityName="com.team9.healthmate.Menu">
         </activity>
         <activity
             android:name=".Moods"
-            android:label="@string/title_activity_moods" >
+            android:label="@string/title_activity_moods" 
+            android:parentActivityName="com.team9.healthmate.Menu">
         </activity>
         <activity
             android:name=".Menu"
@@ -59,19 +63,23 @@
         </activity>
         <activity
             android:name=".StepCounter"
-            android:label="@string/title_activity_step_counter" >
+            android:label="@string/title_activity_step_counter" 
+            android:parentActivityName="com.team9.healthmate.Menu">
         </activity>
         <activity
             android:name=".Medications.NewMedication"
-            android:label="@string/title_activity_new_medication" >
+            android:label="@string/title_activity_new_medication" 
+            android:parentActivityName="com.team9.healthmate.Medications.Medication">
         </activity>
         <activity
             android:name=".Medications.MedicationDetails"
-            android:label="@string/title_activity_medication_details" >
+            android:label="@string/title_activity_medication_details"
+             android:parentActivityName="com.team9.healthmate.Medications.Medication" >
         </activity>
         <activity
             android:name=".Registration"
-            android:label="@string/title_activity_registration" >
+            android:label="@string/title_activity_registration" 
+            android:parentActivityName="com.team9.healthmate.Login">
         </activity>
         <activity
             android:name=".ChartDemo"
@@ -89,35 +97,43 @@
         </activity>
         <activity
             android:name=".Appointments.AppointmentForm"
-            android:label="@string/title_activity_appointment_form" >
+            android:label="@string/title_activity_appointment_form"
+            android:parentActivityName="com.team9.healthmate.Appointments.AppointmentsList" >
         </activity>
         <activity
             android:name=".Appointments.AppointmentsList"
-            android:label="@string/title_activity_appointment_list" >
+            android:label="@string/title_activity_appointment_list"
+            android:parentActivityName="com.team9.healthmate.Menu" >
         </activity>
         <activity
             android:name=".Appointments.AppointmentDetail"
-            android:label="@string/title_activity_appointment_detail" >
+            android:label="@string/title_activity_appointment_detail" 
+             android:parentActivityName="com.team9.healthmate.Appointments.AppointmentsList">
         </activity>
         <activity
             android:name=".UserProfile"
-            android:label="@string/title_activity_user_profile" >
+            android:label="@string/title_activity_user_profile" 
+            android:parentActivityName="com.team9.healthmate.Menu">
         </activity>
         <activity
             android:name=".EditProfile"
-            android:label="@string/title_activity_edit_profile" >
+            android:label="@string/title_activity_edit_profile"
+            android:parentActivityName="com.team9.healthmate.UserProfile" >
         </activity>
         <activity
             android:name=".Notes.ListOfNotes"
-            android:label="@string/title_activity_note_list" >
+            android:label="@string/title_activity_note_list"
+            android:parentActivityName="com.team9.healthmate.Menu" >
         </activity>
         <activity
             android:name=".Notes.NoteDetail"
-            android:label="@string/title_activity_note_detail" >
+            android:label="@string/title_activity_note_detail"
+             android:parentActivityName="com.team9.healthmate.Notes.ListOfNotes" >
         </activity>
         <activity
             android:name=".Notes.NoteEditor"
-            android:label="@string/title_activity_note_editor" >
+            android:label="@string/title_activity_note_editor" 
+            android:parentActivityName="com.team9.healthmate.Notes.ListOfNotes">
         </activity>
 
         <service android:name=".NotificationsManager.HealthMateAlarmService" >
@@ -138,15 +154,18 @@
 
         <activity
             android:name=".ContactMyDoctor"
-            android:label="@string/title_activity_contact_my_doctor" >
+            android:label="@string/title_activity_contact_my_doctor"
+            android:parentActivityName="com.team9.healthmate.Menu" >
         </activity>
         <activity
             android:name=".ContactMyDoctorItemOptions"
-            android:label="@string/title_activity_contact_my_doctor_item_options" >
+            android:label="@string/title_activity_contact_my_doctor_item_options"
+            android:parentActivityName="com.team9.healthmate.ContactMyDoctor" >
         </activity>
         <activity
             android:name=".Profile"
-            android:label="@string/title_activity_profile" >
+            android:label="@string/title_activity_profile"
+             android:parentActivityName="com.team9.healthmate.Menu">
         </activity>
     </application>
 

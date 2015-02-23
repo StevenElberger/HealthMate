@@ -12,6 +12,7 @@
         android:id="@+id/mAdd"
         android:title="@+string/moodAdd"
         android:showAsAction="never"></item> --> 
+       
      <item 
         android:id="@+id/mCallER"
         android:title="@+string/moodER"
@@ -20,10 +21,15 @@
         android:id="@+id/mAddRssFeed"
         android:title="@+string/moodRssFeed"
         android:showAsAction="never"></item>
+        <item
+        android:id="@+id/action_mood_delete"        
+        android:title="@string/action_delete_appointment"
+        android:showAsAction="never"        
+        />
     <item 
         android:id="@+id/mood_tips_Exit"
         android:title="@+string/moodExit"
         android:showAsAction="never"></item>
-   
+  
    
 </menu>

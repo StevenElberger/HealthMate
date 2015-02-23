@@ -12,5 +12,7 @@ public class HealthLocation extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_health_location);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 }

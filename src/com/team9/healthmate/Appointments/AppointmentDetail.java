@@ -42,6 +42,8 @@ public class AppointmentDetail extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_details);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Create a new Map Object
 		appointmentDetails = new HashMap<String, String>();

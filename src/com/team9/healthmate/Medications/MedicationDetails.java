@@ -33,6 +33,7 @@ public class MedicationDetails extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_medication_details);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Intent i = getIntent();
 		final MedicationObject med = (MedicationObject)i.getSerializableExtra("medInfo");

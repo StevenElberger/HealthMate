@@ -1,8 +1,14 @@
 package com.team9.healthmate;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.json.JSONException;
+
+import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.GraphManager.GraphManager;
 
 import android.annotation.SuppressLint;
@@ -61,13 +67,12 @@ public class Moods extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_moods);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		  // Initilization
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
-        mAdapter = new MoodTabsPagerAdapter(getSupportFragmentManager());
-       
-         
+        mAdapter = new MoodTabsPagerAdapter(getSupportFragmentManager());         
  
         viewPager.setAdapter(mAdapter);
         actionBar.setHomeButtonEnabled(false);
@@ -158,8 +163,10 @@ public class Moods extends FragmentActivity
 			builder.setView(layout);			 
 			 rssSpinner = (Spinner)layout.findViewById(R.id.Rss_mood_tips_spinner);
 			 
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.rssfeed_mood_arrays));
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.rssfeed_mood_arrays));
+			
 			 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			
 			 rssSpinner.setAdapter(adapter);
 			 rssSpinner.setOnItemSelectedListener(this);
 			//builder.setTitle("Would you like to make an Emergency Call?");
@@ -185,6 +192,15 @@ public class Moods extends FragmentActivity
 			AlertDialog dialog2 = builder.create();	
 			dialog2.show();
 			break;
+		case R.id.action_mood_delete:
+			Spinner spin;
+			String moodText;
+			Map<String, String> listOfItems = new HashMap<String, String>();
+			spin = (Spinner) findViewById(R.id.spinnerMood);
+			moodText = spin.getSelectedItem().toString().trim();
+			
+			DataStorageManager.deleteFile(getApplicationContext(), "testdata");
+			break;
 		case R.id.mood_tips_Exit:
 			finish();		
 		default:
@@ -198,6 +214,9 @@ public class Moods extends FragmentActivity
 		// on tab selected
         // show respected fragment view
         viewPager.setCurrentItem(tab.getPosition());
+        if (tab.getPosition() == 1){
+        	
+        }
 
       }
 

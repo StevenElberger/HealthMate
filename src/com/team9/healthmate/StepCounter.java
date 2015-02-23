@@ -28,6 +28,9 @@ public class StepCounter extends Activity implements SensorEventListener{
 	    
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.activity_step_counter);
+	        
+	        getActionBar().setDisplayHomeAsUpEnabled(true);
+	        
 	        count = (TextView) findViewById(R.id.stepCount);
 	        count.setText("");
 	        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
