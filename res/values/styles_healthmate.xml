@@ -28,8 +28,7 @@
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Healthmate</item>
         <item name="android:actionModeBackground">@drawable/cab_background_top_healthmate</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_healthmate</item>
-        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Healthmate</item>
-        
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Healthmate</item>      
         
     </style>
 
@@ -38,7 +37,7 @@
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_healthmate</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_healthmate</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Healthmate</item>
-    </style>
+      </style>
 
     <style name="ActionBar.Transparent.Healthmate" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@drawable/ab_transparent_healthmate</item>
