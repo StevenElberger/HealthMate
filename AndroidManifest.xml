@@ -6,11 +6,6 @@
         android:minSdkVersion="19"
         android:targetSdkVersion="21" />
 
-    <permission
-        android:name="com.team9.healthmate.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="com.team9.healthmate.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -117,9 +112,17 @@
             android:label="@string/title_activity_height" >
         </activity>
         <activity
-            android:name="com.team9.healthmate.StepCounter.WeightActivity"
+            android:name=".StepCounter.WeightActivity"
             android:label="@string/title_activity_weight" >
         </activity>
+        <activity
+            android:name="com.team9.healthmate.StepCounter.StepCounterActivity"
+            android:label="@string/title_activity_step_counter" >
+        </activity>
+        
+        <service 
+            android:name=".StepService"
+            android:enabled="true" />
     </application>
 
 </manifest>
