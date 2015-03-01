@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Pause" />
+        android:onClick="onClickReset"
+        android:text="Reset" />
 
     <Button
         android:id="@+id/button3"
@@ -22,6 +23,7 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_alignParentRight="true"
+        android:onClick="onClickStop"
         android:text="Stop" />
 
     <Button
@@ -31,6 +33,7 @@
         android:layout_alignBaseline="@+id/button1"
         android:layout_alignBottom="@+id/button1"
         android:layout_centerHorizontal="true"
+        android:onClick="onClickStart"
         android:text="Start" />
 
     <TextView

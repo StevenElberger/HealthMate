@@ -116,13 +116,19 @@
             android:label="@string/title_activity_weight" >
         </activity>
         <activity
-            android:name="com.team9.healthmate.StepCounter.StepCounterActivity"
+            android:name=".StepCounter.StepCounterActivity"
             android:label="@string/title_activity_step_counter" >
         </activity>
-        
-        <service 
-            android:name=".StepService"
+        <activity
+            android:name=".StepCounter.BmiActivity"
+            android:label="@string/title_activity_bmi" >
+        </activity>
+
+        <service
+            android:name=".StepCounter.StepService"
             android:enabled="true" />
+
+        
     </application>
 
 </manifest>

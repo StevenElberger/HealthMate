@@ -4,7 +4,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,19 +71,47 @@ public class StepCounter extends Activity {
 		
 		
 	}
+	
+	private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+        	updateSteps(intent);       
+        }
+    };
+    
 	public void changeActivity(int pos)	{
 		Intent intent = new Intent(getApplicationContext(), getMenuItem(pos));
-		startActivityForResult(intent, getActivityResultCode(pos));
+		if(pos == 0){
+			intent.putExtra("mainCount", steps);
+			startActivity(intent);
+		}	else	{
+			intent.putExtra("BMI", BMI);
+			startActivityForResult(intent, getActivityResultCode(pos));
+		}
 	}
 	
+	protected void updateSteps(Intent intent) {
+		View v = list.getChildAt(0);
+		TextView change = (TextView) v.findViewById(R.id.counter);
+		steps = Integer.parseInt(intent.getStringExtra("counter"));
+		change.setText(""+steps);
+	}
 	/* switch statement to find the correct option to goto*/
 	public Class<?> getMenuItem(int pos)	{
 		switch(pos)	{
 			case 0: return StepCounterActivity.class;
 			case 2: return HeightActivity.class;
 			case 3: return WeightActivity.class;
+			case 4: return BmiActivity.class;
 		}
 		return null;
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		registerReceiver(broadcastReceiver, new IntentFilter(StepService.BROADCAST_ACTION));
 	}
 	
 	public int getActivityResultCode(int pos)	{
@@ -103,15 +134,7 @@ public class StepCounter extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode)	{
-		case 100:
-			if(resultCode == RESULT_OK)	{
-				View v = list.getChildAt(0);
-				TextView change = (TextView) v.findViewById(R.id.counter);
-				steps = Integer.parseInt(data.getStringExtra("counter"));
-				change.setText(""+steps);
-				Toast.makeText(getApplicationContext(), "PAUSED", Toast.LENGTH_SHORT);
-				Toast.makeText(this, ""+steps, Toast.LENGTH_LONG).show();
-			}break;
+		
 		case 102:
 			if(resultCode == RESULT_OK)	{
 				View v = list.getChildAt(2);

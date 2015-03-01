@@ -122,5 +122,11 @@
     <string name="saving_message">Would you like to save these results?</string>
     <string name="title_activity_height">HeightActivity</string>
     <string name="title_activity_weight">WeightActivity</string>
+    <string name="title_activity_bmi">BmiActivity</string>
+    <string name="underweight_results"> n &lt; 19.00</string>
+    <string name="normal_results"> 19.00 &lt; n &lt; 24.00</string>
+    <string name="overweight_results">24.00 &lt; n &lt; 30.00</string>
+    <string name="obese_results">30.00 &lt; n &lt; 40.00</string>
+    <string name="morbidly_obese_results">n &gt; 40.00</string>
 
 </resources>

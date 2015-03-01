@@ -1,0 +1,178 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.team9.healthmate.StepCounter.BmiActivity" >
+
+	<RelativeLayout
+	    android:id="@+id/result_table"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true" >
+
+	    <LinearLayout
+	        android:id="@+id/linearLayout1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:weightSum="3" >
+
+	        <TextView
+	            android:id="@+id/text_result"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_marginLeft="5sp"
+	            android:layout_weight="1"
+	            android:text="Results" />
+
+	        <TextView
+	            android:id="@+id/n"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_weight="1"
+	            android:text="n" />
+
+	        <TextView
+	            android:id="@+id/bmi"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_weight="1"
+	            android:text="12.02" />
+	    </LinearLayout>
+
+	    <View
+	        android:id="@+id/view1"
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:layout_alignLeft="@+id/linearLayout1"
+	        android:layout_below="@+id/linearLayout1"
+	        android:layout_margin="5sp"
+	        android:background="@android:color/darker_gray" />
+
+	    <LinearLayout
+	        android:id="@+id/lin1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/view1"
+	        android:layout_centerHorizontal="true" >
+
+	        <TextView
+	            android:id="@+id/text_underweight"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_marginLeft="5sp"
+	            android:layout_weight="1"
+	            android:text="Underweight" />
+
+	        <TextView
+	            android:id="@+id/text_underweight_results"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/underweight_results" />
+	    </LinearLayout>
+
+	    <LinearLayout
+	        android:id="@+id/lin2"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/lin1"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="5sp" >
+
+	        <TextView
+	            android:id="@+id/text_normal"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_marginLeft="5sp"
+	            android:layout_weight="1"
+	            android:text="Normal" />
+
+	        <TextView
+	            android:id="@+id/text_normal_results"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/normal_results" />
+	    </LinearLayout>
+
+	    <LinearLayout
+	        android:id="@+id/lin3"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/lin2"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="5sp" >
+
+	        <TextView
+	            android:id="@+id/text_overweight"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_marginLeft="5sp"
+	            android:layout_weight="1"
+	            android:text="Overweight" />
+
+	        <TextView
+	            android:id="@+id/text_overweight_results"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/overweight_results" />
+	    </LinearLayout>
+
+	    <LinearLayout
+	        android:id="@+id/lin4"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/lin3"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="5sp" >
+
+	        <TextView
+	            android:id="@+id/text_obese"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_marginLeft="5sp"
+	            android:layout_weight="1"
+	            android:text="Obese" />
+
+	        <TextView
+	            android:id="@+id/text_obese_results"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/obese_results" />
+	    </LinearLayout>
+
+	    <LinearLayout
+	        android:id="@+id/lin5"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/lin4"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="5sp" >
+
+	        <TextView
+	            android:id="@+id/text_morbidly_obese"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_marginLeft="5sp"
+	            android:layout_weight="1"
+	            android:text="Morbidly Obese" />
+
+	        <TextView
+	            android:id="@+id/text_morbidly_obese_results"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/morbidly_obese_results" />
+	    </LinearLayout>
+	</RelativeLayout>
+
+</RelativeLayout>
