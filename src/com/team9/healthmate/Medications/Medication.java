@@ -1,6 +1,7 @@
 package com.team9.healthmate.Medications;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,7 +82,8 @@ public class Medication extends Activity {
 	 */
 	private ArrayList<MedicationObject> readMedicationFile() {			
 		try {
-			String name, frequencyType, frequencyValue, dosageType, dosageValue;
+			String name, frequencyType, frequencyValue, dosageType, dosageValue, reminder;
+			String[] time, date;
 			MedicationObject med;
 			ArrayList<Map<String, String>> mapList;
 			ArrayList<MedicationObject> medicationList;			
@@ -98,13 +100,23 @@ public class Medication extends Activity {
 				frequencyValue = currentMed.get("frequencyValue");
 				dosageType     = currentMed.get("dosageType");
 				dosageValue    = currentMed.get("dosageValue");
+				reminder	   = currentMed.get("reminder");
+				time 		   = currentMed.get("time").split(":");
+				date 		   = currentMed.get("date").split("/");
+				
+				Calendar calendar = Calendar.getInstance();				
+				calendar.set(Integer.parseInt(date[2]), Integer.parseInt(date[0]), Integer.parseInt(date[1]), 
+							 Integer.parseInt(time[0]), Integer.parseInt(time[1]));
 				
 				med = new MedicationObject(
 						name, 
 						MedicationObject.FrequencyType.valueOf(frequencyType),
 						Integer.parseInt(frequencyValue),
 						MedicationObject.DosageType.valueOf(dosageType),
-						Integer.parseInt(dosageValue));	
+						Integer.parseInt(dosageValue),
+						reminder.equals("ON"),
+						calendar
+						);	
 				
 				medicationList.add(med);
 			}			
@@ -131,6 +143,12 @@ public class Medication extends Activity {
 				medMap.put("frequencyValue", ""+med.frequencyValue);		     
 				medMap.put("dosageType",med.dosageType.name());
 				medMap.put("dosageValue", ""+med.dosageValue);
+				medMap.put("reminder", (med.reminderStatus) ? "ON" : "OFF");
+				medMap.put("time", med.medicationCalendar.get(Calendar.HOUR_OF_DAY) + ":" + 
+								   med.medicationCalendar.get(Calendar.MINUTE));
+				medMap.put("date",  med.medicationCalendar.get(Calendar.MONTH) + "/" +
+									med.medicationCalendar.get(Calendar.DATE) + "/" +
+									med.medicationCalendar.get(Calendar.YEAR));
 				 
 				DataStorageManager.writeJSONObject(context, "medications", medMap, firstElement);
 				firstElement = false;

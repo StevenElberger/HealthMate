@@ -185,5 +185,7 @@
         <item>Tired</item>
         <item>Depressed</item>       
     </string-array>
+        <string name="new_medication_start_date">Start date</string>
+        <string name="new_medication_time">Time</string>
     
 </resources>
