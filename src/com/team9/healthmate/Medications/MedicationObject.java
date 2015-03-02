@@ -1,6 +1,7 @@
 package com.team9.healthmate.Medications;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * MedicationObject class is a struct-like class which holds all the
@@ -15,7 +16,7 @@ public class MedicationObject implements Serializable {
 	 * Available frequency types to pick from
 	 */
 	public static enum FrequencyType {
-		Hour, Day, Week, Month
+		Hour, Day, Week
 	}
 	
 	/**
@@ -31,6 +32,7 @@ public class MedicationObject implements Serializable {
 	public int frequencyValue;
 	public int dosageValue;
 	public boolean reminderStatus = false;
+	public Calendar medicationCalendar;
 	
 	/**
 	 * Class constructor
@@ -44,12 +46,16 @@ public class MedicationObject implements Serializable {
 							FrequencyType frequencyType, 
 							int frequencyValue, 
 							DosageType dosageType, 
-							int dosageValue) {
+							int dosageValue,
+							boolean reminderStatus,
+							Calendar medicationCalendar) {
 		this.name = name;
 		this.frequencyType = frequencyType;
 		this.frequencyValue = frequencyValue;
 		this.dosageType = dosageType;
 		this.dosageValue = dosageValue;
+		this.reminderStatus = reminderStatus;
+		this.medicationCalendar = medicationCalendar;				
 	}
 	
 	/**
@@ -58,6 +64,6 @@ public class MedicationObject implements Serializable {
 	 */
 	public String getDescription() {
 		return "Take "+frequencyValue+" every "+frequencyType.name()+" ("+
-				dosageValue+dosageType.name()+")";
+				dosageValue+dosageType.name()+") remider: "+reminderStatus;
 	}
 }

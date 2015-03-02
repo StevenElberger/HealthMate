@@ -3,6 +3,7 @@ package com.team9.healthmate.NotificationsManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -133,9 +134,14 @@ public class NotificationsManager {
 		// If the notification is meant for medications, send the appropriate
 		// references and data to the alarm.
 		if (intent.getStringExtra("type").equals("medications")) {
-					
-			// This needs to be filled with medication information
-					
+			intent.putExtra("name"       , message.get("name"));
+			intent.putExtra("freqValue"  , message.get("freqValue"));
+			intent.putExtra("freqType"   , message.get("freqType"));
+			intent.putExtra("dosageValue", message.get("dosageValue"));
+			intent.putExtra("dosageType" , message.get("dosageType"));
+			intent.putExtra("reminder"   , message.get("reminder"));
+			intent.putExtra("time"	     , message.get("time"));	
+			intent.putExtra("date"	     , message.get("date"));
 		}
 
 		// used to remove the alarm saved in the alarm registration file

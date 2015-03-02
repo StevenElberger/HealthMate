@@ -280,8 +280,10 @@
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
-    </string-array>
+    </string-array>  
     
-   
-
+        <string name="new_medication_start_date">Start date</string>
+        <string name="new_medication_time">Time</string>
+    
 </resources>
+
