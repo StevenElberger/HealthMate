@@ -19,7 +19,7 @@
             android:id="@+id/lbs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="150"
+            android:text="0"
             android:textSize="60sp" />
 
         <TextView

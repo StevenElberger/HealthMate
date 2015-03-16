@@ -11,6 +11,13 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * This is a Service for counting steps in the
+ * the background of the application in order
+ * to save and load step data
+ * @author Joseph
+ *
+ */
 public class StepService extends Service implements SensorEventListener {
 	private static final String TAG = "StepService";
 	public static final String BROADCAST_ACTION = "com.team9.healthmate.StepCounter";
@@ -21,17 +28,35 @@ public class StepService extends Service implements SensorEventListener {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		
+		// toast that announces that the service has been created
 		Toast.makeText(this, "CREATED", Toast.LENGTH_SHORT).show();
+		
+		// creates an intent so that other application can grab 
+		// data from the service
     	intent = new Intent(BROADCAST_ACTION);	
+    	
+    	// initializes sensor manager to a sensor service along with
+    	// initializing sensor to a step detector.
     	SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
     	Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-    	 if (sensor != null) {
-	            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-	        } else { 
-	            Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
-	        }
+    	
+    	// creates a check to make sure the device sensor is available
+    	// if the device has the sensor, then register listener
+    	if (sensor != null) {
+	        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+	    } else {
+	    	// toast to announce that the device doesn't have a step sensor
+	    	Toast.makeText(this, "This device doesn't have a step sensor", Toast.LENGTH_LONG).show();
+	    }
 	}
 	
+	/**
+	 * An onStart method so that when the application
+	 * starts it grabs the previous intent data and puts
+	 * the right data in the right variable along with a
+	 * handler.
+	 */
     @Override
     public void onStart(Intent intent, int startId) {
     	Toast.makeText(this, "STARTED", Toast.LENGTH_SHORT).show();
@@ -40,16 +65,22 @@ public class StepService extends Service implements SensorEventListener {
         handler.postDelayed(sendUpdatesToUI, 100); // 1 second
    
     }
-
+    
+    /**
+     * initializes a runnable and a handler to post delay 
+     */
     private Runnable sendUpdatesToUI = new Runnable() {
     	public void run() {
     		DisplayLoggingInfo();    		
-    	    handler.postDelayed(this, 100); // 10 seconds
+    	    handler.postDelayed(this, 100); // .001 second
     	}
     };    
     
+    /**
+     * A method put counter data in the intent and send
+     * it through the broadcaster
+     */
     private void DisplayLoggingInfo() {
-    	Log.d(TAG, "entered DisplayLoggingInfo");
     	intent.putExtra("counter", ""+counter);
     	sendBroadcast(intent);
     }
@@ -73,6 +104,7 @@ public class StepService extends Service implements SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		// updates the counter based on the step counter senosr
 		counter += event.values[0];
 		
 	}

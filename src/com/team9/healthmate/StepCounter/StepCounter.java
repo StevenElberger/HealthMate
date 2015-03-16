@@ -102,7 +102,7 @@ public class StepCounter extends Activity {
 			case 0: return StepCounterActivity.class;
 			case 2: return HeightActivity.class;
 			case 3: return WeightActivity.class;
-			case 4: return BmiActivity.class;
+			//case 4: return BmiActivity.class;
 		}
 		return null;
 	}
