@@ -70,6 +70,7 @@ public class HeightActivity extends Activity {
 	/**
 	 * Updates the UI by changing  ft and inch textview
 	 * and updates the height int variable
+	 * 
 	 * @param progress this is an int variable that comes
 	 * 		  SeekBar.
 	 */
@@ -87,6 +88,7 @@ public class HeightActivity extends Activity {
 	 * the users choice on the SeekBar. As well as finishing
 	 * the activity to send the height variable using an 
 	 * intent
+	 * 
 	 * @param v Is the view of the submit button
 	 */
 	public void onClick(View v)	{

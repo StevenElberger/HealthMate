@@ -12,7 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team9.healthmate.R;
-
+/**
+ * Step counter activity that only tracks
+ * the step and has buttons to start the
+ * step service and stop even reset the
+ * step count
+ * @author Joseph
+ *
+ */
 public class StepCounterActivity extends Activity	{
 
 	private static final String TAG = "StepCounterActivty";
@@ -25,21 +32,37 @@ public class StepCounterActivity extends Activity	{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         setContentView(R.layout.activity_step_counter2);
+        
+        /* 
+         * grabs the data counter from the previous activity and
+         * and updates this activity's step counter variable 
+         * along with updating the textview of steps and
+         * initializes the intent that contains step service 
+         */
         stepCounter = this.getIntent().getIntExtra("mainCount", 0);
         TextView init = (TextView) findViewById(R.id.counter);  	
         init.setText(""+stepCounter);
         intent = new Intent(this, StepService.class);
-        
     }
 	
+    /**
+     * creates a broadcast receiver and onReceive method
+     * to call the updateUI method
+     */
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
         	updateUI(intent);       
         }
-    };    
+    };
+    
+    /**
+     * OnClickStart method to call the receiver you start
+     * receiving data from the step service
+     * 
+     * @param v
+     */
     public void onClickStart(View v)	{
     	Toast.makeText(this, "onClick", Toast.LENGTH_SHORT).show();
     	intent.putExtra("count", stepCounter);
@@ -47,6 +70,13 @@ public class StepCounterActivity extends Activity	{
 		registerReceiver(broadcastReceiver, new IntentFilter(StepService.BROADCAST_ACTION));
     }
     
+    /**
+     * OnClickStop method to stop the receiver
+     * and unregister the receiver and stop the
+     * service
+     * 
+     * @param v
+     */
     public void onClickStop(View v)	{
     	try	{
 			unregisterReceiver(broadcastReceiver);
@@ -55,12 +85,19 @@ public class StepCounterActivity extends Activity	{
 		stopService(intent); 
     }
     
+    /**
+     * OnClickReset to restart the service and
+     * the variable containing the steps
+     * 
+     * @param v
+     */
     public void onClickReset(View v)	{
     	stepCounter = 0;
     	intent.putExtra("count", stepCounter);
     	try	{
 			unregisterReceiver(broadcastReceiver);
 		} catch(Exception e)	{
+			Log.d("Receiver", "There is no receiver to unregisters");
 		}
     	stopService(intent);
     	startService(intent);
@@ -82,16 +119,27 @@ public class StepCounterActivity extends Activity	{
 		}
 		
 	}
-	    
+	
+	/**
+	 * Updates the UI aka all the textviews in the
+	 * activity
+	 * 
+	 * @param intent An intent that contains the step
+	 * 				 data
+	 */
     private void updateUI(Intent intent) {
+    	// grabs the data from the intent and updates
+    	// the string counter
     	String counter = intent.getStringExtra("counter");
+    	
+    	// parses the counter to an integer
     	stepCounter = Integer.parseInt(counter);
+    	
+    	// updates the counter
     	counterText = counter;
+    	
+    	// updates the counter textview
     	TextView tv1 = (TextView) findViewById(R.id.counter);  	
     	tv1.setText(counter);
-    }
-
-    private void createGraph()	{
-    	
     }
 }

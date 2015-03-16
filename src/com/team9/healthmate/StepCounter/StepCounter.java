@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.team9.healthmate.ImageListViewArrayAdapter;
 import com.team9.healthmate.R;
 
@@ -23,8 +21,9 @@ import com.team9.healthmate.R;
  * 
  * @author Hoxsey
  * 
- * This is the StepCounter Activity that helps the user track their steps using
- * the Sensor STEP_DETECTOR. 
+ * This is the StepCounter Activity that helps
+ * the user track and set their steps, height
+ * weight and BMI 
  *
  */
 
@@ -45,6 +44,8 @@ public class StepCounter extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_step_counter);
+		
+		// calls the method to initializes some variables
 		init();
 		
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,47 +57,85 @@ public class StepCounter extends Activity {
 		    }
 		});
 	}
+	
 	/**
-	 * 
+	 * Initializes the listview, values that go into the
+	 * ImageListViewArrayAdapter adapter and sets the adapter
+	 * of the listview
 	 */
 	public void init()	{
+		// initializes the listview
 		list = (ListView) findViewById(R.id.list);
 		
+		// initializes the values string
 		String[] values = new String[]{
 				"0","0","0' 0\"","0","0"};
 		
-		
+		// initializes the ImageListViewArrayAdapter
 		final ImageListViewArrayAdapter adapter = new ImageListViewArrayAdapter(this,values);
+		
+		// sets listview adapter
 		list.setAdapter(adapter);
-		
-		
 	}
 	
+	/**
+	 * creates a broadcaster receiver
+	 */
 	private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+        	// updates the steps
         	updateSteps(intent);       
         }
     };
     
+    /**
+     * This is a helper method to change between activities
+     * 
+     * @param pos An int variable that chooses the activity
+     */
 	public void changeActivity(int pos)	{
+		// creates an intent to change activities
 		Intent intent = new Intent(getApplicationContext(), getMenuItem(pos));
-		if(pos == 0){
+		
+		// Checker block of code, to choose an activity
+		if(pos == 0)	{
+			// puts data in the variables and starts activity
 			intent.putExtra("mainCount", steps);
 			startActivity(intent);
 		}	else	{
+			// puts data in the intent and starts activity
 			intent.putExtra("BMI", BMI);
 			startActivityForResult(intent, getActivityResultCode(pos));
 		}
 	}
 	
+	/**
+	 * Updates the step view on the listview
+	 * 
+	 * @param intent An intent that has data from the steps
+	 */
 	protected void updateSteps(Intent intent) {
+		// grabs the step view
 		View v = list.getChildAt(0);
+		
+		// changes the textview
 		TextView change = (TextView) v.findViewById(R.id.counter);
+		
+		// parses the string into an integer from the intent
+		// data and then changes the textview 
 		steps = Integer.parseInt(intent.getStringExtra("counter"));
 		change.setText(""+steps);
 	}
-	/* switch statement to find the correct option to goto*/
+	
+	/**
+	 * Chooses the activity to return bases on the pos 
+	 * using a switch statement
+	 * 
+	 * @param pos Selects the activity
+	 * 
+	 * @return the activity class
+	 */
 	public Class<?> getMenuItem(int pos)	{
 		switch(pos)	{
 			case 0: return StepCounterActivity.class;
@@ -109,23 +148,39 @@ public class StepCounter extends Activity {
 	
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		registerReceiver(broadcastReceiver, new IntentFilter(StepService.BROADCAST_ACTION));
 	}
 	
+	/**
+	 * Choose a Request code to send with the intent to another
+	 * activity based on a switch statement
+	 * 
+	 * @param pos Selects the request code
+	 * 
+	 * @return REQUEST CODE
+	 */
 	public int getActivityResultCode(int pos)	{
 		switch(pos)	{
-			case 0: return REQUEST_STEP = 100;
-			case 2: return REQUEST_HEIGHT = 102;
-			case 3: return REQUEST_WEIGHT = 103;
+			case 0: return REQUEST_STEP;
+			case 2: return REQUEST_HEIGHT;
+			case 3: return REQUEST_WEIGHT;
 		}
 		return -1;
 	}
 	
+	/**
+	 * Updates the BMI view
+	 */
 	public void updateBMI()	{
+		// creates a number format for only two digits
 		NumberFormat f = new DecimalFormat("#0.00");
+		
+		// updates the BMI variable using a formal
 		BMI = ((double)weight/(height*height))*703.0;
+		
+		// grabs the BMI view in the list view and changes
+		// the textview and formats the double
 		View v = list.getChildAt(4);
 		TextView change = (TextView) v.findViewById(R.id.counter);
 		change.setText(""+f.format(BMI));
@@ -134,28 +189,27 @@ public class StepCounter extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode)	{
-		
-		case 102:
-			if(resultCode == RESULT_OK)	{
-				View v = list.getChildAt(2);
-				TextView change = (TextView) v.findViewById(R.id.counter);
-				height = data.getIntExtra("Height", -1);
-				change.setText((height/12)+"' "+(height%12)+"\"");
-				
-				Toast.makeText(this, ""+height, Toast.LENGTH_LONG).show();
-				updateBMI();
-			}break;
-		case 103:
-			if(resultCode == RESULT_OK)	{
-				View v = list.getChildAt(3);
-				TextView change = (TextView) v.findViewById(R.id.counter);
-				change.setText(data.getStringExtra("Weight"));
-				Toast.makeText(this, data.getStringExtra("Weight"), Toast.LENGTH_LONG).show();
-				weight = Integer.parseInt(data.getStringExtra("Weight"));
-				updateBMI();
-			}break;
+			case 102:
+				// This block of code is for the results of the Height
+				// activity to change the view
+				if(resultCode == RESULT_OK)	{
+					View v = list.getChildAt(2);
+					TextView change = (TextView) v.findViewById(R.id.counter);
+					height = data.getIntExtra("Height", -1);
+					change.setText((height/12)+"' "+(height%12)+"\"");
+					updateBMI();
+				}break;
+			case 103:
+				// This block of code is for the results of the Weight
+				// activity to change the view
+				if(resultCode == RESULT_OK)	{
+					View v = list.getChildAt(3);
+					TextView change = (TextView) v.findViewById(R.id.counter);
+					change.setText(data.getStringExtra("Weight"));
+					weight = Integer.parseInt(data.getStringExtra("Weight"));
+					updateBMI();
+				}break;
 		}
-		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	

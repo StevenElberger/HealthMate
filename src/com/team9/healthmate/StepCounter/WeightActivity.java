@@ -73,6 +73,7 @@ public class WeightActivity extends Activity {
 	
 	/**
 	 * Updates the UI by changing  weight textview
+	 * 
 	 * @param progress this is an int variable that comes
 	 * 		  SeekBar.
 	 */
@@ -85,6 +86,7 @@ public class WeightActivity extends Activity {
 	 * the users choice on the SeekBar. As well as finishing
 	 * the activity to send the weight variable using an 
 	 * intent
+	 * 
 	 * @param v Is the view of the submit button
 	 */
 	public void onClick(View v)	{
