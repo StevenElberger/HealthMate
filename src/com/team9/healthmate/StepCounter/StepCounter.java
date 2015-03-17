@@ -1,7 +1,12 @@
 package com.team9.healthmate.StepCounter;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Map;
+
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -13,8 +18,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.team9.healthmate.ImageListViewArrayAdapter;
 import com.team9.healthmate.R;
+import com.team9.healthmate.DataManager.DataStorageManager;
 
 /**
  * Health Mate - Step Counter
@@ -149,7 +156,44 @@ public class StepCounter extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		try {
+			ArrayList<Map<String,String>> weightData = DataStorageManager.readJSONObject(this, "height_data");
+			ArrayList<Map<String,String>> heightData = DataStorageManager.readJSONObject(this, "weight_data");
+			String weightString = weightData.get(0).get("weight_data");
+			String heightString = heightData.get(0).get("height_data");
+			updateMeasurements(weightString, heightString);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		registerReceiver(broadcastReceiver, new IntentFilter(StepService.BROADCAST_ACTION));
+	}
+	
+	private void updateMeasurements(String w, String h)	{
+		// grabs the weight and height views from the listview
+		View heightView = list.getChildAt(2);
+		View weightView = list.getChildAt(3);
+		
+		// initializes the textviews from the views previously
+		TextView heightChange = (TextView) heightView.findViewById(R.id.counter);
+		TextView weightChange = (TextView) weightView.findViewById(R.id.counter);
+		
+		// updates height and weight by parsing the string data
+		height = Integer.parseInt(h);
+		weight = Integer.parseInt(w);
+		
+		// updates the UI of weight and height
+		heightChange.setText((height/12)+"' "+(height%12)+"\"");
+		weightChange.setText(""+weight);
+		
+		// updates the BMI view
+		updateBMI();
 	}
 	
 	/**

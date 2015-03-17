@@ -1,9 +1,16 @@
 package com.team9.healthmate.StepCounter;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+
 import com.team9.healthmate.R;
 import com.team9.healthmate.R.id;
 import com.team9.healthmate.R.layout;
 import com.team9.healthmate.R.menu;
+import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +21,7 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Toast;
 
 /**
  * This is an activity for choosing
@@ -92,6 +100,20 @@ public class WeightActivity extends Activity {
 	public void onClick(View v)	{
 		// creates an intent 
 		Intent intent = new Intent();
+		
+		// saves the weight data to the local storage
+		Map<String,String> infoPack = new HashMap<String, String>();
+		infoPack.put("weight_value", ""+weight);
+		try {
+			DataStorageManager.writeJSONObject(this, "weight_data", infoPack, false);
+			Toast.makeText(this, "Weight data has been saved", Toast.LENGTH_SHORT).show();
+		} catch (JSONException e) {
+			Toast.makeText(this, "Weight data wasn't saved", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		} catch (IOException e) {
+			Toast.makeText(this, "Weight data wasn't saved", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		}
 		
 		// puts the height variable into the intent
 		intent.putExtra("Weight", ""+weight.getText());
