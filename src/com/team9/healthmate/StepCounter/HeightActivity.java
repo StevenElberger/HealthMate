@@ -105,7 +105,7 @@ public class HeightActivity extends Activity {
 		
 		// saves the weight data to the local storage
 				Map<String,String> infoPack = new HashMap<String, String>();
-				infoPack.put("weight_value", ""+height);
+				infoPack.put("height_value", ""+height);
 				try {
 					DataStorageManager.writeJSONObject(this, "height_data", infoPack, false);
 					Toast.makeText(this, "Height data has been saved", Toast.LENGTH_SHORT).show();

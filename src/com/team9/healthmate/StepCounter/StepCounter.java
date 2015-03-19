@@ -14,6 +14,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -46,6 +48,7 @@ public class StepCounter extends Activity {
 	private static int REQUEST_STEP = 100;
 	private static int REQUEST_HEIGHT = 102;
 	private static int REQUEST_WEIGHT = 103;
+	public LayoutInflater in;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +79,15 @@ public class StepCounter extends Activity {
 		
 		// initializes the values string
 		String[] values = new String[]{
-				"0","0","0' 0\"","0","0"};
+				fetchStepData(),"0",fetchHeightData(),fetchWeightData(),fetchBMI() };
 		
 		// initializes the ImageListViewArrayAdapter
 		final ImageListViewArrayAdapter adapter = new ImageListViewArrayAdapter(this,values);
 		
 		// sets listview adapter
 		list.setAdapter(adapter);
+		
+		
 	}
 	
 	/**
@@ -115,6 +120,58 @@ public class StepCounter extends Activity {
 			intent.putExtra("BMI", BMI);
 			startActivityForResult(intent, getActivityResultCode(pos));
 		}
+	}
+	
+	private String fetchWeightData()	{
+		String weightString = "0";
+		try {
+			ArrayList<Map<String,String>> weightData = DataStorageManager.readJSONObject(this, "weight_data");
+			if(!(weightData.size() == 0))	{
+				weightString = weightData.get(weightData.size()-1).get("weight_value");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		Log.d("WEIGHT_VALUE", weightString);
+		weight =Integer.parseInt(weightString);
+		return weightString;
+	}
+	
+	private String fetchHeightData()	{
+		String heightString = "0";
+		try {
+			ArrayList<Map<String,String>> heightData = DataStorageManager.readJSONObject(this, "height_data");
+			if(!(heightData.size() == 0))	{
+				heightString = heightData.get(heightData.size()-1).get("height_value");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		Log.d("HEIGHT_VALUE", heightString);
+		height = Integer.parseInt(heightString);
+		heightString = ""+(height/12)+"' "+(height%12)+"\"";
+		
+		return heightString;
+	}
+	
+	private String fetchStepData()	{
+		String stepString = "0";
+		try {
+			ArrayList<Map<String,String>> stepData = DataStorageManager.readJSONObject(this, "step_data");
+			if(!(stepData.size() == 0))	{
+				stepString = stepData.get(stepData.size()-1).get("step_data");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		steps = Integer.parseInt(stepString);
+		return stepString;
 	}
 	
 	/**
@@ -156,44 +213,8 @@ public class StepCounter extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-		try {
-			ArrayList<Map<String,String>> weightData = DataStorageManager.readJSONObject(this, "height_data");
-			ArrayList<Map<String,String>> heightData = DataStorageManager.readJSONObject(this, "weight_data");
-			String weightString = weightData.get(0).get("weight_data");
-			String heightString = heightData.get(0).get("height_data");
-			updateMeasurements(weightString, heightString);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		init();
 		registerReceiver(broadcastReceiver, new IntentFilter(StepService.BROADCAST_ACTION));
-	}
-	
-	private void updateMeasurements(String w, String h)	{
-		// grabs the weight and height views from the listview
-		View heightView = list.getChildAt(2);
-		View weightView = list.getChildAt(3);
-		
-		// initializes the textviews from the views previously
-		TextView heightChange = (TextView) heightView.findViewById(R.id.counter);
-		TextView weightChange = (TextView) weightView.findViewById(R.id.counter);
-		
-		// updates height and weight by parsing the string data
-		height = Integer.parseInt(h);
-		weight = Integer.parseInt(w);
-		
-		// updates the UI of weight and height
-		heightChange.setText((height/12)+"' "+(height%12)+"\"");
-		weightChange.setText(""+weight);
-		
-		// updates the BMI view
-		updateBMI();
 	}
 	
 	/**
@@ -216,20 +237,18 @@ public class StepCounter extends Activity {
 	/**
 	 * Updates the BMI view
 	 */
-	public void updateBMI()	{
+	public String fetchBMI()	{
+		String BMIStr = "";
 		// creates a number format for only two digits
 		NumberFormat f = new DecimalFormat("#0.00");
 		
 		// updates the BMI variable using a formal
 		BMI = ((double)weight/(height*height))*703.0;
-		
-		// grabs the BMI view in the list view and changes
-		// the textview and formats the double
-		View v = list.getChildAt(4);
-		TextView change = (TextView) v.findViewById(R.id.counter);
-		change.setText(""+f.format(BMI));
+		BMIStr = ""+f.format(BMI);
+		return BMIStr;
 	}
 	
+	/*
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode)	{
@@ -237,10 +256,7 @@ public class StepCounter extends Activity {
 				// This block of code is for the results of the Height
 				// activity to change the view
 				if(resultCode == RESULT_OK)	{
-					View v = list.getChildAt(2);
-					TextView change = (TextView) v.findViewById(R.id.counter);
 					height = data.getIntExtra("Height", -1);
-					change.setText((height/12)+"' "+(height%12)+"\"");
 					updateBMI();
 				}break;
 			case 103:
@@ -255,6 +271,6 @@ public class StepCounter extends Activity {
 				}break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
-	}
+	} */
 	
 }

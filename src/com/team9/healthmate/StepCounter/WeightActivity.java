@@ -32,7 +32,8 @@ import android.widget.Toast;
 public class WeightActivity extends Activity {
 	public SeekBar weightBar;
 	public int maxWeight = 400;
-	public TextView weight;
+	public TextView weightText;
+	public int weight;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class WeightActivity extends Activity {
 		weightBar.setProgress(0);
 		
 		//initializes the weight textview
-		weight = (TextView) findViewById(R.id.lbs);
+		weightText = (TextView) findViewById(R.id.lbs);
 		
 	}
 	
@@ -86,7 +87,8 @@ public class WeightActivity extends Activity {
 	 * 		  SeekBar.
 	 */
 	public void updateUI(int progress)	{
-		 weight.setText(""+(progress));
+		 weightText.setText(""+(progress));
+		 weight = progress;
 	}
 	
 	/**
@@ -114,9 +116,6 @@ public class WeightActivity extends Activity {
 			Toast.makeText(this, "Weight data wasn't saved", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
-		
-		// puts the height variable into the intent
-		intent.putExtra("Weight", ""+weight.getText());
 		
 		// sets the results to RESULT_OK 
 		setResult(RESULT_OK, intent);
