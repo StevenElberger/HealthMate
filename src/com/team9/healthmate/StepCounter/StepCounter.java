@@ -13,6 +13,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,9 @@ import android.widget.TextView;
 import com.team9.healthmate.ImageListViewArrayAdapter;
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
+import com.team9.healthmate.GraphManager.ColumnGraph;
+import com.team9.healthmate.GraphManager.GraphManager;
+import com.team9.healthmate.GraphManager.LineGraph;
 
 /**
  * Health Mate - Step Counter
@@ -49,11 +53,15 @@ public class StepCounter extends Activity {
 	private static int REQUEST_HEIGHT = 102;
 	private static int REQUEST_WEIGHT = 103;
 	public LayoutInflater in;
+	ColumnGraph[] columnGraph;
+	View view;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_step_counter);
+		
+		
 		
 		// calls the method to initializes some variables
 		init();
@@ -84,11 +92,15 @@ public class StepCounter extends Activity {
 		// initializes the ImageListViewArrayAdapter
 		final ImageListViewArrayAdapter adapter = new ImageListViewArrayAdapter(this,values);
 		
+		
+		
 		// sets listview adapter
 		list.setAdapter(adapter);
 		
 		
 	}
+	
+	
 	
 	/**
 	 * creates a broadcaster receiver
@@ -118,7 +130,7 @@ public class StepCounter extends Activity {
 		}	else	{
 			// puts data in the intent and starts activity
 			intent.putExtra("BMI", BMI);
-			startActivityForResult(intent, getActivityResultCode(pos));
+			startActivity(intent);
 		}
 	}
 	
@@ -163,7 +175,7 @@ public class StepCounter extends Activity {
 		try {
 			ArrayList<Map<String,String>> stepData = DataStorageManager.readJSONObject(this, "step_data");
 			if(!(stepData.size() == 0))	{
-				stepString = stepData.get(stepData.size()-1).get("step_data");
+				stepString = stepData.get(stepData.size()-1).get("step_value");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -218,23 +230,6 @@ public class StepCounter extends Activity {
 	}
 	
 	/**
-	 * Choose a Request code to send with the intent to another
-	 * activity based on a switch statement
-	 * 
-	 * @param pos Selects the request code
-	 * 
-	 * @return REQUEST CODE
-	 */
-	public int getActivityResultCode(int pos)	{
-		switch(pos)	{
-			case 0: return REQUEST_STEP;
-			case 2: return REQUEST_HEIGHT;
-			case 3: return REQUEST_WEIGHT;
-		}
-		return -1;
-	}
-	
-	/**
 	 * Updates the BMI view
 	 */
 	public String fetchBMI()	{
@@ -247,30 +242,5 @@ public class StepCounter extends Activity {
 		BMIStr = ""+f.format(BMI);
 		return BMIStr;
 	}
-	
-	/*
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch(requestCode)	{
-			case 102:
-				// This block of code is for the results of the Height
-				// activity to change the view
-				if(resultCode == RESULT_OK)	{
-					height = data.getIntExtra("Height", -1);
-					updateBMI();
-				}break;
-			case 103:
-				// This block of code is for the results of the Weight
-				// activity to change the view
-				if(resultCode == RESULT_OK)	{
-					View v = list.getChildAt(3);
-					TextView change = (TextView) v.findViewById(R.id.counter);
-					change.setText(data.getStringExtra("Weight"));
-					weight = Integer.parseInt(data.getStringExtra("Weight"));
-					updateBMI();
-				}break;
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	} */
 	
 }

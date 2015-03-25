@@ -7,6 +7,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team9.healthmate.StepCounter.WeightActivity" >
+    
+    <RelativeLayout
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/block1"

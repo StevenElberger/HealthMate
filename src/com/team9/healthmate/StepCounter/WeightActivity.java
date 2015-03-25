@@ -11,9 +11,12 @@ import com.team9.healthmate.R.id;
 import com.team9.healthmate.R.layout;
 import com.team9.healthmate.R.menu;
 import com.team9.healthmate.DataManager.DataStorageManager;
+import com.team9.healthmate.GraphManager.ColumnGraph;
+import com.team9.healthmate.GraphManager.GraphManager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +37,8 @@ public class WeightActivity extends Activity {
 	public int maxWeight = 400;
 	public TextView weightText;
 	public int weight;
+	private ColumnGraph[] columnGraph;
+	private View view;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,8 @@ public class WeightActivity extends Activity {
 	 * progress. Also initializes the weight textview
 	 */
 	public void init()	{
+		
+		view = findViewById(R.id.graph);
 		// initializes and sets SeekBar
 		weightBar = (SeekBar) findViewById(R.id.height_counter);
 		weightBar.setMax(maxWeight);
@@ -77,6 +84,7 @@ public class WeightActivity extends Activity {
 		
 		//initializes the weight textview
 		weightText = (TextView) findViewById(R.id.lbs);
+		createGraphs();
 		
 	}
 	
@@ -120,5 +128,15 @@ public class WeightActivity extends Activity {
 		// sets the results to RESULT_OK 
 		setResult(RESULT_OK, intent);
 		finish();
+	}
+	 public void createGraphs() {
+		// Other colors are possible
+		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.RED, Color.LTGRAY, Color.DKGRAY};
+		
+		columnGraph = new ColumnGraph[3];
+		for (int i = 0; i < columnGraph.length; i++) {
+			columnGraph[i] = new ColumnGraph("Days", "Weight", "weight_data", true, true, colors[2]);
+		}
+		GraphManager.generateColumnGraph(getApplicationContext(), view, columnGraph[0], "weight_value");
 	}
 }

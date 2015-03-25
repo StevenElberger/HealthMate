@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team9.healthmate.R;
+import com.team9.healthmate.GraphManager.ColumnGraph;
+import com.team9.healthmate.GraphManager.GraphManager;
 /**
  * Step counter activity that only tracks
  * the step and has buttons to start the
@@ -26,6 +29,8 @@ public class StepCounterActivity extends Activity	{
 	private Intent intent;
 	private String counterText;
 	public int stepCounter = 0;
+	private View view;
+	ColumnGraph [] columnGraph;
 	
 	
 	
@@ -33,6 +38,8 @@ public class StepCounterActivity extends Activity	{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_counter2);
+        
+        view = (View)findViewById(R.id.graph);
         
         /* 
          * grabs the data counter from the previous activity and
@@ -44,7 +51,20 @@ public class StepCounterActivity extends Activity	{
         TextView init = (TextView) findViewById(R.id.counter);  	
         init.setText(""+stepCounter);
         intent = new Intent(this, StepService.class);
+        createGraphs();
     }
+    
+    public void createGraphs() {
+		
+		// Other colors are possible
+		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.RED, Color.LTGRAY, Color.DKGRAY};
+		
+		columnGraph = new ColumnGraph[3];
+		for (int i = 0; i < columnGraph.length; i++) {
+			columnGraph[i] = new ColumnGraph("Days", "Steps", "step_data", true, true, colors[2]);
+		}
+		GraphManager.generateColumnGraph(getApplicationContext(), view, columnGraph[0], "step_value");
+	}
 	
     /**
      * creates a broadcast receiver and onReceive method
@@ -141,5 +161,6 @@ public class StepCounterActivity extends Activity	{
     	// updates the counter textview
     	TextView tv1 = (TextView) findViewById(R.id.counter);  	
     	tv1.setText(counter);
+    	createGraphs();
     }
 }

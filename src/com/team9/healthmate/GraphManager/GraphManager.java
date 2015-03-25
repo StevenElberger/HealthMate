@@ -15,7 +15,9 @@ import com.team9.healthmate.DataManager.DataStorageManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -63,18 +65,20 @@ public class GraphManager {
 	 * @param appContext	Context of the Activity
 	 * @param fileName		Name of the data file
 	 * @param color			Color of the column
-	 * @param mood			Mood to be graphed
+	 * @param key			key to grab from the file
 	 * @return				List of sorted column values
 	 */
-	public static List<ColumnValue> getColumnData(Context appContext, String fileName, int color, String mood) {
+	public static List<ColumnValue> getColumnData(Context appContext, String fileName, int color, String key) {
 		List<ColumnValue> colValues = new ArrayList<ColumnValue>();
 		try {
 			// Grab data from data file
-			ArrayList<Map<String, String>> moodData = DataStorageManager.readJSONObject(appContext, fileName);
-			colValues = sortColumnData(moodData, mood, color);
+			ArrayList<Map<String, String>> data = DataStorageManager.readJSONObject(appContext, fileName);
+			colValues = sortColumnData(data, key, color);
 		} catch (JSONException e) {
+			Toast.makeText(appContext, "Did not retrieve!", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		} catch (IOException e) {
+			Toast.makeText(appContext, "Did not retrieve!", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
 		return colValues;
@@ -245,6 +249,43 @@ public class GraphManager {
 		// set up axes
 		Axis xAxis = new Axis();
 		Axis yAxis = setUpYAxis();
+
+		xAxis.setName(columnGraph.xAxisName);
+		yAxis.setName(columnGraph.yAxisName);
+		
+		// set up chart
+		ColumnChartData data = new ColumnChartData(columns);
+		data.setAxisXBottom(xAxis);
+		data.setAxisYLeft(yAxis);
+		
+		ColumnChartView chart = new ColumnChartView(appContext);
+		chart.setValueSelectionEnabled(true);
+		chart.setColumnChartData(data);
+		
+		((RelativeLayout) view).addView(chart);
+	}
+	
+	/**
+	 * Generates a generic column graph for the mood specified.
+	 * Requires a ColumnGraph object with the necessary
+	 * information to generate the graph.
+	 * @param appContext		The context of the Activity that called
+	 * @param view				The view to display the graph in
+	 * @param columnGraph		The ColumnGraph object for necessary graph information
+	 * @param mood				The mood to be graphed
+	 */
+	public static void generateColumnGraph(Context appContext, View view, ColumnGraph columnGraph, String key) {
+		((RelativeLayout) view).removeAllViews();
+		
+		// values for the mood column we want
+		List<ColumnValue> givenValues = getColumnData(appContext, columnGraph.fileName, columnGraph.color, key);
+		
+		// create columns
+		List<Column> columns = setUpColumns(givenValues);
+		
+		// set up axes
+		Axis xAxis = new Axis();
+		Axis yAxis = setUpStepYAxis();
 
 		xAxis.setName(columnGraph.xAxisName);
 		yAxis.setName(columnGraph.yAxisName);
@@ -537,6 +578,23 @@ public class GraphManager {
 	public static Axis setUpYAxis() {
 		Axis yAxis = new Axis();
 		int[] yAxisValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		List<AxisValue> yValues = new ArrayList<AxisValue>();
+		for (int i : yAxisValues) {
+			yValues.add(new AxisValue(i));
+		}
+		yAxis.setValues(yValues);
+		yAxis.setHasLines(true);
+		return yAxis;
+	}
+	
+	/**
+	 * Used to assist in setting up y-axis for
+	 * most graphs.
+	 * @return		Y-Axis with integer values from 1 - 10
+	 */
+	public static Axis setUpStepYAxis() {
+		Axis yAxis = new Axis();
+		int[] yAxisValues = {10, 20, 40, 60, 80, 100, 200, 500, 1000, 5000, 10000};
 		List<AxisValue> yValues = new ArrayList<AxisValue>();
 		for (int i : yAxisValues) {
 			yValues.add(new AxisValue(i));

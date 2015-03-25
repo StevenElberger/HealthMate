@@ -1,5 +1,13 @@
 package com.team9.healthmate.StepCounter;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+
+import com.team9.healthmate.DataManager.DataStorageManager;
+
 import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -84,6 +92,22 @@ public class StepService extends Service implements SensorEventListener {
     	intent.putExtra("counter", ""+counter);
     	sendBroadcast(intent);
     }
+    
+    private void saveData()	{
+    	// saves the weight data to the local storage
+		Map<String,String> infoPack = new HashMap<String, String>();
+		infoPack.put("step_value", ""+counter);
+		try {
+			DataStorageManager.writeJSONObject(this, "step_data", infoPack, true);
+		//	Toast.makeText(this, "Steps data has been saved", Toast.LENGTH_SHORT).show();
+		} catch (JSONException e) {
+			Toast.makeText(this, "Steps data wasn't saved", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		} catch (IOException e) {
+			Toast.makeText(this, "Steps data wasn't saved", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		}
+    }
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -106,6 +130,7 @@ public class StepService extends Service implements SensorEventListener {
 	public void onSensorChanged(SensorEvent event) {
 		// updates the counter based on the step counter senosr
 		counter += event.values[0];
+		saveData();
 		
 	}
 }
