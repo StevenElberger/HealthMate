@@ -122,15 +122,17 @@ public class StepCounter extends Activity {
 		// creates an intent to change activities
 		Intent intent = new Intent(getApplicationContext(), getMenuItem(pos));
 		
-		// Checker block of code, to choose an activity
-		if(pos == 0)	{
-			// puts data in the variables and starts activity
-			intent.putExtra("mainCount", steps);
-			startActivity(intent);
-		}	else	{
-			// puts data in the intent and starts activity
-			intent.putExtra("BMI", BMI);
-			startActivity(intent);
+		if(!(getMenuItem(pos).equals(null)))	{
+			// Checker block of code, to choose an activity
+			if(pos == 0)	{
+				// puts data in the variables and starts activity
+				intent.putExtra("mainCount", steps);
+				startActivity(intent);
+			}	else	{
+				// puts data in the intent and starts activity
+				intent.putExtra("BMI", BMI);
+				startActivity(intent);
+			}
 		}
 	}
 	
@@ -217,7 +219,6 @@ public class StepCounter extends Activity {
 			case 0: return StepCounterActivity.class;
 			case 2: return HeightActivity.class;
 			case 3: return WeightActivity.class;
-			//case 4: return BmiActivity.class;
 		}
 		return null;
 	}

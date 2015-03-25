@@ -1,6 +1,7 @@
 package com.team9.healthmate;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,11 @@ public class ImageListViewArrayAdapter extends ArrayAdapter<String> {
 			    
 		    	textView.setText(values[pos]);
 		    	switch(pos)	{
-		    	case 0: textView2.setText("steps"); break;
-		    	case 1: textView2.setText("miles"); break;
-		    	case 2: textView2.setText("height"); break;
-		    	case 3: textView2.setText("weight"); break;
-		    	case 4: textView2.setText("BMI"); break;
+		    	case 0: textView2.setText(" steps"); break;
+		    	case 1: textView2.setText(" miles - UC"); textView2.setTextColor(Color.YELLOW); break;
+		    	case 2: textView2.setText(" height"); break;
+		    	case 3: textView2.setText(" weight"); break;
+		    	case 4: textView2.setText(" BMI - UC"); textView2.setTextColor(Color.YELLOW); break;
 		    	}
 			    
 			    imageView.setImageResource(R.drawable.blue_cross_icon);
