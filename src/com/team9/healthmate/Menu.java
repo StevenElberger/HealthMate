@@ -121,14 +121,14 @@ public class Menu extends Activity {
 		switch(pos)	{
 			case 0: return Moods.class; 
 			case 1: return Medication.class;
-			case 2: return StepCounter.class;
-			case 3:	return HealthLocation.class;
-			case 4:	return ListOfNotes.class;
-			case 5: return AppointmentsList.class;
-//			case 6: return ChartDemo.class;
+			
+			case 2:	return HealthLocation.class;
+			case 3:	return ListOfNotes.class;
+			case 4: return AppointmentsList.class;
+//			case 5: return ChartDemo.class;
 //			case 7: return AnimatedChartDemo.class;
 //			case 8: return PreviewChartDemo.class;
-			case 6: return ContactMyDoctor.class;
+			case 5: return ContactMyDoctor.class;
 		}
 		return null;
 	}

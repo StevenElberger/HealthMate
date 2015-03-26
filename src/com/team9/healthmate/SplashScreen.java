@@ -10,7 +10,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
- 
+/**
+ * 
+ * @author Davit
+ *	SplashScree class is the very first activity
+ *	that starts when the application starts. It is 
+ *	used to verify the connection with the network
+ */
 public class SplashScreen extends Activity {
 	
 	
@@ -36,25 +42,21 @@ public class SplashScreen extends Activity {
     private class PrefetchData extends AsyncTask<Void, Void, Void> {
  
     	CheckInterNetConnection check;
-    	Boolean isInternetPresent = false;
-    	
-    	
+    	Boolean isInternetPresent = false;    	
+    	//Displays the alert dialog
     	@SuppressWarnings("deprecation")
     	public void showAlertDialogInterNet(Context context, String title, String message, Boolean status) {
     	            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
     	            alertDialog.setTitle(title);
-    	            alertDialog.setMessage(message);
-    	            //alertDialog.setIcon((status) ? R.drawable.ic_launcher : R.drawable.ic_launcher);
+    	            alertDialog.setMessage(message);    	            
     	            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
     	                public void onClick(DialogInterface dialog, int which) {
     	                SplashScreen.this.finish();
     	                }
     	            });
     	            
-    	            alertDialog.show();
-    
-    	        }
-    	
+    	            alertDialog.show();    
+    	        }    	
     	
         @Override
         protected void onPreExecute() {
@@ -62,19 +64,14 @@ public class SplashScreen extends Activity {
             // before making http calls         
  
         }
- 
+        /**
+         * Function is triggered once AsyncTask is declared.
+         * It runs in the background. It also verifies network
+         * connection.
+         */
         @Override
         protected Void doInBackground(Void... arg0) {
-            /*
-             * Will make http call here This call will download required data
-             * before launching the app 
-             * example: 
-             * 1. Downloading and storing in SQLite 
-             * 2. Downloading images 
-             * 3. Fetching and parsing the xml / json 
-             * 4. Sending device information to server 
-             * 5. etc.,
-             */                	
+                      	
                 try {
                 	check = new CheckInterNetConnection(getApplicationContext());
             	    isInternetPresent = check.isConnectingToInternet();
@@ -83,18 +80,19 @@ public class SplashScreen extends Activity {
             	            
             	     }else{
             	       isNetworkAvailable = false;
-
-            	}
- 
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
+            	     } 
+                } catch (Exception e) {                   
                     e.printStackTrace();
                 }
  
             
                 return null;            
         }
- 
+        /**
+         * Function is called after http request is received.
+         * In here it runs a new runnable to deploy our
+         * main activity if there is connection
+         */
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -103,10 +101,8 @@ public class SplashScreen extends Activity {
 	                new Handler().postDelayed(new Runnable() {
 	                	 
 	                    /*
-	                     * Showing splash screen with a timer. This will be useful when you
-	                     * want to show case your app logo / company
-	                     */
-	         
+	                     * Showing splash screen with a timer. 
+	                     */	         
 	                    @Override
 	                    public void run() {
 	                        // This method will be executed once the timer is over
@@ -123,15 +119,7 @@ public class SplashScreen extends Activity {
              	showAlertDialogInterNet(SplashScreen.this, "No Internet",
              	                "No Internet Connection, Please try again.", false);
             }
-            	
-            	
-
-        }
- 
-    }
-	
-
-	
-	 
+            } 
+    } 
   
 }
