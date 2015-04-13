@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.team9.healthmate.ImageListViewArrayAdapter;
@@ -216,6 +217,7 @@ public class StepCounter extends Activity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
 		return goalString;
 	}
 	
@@ -245,10 +247,12 @@ public class StepCounter extends Activity {
 		
 		// changes the textview
 		TextView change = (TextView) v.findViewById(R.id.counter);
+		ProgressBar pb = (ProgressBar) v.findViewById(R.id.progressBar1);
 		
 		// parses the string into an integer from the intent
 		// data and then changes the textview 
 		steps = Integer.parseInt(intent.getStringExtra("counter"));
+		pb.setProgress(steps);
 		change.setText(""+steps);
 	}
 	

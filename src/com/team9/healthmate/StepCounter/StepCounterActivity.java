@@ -1,6 +1,7 @@
 package com.team9.healthmate.StepCounter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class StepCounterActivity extends Activity	{
         stepGoal = this.getIntent().getIntExtra("goal",1000);
         TextView init = (TextView) findViewById(R.id.counter);  	
         goal = (TextView) findViewById(R.id.goal_count);
-        goal.setText(""+stepGoal);
+        goal.setText(fetchStepGoal());
         init.setText(""+stepCounter);
         intent = new Intent(this, StepService.class);
         createGraphs();
@@ -139,7 +140,7 @@ public class StepCounterActivity extends Activity	{
 		infoPack.put("step_goal_value", ""+stepGoal);
 		try {
 			DataStorageManager.writeJSONObject(this, "step_goal_data", infoPack, true);
-		//	Toast.makeText(this, "Steps data has been saved", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Steps Goal data has been saved", Toast.LENGTH_SHORT).show();
 		} catch (JSONException e) {
 			Toast.makeText(this, "Step Goal data wasn't saved", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
@@ -148,6 +149,21 @@ public class StepCounterActivity extends Activity	{
 			e.printStackTrace();
 		}
     }
+    
+    public String fetchStepGoal()	{
+		String goalString = "0";
+		try {
+			ArrayList<Map<String,String>> goalData = DataStorageManager.readJSONObject(this, "step_goal_data");
+			if(!(goalData.size() == 0))	{
+				goalString = goalData.get(goalData.size()-1).get("step_goal_value");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return goalString;
+	}
     
     /**
      * OnClickStop method to stop the receiver

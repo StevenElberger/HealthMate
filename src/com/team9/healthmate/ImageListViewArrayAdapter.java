@@ -35,12 +35,13 @@ public class ImageListViewArrayAdapter extends ArrayAdapter<String> {
 			    
 		    	textView.setText(values[pos]);
 		    	switch(pos)	{
-		    	case 0: textView2.setText(" steps"); goalCounter.setText(goalValues[0]); break;
+		    	case 0: textView2.setText(" steps"); goalCounter.setText(""+goalValues[0]); progBar.setMax(Integer.parseInt(goalValues[0]));
+		    		progBar.setProgress(Integer.parseInt(values[0]));break;
 		    	case 1: textView2.setText(" height"); progBar.setVisibility(View.INVISIBLE); 
 		    			goal.setVisibility(View.INVISIBLE); goalCounter.setVisibility(View.INVISIBLE); break;
-		    	case 2: textView2.setText(" weight"); goalCounter.setText("150"); progBar.setVisibility(View.INVISIBLE);
+		    	case 2: textView2.setText(" weight"); goalCounter.setText(""+goalValues[1]); progBar.setVisibility(View.INVISIBLE);
 		    			goalCounter.setText(goalValues[1]); break;
-		    	case 3: textView2.setText(" BMI"); goalCounter.setText("20.00"); break;
+		    	case 3: textView2.setText(" BMI"); goalCounter.setText("20.00");progBar.setVisibility(View.INVISIBLE); break;
 		    	}
 			    
 			    imageView.setImageResource(R.drawable.blue_cross_icon);
