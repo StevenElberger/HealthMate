@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,12 +88,12 @@ public class StepCounter extends Activity {
 		
 		// initializes the values string
 		String[] values = new String[]{
-				fetchStepData(),"0",fetchHeightData(),fetchWeightData(),fetchBMI() };
+				fetchStepData(),fetchHeightData(),fetchWeightData(),fetchBMI() };
+		String[] goalValues = new String[]{
+				fetchStepGoal(),fetchWeightGoal() };
 		
 		// initializes the ImageListViewArrayAdapter
-		final ImageListViewArrayAdapter adapter = new ImageListViewArrayAdapter(this,values);
-		
-		
+		final ImageListViewArrayAdapter adapter = new ImageListViewArrayAdapter(this,values,goalValues);
 		
 		// sets listview adapter
 		list.setAdapter(adapter);
@@ -119,21 +120,36 @@ public class StepCounter extends Activity {
      * @param pos An int variable that chooses the activity
      */
 	public void changeActivity(int pos)	{
-		// creates an intent to change activities
-		Intent intent = new Intent(getApplicationContext(), getMenuItem(pos));
-		
-		if(!(getMenuItem(pos).equals(null)))	{
 			// Checker block of code, to choose an activity
-			if(pos == 0)	{
+		Intent intent = new Intent();
+			if(pos == 3)	{
+				
+				intent = new Intent(intent.ACTION_VIEW, Uri.parse("http://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html"));
+				startActivity(intent);
+			}
+			else	{
+				intent = new Intent(getApplicationContext(), getMenuItem(pos));
 				// puts data in the variables and starts activity
 				intent.putExtra("mainCount", steps);
 				startActivity(intent);
-			}	else	{
-				// puts data in the intent and starts activity
-				intent.putExtra("BMI", BMI);
-				startActivity(intent);
 			}
+	}
+	
+	/**
+	 * Chooses the activity to return bases on the pos 
+	 * using a switch statement
+	 * 
+	 * @param pos Selects the activity
+	 * 
+	 * @return the activity class
+	 */
+	public Class<?> getMenuItem(int pos)	{
+		switch(pos)	{
+			case 0: return StepCounterActivity.class;
+			case 1: return HeightActivity.class;
+			case 2: return WeightActivity.class;
 		}
+		return null;
 	}
 	
 	private String fetchWeightData()	{
@@ -188,6 +204,36 @@ public class StepCounter extends Activity {
 		return stepString;
 	}
 	
+	public String fetchStepGoal()	{
+		String goalString = "0";
+		try {
+			ArrayList<Map<String,String>> goalData = DataStorageManager.readJSONObject(this, "step_goal_data");
+			if(!(goalData.size() == 0))	{
+				goalString = goalData.get(goalData.size()-1).get("step_goal_value");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return goalString;
+	}
+	
+	public String fetchWeightGoal()	{
+		String goalString = "0";
+		try {
+			ArrayList<Map<String,String>> goalData = DataStorageManager.readJSONObject(this, "weight_goal_data");
+			if(!(goalData.size() == 0))	{
+				goalString = goalData.get(goalData.size()-1).get("weight_goal_value");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return goalString;
+	}
+	
 	/**
 	 * Updates the step view on the listview
 	 * 
@@ -206,22 +252,7 @@ public class StepCounter extends Activity {
 		change.setText(""+steps);
 	}
 	
-	/**
-	 * Chooses the activity to return bases on the pos 
-	 * using a switch statement
-	 * 
-	 * @param pos Selects the activity
-	 * 
-	 * @return the activity class
-	 */
-	public Class<?> getMenuItem(int pos)	{
-		switch(pos)	{
-			case 0: return StepCounterActivity.class;
-			case 2: return HeightActivity.class;
-			case 3: return WeightActivity.class;
-		}
-		return null;
-	}
+	
 	
 	@Override
 	protected void onResume() {

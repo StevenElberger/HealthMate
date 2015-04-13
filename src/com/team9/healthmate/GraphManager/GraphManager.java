@@ -294,7 +294,6 @@ public class GraphManager {
 		ColumnChartData data = new ColumnChartData(columns);
 		data.setAxisXBottom(xAxis);
 		data.setAxisYLeft(yAxis);
-		
 		ColumnChartView chart = new ColumnChartView(appContext);
 		chart.setValueSelectionEnabled(true);
 		chart.setColumnChartData(data);

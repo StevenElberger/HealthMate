@@ -1,6 +1,7 @@
 package com.team9.healthmate.StepCounter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +16,17 @@ import com.team9.healthmate.GraphManager.ColumnGraph;
 import com.team9.healthmate.GraphManager.GraphManager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -36,9 +42,12 @@ public class WeightActivity extends Activity {
 	public SeekBar weightBar;
 	public int maxWeight = 400;
 	public TextView weightText;
+	public TextView weightGoalText;
 	public int weight;
 	private ColumnGraph[] columnGraph;
 	private View view;
+	private int goal = 0;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +89,47 @@ public class WeightActivity extends Activity {
 		// initializes and sets SeekBar
 		weightBar = (SeekBar) findViewById(R.id.height_counter);
 		weightBar.setMax(maxWeight);
-		weightBar.setProgress(0);
+		weightBar.setProgress(Integer.parseInt(fetchWeightData()));
 		
 		//initializes the weight textview
 		weightText = (TextView) findViewById(R.id.lbs);
+		weightText.setText(fetchWeightData());
+		weightGoalText = (TextView) findViewById(R.id.goal_count);
+		weightGoalText.setText(fetchWeightGoal());
 		createGraphs();
 		
+	}
+	
+	private String fetchWeightData()	{
+		String weightString = "0";
+		try {
+			ArrayList<Map<String,String>> weightData = DataStorageManager.readJSONObject(this, "weight_data");
+			if(!(weightData.size() == 0))	{
+				weightString = weightData.get(weightData.size()-1).get("weight_value");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		Log.d("WEIGHT_VALUE", weightString);
+		weight =Integer.parseInt(weightString);
+		return weightString;
+	}
+	
+	public String fetchWeightGoal()	{
+		String goalString = "0";
+		try {
+			ArrayList<Map<String,String>> goalData = DataStorageManager.readJSONObject(this, "weight_goal_data");
+			if(!(goalData.size() == 0))	{
+				goalString = goalData.get(goalData.size()-1).get("weight_goal_value");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return goalString;
 	}
 	
 	/**
@@ -129,7 +173,44 @@ public class WeightActivity extends Activity {
 		setResult(RESULT_OK, intent);
 		finish();
 	}
-	 public void createGraphs() {
+	
+	public void onClickGoalChange(View v)	{
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+    	alertDialog.setTitle("Change your Goal");
+    	final EditText changer = new EditText(this);
+    	changer.setText(""+goal);
+    	changer.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	alertDialog.setView(changer);
+    	
+    	alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+    	    new DialogInterface.OnClickListener() {
+    	        public void onClick(DialogInterface dialog, int which) {
+    	        	goal = Integer.parseInt(changer.getText().toString());
+    	        	weightGoalText.setText(""+goal);
+    	        	saveGoal();
+    	            dialog.dismiss();
+    	        }
+    	    });
+    	alertDialog.show();
+	}
+	
+	private void saveGoal()	{
+    	// saves the weight data to the local storage
+		Map<String,String> infoPack = new HashMap<String, String>();
+		infoPack.put("weight_goal_value", ""+goal);
+		try {
+			DataStorageManager.writeJSONObject(this, "weight_goal_data", infoPack, true);
+		//	Toast.makeText(this, "Steps data has been saved", Toast.LENGTH_SHORT).show();
+		} catch (JSONException e) {
+			Toast.makeText(this, "Weight Goal data wasn't saved", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		} catch (IOException e) {
+			Toast.makeText(this, "Weight Goal data wasn't saved", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		}
+    }
+	
+	public void createGraphs() {
 		// Other colors are possible
 		int[] colors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.RED, Color.LTGRAY, Color.DKGRAY};
 		

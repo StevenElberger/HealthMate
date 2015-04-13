@@ -32,6 +32,7 @@ public class StepService extends Service implements SensorEventListener {
 	private final Handler handler = new Handler();
 	Intent intent;
 	int counter = 0;
+	int goalCount = 1000;
 	
 	@Override
 	public void onCreate() {
@@ -69,6 +70,7 @@ public class StepService extends Service implements SensorEventListener {
     public void onStart(Intent intent, int startId) {
     	Toast.makeText(this, "STARTED", Toast.LENGTH_SHORT).show();
     	counter = intent.getIntExtra("count", 0);
+    	goalCount = intent.getIntExtra("goalCount", 1000);
         handler.removeCallbacks(sendUpdatesToUI);
         handler.postDelayed(sendUpdatesToUI, 100); // 1 second
    
@@ -90,6 +92,7 @@ public class StepService extends Service implements SensorEventListener {
      */
     private void DisplayLoggingInfo() {
     	intent.putExtra("counter", ""+counter);
+    	intent.putExtra("goalCount",""+goalCount);
     	sendBroadcast(intent);
     }
     

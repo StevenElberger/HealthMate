@@ -13,13 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
     </RelativeLayout>
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:onClick="onClickReset"
-        android:text="Reset" />
 
     <Button
         android:id="@+id/button3"
@@ -30,16 +23,6 @@
         android:layout_alignParentRight="true"
         android:onClick="onClickStop"
         android:text="Stop" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClickStart"
-        android:text="Start" />
 
     <TextView
         android:id="@+id/counter"
@@ -57,6 +40,44 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/counter"
         android:text="steps"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="onClickStart"
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/change_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickGoalChange"
+        android:text="Change Goal" />
+
+    <TextView
+        android:id="@+id/goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/unit"
+        android:layout_below="@+id/unit"
+        android:text="Goal:"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/goal_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/goal"
+        android:layout_alignBottom="@+id/goal"
+        android:layout_toRightOf="@+id/goal"
+        android:text="1000"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

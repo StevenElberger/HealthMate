@@ -42,5 +42,23 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/block1"
         android:layout_toRightOf="@+id/image_view" />
+    <TextView
+        android:id="@+id/goal_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/progressBar1"
+        android:text="1000"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/unit_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/goal_counter"
+        android:layout_alignBottom="@+id/goal_counter"
+        android:layout_toLeftOf="@+id/goal_counter"
+        android:text="Goal:"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

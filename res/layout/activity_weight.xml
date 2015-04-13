@@ -38,21 +38,49 @@
             android:textSize="40sp" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/sumbit_height"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClick"
-        android:layout_marginRight="5sp"
-        android:text="Submit" />
-
     <SeekBar
         android:id="@+id/height_counter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/block1"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/sumbit_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="onClick"
+        android:text="Submit" />
+
+    <Button
+        android:id="@+id/goal_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:onClick="onClickGoalChange"
+        android:text="Change Goal" />
+
+    <TextView
+        android:id="@+id/goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/height_counter"
+        android:layout_centerHorizontal="true"
+        android:text="Goal:"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/goal_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/goal"
+        android:layout_alignBottom="@+id/goal"
+        android:layout_toRightOf="@+id/goal"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
