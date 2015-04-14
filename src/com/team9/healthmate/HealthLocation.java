@@ -2,6 +2,8 @@ package com.team9.healthmate;
 
 
 import android.app.Activity;
+import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -54,7 +56,7 @@ public class HealthLocation extends Activity implements LocationListener{
     public double latitude;
     
     //Conversion from 1 mile to meters
-    public int METER_TO_MILE = 1610;
+    public int METER_TO_MILE = 2*1610;
     public int radius = METER_TO_MILE;
     public String types ="";
     
@@ -65,6 +67,7 @@ public class HealthLocation extends Activity implements LocationListener{
     public GoogleMap gMap;
     private final int MAX_PLACES = 20;
     private MarkerOptions[] places;
+    private ProgressDialog pDialog;
     
     /**
      * This method is called as soon as the activity is selected. The method init markers
@@ -82,6 +85,7 @@ public class HealthLocation extends Activity implements LocationListener{
         fire_station_icon = R.drawable.fire_station_icon;
         police_icon = R.drawable.police_icon;
         pharmacy_icon = R.drawable.pharmacy_icon;
+        pDialog = new ProgressDialog(this);
 
         //grab map
         gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.google_map)).getMap();
@@ -101,7 +105,13 @@ public class HealthLocation extends Activity implements LocationListener{
      * 			  method to be called.
      */
     public void onClick(View v)	{
-    	
+    	pDialog.setMessage("Finding Locations");
+    	try {
+            pDialog.show();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     	switch(v.getId())	{
     		case R.id.hospital: types = "hospital"; /*updatePlaces();*/ break;
     		case R.id.fire_station: types = "fire_station"; updatePlaces(); break;
@@ -240,7 +250,6 @@ public class HealthLocation extends Activity implements LocationListener{
             return placesBuilder.toString();
         }
         
-        
         /**
          * This method is an addition to the first thread and is ran right after doInBackground(..,).
          * In addition, this is where the parsing of the JSON Object taken from the google place api
@@ -331,6 +340,9 @@ public class HealthLocation extends Activity implements LocationListener{
                         placeMarker[i] = gMap.addMarker(places[i]);
                     }
                 }
+            }
+            if(pDialog.isShowing())	{
+            	pDialog.dismiss();
             }
 
         }
