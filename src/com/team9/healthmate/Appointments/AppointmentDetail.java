@@ -3,20 +3,31 @@ package com.team9.healthmate.Appointments;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.team9.healthmate.JsonManager.JSONParser;
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.NotificationsManager.NotificationsManager;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity Class that displays the information for a given
@@ -33,6 +44,21 @@ public class AppointmentDetail extends Activity {
 	
 	// Intent object passed in
 	Intent intent;
+	
+	// Create an instance for JSONParser
+	 JSONParser jsonParser = new JSONParser();
+	 
+	// Create an instance for JSONObject class
+	 JSONObject json;
+	 
+	 //server timestamp 
+	 String timestamp;
+	 
+	// JSON Node names
+	    private static final String TAG_SUCCESS = "success";
+	 
+	 // url to delete product
+	    private static final String url_delete_appointment = "http://10.0.2.2:8080/android_connect/delete_appointment.php";
 
 	/**
 	 * Method retrieves information sent by the previous activity
@@ -122,8 +148,13 @@ public class AppointmentDetail extends Activity {
 				// Read all the registered single alarms for notifications
 				registeredNotifications = DataStorageManager.readJSONObject(this, "single alarms");
 				
+				// Save the timestamp for server side deletion
+				timestamp = appointmentDetails.get("timestamp");			
+				
 				// Delete the appointment from the file of appointments
 				DataStorageManager.deleteJSONObject(this, "appointments", appointmentDetails);
+				
+				
 				
 				// Look for the registered notification for the given appointment based on the
 				// appointments time stamp. If found, delete the alarm from the file 
@@ -155,6 +186,9 @@ public class AppointmentDetail extends Activity {
 				
 				// Unregister the alarm for the notification
 				NotificationsManager.unregisterNotification(this, message);
+				
+				// Execute the deletion from server as well
+				new DeleteAppointment().execute();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -205,5 +239,66 @@ public class AppointmentDetail extends Activity {
 		startActivity(newIntent);
 		finish();
 	}
+	
+	 /*****************************************************************
+     * Background Async Task to Delete Appointment
+     * */
+    class DeleteAppointment extends AsyncTask<String, String, String> {
+ 
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();          
+        }
+ 
+        /**
+         * Deleting product
+         * */
+        protected String doInBackground(String... args) {
+ 
+             try {
+                // Building Parameters
+                List<NameValuePair> params = new ArrayList<NameValuePair>();                
+                params.add(new BasicNameValuePair("timestamp", timestamp));
+                //Log.d("Delete appointment 0", json.toString());
+                // getting appointment details by making HTTP request
+                json = jsonParser.makeHttpRequest(
+                        url_delete_appointment, "POST", params);
+ 
+                // check your log for json response
+                Log.d("Delete appointment", json.toString());              
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+ 
+            return null;
+        }
+ 
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+        	 try {
+                int success  = json.getInt(TAG_SUCCESS);
+             	
+                 if (success == 1) {                  
+                 	Toast.makeText(getBaseContext(), "Data was successfully deleted on the server! " , Toast.LENGTH_LONG).show();
+                 } else {
+                     // failed to create product
+                 	Toast.makeText(getApplicationContext(), "Data was not deleted on the server! Please Contact an Administrator. ", Toast.LENGTH_LONG).show();                 	
+                 }
+             } catch (JSONException e) {
+                 e.printStackTrace();
+             }
+        	 
+        	
+        }
 
+}
+    
+    
+    
+    
 }

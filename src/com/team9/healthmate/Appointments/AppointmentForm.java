@@ -2,27 +2,39 @@ package com.team9.healthmate.Appointments;
 
 
 import java.util.Calendar;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.team9.healthmate.JsonManager.JSONParser;
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.NotificationsManager.NotificationsManager;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 /**
  * Activity Class that Displays a Form used to create Appointments. The
@@ -33,6 +45,32 @@ import android.widget.TimePicker;
  * 
  */
 public class AppointmentForm extends Activity {
+	
+	 // Progress Dialog
+    //private ProgressDialog pDialog;
+    
+    JSONParser jsonParser = new JSONParser();
+    
+    JSONObject json;
+    
+    // Save time for server
+    String timestamp;
+    
+    // Save the new time stamp for updating
+    String newtimestamp;
+    
+    // Flag to identify whether the task is updating or creating
+    // to server
+    Boolean editOrCreate = false;
+    
+ // JSON Node names
+    private static final String TAG_SUCCESS = "success";
+    
+    // url to create new appointment
+    private static String url_create_appointment = "http://10.0.2.2:8080/android_connect/create_appointment.php";
+    
+ // url to update an appointment
+    private static String url_update_appointment = "http://10.0.2.2:8080/android_connect/update_appointment.php";
 
 	// The container of the time stamp that will be deleted
 	Map<String, String> appointmentTimeStamp;
@@ -51,6 +89,9 @@ public class AppointmentForm extends Activity {
 	
 	// The time the notification will be registered with
 	Calendar timeOfAppointment;
+	
+	//Server side time and date
+	String serverStartTime, serverEndTime, serverDate;
 
 	/**
 	 * Method that sets the listener for the save button and initializes the
@@ -94,6 +135,7 @@ public class AppointmentForm extends Activity {
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_save_appointment) {
 			saveAppointment();
+			saveAppointmentOnServer();
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -216,6 +258,9 @@ public class AppointmentForm extends Activity {
 				// Check to see if the Appointment was being edited.
 				if (appointmentTimeStamp.get("timestamp") != null) {
 					
+					// save for updating the row
+					timestamp = appointmentTimeStamp.get("timestamp");
+					
 					// Container for alarm information having to do with notification generation
 					ArrayList<Map<String, String>> registeredNotifications;
 					
@@ -248,10 +293,22 @@ public class AppointmentForm extends Activity {
 					NotificationsManager.unregisterNotification(this, deletionMessage);
 				}
 					// Save the new Appointment to the "appointments" file
-					DataStorageManager.writeJSONObject(this, "appointments", appointment, false);
+					DataStorageManager.writeJSONObject(this, "appointments", appointment, false);					
+					
+					// verify if in edit mode
+					if (editOrCreate){
+						//retrieve the last saved data with the new timestamp value, for updating the data
+						newtimestamp = appointment.get("timestamp").toString();
+					}			
+					else
+						//save the timestamp for server database save, when creating
+						timestamp = appointment.get("timestamp").toString();
+						
 					
 					// read the list of appointments in the updated file
 					appointmentList = DataStorageManager.readJSONObject(this, "appointments");
+					
+								
 					
 					// Create Notification
 					Map<String, String> message = new HashMap<String, String>();
@@ -284,6 +341,14 @@ public class AppointmentForm extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/** Method will save the user entered data on server side.
+	 * @author Davit Avetikyan
+	 * */
+	public void saveAppointmentOnServer(){
+	new CreateNewAppointment().execute();
+	
 	}
 	
 	/**
@@ -426,7 +491,12 @@ public class AppointmentForm extends Activity {
 			// Set the time that was previously entered.
 			timePicker.setCurrentHour(setHour);
 			timePicker.setCurrentMinute(setMinute);
+			
+			// Set it to true to imply it's in edit mode
+			editOrCreate = true;
 		}
+		else
+			editOrCreate = false;
 	}
 
 	/**
@@ -501,9 +571,14 @@ public class AppointmentForm extends Activity {
 				// Add to the information that should be stored.
 				if (startMinutes < 10) {
 					appointment.put("start time", startHour + ":0" + startMinutes + startTimeOfDay);
+					
+					//This is to save to server side
+					serverStartTime = startHour + ":0" + startMinutes + startTimeOfDay;
 				} else {
 					appointment.put("start time", startHour + ":" + startMinutes + startTimeOfDay);
-				}
+					
+					serverStartTime = startHour + ":" + startMinutes + startTimeOfDay;
+				}			
 				
 				// Go through the time and convert from 24 hours to 12 hour time
 				if (endHour > 12) {
@@ -519,9 +594,16 @@ public class AppointmentForm extends Activity {
 				// Add to the information that should be stored.
 				if (endMinutes < 10) {
 					appointment.put("end time", endHour + ":0" + endMinutes + endTimeOfDay);
-				} else {
+					
+					//This is to save to server side
+					serverEndTime = endHour + ":0" + endMinutes + endTimeOfDay;
+				} else {					
 					appointment.put("end time", endHour + ":" + endMinutes + endTimeOfDay);
+					
+					serverEndTime = endHour + ":" + endMinutes + endTimeOfDay;
 				}
+				
+				
 				
 				// Remove error message.
 				incorrectInputMessage = (TextView) findViewById(R.id.AppointmentFormTimeError);
@@ -581,9 +663,112 @@ public class AppointmentForm extends Activity {
 				
 				// Add to the information that should be stored.
 				appointment.put("date", formatedDate);
+				//This is to pass on server
+				serverDate = formatedDate;
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+     * Background Async Task to Create or to Update appointment
+     * */
+    class CreateNewAppointment extends AsyncTask<String, String, String> {
+ 
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();           
+        }
+ 
+        /**
+         * Creating an appointment
+         * */
+        protected String doInBackground(String... args) {
+        	
+        	EditText userInput;
+        	
+        	try{
+        	//assign the field data
+			userInput = (EditText) findViewById(R.id.AppointmentFormTitle);			
+			String title = userInput.getText().toString();			
+			
+			userInput = (EditText) findViewById(R.id.AppointmentFormName);
+			 String name = userInput.getText().toString();			
+        	
+        	userInput = (EditText) findViewById(R.id.AppointmentFormAddress);
+        	 String location= userInput.getText().toString();
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
+			 String phone = userInput.getText().toString();
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormEmail);
+			String email = userInput.getText().toString();
+
+			userInput = (EditText) findViewById(R.id.AppointmentFormComment);
+			String comment = userInput.getText().toString();         
+            
+ 
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("title", title));
+            params.add(new BasicNameValuePair("name", name));
+            params.add(new BasicNameValuePair("location", location));
+            params.add(new BasicNameValuePair("phone", phone));
+            params.add(new BasicNameValuePair("email", email));
+            params.add(new BasicNameValuePair("comment", comment));
+            params.add(new BasicNameValuePair("start_time", serverStartTime));
+            params.add(new BasicNameValuePair("end_time", serverEndTime));
+            params.add(new BasicNameValuePair("date", serverDate));
+            params.add(new BasicNameValuePair("timestamp", timestamp));
+            // add only if editing
+            if (editOrCreate){
+             	params.add(new BasicNameValuePair("newtimestamp", newtimestamp));            
+              	// getting JSON Object
+              	// Note that create product url accepts POST method
+              	json = jsonParser.makeHttpRequest(url_update_appointment,
+                    "POST", params);           
+            }
+            else{
+            	json = jsonParser.makeHttpRequest(url_create_appointment,
+                    "POST", params);
+            }
+ 
+            // check log cat fro response
+            Log.d("Create Response", json.toString());
+        	}
+        	catch (Exception ex){
+        		ex.printStackTrace();
+        	}           
+ 
+           return null;
+        }
+ 
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {        	
+ 
+            try {
+                int success  = json.getInt(TAG_SUCCESS);
+            	// successful to create an appointment
+                if (success == 1) {                   
+                	Toast.makeText(getApplicationContext(), "Data was Saved on the Server Successfully! " , Toast.LENGTH_LONG).show();
+                } else {
+                    // failed to create an appointment
+                	Toast.makeText(getApplicationContext(), "Data was Not Aaved on the Server! ", Toast.LENGTH_LONG).show();
+                	
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+ 
+    }
+    
+   	
 }

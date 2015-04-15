@@ -10,6 +10,7 @@ import org.json.JSONException;
 
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.GraphManager.GraphManager;
+import com.team9.healthmate.ServerManager.ServerStorageManager;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -47,10 +48,10 @@ import android.os.Build;
 public class Moods extends FragmentActivity
 							implements ActionBar.TabListener, OnItemSelectedListener {
 
-	private ViewPager viewPager;
-    private MoodTabsPagerAdapter mAdapter;
-    private ActionBar actionBar;
-    private MenuInflater mn;    
+   private ViewPager viewPager;
+   private MoodTabsPagerAdapter mAdapter;
+   private ActionBar actionBar;
+   private MenuInflater mn;    
    private Menu TabMenu;
    private Context context;
    private Intent intent2;
@@ -59,7 +60,7 @@ public class Moods extends FragmentActivity
    private Tab tabAddFeed;
    
     
- // Tab titles
+ // Tab titles that are displayed in Moods section
     private String[] tabs = { "Moods Survey", "Moods Graph", "Helpful Tips" };    
 		
 	@Override
@@ -147,7 +148,7 @@ public class Moods extends FragmentActivity
 			        	   
 			           }
 			       });
-			
+									
 			// Create the AlertDialog
 			AlertDialog dialog = builder2.create();	
 			dialog.show();
@@ -155,6 +156,7 @@ public class Moods extends FragmentActivity
 		case R.id.mAddRssFeed:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			Context mContext = getApplicationContext();
+			
 			LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 			 View layout = inflater.inflate(R.layout.dialog_rss_feed, null);
 			Log.v("Debug", "ER start");
