@@ -39,6 +39,10 @@
         <meta-data
   		  android:name="com.google.android.maps.v2.API_KEY"
   		  android:value="AIzaSyDwk7j-tFAH0RQtV7_912E4hNtW3aP_NJM"/>
+        <!--  Davit's Laptop COMP SHA1 -->
+        <meta-data
+  		  android:name="com.google.android.maps.v2.API_KEY"
+  		  android:value="AIzaSyDT7XTXaPLEt-TrtFpF0zrcZ9fdixrzImc"/>
         
         <meta-data
     		android:name="com.google.android.gms.version"
