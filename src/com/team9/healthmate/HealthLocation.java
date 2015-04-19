@@ -2,7 +2,6 @@
 package com.team9.healthmate;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Location;
@@ -24,7 +23,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -63,7 +61,7 @@ public class HealthLocation extends Activity implements LocationListener{
     public String placesSearchStr;
     private Marker userMarker;
     private Marker[] placeMarker;
-    private int user_icon, hospital_icon,fire_station_icon, police_icon, doctor_icon, pharmacy_icon;
+    private int user_icon, hospital_icon,fire_station_icon, police_icon, pharmacy_icon;
     public GoogleMap gMap;
     private final int MAX_PLACES = 20;
     private MarkerOptions[] places;
