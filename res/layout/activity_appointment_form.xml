@@ -28,6 +28,13 @@
             android:inputType="text"
             android:paddingTop="5dp" >
         </EditText>
+        
+        <TextView
+            android:id="@+id/AppointmentFormTitleError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/AppointmentFormName"
@@ -37,6 +44,13 @@
             android:inputType="textPersonName"
             android:paddingTop="5dp" >
         </EditText>
+        
+        <TextView
+            android:id="@+id/AppointmentFormNameError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/AppointmentFormAddress"
@@ -93,6 +107,14 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="0dp"
 		    android:gravity="start"/>
+        
+        <TextView
+            android:id="@+id/AppointmentFormDateError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text=""
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/AppointmentFormStartTimeTitle"
@@ -121,22 +143,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp" />
-
+        
         <TextView
-            android:id="@+id/SaveButtonText"
+            android:id="@+id/AppointmentFormTimeError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="@string/appointment_form_save"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/SaveAppointment"
+            android:layout_margin="10dp"
+            android:text=""
+            android:textSize="14sp" />
+        
+        <TextView
+            android:id="@+id/AppointmentFormError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/appointment_form_save"
-            android:src="@drawable/ic_action_content_save" />
+            android:layout_margin="10dp"
+            android:text=""
+            android:textSize="14sp" />
     </LinearLayout>
 
 </ScrollView>

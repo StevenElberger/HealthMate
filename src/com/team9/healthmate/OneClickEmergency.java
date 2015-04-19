@@ -1,13 +1,8 @@
-/* @author Davit Avetikyan 10/26/2014
- * OneClickEmergency class will provide with 
- * set of functionalities to send emails and texts. 
- * 
- */
-
 package com.team9.healthmate;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
@@ -17,7 +12,10 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
-
+/** @author Davit Avetikyan 10/26/2014
+ * OneClickEmergency class will provide with 
+ * set of functionalities to send emails and texts. 
+  */
 public class OneClickEmergency {
 	
 	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -26,6 +24,7 @@ public class OneClickEmergency {
 	/** Sends text to specified users
 	 *  from the contact list. Specifies in
 	 *  text body the purpose of the message	
+	 *  @param context the current context of the activity
 	 */
 	protected void sendSMSMessage(Context context) {
 	      Log.v("Send SMS", "");      
@@ -53,24 +52,33 @@ public class OneClickEmergency {
 	 * 	in the message body the purpose of the 
 	 * 	email, stamping the date and time the 
 	 * 	call was made.
+	 *  @param context the current context of the activity
 	 */
 	protected void sendEmail(Context context) {
-		String recipient = "avetikyan.davit@gmail.com";
+		ArrayList<String> recipient = new ArrayList<String>();
+		
 		String subject = "An emergency call was made by Dave at this time: " + dateFormat.format(date);
 		String body = "Emergency Call";
+		recipient.add("avetikyan.davit@gmail.com");
 				
-		String[] recipients = {recipient};
-		 Intent email = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
+		String[] recipients = {recipient.get(0)};
+		 Intent email = new Intent(Intent.ACTION_SEND);
+		 email.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		 email.setType("text/plain");
 		// prompts email clients only
-		 email.setType("message/rfc822");
+		 //email.setType("message/rfc822");
 		 
 		 email.putExtra(Intent.EXTRA_EMAIL, recipients);
 		 email.putExtra(Intent.EXTRA_SUBJECT, subject);
 		 email.putExtra(Intent.EXTRA_TEXT, body);
+		 
+		 Intent new_intent = Intent.createChooser(email, "Share Via");
+		 new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 		 try {
 			 // the user can choose the email client
-			 context.startActivity(Intent.createChooser(email, "Choose an email client from..."));
+			 //context.startActivity(Intent.createChooser(email, "Choose an email client from..."));
+			 context.startActivity(new_intent);
 		 } catch (android.content.ActivityNotFoundException ex) {
 			 Toast.makeText(context.getApplicationContext(), "No email client installed.",
 					 Toast.LENGTH_LONG).show();
@@ -78,11 +86,24 @@ public class OneClickEmergency {
 	}
 
 	/**	Makes a call to a specified phone number
-	 */
+	 * @param context the current context of the activity
+	 */ 
 	protected void makeACall(Context context){
+		try {
 		Intent callIntent = new Intent(Intent.ACTION_CALL);
-	    callIntent.setData(Uri.parse("tel:8053208737"));
-	    context.startActivity(callIntent);	
+		callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		//callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+	    callIntent.setData(Uri.parse("tel:8027933209"));
+	    context.startActivity(callIntent);	}
+		catch(android.content.ActivityNotFoundException ex){
+			 Toast.makeText(context.getApplicationContext(), 
+			 "Call faild, please try again later.", Toast.LENGTH_SHORT).show();
+		}
+			 catch(Exception ex){
+				 Toast.makeText(context.getApplicationContext(),
+						 "There is an Exception in making a call. Please contact an Administrator.", Toast.LENGTH_LONG).show();
+			 }
+		
 	}
 
 }

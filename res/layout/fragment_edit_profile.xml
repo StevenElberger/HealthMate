@@ -1,0 +1,234 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical" >
+	<RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	    android:orientation="vertical" >
+		
+	    <LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp" >
+	        
+	        	<TextView
+		        android:id="@+id/edit_profile_fragment_no_password_label"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:gravity="center_horizontal"
+		        android:visibility="invisible"
+		        android:text="@string/edit_profile_fragment_password" />
+	        	
+	    </LinearLayout>
+	    
+	    <LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout0"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp"
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout" >
+	        
+	        	<ImageView
+			        android:id="@+id/edit_profile_fragment_edit_profile_pic"
+			        android:contentDescription="@string/user_profile_profile_pic"
+			        android:layout_weight="1"
+			        android:layout_width="50dp"
+			        android:layout_height="50dp"
+			        android:maxWidth="50dp"
+			        android:maxHeight="50dp"
+			        android:src="@drawable/ic_launcher" />
+	        	
+	        	<Button
+				    android:id="@+id/edit_profile_fragment_upload_profile_pic"
+				    android:layout_weight="1"
+				    android:layout_width="0dp"
+				    android:layout_height="wrap_content"
+				    android:gravity="center"
+				    android:layout_gravity="center_vertical"
+				    android:text="@string/edit_profile_fragment_change_pic" />
+	        	
+	    </LinearLayout>
+	    
+		<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout1"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp"
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout0" >
+	        
+		    <TextView
+		        android:id="@+id/edit_profile_fragment_f_name_label"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="@string/edit_profile_fragment_first_name" />
+		    
+		    <EditText
+		        android:id="@+id/edit_profile_fragment_f_name"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:gravity="end"
+		        android:hint="@string/edit_profile_fragment_first_name"/>
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp" 
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout1" >
+		    
+		    <TextView
+		        android:id="@+id/edit_profile_fragment_l_name_label"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="@string/edit_profile_fragment_last_name" />
+		    
+		    <EditText
+		        android:id="@+id/edit_profile_fragment_l_name"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:gravity="end"
+		        android:hint="@string/edit_profile_fragment_last_name" />
+		    
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout3"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp" 
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout2" >
+		    
+		    <TextView
+		        android:id="@+id/edit_profile_fragment_u_name_label"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="@string/edit_profile_fragment_username" />
+		    
+		    <EditText
+		        android:id="@+id/edit_profile_fragment_u_name"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:gravity="end"
+		        android:hint="@string/edit_profile_fragment_username" />
+		    
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout4"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp" 
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout3" >
+			
+		    <TextView
+		        android:id="@+id/edit_profile_fragment_gender_label"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="@string/edit_profile_fragment_gender" />
+		    
+		    <Spinner
+				android:id="@+id/edit_profile_fragment_gender"
+				android:layout_weight="1"
+				android:layout_width="0dp"
+				android:gravity="center"
+				android:layout_height="wrap_content" />
+		    
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout5"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp" 
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout4" >
+		
+		<TextView
+		        android:id="@+id/edit_profile_fragment_age_label"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+
+		        android:text="@string/edit_profile_fragment_birthday" />
+		
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout6"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp" 
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout5" >
+		    
+		    <DatePicker
+			   	android:id="@+id/edit_profile_fragment_bday"
+			   	android:calendarViewShown="false"
+			   	android:endYear="2014"
+			   	android:maxDate="12/31/2015"
+			   	android:minDate="01/01/1900"
+			   	android:spinnersShown="true"
+			   	android:startYear="1900"
+			   	android:layout_weight="5"
+			    android:layout_width="0dp"
+			    android:layout_height="wrap_content"
+			    android:gravity="start" />
+		    
+		</LinearLayout>
+		
+			<LinearLayout
+		    android:id="@+id/edit_profile_fragment_relative_layout7"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        android:orientation="horizontal"
+	        android:paddingTop="10dp"
+	        android:layout_below="@+id/edit_profile_fragment_relative_layout6" >
+		    
+		    <TextView
+		        android:id="@+id/edit_profile_fragment_password_label"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="@string/edit_profile_fragment_password" />
+		    
+		    <EditText
+		        android:id="@+id/edit_profile_fragment_password"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:gravity="end"
+		        android:inputType="textPassword"
+		        android:hint="@+string/edit_profile_fragment_password" />
+		    
+		</LinearLayout>
+		
+	</RelativeLayout>
+</ScrollView>

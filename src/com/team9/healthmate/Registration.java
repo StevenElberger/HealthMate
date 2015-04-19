@@ -1,8 +1,11 @@
 package com.team9.healthmate;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -47,6 +50,7 @@ public class Registration extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		// User's birthday
 	    datePicker = (DatePicker) findViewById(R.id.bday);
 	    
@@ -86,15 +90,10 @@ public class Registration extends Activity implements OnClickListener {
 		int month = datePicker.getMonth();
 		int year = datePicker.getYear();
 		Calendar c = Calendar.getInstance();
-		int currentYear = c.get(Calendar.YEAR);
-		int currentMonth = c.get(Calendar.MONTH);
-		int currentDay = c.get(Calendar.DAY_OF_MONTH);
-		int age;
-		if (currentMonth >= month && currentDay >= day) {
-			age = currentYear - year;
-		} else {
-			age = currentYear - year - 1;
-		}
+		c.set(year, month, day);
+		Date age = c.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		String dateString = sdf.format(age);
 		// Write contents to file
 		Context context = getApplicationContext();
 		Map<String, String> accountInfo = new HashMap<String, String>();
@@ -103,7 +102,7 @@ public class Registration extends Activity implements OnClickListener {
 		accountInfo.put("first_name", firstName.getText().toString());
 		accountInfo.put("last_name", lastName.getText().toString());
 		accountInfo.put("sex", sexSpinner.getSelectedItem().toString());
-		accountInfo.put("age", "" + age);
+		accountInfo.put("age", "" + dateString);
 		
 		try {
 			DataStorageManager.writeJSONObject(context, "account", accountInfo, true);

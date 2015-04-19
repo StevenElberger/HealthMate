@@ -1,5 +1,5 @@
-package com.team9.healthmate;
 
+package com.team9.healthmate;
 
 import android.app.Activity;
 import android.app.ListActivity;

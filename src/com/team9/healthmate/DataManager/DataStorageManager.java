@@ -20,7 +20,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.widget.TextView;
 
 /**
@@ -83,7 +82,6 @@ public class DataStorageManager {
 
 		// Get the JSON object information in a string format
 		String text = data.toString() + "\n";
-		Log.w("Data Written", text);
 
 		// If overwrite is true, the file will be overwritten if it already
 		// exists.
