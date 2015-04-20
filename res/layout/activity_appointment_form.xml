@@ -35,20 +35,49 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="14sp" />
+		<LinearLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="match_parent"
+		    android:orientation="horizontal" >       
 
         <EditText
             android:id="@+id/AppointmentFormName"
-            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ems="10"
             android:hint="@string/appointment_form_name"
             android:inputType="textPersonName"
-            android:paddingTop="5dp" >
+            android:paddingTop="5dp" />
+
+		 <EditText
+            android:id="@+id/AppointmentFormLastName"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/appointment_form_lastname"
+            android:inputType="textPersonName"
+            android:paddingTop="5dp" />
+
+		
+		</LinearLayout>
+		
+		<EditText
+		    android:id="@+id/AppointmentFormId"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:ems="10"
+		    android:hint="@string/appointment_form_drid"
+		    android:inputType="text" >
+           
         </EditText>
-        
+
         <TextView
             android:id="@+id/AppointmentFormNameError"
-            android:layout_width="wrap_content"
+            android:layout_width="86dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.58"
             android:text=""
             android:textSize="14sp" />
 
@@ -57,6 +86,42 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/appointment_form_address"
+            android:inputType="textPostalAddress"
+            android:paddingTop="5dp" >
+        </EditText>
+        <LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal" >   
+
+        <EditText
+            android:id="@+id/AppointmentFormCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="@string/appointment_form_city"
+            android:inputType="textPostalAddress"
+            android:paddingTop="5dp" >
+
+        </EditText>
+        
+        <EditText
+            android:id="@+id/AppointmentFormZip"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/appointment_form_zip"
+            android:inputType="number"
+            android:paddingTop="5dp" >
+        </EditText>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/AppointmentFormState"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/appointment_form_state"
             android:inputType="textPostalAddress"
             android:paddingTop="5dp" >
         </EditText>

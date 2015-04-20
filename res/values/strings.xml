@@ -37,7 +37,7 @@
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_login_button">Login</string>
-    <string name="login_register_button">Register</string>
+    <string name="login_register_button">Not a member? Sign up now.</string>
     
     <!-- Strings for Registration Activity -->
     <string name="create_account">Create an Account</string>
@@ -146,6 +146,7 @@
     <!-- Strings for AppointmentDetail Activity -->
     <string name="appointment_detail_title">Appointment Information</string>
     <string name="appointment_detail_name">Doctor\'s Name: </string>
+    <string name="appointment_detail_id">Doctor\'s ID#: </string>
     <string name="appointment_detail_address">Location: </string>
     <string name="appointment_detail_contact_information">Contact Information\:</string>
     <string name="appointment_detail_date">Date: </string>
@@ -155,9 +156,14 @@
 
     <!-- Strings for AppointmentForm Activity -->
     <string name="appointment_form_header">Appointment Form</string>
-    <string name="appointment_form_title">Appointment Title (Required)</string>
-    <string name="appointment_form_name">Enter a Doctor\'s Name (Required)</string>
+    <string name="appointment_form_title">Appointment Title (Required)</string>    
+     <string name="appointment_form_name">Dr\'s Name</string>
+     <string name="appointment_form_lastname">Dr\'s Last Name</string>
+     <string name="appointment_form_drid">Dr\'s ID</string>
     <string name="appointment_form_address">Enter a Address</string>
+    <string name="appointment_form_city">Enter a City</string>
+    <string name="appointment_form_zip">Enter a Zip</string>
+    <string name="appointment_form_state">Enter a State</string>
     <string name="appointment_form_phone_number">Enter a Phone Number</string>
     <string name="appointment_form_email">Enter Email Address</string>
     <string name="appointment_form_comment">Enter a Comment</string>

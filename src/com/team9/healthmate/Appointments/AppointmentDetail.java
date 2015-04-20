@@ -1,5 +1,6 @@
 package com.team9.healthmate.Appointments;
 
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ import com.team9.healthmate.JsonManager.JSONParser;
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.NotificationsManager.NotificationsManager;
+import com.team9.healthmate.ServerManager.*;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -58,7 +60,7 @@ public class AppointmentDetail extends Activity {
 	    private static final String TAG_SUCCESS = "success";
 	 
 	 // url to delete product
-	    private static final String url_delete_appointment = "http://10.0.2.2:8080/android_connect/delete_appointment.php";
+	    private static final String url_delete_appointment = "http://108.77.76.162/HealthMateIntegration/delete_appointment.php";
 
 	/**
 	 * Method retrieves information sent by the previous activity
@@ -81,24 +83,32 @@ public class AppointmentDetail extends Activity {
 		appointmentDetails.put("timestamp", intent.getStringExtra("timestamp"));
 		appointmentDetails.put("title", intent.getStringExtra("title"));
 		appointmentDetails.put("name", intent.getStringExtra("name"));
+		appointmentDetails.put("lastname", intent.getStringExtra("lastname"));
+		appointmentDetails.put("doctorid", intent.getStringExtra("doctorid"));
 		appointmentDetails.put("location", intent.getStringExtra("location"));
+		appointmentDetails.put("city", intent.getStringExtra("city"));
+		appointmentDetails.put("zip", intent.getStringExtra("zip"));
+		appointmentDetails.put("state", intent.getStringExtra("state"));
 		appointmentDetails.put("phone", intent.getStringExtra("phone"));
 		appointmentDetails.put("email", intent.getStringExtra("email"));
 		appointmentDetails.put("comment", intent.getStringExtra("comment"));
 		appointmentDetails.put("start time", intent.getStringExtra("start time"));
 		appointmentDetails.put("end time", intent.getStringExtra("end time"));
-		appointmentDetails.put("date", intent.getStringExtra("date"));
-		
+		appointmentDetails.put("date", intent.getStringExtra("date"));		
 
 		// Go Through the information and display it on the screen.
 		TextView textView = (TextView) findViewById(R.id.AppointmentDetailTitle);
 		textView.setText(appointmentDetails.get("title"));
 
 		textView = (TextView) findViewById(R.id.AppointmentDetailName);
-		textView.setText("Doctor's Name: " + appointmentDetails.get("name"));
+		textView.setText("Doctor's Name: " + appointmentDetails.get("name") + " " +  appointmentDetails.get("lastname"));
+		
+		textView = (TextView) findViewById(R.id.AppointmentDetailId);
+		textView.setText("Doctor's ID#: " + appointmentDetails.get("doctorid"));
 
 		textView = (TextView) findViewById(R.id.AppointmentDetailAddress);
-		textView.setText("Location: " + appointmentDetails.get("location"));
+		textView.setText("Location: " + appointmentDetails.get("location") + ", " + appointmentDetails.get("city") + ", " + 
+		appointmentDetails.get("state") + " " + appointmentDetails.get("zip"));
 
 		textView = (TextView) findViewById(R.id.AppointmentDetailContactInformation);
 		textView.setText("Contact Information: \n" + "\tPhone Number: " + 
@@ -188,7 +198,8 @@ public class AppointmentDetail extends Activity {
 				NotificationsManager.unregisterNotification(this, message);
 				
 				// Execute the deletion from server as well
-				new DeleteAppointment().execute();
+				deleteDataonServer();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -239,65 +250,79 @@ public class AppointmentDetail extends Activity {
 		startActivity(newIntent);
 		finish();
 	}
+	/**
+	 * Background Async Task to Delete Appointment
+	 * data on the server side
+	 */
+	public void deleteDataonServer(){
+		// map object to pass in async thread
+		Map<String, String> paramToDelete = new HashMap<String, String>();
+		// will delete data row by timestamp
+		paramToDelete.put("timestamp", timestamp);
+		// creat the thread with deletion procedure		
+		new ServerStorageManager("Delete",url_delete_appointment, paramToDelete, this);
+		
+				
+	}
 	
 	 /*****************************************************************
      * Background Async Task to Delete Appointment
      * */
-    class DeleteAppointment extends AsyncTask<String, String, String> {
- 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();          
-        }
- 
-        /**
-         * Deleting product
-         * */
-        protected String doInBackground(String... args) {
- 
-             try {
-                // Building Parameters
-                List<NameValuePair> params = new ArrayList<NameValuePair>();                
-                params.add(new BasicNameValuePair("timestamp", timestamp));
-                //Log.d("Delete appointment 0", json.toString());
-                // getting appointment details by making HTTP request
-                json = jsonParser.makeHttpRequest(
-                        url_delete_appointment, "POST", params);
- 
-                // check your log for json response
-                Log.d("Delete appointment", json.toString());              
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
- 
-            return null;
-        }
- 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-        	 try {
-                int success  = json.getInt(TAG_SUCCESS);
-             	
-                 if (success == 1) {                  
-                 	Toast.makeText(getBaseContext(), "Data was successfully deleted on the server! " , Toast.LENGTH_LONG).show();
-                 } else {
-                     // failed to create product
-                 	Toast.makeText(getApplicationContext(), "Data was not deleted on the server! Please Contact an Administrator. ", Toast.LENGTH_LONG).show();                 	
-                 }
-             } catch (JSONException e) {
-                 e.printStackTrace();
-             }
-        	 
-        	
-        }
-
-}
-    
+//    class DeleteAppointment extends AsyncTask<String, String, String> {
+// 
+//        /**
+//         * Before starting background thread Show Progress Dialog
+//         * */
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();          
+//        }
+// 
+//        /**
+//         * Deleting product
+//         * */
+//        protected String doInBackground(String... args) {
+// 
+//             try {
+//                // Building Parameters
+//                List<NameValuePair> params = new ArrayList<NameValuePair>();                
+//                params.add(new BasicNameValuePair("timestamp", timestamp));
+//                //Log.d("Delete appointment 0", json.toString());
+//                // getting appointment details by making HTTP request
+//                json = jsonParser.makeHttpRequest(
+//                        url_delete_appointment, "POST", params);
+// 
+//                // check your log for json response
+//                Log.d("Delete appointment", json.toString());              
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+// 
+//            return null;
+//        }
+// 
+//        /**
+//         * After completing background task Dismiss the progress dialog
+//         * **/
+//        protected void onPostExecute(String file_url) {
+//        	 try {
+//                int success  = json.getInt(TAG_SUCCESS);
+//             	
+//                 if (success == 1) {                  
+//                 	Toast.makeText(getBaseContext(), "Data was successfully deleted on the server! " , Toast.LENGTH_LONG).show();
+//                 } else {
+//                     // failed to create product
+//                 	Toast.makeText(getApplicationContext(), "Data was not deleted on the server! Please Contact an Administrator. ", Toast.LENGTH_LONG).show();                 	
+//                 }
+//             } catch (JSONException e) {
+//                 e.printStackTrace();
+//             }
+//        	 
+//        	
+//        }
+//
+//}
+//    
     
     
     

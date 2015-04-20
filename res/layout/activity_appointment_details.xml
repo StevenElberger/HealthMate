@@ -22,6 +22,14 @@
         android:text="@string/appointment_detail_name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
+     <TextView
+        android:id="@+id/AppointmentDetailId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/appointment_detail_id"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
     <TextView
         android:id="@+id/AppointmentDetailAddress"
         android:layout_width="wrap_content"

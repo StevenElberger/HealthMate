@@ -20,6 +20,7 @@ import com.team9.healthmate.JsonManager.JSONParser;
 import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.NotificationsManager.NotificationsManager;
+import com.team9.healthmate.ServerManager.ServerStorageManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -67,10 +68,12 @@ public class AppointmentForm extends Activity {
     private static final String TAG_SUCCESS = "success";
     
     // url to create new appointment
-    private static String url_create_appointment = "http://10.0.2.2:8080/android_connect/create_appointment.php";
+    //private static String url_create_appointment = "http://10.0.2.2:8080/android_connect/Send_to_Steve/create_appointment.php";
+    private static String url_create_appointment = "http://108.77.76.162/HealthMateIntegration/create_appointment2.php";
     
  // url to update an appointment
-    private static String url_update_appointment = "http://10.0.2.2:8080/android_connect/update_appointment.php";
+    //private static String url_update_appointment = "http://10.0.2.2:8080/android_connect/Send_to_Steve/update_appointment.php";
+    private static String url_update_appointment = "http://108.77.76.162/HealthMateIntegration/update_appointment.php";
 
 	// The container of the time stamp that will be deleted
 	Map<String, String> appointmentTimeStamp;
@@ -135,7 +138,9 @@ public class AppointmentForm extends Activity {
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_save_appointment) {
 			saveAppointment();
-			saveAppointmentOnServer();
+			//saveAppointmentOnServer();
+			createOrupdate();
+			
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -225,9 +230,24 @@ public class AppointmentForm extends Activity {
 				appointment.put("name", userInput.getText().toString());
 				
 			}
+			
+			userInput = (EditText) findViewById(R.id.AppointmentFormLastName);
+			appointment.put("lastname", userInput.getText().toString());
+			
+			userInput = (EditText) findViewById(R.id.AppointmentFormId);
+			appointment.put("doctorid", userInput.getText().toString());
 
 			userInput = (EditText) findViewById(R.id.AppointmentFormAddress);
 			appointment.put("location", userInput.getText().toString());
+			
+			userInput = (EditText) findViewById(R.id.AppointmentFormCity);
+			appointment.put("city", userInput.getText().toString());
+			
+			userInput = (EditText) findViewById(R.id.AppointmentFormZip);
+			appointment.put("zip", userInput.getText().toString());
+			
+			userInput = (EditText) findViewById(R.id.AppointmentFormState);
+			appointment.put("state", userInput.getText().toString());
 
 			userInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
 			appointment.put("phone", userInput.getText().toString());
@@ -346,10 +366,10 @@ public class AppointmentForm extends Activity {
 	/** Method will save the user entered data on server side.
 	 * @author Davit Avetikyan
 	 * */
-	public void saveAppointmentOnServer(){
-	new CreateNewAppointment().execute();
-	
-	}
+//	public void saveAppointmentOnServer(){
+//	new CreateNewAppointment().execute();
+//	
+//	}
 	
 	/**
 	 * Method to determine when the notification should be set for a saved appointment.
@@ -419,10 +439,30 @@ public class AppointmentForm extends Activity {
 			editInput = (EditText) findViewById(R.id.AppointmentFormName);
 			editInput.setText(intent.getStringExtra("name"));
 			appointmentToDelete.put("name", intent.getStringExtra("name"));
+			
+			editInput = (EditText) findViewById(R.id.AppointmentFormLastName);
+			editInput.setText(intent.getStringExtra("lastname"));
+			appointmentToDelete.put("lastname", intent.getStringExtra("lastname"));
+			
+			editInput = (EditText) findViewById(R.id.AppointmentFormId);
+			editInput.setText(intent.getStringExtra("doctorid"));
+			appointmentToDelete.put("doctorid", intent.getStringExtra("doctorid"));
 
 			editInput = (EditText) findViewById(R.id.AppointmentFormAddress);
 			editInput.setText(intent.getStringExtra("location"));
 			appointmentToDelete.put("location", intent.getStringExtra("location"));
+			
+			editInput = (EditText) findViewById(R.id.AppointmentFormCity);
+			editInput.setText(intent.getStringExtra("city"));
+			appointmentToDelete.put("city", intent.getStringExtra("city"));
+			
+			editInput = (EditText) findViewById(R.id.AppointmentFormZip);
+			editInput.setText(intent.getStringExtra("zip"));
+			appointmentToDelete.put("zip", intent.getStringExtra("zip"));
+			
+			editInput = (EditText) findViewById(R.id.AppointmentFormState);
+			editInput.setText(intent.getStringExtra("state"));
+			appointmentToDelete.put("state", intent.getStringExtra("state"));
 
 			editInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
 			editInput.setText(intent.getStringExtra("phone"));
@@ -672,103 +712,179 @@ public class AppointmentForm extends Activity {
 		}
 	}
 	
+	
 	/**
      * Background Async Task to Create or to Update appointment
      * */
-    class CreateNewAppointment extends AsyncTask<String, String, String> {
- 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();           
-        }
- 
-        /**
-         * Creating an appointment
-         * */
-        protected String doInBackground(String... args) {
-        	
-        	EditText userInput;
-        	
-        	try{
-        	//assign the field data
-			userInput = (EditText) findViewById(R.id.AppointmentFormTitle);			
-			String title = userInput.getText().toString();			
-			
-			userInput = (EditText) findViewById(R.id.AppointmentFormName);
-			 String name = userInput.getText().toString();			
-        	
-        	userInput = (EditText) findViewById(R.id.AppointmentFormAddress);
-        	 String location= userInput.getText().toString();
+	public void createOrupdate(){
+		
+		Map<String, String> paramUpdateCreate = new HashMap<String, String>();
+		
+		EditText userInput;
+    	
+    	try{
+    	//assign the field data
+    	userInput = (EditText) findViewById(R.id.AppointmentFormId);			
+   		 String drId  = userInput.getText().toString();
+   		 paramUpdateCreate.put("doctor_id", drId);  		    		
+    		
+		 userInput = (EditText) findViewById(R.id.AppointmentFormTitle);			
+		 String title = userInput.getText().toString();
+		 paramUpdateCreate.put("title", title);	
+		
+		 userInput = (EditText) findViewById(R.id.AppointmentFormName);
+		 String name = userInput.getText().toString();
+		 paramUpdateCreate.put("first_name", name);
+		 
+		 userInput = (EditText) findViewById(R.id.AppointmentFormLastName);
+		 String lastname = userInput.getText().toString();
+		 paramUpdateCreate.put("last_name", lastname);
+    	
+    	 userInput = (EditText) findViewById(R.id.AppointmentFormAddress);
+    	 String location= userInput.getText().toString();
+    	 paramUpdateCreate.put("address", location);
+    	 
+    	 userInput = (EditText) findViewById(R.id.AppointmentFormCity);
+    	 String city= userInput.getText().toString();
+    	 paramUpdateCreate.put("city", city);
+    	 
+    	 userInput = (EditText) findViewById(R.id.AppointmentFormZip);
+    	 String zip= userInput.getText().toString();
+    	 paramUpdateCreate.put("zip", zip);
+    	 
+    	 userInput = (EditText) findViewById(R.id.AppointmentFormState);
+    	 String state= userInput.getText().toString();
+    	 paramUpdateCreate.put("state", state);
 
-			userInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
-			 String phone = userInput.getText().toString();
+		 userInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
+		 String phone = userInput.getText().toString();
+		 paramUpdateCreate.put("phone", phone);
 
-			userInput = (EditText) findViewById(R.id.AppointmentFormEmail);
-			String email = userInput.getText().toString();
+		 userInput = (EditText) findViewById(R.id.AppointmentFormEmail);
+		 String email = userInput.getText().toString();
+		 paramUpdateCreate.put("email", email);
 
-			userInput = (EditText) findViewById(R.id.AppointmentFormComment);
-			String comment = userInput.getText().toString();         
-            
- 
-            // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("title", title));
-            params.add(new BasicNameValuePair("name", name));
-            params.add(new BasicNameValuePair("location", location));
-            params.add(new BasicNameValuePair("phone", phone));
-            params.add(new BasicNameValuePair("email", email));
-            params.add(new BasicNameValuePair("comment", comment));
-            params.add(new BasicNameValuePair("start_time", serverStartTime));
-            params.add(new BasicNameValuePair("end_time", serverEndTime));
-            params.add(new BasicNameValuePair("date", serverDate));
-            params.add(new BasicNameValuePair("timestamp", timestamp));
-            // add only if editing
-            if (editOrCreate){
-             	params.add(new BasicNameValuePair("newtimestamp", newtimestamp));            
-              	// getting JSON Object
-              	// Note that create product url accepts POST method
-              	json = jsonParser.makeHttpRequest(url_update_appointment,
-                    "POST", params);           
-            }
-            else{
-            	json = jsonParser.makeHttpRequest(url_create_appointment,
-                    "POST", params);
-            }
- 
-            // check log cat fro response
-            Log.d("Create Response", json.toString());
-        	}
-        	catch (Exception ex){
-        		ex.printStackTrace();
-        	}           
- 
-           return null;
-        }
- 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {        	
- 
-            try {
-                int success  = json.getInt(TAG_SUCCESS);
-            	// successful to create an appointment
-                if (success == 1) {                   
-                	Toast.makeText(getApplicationContext(), "Data was Saved on the Server Successfully! " , Toast.LENGTH_LONG).show();
-                } else {
-                    // failed to create an appointment
-                	Toast.makeText(getApplicationContext(), "Data was Not Aaved on the Server! ", Toast.LENGTH_LONG).show();
-                	
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
- 
-    }
+		 userInput = (EditText) findViewById(R.id.AppointmentFormComment);
+		 String comment = userInput.getText().toString();    
+		 paramUpdateCreate.put("comment", comment);        
+
+		 paramUpdateCreate.put("start", serverStartTime);
+		 paramUpdateCreate.put("end", serverEndTime);
+		 paramUpdateCreate.put("date", serverDate);
+		 paramUpdateCreate.put("timestamp", timestamp);
+		 
+		 Log.d("editorcreate", editOrCreate.toString());
+        // add only if editing
+        if (editOrCreate){
+        	paramUpdateCreate.put("newtimestamp", newtimestamp);        
+        	new ServerStorageManager("CreateorUpdate", url_update_appointment, paramUpdateCreate, this);
+        }      
+        else
+        	new ServerStorageManager("CreateorUpdate", url_create_appointment, paramUpdateCreate, this);        
+    	}
+    	catch (Exception ex){
+    		ex.printStackTrace();
+    	}           
+		
+	}
+	
+	/**
+     * Background Async Task to Create or to Update appointment
+     * */
+//    class CreateNewAppointment extends AsyncTask<String, String, String> {
+// 
+//        /**
+//         * Before starting background thread Show Progress Dialog
+//         * */
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();           
+//        }
+// 
+//        /**
+//         * Creating an appointment
+//         * */
+//        protected String doInBackground(String... args) {
+//        	
+//        	EditText userInput;
+//        	
+//        	try{
+//        	//assign the field data
+//			userInput = (EditText) findViewById(R.id.AppointmentFormTitle);			
+//			String title = userInput.getText().toString();			
+//			
+//			userInput = (EditText) findViewById(R.id.AppointmentFormName);
+//			 String name = userInput.getText().toString();			
+//        	
+//        	userInput = (EditText) findViewById(R.id.AppointmentFormAddress);
+//        	 String location= userInput.getText().toString();
+//
+//			userInput = (EditText) findViewById(R.id.AppointmentFormPhoneNumber);
+//			 String phone = userInput.getText().toString();
+//
+//			userInput = (EditText) findViewById(R.id.AppointmentFormEmail);
+//			String email = userInput.getText().toString();
+//
+//			userInput = (EditText) findViewById(R.id.AppointmentFormComment);
+//			String comment = userInput.getText().toString();         
+//            
+// 
+//            // Building Parameters
+//            List<NameValuePair> params = new ArrayList<NameValuePair>();
+//            params.add(new BasicNameValuePair("title", title));
+//            params.add(new BasicNameValuePair("name", name));
+//            params.add(new BasicNameValuePair("location", location));
+//            params.add(new BasicNameValuePair("phone", phone));
+//            params.add(new BasicNameValuePair("email", email));
+//            params.add(new BasicNameValuePair("comment", comment));
+//            params.add(new BasicNameValuePair("start_time", serverStartTime));
+//            params.add(new BasicNameValuePair("end_time", serverEndTime));
+//            params.add(new BasicNameValuePair("date", serverDate));
+//            params.add(new BasicNameValuePair("timestamp", timestamp));
+//            // add only if editing
+//            if (editOrCreate){
+//             	params.add(new BasicNameValuePair("newtimestamp", newtimestamp));            
+//              	// getting JSON Object
+//              	// Note that create product url accepts POST method
+//              	json = jsonParser.makeHttpRequest(url_update_appointment,
+//                    "POST", params);           
+//            }
+//            else{
+//            	json = jsonParser.makeHttpRequest(url_create_appointment,
+//                    "POST", params);
+//            }
+// 
+//            // check log cat fro response
+//            Log.d("Create Response", json.toString());
+//        	}
+//        	catch (Exception ex){
+//        		ex.printStackTrace();
+//        	}           
+// 
+//           return null;
+//        }
+// 
+//        /**
+//         * After completing background task Dismiss the progress dialog
+//         * **/
+//        protected void onPostExecute(String file_url) {        	
+// 
+//            try {
+//                int success  = json.getInt(TAG_SUCCESS);
+//            	// successful to create an appointment
+//                if (success == 1) {                   
+//                	Toast.makeText(getApplicationContext(), "Data was Saved on the Server Successfully! " , Toast.LENGTH_LONG).show();
+//                } else {
+//                    // failed to create an appointment
+//                	Toast.makeText(getApplicationContext(), "Data was Not Aaved on the Server! ", Toast.LENGTH_LONG).show();
+//                	
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+// 
+//    }
     
    	
 }
