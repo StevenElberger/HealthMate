@@ -1,10 +1,12 @@
-package com.team9.healthmate;
+package com.team9.healthmate.Appointments;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.team9.healthmate.R;
 import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.app.ListActivity;
@@ -36,6 +38,8 @@ public class AppointmentsList extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_list);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		// Attempt to read from the Appointments file
 		try {
 			
@@ -44,19 +48,24 @@ public class AppointmentsList extends ListActivity {
 		// A list of strings that will be displayed to the user
 		ArrayList<String> appointmentList = new ArrayList<String>();
 		
+		// reverse the list of appointments in order to list them in
+		// newest appointment on the top of the list
+		Collections.reverse(appointments);
+		
 		// The information that will be displayed to the user.
 		String appointmentInformation = "";
 		
 		// Object used to process each appointment
-		Map<String, String> appointment;
+		//Map<String, String> appointment;
 		
 		// Go through all the appointments and generate a list of Strings.
 		// This list will be used to generate a list with information about
 		// each appointment.
-		for (int i = 0; i < appointments.size(); i++) {
-			appointment = appointments.get(i);
+		
+		for (Map<String, String> appointment : appointments) {
 			appointmentInformation = appointment.get("title") + "\n" + "Doctor: " + 
-					appointment.get("name") + "\nDate: " + appointment.get("date");
+					appointment.get("name") + " " + appointment.get("lastname") +"\nDoctor's ID# " + appointment.get("doctorid") + 
+					"\nDate: " + appointment.get("date");
 			appointmentList.add(appointmentInformation);
 		}
 		

@@ -9,42 +9,48 @@
     	android:layout_width="match_parent"
     	android:layout_height="match_parent"
     />
-    <ImageButton 
-        android:id="@+id/hospital"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="75dp"
-        android:src="@drawable/hospital_icon"
-        android:onClick="onClick"/>
-    <ImageButton 
-        android:id="@+id/fire_station"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@+id/hospital"
-        android:src="@drawable/fire_station_icon"
-        android:onClick="onClick"/>
-    <ImageButton 
-        android:id="@+id/police"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@+id/fire_station"
-        android:src="@drawable/police_icon"
-        android:onClick="onClick"/>
-    <ImageButton 
+    <ImageButton
         android:id="@+id/pharmacy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@+id/police"
-        android:src="@drawable/pharmacy_icon"
-        android:onClick="onClick"/>
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:background="#2E9AFE"
+        android:onClick="onClick"
+        android:src="@drawable/pharmacy_icon" />
+
+    <ImageButton
+        android:id="@+id/police"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/pharmacy"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:background="#2E9AFE"
+        android:onClick="onClick"
+        android:src="@drawable/police_icon" />
+
+    <ImageButton
+        android:id="@+id/fire_station"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/police"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:background="#2E9AFE"
+        android:onClick="onClick"
+        android:src="@drawable/fire_station_icon" />
+
+    <ImageButton
+        android:id="@+id/hospital"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/fire_station"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="12dp"
+        android:background="#2E9AFE"
+        android:onClick="onClick"
+        android:src="@drawable/hospital_icon" />
     
 </RelativeLayout>

@@ -31,6 +31,7 @@ public class Login extends Activity implements OnClickListener{
 	EditText pass;
 	TextView debugText;
 	boolean debugMode = false;
+	
 
 	
 	/**
@@ -56,7 +57,6 @@ public class Login extends Activity implements OnClickListener{
 			debugText.setVisibility(1);
 			debugText.setText("Debug values");
 		}
-
 	}
 	
 	/**
@@ -87,8 +87,6 @@ public class Login extends Activity implements OnClickListener{
 		if (v.equals(register)) {
 			startRegistration();
 		} else if (v.equals(login)) {
-			//debug 
-			startMenu();
 			try {
 				// check the contents of the account file against
 				// the credentials provided by the user
@@ -149,7 +147,5 @@ public class Login extends Activity implements OnClickListener{
 				e.printStackTrace();
 			}
 		}
-	}	
-	
-	
+	}
 }

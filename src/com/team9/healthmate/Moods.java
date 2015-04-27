@@ -1,205 +1,272 @@
-/** @author Davit Avetikyan
- 	Moods activity is providing Emotion recording 
- 	instruments. Will also display the activity progress
- 	in a form of a graph. Provides fragment look in the tabs 
- */
-
 package com.team9.healthmate;
 
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONException;
 
+import com.team9.healthmate.DataManager.DataStorageManager;
+import com.team9.healthmate.GraphManager.GraphManager;
+import com.team9.healthmate.ServerManager.ServerStorageManager;
+
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.app.ActionBar;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.os.Build;
 
-import com.team9.healthmate.DataManager.DataStorageManager;
 
-import com.team9.healthmate.R;
+/** @author Davit Avetikyan
+	 
+*/
+public class Moods extends FragmentActivity
+							implements ActionBar.TabListener, OnItemSelectedListener {
 
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-public class Moods extends Activity implements SeekBar.OnSeekBarChangeListener {
-
-	private TextView lblCounter[] = new TextView[7];
-	private TextView lblMoods[] = new TextView[7];
-	private SeekBar seek[] = new SeekBar[6];	
-	
+   private ViewPager viewPager;
+   private MoodTabsPagerAdapter mAdapter;
+   private ActionBar actionBar;
+   private MenuInflater mn;    
+   private Menu TabMenu;
+   private Context context;
+   private Intent intent2;
+   private Spinner rssSpinner;
+   private String moodRssEntry;
+   private Tab tabAddFeed;
+   
+    
+ // Tab titles that are displayed in Moods section
+    private String[] tabs = { "Moods Survey", "Moods Graph", "Helpful Tips" };    
+		
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_moods);	
+		setContentView(R.layout.activity_moods);
 		
-		SetControlLayout();	// initializes all the view controls				
-		BtnClick();         // Calls button events
-		//SetTabs();		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		//Creats tabs in action Bar by referencing to Tablistener event
-		final ActionBar actionBar = getActionBar();
-		  actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		    // Create a tab listener that is called when the user changes tabs.
-		    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-				
-				@Override
-				public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {
-					
-				}				
-				@Override
-				public void onTabSelected(Tab tab, android.app.FragmentTransaction ft) {
-				}
-				
-				@Override
-				public void onTabReselected(Tab tab, android.app.FragmentTransaction ft) {
-				}
-			};
-			
-		//Creates 3 tabs in the action bar
-		  for (int i = 0; i < 3; i++) {
-  	        actionBar.addTab(
-  	                actionBar.newTab()
-  	                        .setText("Tab " + (i + 1))
-  	                        .setTabListener(tabListener));
-  	    }		  
-	}			
-	
-	/**The function is calling two button event calls
-	*  Button Reset will reset to original state of controls
-	*  Button Submit will save the user data to a file 
-	*/
-	public void BtnClick(){		
-		//Reset Button
-		final Button buttonReset = (Button) findViewById(R.id.cmdReset);
-        buttonReset.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-               for (int i = 0; i < seek.length; i++) {
-				seek[i].setProgress(0);
-               }
-            }
-        });     
+		  // Initilization
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        actionBar = getActionBar();
+        mAdapter = new MoodTabsPagerAdapter(getSupportFragmentManager());         
+ 
+        viewPager.setAdapter(mAdapter);
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);        
+ 
+        // Adding Tabs
+        for (String tab_name : tabs) {
+            actionBar.addTab(actionBar.newTab().setText(tab_name)
+                    .setTabListener(this));
+        }        
         
-        //Submit button will submit the user entered data
-        final Button buttonSubmit = (Button) findViewById(R.id.cmdSubmit);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        /**
+         * On swiping the ViewPager make respective tab selected
+         * */
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+ 
+            @Override
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                actionBar.setSelectedNavigationItem(position);
+            }
+ 
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            	
+            }
+ 
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
             
-			public void onClick(View v) {               
-               Map<String, String> listOfItems = new HashMap<String, String>();
-               try {
-            	   for (int i = 0; i < seek.length; i++) {
-					listOfItems.put(lblMoods[0].getText().toString().trim() + ": ", lblCounter[0].getText().toString().trim());
-				}           	   
-				
-				DataStorageManager.writeJSONObject(getApplication(), "Moods", listOfItems, false);
-				Toast toast = Toast.makeText(getApplication(), "The file is successfully writen.", Toast.LENGTH_LONG);
-				toast.show();							
-				finish();
-				
-			} catch (JSONException e) {
-				Toast toast = Toast.makeText(getApplication(), "JSON Exception", Toast.LENGTH_LONG);
-				toast.show();
-				Log.v("Exception Caught in Moods.btnClickFunction: ", e.toString());
-				e.printStackTrace();
-			} catch (IOException e) {
-				Toast toast = Toast.makeText(getApplication(), "IO Exception", Toast.LENGTH_LONG);
-				toast.show();
-				Log.v("Exception Caught in Moods.btnClickFunction: ", e.toString());
-				e.printStackTrace();
-			} 
             }
         });
+        
+        context = getApplicationContext();
 	}
-		
-	/** Setting the initial values for the controls
-	  	SeekBars, TextViews
-	 */
-	public void SetControlLayout(){
-		int rsIDCounter, rsIDMoods, rsIDsk;
-		for (int i = 0; i < seek.length; i++) {
-			
-			switch (i) {
-		
-			case 0:
-				rsIDCounter = R.id.txtHappyCounter;
-				rsIDMoods = R.id.txtHappy;
-				rsIDsk = R.id.skHappy;
-				break;
-			case 1:
-				rsIDCounter = R.id.txtMotivatedCounter;
-				rsIDMoods = R.id.txtMotivated;
-				rsIDsk = R.id.skMotivated;
-				break;				
-			case 2:				
-				rsIDCounter = R.id.txtStressedCounter;
-				rsIDMoods = R.id.txtStressed;
-				rsIDsk = R.id.skStressed;
-				break;
-			case 3:
-				rsIDCounter = R.id.txtAngryCounter;
-				rsIDMoods = R.id.txtAngry;
-				rsIDsk = R.id.skAngry;
-				break;
-			case 4:
-				rsIDCounter = R.id.txtTiredCounter;
-				rsIDMoods = R.id.txtTired;
-				rsIDsk = R.id.skTired;
-				break;
-			case 5:
-				rsIDCounter = R.id.txtDepressedCounter;
-				rsIDMoods = R.id.txtDepressed;				
-				rsIDsk = R.id.skDepressed;
-				break;			
-				
-			default:
-				rsIDCounter = R.id.txtHappyCounter;
-				rsIDMoods = R.id.txtHappy;
-				rsIDsk = R.id.skHappy;
-				break;
-			}
-			lblCounter[i] = (TextView)findViewById(rsIDCounter);
-			lblCounter[i].setText("0");
-			lblMoods[i] = (TextView)findViewById(rsIDMoods);
-			seek[i] = (SeekBar)findViewById(rsIDsk);
-			seek[i].setOnSeekBarChangeListener(this);			
-		}
-	}	
 	
-	/** If seek bar is moved the text counter will be updated
-	 * 	@argo the current seekbar used
-	 * 	@progress indicates the current positoin of seekbar
-	 * 	@fromUser indicates if the user moved it
-	*/
 	@Override
-	public void onProgressChanged(SeekBar arg0, int progress, boolean fromUser) {
-		if (fromUser) {
-		for (int i = 0; i < seek.length; i++) {
-			lblCounter[i].setText(String.valueOf(seek[i].getProgress()));			
-			//updateMoodPicture();
-				}
-			}		
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.mood_menu_items, menu);
+	    mn = inflater;
+	    TabMenu = menu;
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.mCallER:
+			AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+			
+			Log.v("Debug", "ER start");
+			// Add the buttons	
+
+			builder2.setTitle("Would you like to make an Emergency Call?");
+			builder2.setPositiveButton(R.string.ok2, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               // User clicked OK button
+			        	   Log.v("Debug", "ER0");
+			        	OneClickEmergency ER = new OneClickEmergency();
+			   			ER.makeACall(context);			
+			   			ER.sendEmail(context);
+			   			ER.sendSMSMessage(context);
+			   			Log.v("Debug", "ER1");
+			           }
+			       });
+			builder2.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               // User cancelled the dialog
+			        	   
+			           }
+			       });
+									
+			// Create the AlertDialog
+			AlertDialog dialog = builder2.create();	
+			dialog.show();
+			break;
+		case R.id.mAddRssFeed:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			Context mContext = getApplicationContext();
+			
+			LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+			 View layout = inflater.inflate(R.layout.dialog_rss_feed, null);
+			Log.v("Debug", "ER start");
+			// Add the buttons
+			
+			builder.setView(layout);			 
+			 rssSpinner = (Spinner)layout.findViewById(R.id.Rss_mood_tips_spinner);
+			 
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.rssfeed_mood_arrays));
+			
+			 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			
+			 rssSpinner.setAdapter(adapter);
+			 rssSpinner.setOnItemSelectedListener(this);
+			//builder.setTitle("Would you like to make an Emergency Call?");
+			builder.setPositiveButton(R.string.ok2, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			            
+			        	  MoodFeelingTips.rssFeedVar = moodRssEntry ;
+//			        	  tabAddFeed = actionBar.getTabAt(0);
+//			        	  viewPager.setCurrentItem(tabAddFeed.getPosition());
+			        	  tabAddFeed = actionBar.getTabAt(2);
+			        	  viewPager.setCurrentItem(tabAddFeed.getPosition());
+			        	  
+			           }
+			       });
+			builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               // User cancelled the dialog
+			        	   
+			           }
+			       });
+			
+			// Create the AlertDialog
+			AlertDialog dialog2 = builder.create();	
+			dialog2.show();
+			break;
+		case R.id.action_mood_delete:
+			Spinner spin;
+			String moodText;
+			Map<String, String> listOfItems = new HashMap<String, String>();
+			spin = (Spinner) findViewById(R.id.spinnerMood);
+			moodText = spin.getSelectedItem().toString().trim();
+			
+			DataStorageManager.deleteFile(getApplicationContext(), "testdata");
+			break;
+		case R.id.mood_tips_Exit:
+			finish();		
+		default:
+			break;
 		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		// on tab selected
+        // show respected fragment view
+        viewPager.setCurrentItem(tab.getPosition());
+        if (tab.getPosition() == 1){
+        	
+        }
+
+      }
 
 	@Override
-	public void onStartTrackingTouch(SeekBar arg0) {		
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+//		ActionBar action = getActionBar();
+//		action.hide();
 	}
+
 	@Override
-	public void onStopTrackingTouch(SeekBar arg0) {
-	}	
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+				
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+	{
+		int pos = rssSpinner.getSelectedItemPosition();
+		
+		switch(pos){
+			
+		case 0:
+			moodRssEntry = "http://www.health.com/health/diet-fitness/feed" ;					
+			break;
+		case 1:
+			moodRssEntry = "http://www.health.com/health/beauty-style/feed" ;			
+			break;
+		case 2:
+			moodRssEntry = "http://www.health.com/health/asthma/feed" ;
+			break;
+		case 3:
+			moodRssEntry = "http://www.cdc.gov/tobacco/rss/tobacco.xml" ;
+			break;
+		case 4:
+			moodRssEntry = "http://feeds.health.com/health/heart-disease" ;
+			break;
+		case 5:
+			moodRssEntry = "http://www.health.com/health/cholesterol/feed/" ;
+			break;
+		}
+		
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent)
+	{
+	
+	}		
+	
+	
 }

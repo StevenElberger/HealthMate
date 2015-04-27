@@ -1,3 +1,4 @@
+
 <resources>
 
     <!--
@@ -10,12 +11,11 @@
     <style name="AppTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    
+   
     <style name="CustomButtonStyle" parent="@android:style/Widget.Holo.Light.Button">
     <!--  	<item name="android:minHeight">22dip</item>
     	<item name="android:minWidth">43dip</item> -->
 	</style>    
-	<style name="HealthMateTheme" parent="@android:style/Theme.Holo">
-	</style>    
-
+	
+   
 </resources>

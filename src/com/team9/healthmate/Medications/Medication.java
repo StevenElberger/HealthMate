@@ -1,6 +1,7 @@
 package com.team9.healthmate.Medications;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,9 +22,7 @@ import android.widget.TextView;
 
 /**
  * The Medication class implements the functionalities for the main activity of
- * the Medication component. This includes the display of the medication list,
- * call for the medication detail activity and new medication activity, as well
- * as reading and writing from the medication file stored on the phone.
+ * the medication component. 
  * @author Gustavo Arce
  * 
  */
@@ -33,14 +32,26 @@ public class Medication extends Activity {
 	public static ArrayAdapter<MedicationObject> adapter;
 	public ListView medicationList;
 	
+	/**
+	 * Android's onCreate method. Called on the start of the activity.
+	 * Here is where all fields are filled method is called if the user 
+	 * is editing an existing medication
+	 * 
+	 * @param Bundle savedInstaceState as requested by Android
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_medication);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		populateMedicationList();
 		onItemListClick();
 	}	
 	
+	/**
+	 * Populates the medication list
+	 */
 	public void populateMedicationList() {
 		medicationList = (ListView) findViewById(R.id.listViewMedications);			
 		medications = new ArrayList<MedicationObject>(readMedicationFile());
@@ -48,6 +59,9 @@ public class Medication extends Activity {
 		medicationList.setAdapter(adapter);
 	}
 	
+	/**
+	 * Sets listeners for the every item list
+	 */
 	public void onItemListClick() {
 		ListView list = (ListView) findViewById(R.id.listViewMedications);		
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,9 +78,14 @@ public class Medication extends Activity {
 		});
 	}
 	
+	/**
+	 * Read file from local storage to retrieve all saved medications
+	 * @return an array list containing all the medications stored
+	 */
 	private ArrayList<MedicationObject> readMedicationFile() {			
 		try {
-			String name, frequencyType, frequencyValue, dosageType, dosageValue;
+			String name, frequencyType, frequencyValue, dosageType, dosageValue, reminder;
+			String[] time, date;
 			MedicationObject med;
 			ArrayList<Map<String, String>> mapList;
 			ArrayList<MedicationObject> medicationList;			
@@ -83,13 +102,23 @@ public class Medication extends Activity {
 				frequencyValue = currentMed.get("frequencyValue");
 				dosageType     = currentMed.get("dosageType");
 				dosageValue    = currentMed.get("dosageValue");
+				reminder	   = currentMed.get("reminder");
+				time 		   = currentMed.get("time").split(":");
+				date 		   = currentMed.get("date").split("/");
+				
+				Calendar calendar = Calendar.getInstance();				
+				calendar.set(Integer.parseInt(date[2]), Integer.parseInt(date[0]), Integer.parseInt(date[1]), 
+							 Integer.parseInt(time[0]), Integer.parseInt(time[1]));
 				
 				med = new MedicationObject(
 						name, 
 						MedicationObject.FrequencyType.valueOf(frequencyType),
 						Integer.parseInt(frequencyValue),
 						MedicationObject.DosageType.valueOf(dosageType),
-						Integer.parseInt(dosageValue));	
+						Integer.parseInt(dosageValue),
+						reminder.equals("ON"),
+						calendar
+						);	
 				
 				medicationList.add(med);
 			}			
@@ -98,10 +127,15 @@ public class Medication extends Activity {
 		     throw new Error(e);
 		}
 	}
-			
+	
+	/**
+	 * Saves the medication list to local storage
+	 * @param context of the activity
+	 */
 	static void saveMedication(Context context) {
 		try {
-			boolean firstElement = true;			
+			boolean firstElement = true;
+			DataStorageManager.deleteFile(context, "medications");
 			for(MedicationObject med : medications)
 			{		
 				Map<String,String> medMap = new HashMap<String,String>();		
@@ -111,6 +145,12 @@ public class Medication extends Activity {
 				medMap.put("frequencyValue", ""+med.frequencyValue);		     
 				medMap.put("dosageType",med.dosageType.name());
 				medMap.put("dosageValue", ""+med.dosageValue);
+				medMap.put("reminder", (med.reminderStatus) ? "ON" : "OFF");
+				medMap.put("time", med.medicationCalendar.get(Calendar.HOUR_OF_DAY) + ":" + 
+								   med.medicationCalendar.get(Calendar.MINUTE));
+				medMap.put("date",  med.medicationCalendar.get(Calendar.MONTH) + "/" +
+									med.medicationCalendar.get(Calendar.DATE) + "/" +
+									med.medicationCalendar.get(Calendar.YEAR));
 				 
 				DataStorageManager.writeJSONObject(context, "medications", medMap, firstElement);
 				firstElement = false;
@@ -120,10 +160,17 @@ public class Medication extends Activity {
 		} 
 	}
 	
+	/**
+	 * Calls NewMedication activity
+	 * @param View required by Android when called from an XML button
+	 */
 	public void createMedication(View V) {
 		this.startActivityForResult(new Intent(this,NewMedication.class),1);		
 	}
 	
+	/**
+	 * Adapter private class used to create a list with both title and description
+	 */
 	private class TwoLinesAdapter extends ArrayAdapter<MedicationObject> {
 		public TwoLinesAdapter() {
 			super(Medication.this, R.layout.list_item, medications);
@@ -145,6 +192,10 @@ public class Medication extends Activity {
 		}
 	}
 	
+	/**
+	 * Method used to debug code
+	 * @param msg text to be logged
+	 */
 	public static void Debug(String msg) {
 		Log.v("debugme", msg);
 	}
