@@ -13,10 +13,7 @@
         android:title="@+string/moodAdd"
         android:showAsAction="never"></item> --> 
        
-     <item 
-        android:id="@+id/mCallER"
-        android:title="@+string/moodER"
-        android:showAsAction="never"></item>
+    
       <item 
         android:id="@+id/mAddRssFeed"
         android:title="@+string/moodRssFeed"

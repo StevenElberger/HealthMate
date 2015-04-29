@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
+
+import com.team9.healthmate.DataManager.DataStorageManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,10 +32,18 @@ public class OneClickEmergency {
 	protected void sendSMSMessage(Context context) {
 	      Log.v("Send SMS", "");      
 	      
-	      String phoneNo = "805-320-8737";
+	      
+	      String phoneNo;// = "805-320-8737";
 	      String message = "An emergency call was made by Dave at this time: " + dateFormat.format(date);
 
-	      try {
+	      try {	    	  
+	    	  ArrayList<Map<String, String>> contactMap;
+		      contactMap = DataStorageManager.readJSONObject(context, 
+					   "contacts");
+		      phoneNo = contactMap.get(0).get("phone").toString().trim();
+		     if ( phoneNo.length() == 0)
+		    	 phoneNo = "911";		      
+		      
 	         SmsManager smsManager = SmsManager.getDefault();
 	         smsManager.sendTextMessage(phoneNo, null, message, null, null);
 	         Log.v("debugme", "Send Sms 2 try");
@@ -89,11 +100,18 @@ public class OneClickEmergency {
 	 * @param context the current context of the activity
 	 */ 
 	protected void makeACall(Context context){
+		String phoneNo;
 		try {
+			 ArrayList<Map<String, String>> contactMap;
+		      contactMap = DataStorageManager.readJSONObject(context, 
+					   "contacts");
+		      phoneNo = contactMap.get(0).get("phone").toString().trim();
+		     if ( phoneNo.length() == 0)
+		    	 phoneNo = "911";
 		Intent callIntent = new Intent(Intent.ACTION_CALL);
 		callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		//callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-	    callIntent.setData(Uri.parse("tel:8027933209"));
+	    callIntent.setData(Uri.parse("tel:" + phoneNo));
 	    context.startActivity(callIntent);	}
 		catch(android.content.ActivityNotFoundException ex){
 			 Toast.makeText(context.getApplicationContext(), 
