@@ -3,7 +3,7 @@
     package="com.team9.healthmate" >
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="19"
         android:targetSdkVersion="21" />
     <permission
          android:name="com.team9.healthmate.permission.MAPS_RECEIVE"
@@ -31,18 +31,18 @@
         android:theme="@style/Theme.Healthmate">
         
         <!-- GOOGLE API KEY -->
-        <!--  Joseph's Home COMP SHA1 -->
+        <!--  Joseph's Home COMP SHA1
         <meta-data
   		  android:name="com.google.android.maps.v2.API_KEY"
-  		  android:value="AIzaSyANKQQ4N13tW-378oNvTbkqqbZj4-px5JU"/>
+  		  android:value="AIzaSyANKQQ4N13tW-378oNvTbkqqbZj4-px5JU"/>  -->
         <!--  Joseph's Laptop COMP SHA1 -->
         <meta-data
   		  android:name="com.google.android.maps.v2.API_KEY"
-  		  android:value="AIzaSyDwk7j-tFAH0RQtV7_912E4hNtW3aP_NJM"/>
-        <!--  Davit's Laptop COMP SHA1 -->
+  		  android:value="AIzaSyAEVFHOPH1OqSI0QW0H3Cz7BN264Qt2s-Y"/>
+        <!--  Davit's Laptop COMP SHA1
         <meta-data
   		  android:name="com.google.android.maps.v2.API_KEY"
-  		  android:value="AIzaSyDT7XTXaPLEt-TrtFpF0zrcZ9fdixrzImc"/>
+  		  android:value="AIzaSyDT7XTXaPLEt-TrtFpF0zrcZ9fdixrzImc"/> -->
         
         <meta-data
     		android:name="com.google.android.gms.version"
@@ -145,6 +145,9 @@
             android:label="@string/title_activity_user_profile" 
             android:parentActivityName="com.team9.healthmate.Menu">
         </activity>
+        <activity
+            android:name=".StepCounter.StepCounter"
+            android:label="@string/title_activity_step_counter" />
         <activity
             android:name=".EditProfile"
             android:label="@string/title_activity_edit_profile"

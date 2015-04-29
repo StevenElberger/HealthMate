@@ -703,7 +703,7 @@ public class AppointmentForm extends Activity {
 				
 				// Add to the information that should be stored.
 				appointment.put("date", formatedDate);
-				//This is to pass on server
+				//This is to pass on 
 				serverDate = formatedDate;
 				
 			}

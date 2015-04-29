@@ -48,12 +48,12 @@ import org.json.JSONObject;
  */
 public class HealthLocation extends Activity implements LocationListener{
 	
-	public String API_KEY = "AIzaSyByYEysYTmSo-_vMEkgVviy18IJbAg3dpE";
+	public String API_KEY = "AIzaSyChOjrUoQkiPwXHiTPHMPjGeI8qvRHIFdU";
     public double longitude;
     public double latitude;
     
     //Conversion from 1 mile to meters
-    public int METER_TO_MILE = 2*1610;
+    public int METER_TO_MILE = 1610;
     public int radius = METER_TO_MILE;
     public String types ="";
     
@@ -65,6 +65,7 @@ public class HealthLocation extends Activity implements LocationListener{
     private final int MAX_PLACES = 20;
     private MarkerOptions[] places;
     private ProgressDialog pDialog;
+    private boolean firstAnimate = false;
     
     /**
      * This method is called as soon as the activity is selected. The method init markers
@@ -102,7 +103,7 @@ public class HealthLocation extends Activity implements LocationListener{
      * 			  method to be called.
      */
     public void onClick(View v)	{
-    	pDialog.setMessage("Finding Locations");
+    	pDialog.setMessage("Finding Locations...");
     	try {
             pDialog.show();
         } catch (Exception e) {
@@ -110,7 +111,7 @@ public class HealthLocation extends Activity implements LocationListener{
             e.printStackTrace();
         }
     	switch(v.getId())	{
-    		case R.id.hospital: types = "hospital"; /*updatePlaces();*/ break;
+    		case R.id.hospital: types = "hospital"; updatePlaces(); break;
     		case R.id.fire_station: types = "fire_station"; updatePlaces(); break;
     		case R.id.police: types = "police"; updatePlaces(); break;
     		case R.id.pharmacy: types = "pharmacy"; updatePlaces(); break;
@@ -120,7 +121,7 @@ public class HealthLocation extends Activity implements LocationListener{
     
     @Override
     public void onLocationChanged(Location location) {
-        updatePlaces();
+       // updatePlaces();
     }
     @Override
     public void onProviderDisabled(String provider){
@@ -176,7 +177,7 @@ public class HealthLocation extends Activity implements LocationListener{
         	.tilt(45)                   // Sets the tilt of the camera to 30 degrees
         	.build();                   // Creates a CameraPosition from the builder
         
-        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null);
+        	gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1000, null);
         
         if(types != "")	{
 	        //build places query string
@@ -188,7 +189,7 @@ public class HealthLocation extends Activity implements LocationListener{
 	        new GetPlaces().execute(placesSearchStr);
         }
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,30000, 100,this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,(2*30000), METER_TO_MILE,this);
     }
     
     /**
