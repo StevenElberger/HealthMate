@@ -15,7 +15,7 @@
     <string name="title_activity_new_medication">NewMedication</string>
     <string name="title_activity_medication_details">MedicationDetails</string>
     <string name="title_activity_registration">Registration</string>
-	<string name="title_activity_chart_demo">ChartDemo</string>
+    <string name="title_activity_chart_demo">ChartDemo</string>
     <string name="title_activity_animated_chart_demo">AnimatedChartDemo</string>
     <string name="title_activity_preview_chart_demo">PreviewChartDemo</string>
     <string name="title_activity_appointment_form">Appointment Form</string>
@@ -38,7 +38,7 @@
     <string name="login_password">Password</string>
     <string name="login_login_button">Login</string>
     <string name="login_register_button">Not a member? Sign up now.</string>
-    
+
     <!-- Strings for Registration Activity -->
     <string name="create_account">Create an Account</string>
     <string name="first_name">First name</string>
@@ -47,9 +47,7 @@
     <string name="enter_bday">Please enter your birthday:</string>
     <string name="enter_sex">Please enter your sex:</string>
     <string name="JustOk">Just Ok</string>
-    
-	<string name="image_mood">List Image</string>
-	
+    <string name="image_mood">List Image</string>
     <string name="Happy">Happy</string>
     <string name="Motivated">Motivated</string>
     <string name="Stressed">Stressed</string>
@@ -57,29 +55,24 @@
     <string name="Tired">Tired</string>
     <string name="Depressed">Depressed</string>
 
-    
-    
     <string-array name="mood_arrays">
         <item>Happy</item>
         <item>Motivated</item>
         <item>Stressed</item>
         <item>Angry</item>
         <item>Tired</item>
-        <item>Depressed</item>       
+        <item>Depressed</item>
     </string-array>
-    
-      <string-array name="rssfeed_mood_arrays">
+    <string-array name="rssfeed_mood_arrays">
         <item>Diet and Fitness</item>
         <item>Beauty and Style</item>
         <item>Asthma</item>
         <item>Smoking</item>
         <item>Heart Disease</item>
-        <item>Cholesterol</item>       
+        <item>Cholesterol</item>
     </string-array>
-    
-    
+
     <string name="ok2">OK</string>
-    
     <string name="name_">"Name: "</string>
     <string name="medication_name">medication_name</string>
     <string name="adding_a_new_medication">Adding a new Medication</string>
@@ -111,7 +104,6 @@
     <string name="_plus">+</string>
     <string name="reminder">reminder</string>
     <string name="take_one_everey">Take one everey</string>
-
     <string name="moodSave">Save</string>
     <string name="moodEdit">Edit</string>
     <string name="moodAdd">Add</string>
@@ -119,7 +111,7 @@
     <string name="moodExit">Exit</string>
     <string name="moodRssFeed">Add Rss Feed</string>
     <string name="Rss_Username">Rss Feed</string>
-    <string name="Rss_password">Password</string>   
+    <string name="Rss_password">Password</string>
 
     <!-- Strings for Registration Activity -->
     <string name="registration_create_account">Create an Account</string>
@@ -156,10 +148,10 @@
 
     <!-- Strings for AppointmentForm Activity -->
     <string name="appointment_form_header">Appointment Form</string>
-    <string name="appointment_form_title">Appointment Title (Required)</string>    
-     <string name="appointment_form_name">Dr\'s Name</string>
-     <string name="appointment_form_lastname">Dr\'s Last Name</string>
-     <string name="appointment_form_drid">Dr\'s ID</string>
+    <string name="appointment_form_title">Appointment Title (Required)</string>
+    <string name="appointment_form_name">Dr\'s Name</string>
+    <string name="appointment_form_lastname">Dr\'s Last Name</string>
+    <string name="appointment_form_drid">Dr\'s ID</string>
     <string name="appointment_form_address">Enter a Address</string>
     <string name="appointment_form_city">Enter a City</string>
     <string name="appointment_form_zip">Enter a Zip</string>
@@ -260,7 +252,7 @@
     <string name="action_create_new_note">New Note</string>
     <string name="action_edit_note">Edit</string>
     <string name="action_delete_note">Delete</string>
-    
+
     <!-- Strings for Display Fragment -->
     <string name="display_profile_fragment_profile_pic">Profile Picture</string>
     <string name="display_profile_fragment_first_name">First name</string>
@@ -268,10 +260,10 @@
     <string name="display_profile_fragment_username">Username</string>
     <string name="display_profile_fragment_gender">Gender</string>
     <string name="display_profile_fragment_birthday">Birthday</string>
-    
+
     <!-- Strings for Edit Fragment -->
-	<string name="edit_profile_fragment_label">Edit Your Profile</string>
-	<string name="edit_profile_fragment_change_pic">Profile Picture</string>
+    <string name="edit_profile_fragment_label">Edit Your Profile</string>
+    <string name="edit_profile_fragment_change_pic">Profile Picture</string>
     <string name="edit_profile_fragment_first_name">First name</string>
     <string name="edit_profile_fragment_last_name">Last name</string>
     <string name="edit_profile_fragment_username">Username</string>
@@ -295,15 +287,16 @@
     <string name="overweight_results">24.00 &lt; n &lt; 30.00</string>
     <string name="obese_results">30.00 &lt; n &lt; 40.00</string>
     <string name="morbidly_obese_results">n &gt; 40.00</string>
-    
     <!-- String Arrays for Form Components -->
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </string-array>  
-    
-        <string name="new_medication_start_date">Start date</string>
-        <string name="new_medication_time">Time</string>
-    
+
+
+    <string name="new_medication_start_date">Start date</string>
+    <string name="new_medication_time">Time</string>
+    <string name="title_activity_about_us">AboutUs</string>
+    <string name="hello_world">Hello world!</string>
 </resources>

@@ -264,66 +264,7 @@ public class AppointmentDetail extends Activity {
 		
 				
 	}
-	
-	 /*****************************************************************
-     * Background Async Task to Delete Appointment
-     * */
-//    class DeleteAppointment extends AsyncTask<String, String, String> {
-// 
-//        /**
-//         * Before starting background thread Show Progress Dialog
-//         * */
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();          
-//        }
-// 
-//        /**
-//         * Deleting product
-//         * */
-//        protected String doInBackground(String... args) {
-// 
-//             try {
-//                // Building Parameters
-//                List<NameValuePair> params = new ArrayList<NameValuePair>();                
-//                params.add(new BasicNameValuePair("timestamp", timestamp));
-//                //Log.d("Delete appointment 0", json.toString());
-//                // getting appointment details by making HTTP request
-//                json = jsonParser.makeHttpRequest(
-//                        url_delete_appointment, "POST", params);
-// 
-//                // check your log for json response
-//                Log.d("Delete appointment", json.toString());              
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-// 
-//            return null;
-//        }
-// 
-//        /**
-//         * After completing background task Dismiss the progress dialog
-//         * **/
-//        protected void onPostExecute(String file_url) {
-//        	 try {
-//                int success  = json.getInt(TAG_SUCCESS);
-//             	
-//                 if (success == 1) {                  
-//                 	Toast.makeText(getBaseContext(), "Data was successfully deleted on the server! " , Toast.LENGTH_LONG).show();
-//                 } else {
-//                     // failed to create product
-//                 	Toast.makeText(getApplicationContext(), "Data was not deleted on the server! Please Contact an Administrator. ", Toast.LENGTH_LONG).show();                 	
-//                 }
-//             } catch (JSONException e) {
-//                 e.printStackTrace();
-//             }
-//        	 
-//        	
-//        }
-//
-//}
-//    
-    
+	  
     
     
 }

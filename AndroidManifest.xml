@@ -5,86 +5,79 @@
     <uses-sdk
         android:minSdkVersion="19"
         android:targetSdkVersion="21" />
+
     <permission
-         android:name="com.team9.healthmate.permission.MAPS_RECEIVE"
-         android:protectionLevel="signature"/>
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.CALL_PHONE" />
+        android:name="com.team9.healthmate.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/> 
-	
-	<uses-feature
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"/>
-    
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/Theme.Healthmate">
-        
+        android:theme="@style/Theme.Healthmate" >
+
         <!-- GOOGLE API KEY -->
-        <!--  Joseph's Home COMP SHA1
-        <meta-data
-  		  android:name="com.google.android.maps.v2.API_KEY"
-  		  android:value="AIzaSyANKQQ4N13tW-378oNvTbkqqbZj4-px5JU"/>  -->
-        <!--  Joseph's Laptop COMP SHA1 -->
+        <!-- Joseph's Laptop COMP SHA1 -->
         <meta-data
   		  android:name="com.google.android.maps.v2.API_KEY"
   		  android:value="AIzaSyAEVFHOPH1OqSI0QW0H3Cz7BN264Qt2s-Y"/>
-        <!--  Davit's Laptop COMP SHA1
+        <!-- Davit's Laptop COMP SHA1 -->
         <meta-data
   		  android:name="com.google.android.maps.v2.API_KEY"
-  		  android:value="AIzaSyDT7XTXaPLEt-TrtFpF0zrcZ9fdixrzImc"/> -->
-        
+  		  android:value="AIzaSyDT7XTXaPLEt-TrtFpF0zrcZ9fdixrzImc"/>
         <meta-data
-    		android:name="com.google.android.gms.version"
-   			android:value="@integer/google_play_services_version" />
-        
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".SplashScreen"
-            android:label="@string/app_name" 
-             android:screenOrientation="portrait"
-             android:theme="@android:style/Theme.NoTitleBar">
-              <intent-filter>
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-             
-             
-            
         </activity>
-         <activity
+        <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
             android:name=".Medications.Medication"
-            android:label="@string/title_activity_medication" 
-            android:parentActivityName="com.team9.healthmate.Menu">
+            android:label="@string/title_activity_medication"
+            android:parentActivityName=".Menu" >
         </activity>
         <activity
             android:name=".HealthLocation"
-            android:label="@string/title_activity_health_location" 
-            android:parentActivityName="com.team9.healthmate.Menu">
+            android:label="@string/title_activity_health_location"
+            android:parentActivityName=".Menu" >
         </activity>
         <activity
             android:name=".Moods"
-            android:label="@string/title_activity_moods" 
-            android:parentActivityName="com.team9.healthmate.Menu">
+            android:label="@string/title_activity_moods"
+            android:parentActivityName=".Menu" >
         </activity>
         <activity
             android:name=".Menu"
             android:label="@string/title_activity_menu" >
-           
         </activity>
         <activity
             android:name=".Emergency"
@@ -92,24 +85,23 @@
         </activity>
         <activity
             android:name=".StepCounter"
-            android:label="@string/title_activity_step_counter" 
-            android:parentActivityName="com.team9.healthmate.Menu">
+            android:label="@string/title_activity_step_counter"
+            android:parentActivityName=".Menu" >
         </activity>
-
         <activity
             android:name=".Medications.NewMedication"
-            android:label="@string/title_activity_new_medication" 
-            android:parentActivityName="com.team9.healthmate.Medications.Medication">
+            android:label="@string/title_activity_new_medication"
+            android:parentActivityName=".Medications.Medication" >
         </activity>
         <activity
             android:name=".Medications.MedicationDetails"
             android:label="@string/title_activity_medication_details"
-             android:parentActivityName="com.team9.healthmate.Medications.Medication" >
+            android:parentActivityName=".Medications.Medication" >
         </activity>
         <activity
             android:name=".Registration"
-            android:label="@string/title_activity_registration" 
-            android:parentActivityName="com.team9.healthmate.Login">
+            android:label="@string/title_activity_registration"
+            android:parentActivityName=".Login" >
         </activity>
         <activity
             android:name=".ChartDemo"
@@ -128,22 +120,22 @@
         <activity
             android:name=".Appointments.AppointmentForm"
             android:label="@string/title_activity_appointment_form"
-            android:parentActivityName="com.team9.healthmate.Appointments.AppointmentsList" >
+            android:parentActivityName=".Appointments.AppointmentsList" >
         </activity>
         <activity
             android:name=".Appointments.AppointmentsList"
             android:label="@string/title_activity_appointment_list"
-            android:parentActivityName="com.team9.healthmate.Menu" >
+            android:parentActivityName=".Menu" >
         </activity>
         <activity
             android:name=".Appointments.AppointmentDetail"
-            android:label="@string/title_activity_appointment_detail" 
-             android:parentActivityName="com.team9.healthmate.Appointments.AppointmentsList">
+            android:label="@string/title_activity_appointment_detail"
+            android:parentActivityName=".Appointments.AppointmentsList" >
         </activity>
         <activity
             android:name=".UserProfile"
-            android:label="@string/title_activity_user_profile" 
-            android:parentActivityName="com.team9.healthmate.Menu">
+            android:label="@string/title_activity_user_profile"
+            android:parentActivityName=".Menu" >
         </activity>
         <activity
             android:name=".StepCounter.StepCounter"
@@ -151,22 +143,22 @@
         <activity
             android:name=".EditProfile"
             android:label="@string/title_activity_edit_profile"
-            android:parentActivityName="com.team9.healthmate.UserProfile" >
+            android:parentActivityName=".UserProfile" >
         </activity>
         <activity
             android:name=".Notes.ListOfNotes"
             android:label="@string/title_activity_note_list"
-            android:parentActivityName="com.team9.healthmate.Menu" >
+            android:parentActivityName=".Menu" >
         </activity>
         <activity
             android:name=".Notes.NoteDetail"
             android:label="@string/title_activity_note_detail"
-             android:parentActivityName="com.team9.healthmate.Notes.ListOfNotes" >
+            android:parentActivityName=".Notes.ListOfNotes" >
         </activity>
         <activity
             android:name=".Notes.NoteEditor"
-            android:label="@string/title_activity_note_editor" 
-            android:parentActivityName="com.team9.healthmate.Notes.ListOfNotes">
+            android:label="@string/title_activity_note_editor"
+            android:parentActivityName=".Notes.ListOfNotes" >
         </activity>
 
         <service android:name=".NotificationsManager.HealthMateAlarmService" >
@@ -188,17 +180,21 @@
         <activity
             android:name=".ContactMyDoctor"
             android:label="@string/title_activity_contact_my_doctor"
-            android:parentActivityName="com.team9.healthmate.Menu" >
+            android:parentActivityName=".Menu" >
         </activity>
         <activity
             android:name=".ContactMyDoctorItemOptions"
             android:label="@string/title_activity_contact_my_doctor_item_options"
-            android:parentActivityName="com.team9.healthmate.ContactMyDoctor" >
+            android:parentActivityName=".ContactMyDoctor" >
         </activity>
         <activity
             android:name=".Profile"
             android:label="@string/title_activity_profile"
-             android:parentActivityName="com.team9.healthmate.Menu">
+            android:parentActivityName=".Menu" >
+        </activity>
+        <activity
+            android:name=".AboutUs"
+            android:label="@string/title_activity_about_us" >
         </activity>
         
         <activity

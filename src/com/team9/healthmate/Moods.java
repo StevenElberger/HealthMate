@@ -123,36 +123,7 @@ public class Moods extends FragmentActivity
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.mCallER:
-			AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-			
-			Log.v("Debug", "ER start");
-			// Add the buttons	
-
-			builder2.setTitle("Would you like to make an Emergency Call?");
-			builder2.setPositiveButton(R.string.ok2, new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			               // User clicked OK button
-			        	   Log.v("Debug", "ER0");
-			        	OneClickEmergency ER = new OneClickEmergency();
-			   			ER.makeACall(context);			
-			   			ER.sendEmail(context);
-			   			ER.sendSMSMessage(context);
-			   			Log.v("Debug", "ER1");
-			           }
-			       });
-			builder2.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			               // User cancelled the dialog
-			        	   
-			           }
-			       });
-									
-			// Create the AlertDialog
-			AlertDialog dialog = builder2.create();	
-			dialog.show();
-			break;
+		switch (item.getItemId()) {		
 		case R.id.mAddRssFeed:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			Context mContext = getApplicationContext();

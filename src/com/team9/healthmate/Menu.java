@@ -7,21 +7,27 @@ import java.util.Iterator;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.os.Build;
 import com.team9.healthmate.Appointments.AppointmentsList;
 import com.team9.healthmate.DataManager.DataStorageManager;
 import com.team9.healthmate.Medications.Medication;
@@ -30,21 +36,26 @@ import com.team9.healthmate.Notes.ListOfNotes;
 
 public class Menu extends Activity {
 	GridView menu_grid;
-	public Intent intent;
 	Drawable pic;
 	
+	private Context context;
+	
+	public Intent intent;
+	
 	String[] menuString = {
-			"Moods","Medication","Steps","Health Locations","Notes", "Appointments", "Contact My Doctor"
+			"Moods","Medication","Steps","Health Locations","Notes", "Appointments", "Contact My Doctor", "Call ER", "About Us"
 	}; // "Graphs", "Animated Graphs", "More Graphs",
 	
 	int[] imageId = {
-		      R.drawable.ic_heart,
-		      R.drawable.ic_heart,
-		      R.drawable.ic_heart,
-		      R.drawable.ic_heart,
-		      R.drawable.ic_heart,
-		      R.drawable.ic_heart,
-		      R.drawable.ic_heart
+		      R.drawable.moods,
+		      R.drawable.medication,
+		      R.drawable.steps,
+		      R.drawable.healthlocations,
+		      R.drawable.notes,
+		      R.drawable.appointments,
+		      R.drawable.contactmydoctor,
+		      R.drawable.emergency,
+		      R.drawable.aboutus
 		  };
 	
 	@Override
@@ -55,15 +66,7 @@ public class Menu extends Activity {
 	    menu_grid = (GridView)findViewById(R.id.menu);
 	    menu_grid.setAdapter(adapter);
 	    
-	    /*
-	    menu_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(Menu.this, "You Clicked at " +menuString[+ position], Toast.LENGTH_SHORT).show();
-            }
-        });
-        */
+	   context = getApplicationContext();
 	    
 	    menu_grid.setOnItemClickListener(new OnItemClickListener() {
 
@@ -74,6 +77,8 @@ public class Menu extends Activity {
 
 			}
 		});
+	    
+	   
 	  }
 
 	/**
@@ -129,6 +134,8 @@ public class Menu extends Activity {
 //			case 7: return AnimatedChartDemo.class;
 //			case 8: return PreviewChartDemo.class;
 			case 6: return ContactMyDoctor.class;
+			case 7: return Emergency.class;
+			case 8: return AboutUs.class;
 		}
 		return null;
 	}
@@ -142,8 +149,11 @@ public class Menu extends Activity {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
 		loadProfileInformation();
 		if (pic != null) {
-			menu.getItem(0).setIcon(pic);
+			//menu.getItem(0).setIcon(pic);
 		}
+		
+		
+		
 		return true;
 	}
 	
@@ -157,9 +167,31 @@ public class Menu extends Activity {
 		// Check to see which option was selected by the user.
 		if (item.getItemId() == R.id.action_edit_profile) {
 			Intent intent = new Intent(this, Profile.class); // used to be UserProfile.class
-			startActivity(intent);
-		}
+			startActivity(intent);		}
 		
+		if (item.getItemId() == R.id.action_emergency){
+		 View vAction = (View)findViewById(R.id.action_emergency);
+			
+			vAction.isClickable();	
+			
+			vAction.setOnLongClickListener(new View.OnLongClickListener() {
+				
+				@Override
+				public boolean onLongClick(View v)
+				{
+					OneClickEmergency ER = new OneClickEmergency();
+		   			ER.makeACall(context);			
+		   			ER.sendEmail(context);
+		   			ER.sendSMSMessage(context);
+					Toast.makeText(getBaseContext(), "Long Clicked", Toast.LENGTH_SHORT).show();
+					return false;
+				}
+			});
+		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
+		
+	
 }

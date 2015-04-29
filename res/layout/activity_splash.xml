@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imgLogo"
         android:layout_centerHorizontal="true"
-        android:text="v1.0.1"
+        android:text="v1.0.11"
         android:textColor="#ffffff"
         android:textSize="15dp"
         android:textStyle="bold"
