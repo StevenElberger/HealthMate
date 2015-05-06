@@ -21,7 +21,11 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="com.team9.healthmate.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.team9.healthmate.permission.C2D_MESSAGE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -43,7 +47,12 @@
   		  android:value="AIzaSyDT7XTXaPLEt-TrtFpF0zrcZ9fdixrzImc"/>
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version" />    
+    
+   
+ 		<!--  Required for GCM -->
+         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+         
 
         <activity
             android:name=".SplashScreen"
@@ -197,6 +206,7 @@
             android:label="@string/title_activity_about_us" >
         </activity>
         
+
         <activity
             android:name=".StepCounter.HeightActivity"
             android:label="@string/title_activity_height" >
@@ -217,6 +227,16 @@
         <service
             android:name=".StepCounter.StepService"
             android:enabled="true" />
-    </application>
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcmclienttest" />
+            </intent-filter>
+        </receiver>
+        
+        <service android:name=".GCMIntentService" /> 
 
+    </application>
 </manifest>
